@@ -61,6 +61,8 @@
   <ItemGroup>
     <Compile Include="DAL.cs" />
     <Compile Include="Db.cs" />
+    <Compile Include="Model\Dictionaries.cs" />
+    <Compile Include="Model\LoginLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\User.cs" />
   </ItemGroup>
