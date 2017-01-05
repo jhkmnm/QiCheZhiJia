@@ -1,15 +1,15 @@
 ﻿using CsharpHttpHelper;
 using CsharpHttpHelper.Enum;
-using System.Net;
-using System.Text;
 using System.Drawing;
 using System.IO;
+using HtmlAgilityPack;
 
-namespace Business
+namespace Aide
 {
     public class Html
     {        
         string cookie = "";
+        HtmlDocument doc = new HtmlDocument();
 
         public Image GetImage(string url)
         {
@@ -27,14 +27,13 @@ namespace Business
             return Bitmap.FromStream(ms, true);            
         }
 
-        public string Get(string url)
+        public HtmlDocument Get(string url)
         {
             var item = new HttpItem()
             {
                 URL = url,
                 Method = "get",
-                ContentType = "text/html",
-                ResultCookieType = ResultCookieType.CookieCollection
+                ContentType = "text/html"
             };
             if(!string.IsNullOrWhiteSpace(cookie))
             {
@@ -43,17 +42,19 @@ namespace Business
             HttpHelper http = new HttpHelper();
             HttpResult result = http.GetHtml(item);
             cookie += HttpHelper.GetSmallCookie(result.Cookie);
-            return result.Html;
+            doc.LoadHtml(result.Html);
+            return doc;
         }
 
-        public string Post(HttpItem item)
+        public HtmlDocument Post(HttpItem item)
         {
             item.Cookie = cookie;
             HttpHelper http = new HttpHelper();
             HttpResult result = http.GetHtml(item);
             cookie += HttpHelper.GetSmallCookie(result.Cookie);
             cookie = HttpHelper.GetSmallCookie(cookie);
-            return result.Html;
+            doc.LoadHtml(result.Html);
+            return doc;
         }
     }
 }

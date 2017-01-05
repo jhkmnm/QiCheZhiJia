@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using System;
 using Dos.ORM;
 
-namespace Aide
+namespace AideM
 {
     /// <summary>
     /// 实体类Dictionaries。(属性说明自动提取数据库字段的描述信息)

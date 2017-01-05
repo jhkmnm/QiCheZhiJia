@@ -1,29 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using Business;
-using HtmlAgilityPack;
-using System.Security.Cryptography;
 using CsharpHttpHelper;
 using System.IO;
 using System.Configuration;
+using HtmlAgilityPack;
+using Newtonsoft.Json;
+using Aide;
+using AideM;
 
 namespace 汽车之家
 {
     public partial class FormLogin : Form
-    {
+    {        
         string validateCode = "http://ics.autohome.com.cn/passport/Account/GetDealerValidateCode?time=1483443132656";
+        /// <summary>
+        /// 登录页面
+        /// </summary>
         string loginurl = "http://ics.autohome.com.cn/passport/Account/Login";
+        /// <summary>
+        /// 登录提交
+        /// </summary>
         string postlogin = "http://ics.autohome.com.cn/passport/";
         string entervalidateCode = "http://ics.autohome.com.cn/passport/Account/GetEnterpriseValidateCode";
-        string personalInfo = "http://ics.autohome.com.cn/BSS/MyMch/PersonalInfo";
+        /// <summary>
+        /// 账号列表
+        /// </summary>
+        string employeelist = "http://ics.autohome.com.cn/BSS/Employee/GetEmployee?dealerId=0&take=30";
         Html html = new Html();
-        HtmlAgilityPack.HtmlDocument htmlDoc = new HtmlAgilityPack.HtmlDocument();
         private static string StrJS = "";
         string token = "";
         string redisKey = "";
@@ -42,48 +46,40 @@ namespace 汽车之家
 
         private void GotoLoginPage()
         {
-            var strhtml = html.Get(loginurl);
-            htmlDoc.LoadHtml(strhtml);
+            var htmlDoc = html.Get(loginurl);
 
             token = htmlDoc.DocumentNode.SelectNodes("//input[@name='__RequestVerificationToken']")[0].GetAttributeValue("value", "");
             redisKey = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='rkey']").GetAttributeValue("value", "");
             exponment = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='hidPublicKeyExponent']").GetAttributeValue("value", "");
             modulus = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"hidPublicKeyModulus\"]").GetAttributeValue("value", "");
 
-            strhtml = html.Get(entervalidateCode);
+            html.Get(entervalidateCode);
         }
 
-        private void LoadPersonalInfo()
+        private bool LoadPersonalInfo()
         {
-            //var strhtml = html.Get(personalInfo);
-            
-            //string input = "";
-            //input = HttpHelper.GetBetweenHtml(HttpHelper.GetBetweenHtml(result.Html, "<dt>姓名：</dt>", "</dl>"), "<dd>", "</dd>");
-            //CommonThis.userMsg.LinkMan = input;
-            //input = HttpHelper.GetBetweenHtml(HttpHelper.GetBetweenHtml(result.Html, "<dt>手机号：</dt>", "</dl>"), "<dd>", "</dd>");
-            //CommonThis.userMsg.Mobile = input;
-            //input = HttpHelper.GetBetweenHtml(result.Html, "<dt>性别：</dt>", "</dl>");
-            //string[] strArray = Regex.Split(input, "/label>");
-            //foreach (string str2 in strArray)
-            //{
-            //    if ((input.IndexOf("女") != -1) && (input.IndexOf("checked") != -1))
-            //    {
-            //        CommonThis.userMsg.Sex = "女";
-            //    }
-            //    if ((input.IndexOf("男") != -1) && (input.IndexOf("checked") != -1))
-            //    {
-            //        CommonThis.userMsg.Sex = "男";
-            //    }
-            //}
-            //CommonThis.userMsg.Email = HttpHelper.GetBetweenHtml(result.Html, "email\" value=\"", "\"");
-            //CommonThis.userMsg.Phone = HttpHelper.GetBetweenHtml(result.Html, "TelPhone\" type=\"text\" value=\"", "\"");
-            //item = new HttpItem
-            //{
-            //    URL = "http://ics.autohome.com.cn/passport/Home/Index",
-            //    Cookie = this.cookie
-            //};
-            //result = MyHttpHelper.MyGetHtml(item);
-            //CommonThis.userMsg.CompanyName = HttpHelper.GetBetweenHtml(result.Html, "index-name\">", "<");
+            var htmlDoc = html.Get(employeelist);
+            var result = JsonConvert.DeserializeObject<LinkResult>(htmlDoc.DocumentNode.OuterHtml);
+            var linkinfo = "姓名:{0};职位:{1};手机:{2}"+ Environment.NewLine;
+
+            Service.User user = new Service.User{
+                Company = result.Data.SaleList[0].CompanyString,
+                PassWord = txtPassword.Text,
+                UserName = txtUserName.Text,
+                Status = 1
+            };
+
+            var loginResult = Tool.service.UserLogin(user);
+
+            if(loginResult.Result)
+            {
+                Tool.userInfo = loginResult.Data;
+            }
+            else
+            {
+                MessageBox.Show(loginResult.Message);
+            }
+            return loginResult.Result;
         }
 
         private bool Login()
@@ -112,7 +108,7 @@ namespace 汽车之家
             item.Header.Add("X-Requested-With", "XMLHttpRequest");
             item.Allowautoredirect = false;
 
-            var strhtml = html.Post(item);
+            var strhtml = html.Post(item).DocumentNode.OuterHtml;
 
             if (strhtml.IndexOf("8|1") != -1)
             {
@@ -181,7 +177,19 @@ namespace 汽车之家
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Login();
+            if(Login())
+            {
+                if(LoadPersonalInfo())
+                {
+                    this.DialogResult = DialogResult.OK;
+                }
+                else
+                {
+                    this.DialogResult = DialogResult.No;
+                }
+
+                this.Close();
+            }
         }
 
         private void btnRefImg_Click(object sender, EventArgs e)

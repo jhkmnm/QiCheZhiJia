@@ -7,8 +7,8 @@
     <ProjectGuid>{2E7EAAC3-C930-42BF-AA33-DCDFD32743B6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Aide</RootNamespace>
-    <AssemblyName>Aide</AssemblyName>
+    <RootNamespace>AideD</RootNamespace>
+    <AssemblyName>DAL</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>发布\</PublishUrl>
@@ -61,10 +61,7 @@
   <ItemGroup>
     <Compile Include="DAL.cs" />
     <Compile Include="Db.cs" />
-    <Compile Include="Model\Dictionaries.cs" />
-    <Compile Include="Model\LoginLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Model\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="QiChe.mdf">
@@ -89,6 +86,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{f7957a3f-d58f-45c7-a30a-024cef7a9508}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

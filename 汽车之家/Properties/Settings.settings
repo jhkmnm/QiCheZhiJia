@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="汽车之家.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="汽车之家_Service_Service" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">http://localhost:32050/Service.asmx</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

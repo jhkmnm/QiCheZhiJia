@@ -1,10 +1,9 @@
 ﻿using Dos.ORM;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using AideM;
 
-namespace Aide
+namespace AideD
 {
     public class DAL
     {
@@ -38,6 +37,23 @@ namespace Aide
             if (!string.IsNullOrWhiteSpace(userName))
             {
                 where.And(d => d.UserName == userName);
+            }
+            if (!string.IsNullOrWhiteSpace(company))
+            {
+                where.And(d => d.Company == company);
+            }
+
+            return DB.Context.From<User>()
+                .Where(where)
+                .ToFirst();
+        }
+
+        public User CheckUser(string userName, string company)
+        {
+            var where = new Where<User>();
+            if (!string.IsNullOrWhiteSpace(userName))
+            {
+                where.And(d => d.UserName != userName);
             }
             if (!string.IsNullOrWhiteSpace(company))
             {
