@@ -1,18 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 2013
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "汽车之家", "汽车之家\汽车之家.csproj", "{6CA87D05-9B1E-40B3-A017-0DC43867C266}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aide", "汽车之家\Aide.csproj", "{6CA87D05-9B1E-40B3-A017-0DC43867C266}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Business", "Business\Business.csproj", "{8F11BAB9-2BDE-42F5-8F78-E0E34F0FB3E9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{2E7EAAC3-C930-42BF-AA33-DCDFD32743B6}"
-EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebService", "WebService\", "{A12C173F-664D-40C5-A3B9-2ADC7CCD0FD8}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebService(1)", "WebService\", "{A12C173F-664D-40C5-A3B9-2ADC7CCD0FD8}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		ProjectReferences = "{2e7eaac3-c930-42bf-aa33-dcdfd32743b6}|Aide.dll;{F7957A3F-D58F-45C7-A30A-024CEF7A9508}|Aide.dll;"
+		ProjectReferences = ""
 		Debug.AspNetCompiler.VirtualPath = "/localhost_32050"
 		Debug.AspNetCompiler.PhysicalPath = "WebService\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_32050\"
@@ -32,8 +28,6 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "WebService", "WebService\",
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{F7957A3F-D58F-45C7-A30A-024CEF7A9508}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -44,22 +38,10 @@ Global
 		{6CA87D05-9B1E-40B3-A017-0DC43867C266}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6CA87D05-9B1E-40B3-A017-0DC43867C266}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6CA87D05-9B1E-40B3-A017-0DC43867C266}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8F11BAB9-2BDE-42F5-8F78-E0E34F0FB3E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8F11BAB9-2BDE-42F5-8F78-E0E34F0FB3E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8F11BAB9-2BDE-42F5-8F78-E0E34F0FB3E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8F11BAB9-2BDE-42F5-8F78-E0E34F0FB3E9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2E7EAAC3-C930-42BF-AA33-DCDFD32743B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E7EAAC3-C930-42BF-AA33-DCDFD32743B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E7EAAC3-C930-42BF-AA33-DCDFD32743B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E7EAAC3-C930-42BF-AA33-DCDFD32743B6}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A12C173F-664D-40C5-A3B9-2ADC7CCD0FD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A12C173F-664D-40C5-A3B9-2ADC7CCD0FD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A12C173F-664D-40C5-A3B9-2ADC7CCD0FD8}.Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{A12C173F-664D-40C5-A3B9-2ADC7CCD0FD8}.Release|Any CPU.Build.0 = Debug|Any CPU
-		{F7957A3F-D58F-45C7-A30A-024CEF7A9508}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F7957A3F-D58F-45C7-A30A-024CEF7A9508}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F7957A3F-D58F-45C7-A30A-024CEF7A9508}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F7957A3F-D58F-45C7-A30A-024CEF7A9508}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

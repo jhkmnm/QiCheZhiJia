@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace 汽车之家
+namespace Aide
 {
     static class Program
     {
@@ -15,7 +15,14 @@ namespace 汽车之家
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormLogin());
+            //Application.Run(new FormLogin());
+
+            FormLogin f = new FormLogin();
+            if (f.ShowDialog() == DialogResult.OK)
+            {
+                FormMain fm = new FormMain();
+                fm.ShowDialog();
+            }
 
             //Tool.service.Url = System.Configuration.ConfigurationManager.AppSettings["dataSrvUrl"];
         }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-namespace 汽车之家
+namespace Aide
 {
     public partial class FormMain : Form
     {

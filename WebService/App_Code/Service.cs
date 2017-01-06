@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Web.Services;
-using AideD;
-using AideM;
+using Model;
 
 /// <summary>
 /// Service 的摘要说明
@@ -29,10 +28,10 @@ public class Service : System.Web.Services.WebService
     /// <summary>
     /// 用户登录
     /// 1. 判断用户是否存在
-    /// 2. 不存在写入，返回100
+    /// 2. 不存在写入，返回
     /// 3. 存在
-    ///     a. 判断是否过期，过期返回101
-    ///     b. 判断是否体验过期，过期返回102
+    ///     a. 判断是否过期，过期返回
+    ///     b. 判断是否体验过期，过期返回
     ///     c. 更新登录日志
     /// </summary>
     /// <param name="user"></param>
@@ -57,25 +56,35 @@ public class Service : System.Web.Services.WebService
             {
                 user.UserType = 0;
                 dal.AddUser(user);
-
                 userResult.Data = dal.GetUser(user.UserName, user.Company);
+                dal.UpdateLoginLogByLogin(userResult.Data.Id);
             }
             else
             {
-                if (!dal.CheckDueTime(user.UserName, user.Company))
+                if (result.UserType == 0)
                 {
-                    userResult.Result = false;
-                    userResult.Message = result.UserType == 0 ? "非常抱歉，该用户检验时间已到，暂时无法登陆。详询QQ：278815541。" : "非常抱歉，该用户使用时间已到，暂时无法登陆。详询QQ：278815541。";
-                }
-                else if (!dal.CheckTasteTime(result.Id))
-                {
-                    userResult.Result = false;
-                    userResult.Message = "非常抱歉，该用户今天体验时间已到，暂时无法登陆。详询QQ：278815541。";
+                    if (!dal.CheckTasteTime(result.Id))
+                    {
+                        userResult.Result = false;
+                        userResult.Message = "非常抱歉，该用户今天体验时间已到，暂时无法登陆。详询QQ：278815541。";
+                    }
+                    else
+                    {
+                        userResult.Data = result;
+                    }
                 }
                 else
                 {
-                    userResult.Data = result;
-                }
+                    if (!dal.CheckDueTime(user.UserName, user.Company))
+                    {
+                        userResult.Result = false;
+                        userResult.Message = "非常抱歉，该用户使用时间已到，暂时无法登陆。详询QQ：278815541。";
+                    }
+                    else
+                    {
+                        userResult.Data = result;
+                    }
+                }                
             }
         }
 
@@ -131,7 +140,7 @@ public class Service : System.Web.Services.WebService
     //}
 
     [WebMethod]
-    public Dictionaries GetDic()
+    public List<Dictionaries> GetDic()
     {
         return dal.GetDic();
     }

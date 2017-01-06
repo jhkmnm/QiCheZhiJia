@@ -1,4 +1,4 @@
-﻿namespace 汽车之家
+﻿namespace Aide
 {
     partial class FormLogin
     {

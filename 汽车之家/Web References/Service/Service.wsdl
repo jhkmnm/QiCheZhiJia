@@ -120,10 +120,15 @@
       <s:element name="GetDicResponse">
         <s:complexType>
           <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="GetDicResult" type="tns:Dictionaries" />
+            <s:element minOccurs="0" maxOccurs="1" name="GetDicResult" type="tns:ArrayOfDictionaries" />
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:complexType name="ArrayOfDictionaries">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Dictionaries" nillable="true" type="tns:Dictionaries" />
+        </s:sequence>
+      </s:complexType>
       <s:complexType name="Dictionaries">
         <s:complexContent mixed="false">
           <s:extension base="tns:Entity">

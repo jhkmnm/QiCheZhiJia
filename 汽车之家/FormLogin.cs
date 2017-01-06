@@ -6,13 +6,12 @@ using System.IO;
 using System.Configuration;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
-using Aide;
-using AideM;
+using Model;
 
-namespace 汽车之家
+namespace Aide
 {
     public partial class FormLogin : Form
-    {        
+    {
         string validateCode = "http://ics.autohome.com.cn/passport/Account/GetDealerValidateCode?time=1483443132656";
         /// <summary>
         /// 登录页面
@@ -27,6 +26,16 @@ namespace 汽车之家
         /// 账号列表
         /// </summary>
         string employeelist = "http://ics.autohome.com.cn/BSS/Employee/GetEmployee?dealerId=0&take=30";
+        /// <summary>
+        /// 公共线索
+        /// </summary>
+        string dmsOrder = "http://ics.autohome.com.cn/Dms/Order/Index";
+
+        /// <summary>
+        /// 获取公共订单
+        /// </summary>
+        string publicOrder = "http://ics.autohome.com.cn/Dms/Order/GetPublicOrders?timeStamp={0}&ik=9DF3FD033BAD49F2AD12824D56DB11A9&appid=dms&provinceid={1}&cityid={2}&factoryID={3}&seriesid={4}&logicType={5}&pageindex=1&pagesize=200&tk=2644691E-91BE-4F2F-97B3-57FD0356D52C";
+
         Html html = new Html();
         private static string StrJS = "";
         string token = "";
@@ -60,18 +69,23 @@ namespace 汽车之家
         {
             var htmlDoc = html.Get(employeelist);
             var result = JsonConvert.DeserializeObject<LinkResult>(htmlDoc.DocumentNode.OuterHtml);
-            var linkinfo = "姓名:{0};职位:{1};手机:{2}"+ Environment.NewLine;
+            var infoformat = "姓名:{0};性别:{1};职位:{2};手机:{3};座机:{4}" + Environment.NewLine;
+            StringBuilder sb = new StringBuilder(result.Data.SaleList.Count * 25);
 
-            Service.User user = new Service.User{
+            result.Data.SaleList.ForEach(item => sb.AppendFormat(infoformat, item.Name, item.Sex == "1" ? "男" : "女", item.RoleName, item.Phone, item.TelPhone));
+
+            Service.User user = new Service.User
+            {
                 Company = result.Data.SaleList[0].CompanyString,
                 PassWord = txtPassword.Text,
                 UserName = txtUserName.Text,
-                Status = 1
+                Status = 1,
+                LinkInfo = sb.ToString()
             };
 
             var loginResult = Tool.service.UserLogin(user);
 
-            if(loginResult.Result)
+            if (loginResult.Result)
             {
                 Tool.userInfo = loginResult.Data;
             }
@@ -84,22 +98,19 @@ namespace 汽车之家
 
         private bool Login()
         {
-            UserInfo.UserName = "";
-            UserInfo.Password = "";
-
-            var username = HttpHelper.URLEncode("晋江嘉华雷克萨斯", Encoding.UTF8);
-            var password = "qzzs8888.";
+            var username = HttpHelper.URLEncode(txtUserName.Text, Encoding.UTF8);
+            var password = txtPassword.Text;
             var code = txtCode.Text;
 
             var jsmain = "mytest(\"{0}\",\"{1}\",\"{2}\")";
-            var postdata = "__RequestVerificationToken={0}&UserNameDealer={1}&PasswordDealer={2}&RedisKey={3}&checkCodeDealer={4}";            
+            var postdata = "__RequestVerificationToken={0}&UserNameDealer={1}&PasswordDealer={2}&RedisKey={3}&checkCodeDealer={4}";
 
             var passenc = HttpHelper.JavaScriptEval(StrJS, string.Format(jsmain, exponment, modulus, password));
 
             var item = new HttpItem
             {
                 URL = postlogin,
-                ContentType = "application/x-www-form-urlencoded; charset=UTF-8",                
+                ContentType = "application/x-www-form-urlencoded; charset=UTF-8",
                 Method = "post",
                 Postdata = string.Format(postdata, token, username, passenc, redisKey, code),
                 Referer = loginurl,
@@ -117,18 +128,29 @@ namespace 汽车之家
             }
             if (strhtml.IndexOf("3|1") != -1)
             {
-                MessageBox.Show("密码错误");
+                MessageBox.Show("该用户帐户信息错误或访问受限");
                 return false;
             }
             if (strhtml.IndexOf("2|1") != -1)
             {
-                MessageBox.Show("用户名不存在");
+                MessageBox.Show("用户不存在或者密码错误");
+                return false;
+            }
+            if (strhtml.IndexOf("4|1") != -1)
+            {
+                MessageBox.Show("请求错误，请刷新页面重新提交。");
+                return false;
+            }
+            if (strhtml.IndexOf("5|1") != -1)
+            {
+                MessageBox.Show("验证码过期");
                 return false;
             }
             if (strhtml == "0")
             {
                 return true;
             }
+
             MessageBox.Show("登录异常！建议重试！");
             return false;
         }
@@ -145,6 +167,11 @@ namespace 汽车之家
             StrJS = File.ReadAllText(path);
             GotoLoginPage();
             LoadValidateCode();
+
+#if DEBUG
+            txtUserName.Text = "晋江嘉华雷克萨斯";
+            txtPassword.Text = "qzzs8888.";
+#endif
         }
 
         /// <summary>
@@ -155,13 +182,13 @@ namespace 汽车之家
             Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             if (this.chkSavePass.Checked)
             {
-                configuration.AppSettings.Settings["UserName"].Value = UserInfo.UserName;
-                configuration.AppSettings.Settings["PassWord"].Value = UserInfo.Password;
+                configuration.AppSettings.Settings["UserName"].Value = txtUserName.Text;
+                configuration.AppSettings.Settings["PassWord"].Value = txtPassword.Text;
             }
             configuration.AppSettings.Settings["chkSavePass"].Value = this.chkSavePass.Checked.ToString();
             configuration.Save();
         }
-        
+
         /// <summary>
         /// 读取本地的账号和密码
         /// </summary>
@@ -177,9 +204,9 @@ namespace 汽车之家
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if(Login())
+            if (Login())
             {
-                if(LoadPersonalInfo())
+                if (LoadPersonalInfo())
                 {
                     this.DialogResult = DialogResult.OK;
                 }
@@ -194,7 +221,14 @@ namespace 汽车之家
 
         private void btnRefImg_Click(object sender, EventArgs e)
         {
+            GotoLoginPage();
             LoadValidateCode();
+        }
+
+        public static string GetTimeStamp()
+        {
+            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return Convert.ToInt64(ts.TotalSeconds).ToString();
         }
     }
 }
