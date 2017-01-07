@@ -43,7 +43,7 @@ public class Service : System.Web.Services.WebService
         userResult.Message = "";
         userResult.Result = true;
 
-        var ruser = dal.CheckUser(user.UserName, user.Company);
+        var ruser = dal.CheckUser(user.UserName, user.Company, user.SiteName);
         if (ruser != null)
         {
             userResult.Result = false;
@@ -51,12 +51,12 @@ public class Service : System.Web.Services.WebService
         }
         else
         {
-            var result = dal.GetUser(user.UserName, user.Company);
+            var result = dal.GetUser(user.UserName, user.Company, user.SiteName);
             if (result == null)
             {
                 user.UserType = 0;
                 dal.AddUser(user);
-                userResult.Data = dal.GetUser(user.UserName, user.Company);
+                userResult.Data = dal.GetUser(user.UserName, user.Company, user.SiteName);
                 dal.UpdateLoginLogByLogin(userResult.Data.Id);
             }
             else
@@ -75,7 +75,7 @@ public class Service : System.Web.Services.WebService
                 }
                 else
                 {
-                    if (!dal.CheckDueTime(user.UserName, user.Company))
+                    if (!dal.CheckDueTime(user.UserName, user.Company, user.SiteName))
                     {
                         userResult.Result = false;
                         userResult.Message = "非常抱歉，该用户使用时间已到，暂时无法登陆。详询QQ：278815541。";

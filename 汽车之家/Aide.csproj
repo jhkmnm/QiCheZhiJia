@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dos.Common">
+      <HintPath>..\packages\Dos.Common.1.0.9.4\lib\net40\Dos.Common.dll</HintPath>
+    </Reference>
     <Reference Include="Dos.ORM, Version=1.10.7.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Dos.ORM.1.10.7.1\lib\net40\Dos.ORM.dll</HintPath>
       <Private>True</Private>
@@ -84,13 +87,16 @@
     <Compile Include="Model\Area.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\PublicOrder.cs" />
+    <Compile Include="Model\Result.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QiCheZhiJia.cs" />
     <Compile Include="Web References\Service\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
+    <Compile Include="YiChe.cs" />
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>

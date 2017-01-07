@@ -13,6 +13,7 @@ namespace Model
     {
         #region Model
         private int _Id;
+        private string _SiteName;
         private string _UserName;
         private string _PassWord;
         private string _Company;
@@ -33,6 +34,19 @@ namespace Model
             {
                 this.OnPropertyValueChange("Id");
                 this._Id = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Field("SiteName")]
+        public string SiteName
+        {
+            get { return _SiteName; }
+            set
+            {
+                this.OnPropertyValueChange("SiteName");
+                this._SiteName = value;
             }
         }
         /// <summary>
@@ -165,6 +179,7 @@ namespace Model
         {
             return new Field[] {
                 _.Id,
+                _.SiteName,
                 _.UserName,
                 _.PassWord,
                 _.Company,
@@ -182,6 +197,7 @@ namespace Model
         {
             return new object[] {
                 this._Id,
+                this._SiteName,
                 this._UserName,
                 this._PassWord,
                 this._Company,
@@ -216,6 +232,10 @@ namespace Model
             /// 
             /// </summary>
             public readonly static Field Id = new Field("Id", "User", "");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field SiteName = new Field("SiteName", "User", "");            
             /// <summary>
             /// 
             /// </summary>
@@ -259,37 +279,5 @@ namespace Model
         public string Message { get; set; }
 
         public User Data { get; set; }
-    }
-
-    public class LinkResult
-    {
-        public int Result { get; set; }
-        public bool Reload { get; set; }
-
-        public string Message { get; set; }
-
-        public Data Data { get; set; }
-    }
-
-    public class Data
-    {
-        public bool IsAdmin { get; set; }
-
-        public List<Sale> SaleList { get; set; }
-    }
-
-    public class Sale
-    {
-        public string Name { get; set; }
-        
-        public string Phone { get; set; }
-
-        public string TelPhone { get; set; }
-
-        public string Sex { get; set; }
-
-        public string RoleName { get; set; }
-
-        public string CompanyString { get; set; }
-    }
+    }    
 }

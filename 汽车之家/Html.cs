@@ -12,19 +12,24 @@ namespace Aide
         HtmlDocument doc = new HtmlDocument();
 
         public Image GetImage(string url)
-        {
-            HttpHelper http = new HttpHelper();
+        {            
             HttpItem item = new HttpItem()
             {
                 URL = url,
                 Method = "get",
-                ResultType = ResultType.Byte,
-                Cookie = this.cookie
+                ResultType = ResultType.Byte
             };
+            return GetImage(item);
+        }
+
+        public Image GetImage(HttpItem item)
+        {
+            HttpHelper http = new HttpHelper();
             var result = http.GetHtml(item);
-            cookie += HttpHelper.GetSmallCookie(result.Cookie);
+            if(!string.IsNullOrWhiteSpace(result.Cookie))
+                cookie += HttpHelper.GetSmallCookie(result.Cookie);
             MemoryStream ms = new MemoryStream(result.ResultByte);
-            return Bitmap.FromStream(ms, true);            
+            return Bitmap.FromStream(ms, true);
         }
 
         public HtmlDocument Get(string url)
@@ -35,15 +40,17 @@ namespace Aide
                 Method = "get",
                 ContentType = "text/html"
             };
-            if(!string.IsNullOrWhiteSpace(cookie))
-            {
-                item.Cookie = cookie;
-            }
+            doc.LoadHtml(Get(item).Html);
+            return doc;
+        }
+
+        public HttpResult Get(HttpItem item)
+        {
+            item.Cookie = cookie;
             HttpHelper http = new HttpHelper();
             HttpResult result = http.GetHtml(item);
             cookie += HttpHelper.GetSmallCookie(result.Cookie);
-            doc.LoadHtml(result.Html);
-            return doc;
+            return result;
         }
 
         public HtmlDocument Post(HttpItem item)

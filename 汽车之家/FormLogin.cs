@@ -12,36 +12,9 @@ namespace Aide
 {
     public partial class FormLogin : Form
     {
-        string validateCode = "http://ics.autohome.com.cn/passport/Account/GetDealerValidateCode?time=1483443132656";
-        /// <summary>
-        /// 登录页面
-        /// </summary>
-        string loginurl = "http://ics.autohome.com.cn/passport/Account/Login";
-        /// <summary>
-        /// 登录提交
-        /// </summary>
-        string postlogin = "http://ics.autohome.com.cn/passport/";
-        string entervalidateCode = "http://ics.autohome.com.cn/passport/Account/GetEnterpriseValidateCode";
-        /// <summary>
-        /// 账号列表
-        /// </summary>
-        string employeelist = "http://ics.autohome.com.cn/BSS/Employee/GetEmployee?dealerId=0&take=30";
-        /// <summary>
-        /// 公共线索
-        /// </summary>
-        string dmsOrder = "http://ics.autohome.com.cn/Dms/Order/Index";
-
-        /// <summary>
-        /// 获取公共订单
-        /// </summary>
-        string publicOrder = "http://ics.autohome.com.cn/Dms/Order/GetPublicOrders?timeStamp={0}&ik=9DF3FD033BAD49F2AD12824D56DB11A9&appid=dms&provinceid={1}&cityid={2}&factoryID={3}&seriesid={4}&logicType={5}&pageindex=1&pagesize=200&tk=2644691E-91BE-4F2F-97B3-57FD0356D52C";
-
-        Html html = new Html();
-        private static string StrJS = "";
-        string token = "";
-        string redisKey = "";
-        string exponment = "";
-        string modulus = "";
+        QiCheZhiJia qiche;
+        YiChe yiche;
+        string site;
 
         public FormLogin()
         {
@@ -50,122 +23,31 @@ namespace Aide
 
         private void LoadValidateCode()
         {
-            pbCode.Image = html.GetImage(validateCode);
-        }
-
-        private void GotoLoginPage()
-        {
-            var htmlDoc = html.Get(loginurl);
-
-            token = htmlDoc.DocumentNode.SelectNodes("//input[@name='__RequestVerificationToken']")[0].GetAttributeValue("value", "");
-            redisKey = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='rkey']").GetAttributeValue("value", "");
-            exponment = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='hidPublicKeyExponent']").GetAttributeValue("value", "");
-            modulus = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"hidPublicKeyModulus\"]").GetAttributeValue("value", "");
-
-            html.Get(entervalidateCode);
-        }
-
-        private bool LoadPersonalInfo()
-        {
-            var htmlDoc = html.Get(employeelist);
-            var result = JsonConvert.DeserializeObject<LinkResult>(htmlDoc.DocumentNode.OuterHtml);
-            var infoformat = "姓名:{0};性别:{1};职位:{2};手机:{3};座机:{4}" + Environment.NewLine;
-            StringBuilder sb = new StringBuilder(result.Data.SaleList.Count * 25);
-
-            result.Data.SaleList.ForEach(item => sb.AppendFormat(infoformat, item.Name, item.Sex == "1" ? "男" : "女", item.RoleName, item.Phone, item.TelPhone));
-
-            Service.User user = new Service.User
+            if (site == "汽车")
             {
-                Company = result.Data.SaleList[0].CompanyString,
-                PassWord = txtPassword.Text,
-                UserName = txtUserName.Text,
-                Status = 1,
-                LinkInfo = sb.ToString()
-            };
-
-            var loginResult = Tool.service.UserLogin(user);
-
-            if (loginResult.Result)
-            {
-                Tool.userInfo = loginResult.Data;
+                qiche.GotoLoginPage();
+                pbCode.Image = qiche.LoadValidateCode();
             }
             else
             {
-                MessageBox.Show(loginResult.Message);
+                yiche.GotoLoginPage();
+                pbCode.Image = yiche.LoadValidateCode();
             }
-            return loginResult.Result;
-        }
-
-        private bool Login()
-        {
-            var username = HttpHelper.URLEncode(txtUserName.Text, Encoding.UTF8);
-            var password = txtPassword.Text;
-            var code = txtCode.Text;
-
-            var jsmain = "mytest(\"{0}\",\"{1}\",\"{2}\")";
-            var postdata = "__RequestVerificationToken={0}&UserNameDealer={1}&PasswordDealer={2}&RedisKey={3}&checkCodeDealer={4}";
-
-            var passenc = HttpHelper.JavaScriptEval(StrJS, string.Format(jsmain, exponment, modulus, password));
-
-            var item = new HttpItem
-            {
-                URL = postlogin,
-                ContentType = "application/x-www-form-urlencoded; charset=UTF-8",
-                Method = "post",
-                Postdata = string.Format(postdata, token, username, passenc, redisKey, code),
-                Referer = loginurl,
-                UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"
-            };
-            item.Header.Add("X-Requested-With", "XMLHttpRequest");
-            item.Allowautoredirect = false;
-
-            var strhtml = html.Post(item).DocumentNode.OuterHtml;
-
-            if (strhtml.IndexOf("8|1") != -1)
-            {
-                MessageBox.Show("验证码输入有误，请重新输入！");
-                return false;
-            }
-            if (strhtml.IndexOf("3|1") != -1)
-            {
-                MessageBox.Show("该用户帐户信息错误或访问受限");
-                return false;
-            }
-            if (strhtml.IndexOf("2|1") != -1)
-            {
-                MessageBox.Show("用户不存在或者密码错误");
-                return false;
-            }
-            if (strhtml.IndexOf("4|1") != -1)
-            {
-                MessageBox.Show("请求错误，请刷新页面重新提交。");
-                return false;
-            }
-            if (strhtml.IndexOf("5|1") != -1)
-            {
-                MessageBox.Show("验证码过期");
-                return false;
-            }
-            if (strhtml == "0")
-            {
-                return true;
-            }
-
-            MessageBox.Show("登录异常！建议重试！");
-            return false;
         }
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-            this.LoadPw();
+            site = "车";
+
             string path = AppDomain.CurrentDomain.BaseDirectory + "js.lyt";
             if (!File.Exists(path))
             {
                 MessageBox.Show("js.lyt文件缺失，建议重新解压软件解决！");
                 base.Close();
             }
-            StrJS = File.ReadAllText(path);
-            GotoLoginPage();
+            qiche = new QiCheZhiJia(File.ReadAllText(path));
+            yiche = new YiChe();
+            this.LoadPw();
             LoadValidateCode();
 
 #if DEBUG
@@ -174,61 +56,67 @@ namespace Aide
 #endif
         }
 
-        /// <summary>
-        /// 本地保存登录的账号和密码
-        /// </summary>
-        private void SavePw()
-        {
-            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            if (this.chkSavePass.Checked)
-            {
-                configuration.AppSettings.Settings["UserName"].Value = txtUserName.Text;
-                configuration.AppSettings.Settings["PassWord"].Value = txtPassword.Text;
-            }
-            configuration.AppSettings.Settings["chkSavePass"].Value = this.chkSavePass.Checked.ToString();
-            configuration.Save();
-        }
-
-        /// <summary>
-        /// 读取本地的账号和密码
-        /// </summary>
-        private void LoadPw()
-        {
-            if (ConfigurationManager.AppSettings["chkSavePass"] == "True")
-            {
-                this.chkSavePass.Checked = true;
-                this.txtUserName.Text = ConfigurationManager.AppSettings["UserName"];
-                this.txtPassword.Text = ConfigurationManager.AppSettings["PassWord"];
-            }
-        }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            if (Login())
+            var result = qiche.Login(txtUserName.Text, txtPassword.Text, txtCode.Text);
+            if (!result.Result)
             {
-                if (LoadPersonalInfo())
-                {
-                    this.DialogResult = DialogResult.OK;
-                }
-                else
-                {
-                    this.DialogResult = DialogResult.No;
-                }
-
-                this.Close();
+                MessageBox.Show(result.Message);
+                if (!result.Exit)
+                    return;
+                this.DialogResult = DialogResult.No;
             }
+            else
+            {
+                this.DialogResult = DialogResult.OK;
+                if (chkSavePass.Checked)
+                    qiche.SavePw();
+            }
+
+            this.Close();
         }
 
         private void btnRefImg_Click(object sender, EventArgs e)
         {
-            GotoLoginPage();
             LoadValidateCode();
+        }        
+
+        private void LoadPw()
+        {
+            if (site == "汽车")
+            {
+                var str = qiche.LoadPw();
+                if (!string.IsNullOrWhiteSpace(str[0]))
+                {
+                    chkSavePass.Checked = true;
+                    txtUserName.Text = str[0];
+                    txtPassword.Text = str[1];
+                }
+            }
+            else
+            {
+                var str = yiche.LoadPw();
+            }
         }
 
-        public static string GetTimeStamp()
+        private void button2_Click(object sender, EventArgs e)
         {
-            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            return Convert.ToInt64(ts.TotalSeconds).ToString();
+            var result = yiche.Login(txtUserName.Text, txtPassword.Text, txtCode.Text);
+            if (!result.Result)
+            {
+                MessageBox.Show(result.Message);
+                if (!result.Exit)
+                    return;
+                this.DialogResult = DialogResult.No;
+            }
+            else
+            {
+                this.DialogResult = DialogResult.OK;
+                if (chkSavePass.Checked)
+                    qiche.SavePw();
+            }
+
+            this.Close();
         }
     }
 }

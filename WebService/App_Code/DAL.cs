@@ -29,7 +29,7 @@ public class DAL
             .ToList();
     }
 
-    public User GetUser(string userName, string company)
+    public User GetUser(string userName, string company, string sitename)
     {
         var where = new Where<User>();
         if (!string.IsNullOrWhiteSpace(userName))
@@ -40,13 +40,15 @@ public class DAL
         {
             where.And(d => d.Company == company);
         }
+        if (!string.IsNullOrWhiteSpace(sitename))
+        {
+            where.And(d => d.SiteName == sitename);
+        }
 
-        return DB.Context.From<User>()
-            .Where(where)
-            .ToFirst();
+        return GetSingleUser(where);
     }
 
-    public User CheckUser(string userName, string company)
+    public User CheckUser(string userName, string company, string sitename)
     {
         var where = new Where<User>();
         if (!string.IsNullOrWhiteSpace(userName))
@@ -57,7 +59,16 @@ public class DAL
         {
             where.And(d => d.Company == company);
         }
+        if (!string.IsNullOrWhiteSpace(sitename))
+        {
+            where.And(d => d.SiteName == sitename);
+        }
 
+        return GetSingleUser(where);
+    }
+
+    private User GetSingleUser(Where<User> where)
+    {
         return DB.Context.From<User>()
             .Where(where)
             .ToFirst();
@@ -68,9 +79,7 @@ public class DAL
         var where = new Where<User>();
         where.And(d => d.Id == userId);
 
-        return DB.Context.From<User>()
-            .Where(where)
-            .ToFirst();
+        return GetSingleUser(where);
     }
 
     public int AddUser(User user)
@@ -114,15 +123,9 @@ public class DAL
     /// <param name="userName"></param>
     /// <param name="company"></param>
     /// <returns>true 有效 false 过期</returns>
-    public bool CheckDueTime(string userName, string company)
+    public bool CheckDueTime(string userName, string company, string sitename)
     {
-        var where = new Where<User>();
-        where.And(d => d.UserName == userName);
-        where.And(d => d.Company == company);
-
-        var user = DB.Context.From<User>()
-            .Where(where)
-            .ToFirst();
+        var user = GetUser(userName, company, sitename);
 
         return user.DueTime > DateTime.Now;
     }
