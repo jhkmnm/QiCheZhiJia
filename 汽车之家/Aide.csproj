@@ -165,6 +165,9 @@
     <None Include="Web References\Service\Service.disco" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\data.mdb">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="DLL\HttpHelper.dll" />
   </ItemGroup>
   <ItemGroup />

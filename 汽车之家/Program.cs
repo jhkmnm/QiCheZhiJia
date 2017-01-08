@@ -15,14 +15,14 @@ namespace Aide
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new FormLogin());
+            Application.Run(new FormLogin());
 
-            FormLogin f = new FormLogin();
-            if (f.ShowDialog() == DialogResult.OK)
-            {
-                FormMain fm = new FormMain();
-                fm.ShowDialog();
-            }
+            //FormLogin f = new FormLogin();
+            //if (f.ShowDialog() == DialogResult.OK)
+            //{
+            //    FormMain fm = new FormMain();
+            //    fm.ShowDialog();
+            //}
 
             //Tool.service.Url = System.Configuration.ConfigurationManager.AppSettings["dataSrvUrl"];
         }
@@ -32,6 +32,8 @@ namespace Aide
     {
         public static Service.Service service = new Service.Service();
 
-        public static Service.User userInfo = new Service.User();
+        public static Service.User userInfo_qc;
+
+        public static Service.User userInfo_yc;
     }
 }

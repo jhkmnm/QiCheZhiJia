@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using HtmlAgilityPack;
 
 namespace Aide
 {
@@ -65,6 +66,38 @@ namespace Aide
             html.Get(entervalidateCode);
         }
 
+        /// <summary>
+        /// 本地保存登录的账号和密码
+        /// </summary>
+        public void SavePw()
+        {
+            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            configuration.AppSettings.Settings["UserName_QC"].Value = Tool.userInfo_qc.UserName;
+            configuration.AppSettings.Settings["PassWord_QC"].Value = Tool.userInfo_qc.PassWord;
+            configuration.AppSettings.Settings["chkSavePass_QC"].Value = "True";
+            configuration.Save();
+        }
+
+        /// <summary>
+        /// 读取本地的账号和密码
+        /// </summary>
+        public string[] LoadPw()
+        {
+            string[] str = new string[2];
+            if (ConfigurationManager.AppSettings["chkSavePass_QC"] == "True")
+            {
+                str[0] = ConfigurationManager.AppSettings["UserName_QC"];
+                str[1] = ConfigurationManager.AppSettings["PassWord_QC"];
+            }
+            return str;
+        }
+
+        /// <summary>
+        /// 加载联系人信息
+        /// </summary>
+        /// <param name="userName"></param>
+        /// <param name="passWord"></param>
+        /// <returns></returns>
         private ViewResult LoadPersonalInfo(string userName, string passWord)
         {
             ViewResult vresult = new ViewResult();
@@ -88,7 +121,7 @@ namespace Aide
 
             if (loginResult.Result)
             {
-                Tool.userInfo = loginResult.Data;
+                Tool.userInfo_qc = loginResult.Data;
             }
             else
             {
@@ -166,19 +199,7 @@ namespace Aide
             }            
 
             return result;
-        }
-
-        /// <summary>
-        /// 本地保存登录的账号和密码
-        /// </summary>
-        public void SavePw()
-        {
-            Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            configuration.AppSettings.Settings["UserName_QC"].Value = Tool.userInfo.UserName;
-            configuration.AppSettings.Settings["PassWord_QC"].Value = Tool.userInfo.PassWord;
-            configuration.AppSettings.Settings["chkSavePass_QC"].Value = "True";
-            configuration.Save();
-        }
+        }        
 
         private static string GetTimeStamp()
         {
@@ -187,17 +208,11 @@ namespace Aide
         }
 
         /// <summary>
-        /// 读取本地的账号和密码
+        /// 加载公共订单页面，省，市，车型，订单类型选项
         /// </summary>
-        public string[] LoadPw()
+        public HtmlDocument LoadOrder()
         {
-            string[] str = new string[2];
-            if (ConfigurationManager.AppSettings["chkSavePass_QC"] == "True")
-            {
-                str[0] = ConfigurationManager.AppSettings["UserName_QC"];
-                str[1] = ConfigurationManager.AppSettings["PassWord_QC"];
-            }
-            return str;
+            return html.Get(dmsOrder);
         }
     }
 }

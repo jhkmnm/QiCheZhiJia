@@ -1,14 +1,9 @@
 ﻿using Dos.Common;
 using Dos.ORM;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 
 class DB
 {
-    public static readonly DbSession Context = new DbSession("SqlserverCon");
+    public static readonly DbSession Context = new DbSession("AccCon");
 
     static DB()
     {

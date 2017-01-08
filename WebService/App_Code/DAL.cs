@@ -182,6 +182,25 @@ public class DAL
         }
     }
 
+    public int UpdateLoginLogByLogOut(int userId)
+    {
+        var today = DateTime.Today.ToShortDateString();
+
+        var where = new Where<LoginLog>();
+        where.And(d => d.UserId == userId);
+        where.And(d => d.ToDay == today);
+
+        var log = DB.Context.From<LoginLog>()
+            .Where(where).ToFirst();
+
+        if(log != null)
+        {
+            log.LoginTime = ((log.LoginTime.HasValue ? log.LoginTime.Value : 0) + (float)(DateTime.Now - log.LastLoginTime).TotalHours);
+            return DB.Context.Update(log);
+        }
+        return 0;
+    }
+
     //public int UpdateLoginLogByAss(int userId)
     //{
     //    var today = DateTime.Today.ToShortDateString();        
@@ -214,7 +233,7 @@ public class DAL
         var log = DB.Context.From<LoginLog>()
             .Where(where).ToFirst();
 
-        return Convert.ToInt32(duetime.Value) > (log.LoginTime + (float)(DateTime.Now - log.LastLoginTime).TotalHours);
+        return Convert.ToInt32(duetime.Value) > ((log.LoginTime.HasValue ? log.LoginTime.Value : 0) + (float)(DateTime.Now - log.LastLoginTime).TotalHours);
     }
     #endregion
 }

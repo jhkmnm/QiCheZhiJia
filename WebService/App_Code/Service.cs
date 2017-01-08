@@ -61,6 +61,8 @@ public class Service : System.Web.Services.WebService
             }
             else
             {
+                dal.UpdateLoginLogByLogin(result.Id);
+
                 if (result.UserType == 0)
                 {
                     if (!dal.CheckTasteTime(result.Id))

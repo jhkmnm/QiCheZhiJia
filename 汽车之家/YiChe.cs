@@ -103,8 +103,8 @@ namespace Aide
         public void SavePw()
         {
             Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            configuration.AppSettings.Settings["UserName_YC"].Value = Tool.userInfo.UserName;
-            configuration.AppSettings.Settings["PassWord_YC"].Value = Tool.userInfo.PassWord;
+            configuration.AppSettings.Settings["UserName_YC"].Value = Tool.userInfo_qc.UserName;
+            configuration.AppSettings.Settings["PassWord_YC"].Value = Tool.userInfo_qc.PassWord;
             configuration.AppSettings.Settings["chkSavePass_YC"].Value = "True";
             configuration.Save();
         }

@@ -15,6 +15,7 @@ namespace Aide
         QiCheZhiJia qiche;
         YiChe yiche;
         string site;
+        DAL dal = new DAL();
 
         public FormLogin()
         {
@@ -37,7 +38,7 @@ namespace Aide
 
         private void FormLogin_Load(object sender, EventArgs e)
         {
-            site = "车";
+            site = "汽车";
 
             string path = AppDomain.CurrentDomain.BaseDirectory + "js.lyt";
             if (!File.Exists(path))
@@ -46,34 +47,60 @@ namespace Aide
                 base.Close();
             }
             qiche = new QiCheZhiJia(File.ReadAllText(path));
-            yiche = new YiChe();
-            this.LoadPw();
-            LoadValidateCode();
+            yiche = new YiChe();            
+            InitUser();
 
 #if DEBUG
-            txtUserName.Text = "晋江嘉华雷克萨斯";
+            if (site == "汽车")
+            {
+                txtUserName.Text = "晋江嘉华雷克萨斯";
+            }
+            else
+            {
+                txtUserName.Text = "344801178@qq.com";
+            }
             txtPassword.Text = "qzzs8888.";
 #endif
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var result = qiche.Login(txtUserName.Text, txtPassword.Text, txtCode.Text);
+            ViewResult result = new ViewResult();
+            if(site == "汽车")
+                result = qiche.Login(txtUserName.Text, txtPassword.Text, txtCode.Text);
+            else
+                result = yiche.Login(txtUserName.Text, txtPassword.Text, txtCode.Text);
+            
             if (!result.Result)
             {
                 MessageBox.Show(result.Message);
-                if (!result.Exit)
-                    return;
-                this.DialogResult = DialogResult.No;
+                //if (!result.Exit)
+                //    return;
+                //this.DialogResult = DialogResult.No;
             }
             else
             {
-                this.DialogResult = DialogResult.OK;
-                if (chkSavePass.Checked)
-                    qiche.SavePw();
-            }
-
-            this.Close();
+                panel1.Visible = false;
+                if (site == "汽车")
+                {
+                    if (chkSavePass.Checked)
+                    {
+                        qiche.SavePw();
+                    }
+                    LoadUser(Tool.userInfo_qc);
+                    LoadOrder_QC();
+                }
+                else
+                {
+                    if (chkSavePass.Checked)
+                    {
+                        yiche.SavePw();
+                    }                    
+                    LoadUser(Tool.userInfo_yc);
+                }
+                //this.DialogResult = DialogResult.OK;
+                
+            }         
         }
 
         private void btnRefImg_Click(object sender, EventArgs e)
@@ -97,26 +124,102 @@ namespace Aide
             {
                 var str = yiche.LoadPw();
             }
-        }
+        }        
 
-        private void button2_Click(object sender, EventArgs e)
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var result = yiche.Login(txtUserName.Text, txtPassword.Text, txtCode.Text);
-            if (!result.Result)
+            if (tabControl1.SelectedTab == tabPage1)
             {
-                MessageBox.Show(result.Message);
-                if (!result.Exit)
-                    return;
-                this.DialogResult = DialogResult.No;
+                site = "汽车";
             }
             else
             {
-                this.DialogResult = DialogResult.OK;
-                if (chkSavePass.Checked)
-                    qiche.SavePw();
+                site = "易车";
+#if DEBUG
+                txtUserName.Text = "344801178@qq.com";
+#endif
             }
-
-            this.Close();
+            InitUser();
         }
+
+        private void InitUser()
+        {
+            if(site == "汽车")
+            {
+                if(Tool.userInfo_qc == null)
+                {
+                    panel1.Visible = true;
+                    panel1.Location = new System.Drawing.Point(4, 25);
+                    panel1.Height = this.Height - 25;
+                    this.LoadPw();
+                    LoadValidateCode();
+                }
+                else
+                {                    
+                    LoadUser(Tool.userInfo_qc);
+                }
+            }
+            else
+            {
+                if (Tool.userInfo_yc == null)
+                {
+                    panel1.Visible = true;
+                    panel1.Location = new System.Drawing.Point(4, 25);
+                    panel1.Height = this.Height - 25;
+                    this.LoadPw();
+                    LoadValidateCode();
+                }
+                else
+                {
+                    panel1.Visible = false;
+                    LoadUser(Tool.userInfo_yc);
+                }
+            }
+        }
+
+        private void LoadUser(Service.User user)
+        {
+            lblCode.Text = user.Id.ToString();
+            lblEnd.Text = user.DueTime.HasValue ? user.DueTime.ToString() : "";
+            lblUserName.Text = user.UserName;
+            lblUserType.Text = user.UserType == 0 ? "试用" : "付费";
+        }
+
+        private void InitDDL()
+        {
+            ddlProvince.DisplayMember = "ProId";
+            ddlProvince.ValueMember = "Pro";
+            ddlCity.Text = "全部省份";
+
+            ddlCity.DisplayMember = "CityId";
+            ddlCity.ValueMember = "City";
+            ddlCity.Text = "全部城市";
+
+            ddlSeries.DisplayMember = "Text";
+            ddlSeries.ValueMember = "Value";
+            ddlSeries.Text = "全部车系";
+
+            ddlOrderType.DisplayMember = "Text";
+            ddlOrderType.ValueMember = "Value";
+            ddlSeries.Text = "全部类型";
+        }
+
+        private void LoadOrder_QC()
+        {
+            var province = dal.GetProvince();
+            province.Insert(0, new Area { ProId = "-1", Pro = "全部省份" });
+            ddlProvince.DataSource = province;
+            ddlProvince.SelectedIndex = 0;
+
+            var doc = qiche.LoadOrder();
+            var series = doc.DocumentNode.SelectNodes("//*[@id=\"sel_series\"]");
+            var ordertype = doc.DocumentNode.SelectNodes("//*[@id=\"sel_orderType\"]");
+        }
+    }
+
+    public class TextValue
+    {
+        public string Text { get; set; }
+        public string Value { get; set; }
     }
 }
