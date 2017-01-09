@@ -10,6 +10,7 @@ namespace Aide
     {        
         string cookie = "";
         HtmlDocument doc = new HtmlDocument();
+        bool isLogin = true;
 
         public Image GetImage(string url)
         {            
@@ -26,7 +27,7 @@ namespace Aide
         {
             HttpHelper http = new HttpHelper();
             var result = http.GetHtml(item);
-            if(!string.IsNullOrWhiteSpace(result.Cookie))
+            if(!string.IsNullOrWhiteSpace(result.Cookie) && isLogin)
                 cookie += HttpHelper.GetSmallCookie(result.Cookie);
             MemoryStream ms = new MemoryStream(result.ResultByte);
             return Bitmap.FromStream(ms, true);
@@ -49,7 +50,8 @@ namespace Aide
             item.Cookie = cookie;
             HttpHelper http = new HttpHelper();
             HttpResult result = http.GetHtml(item);
-            cookie += HttpHelper.GetSmallCookie(result.Cookie);
+            if(isLogin)
+                cookie += HttpHelper.GetSmallCookie(result.Cookie);
             return result;
         }
 
@@ -58,8 +60,11 @@ namespace Aide
             item.Cookie = cookie;
             HttpHelper http = new HttpHelper();
             HttpResult result = http.GetHtml(item);
-            cookie += HttpHelper.GetSmallCookie(result.Cookie);
-            cookie = HttpHelper.GetSmallCookie(cookie);
+            if (isLogin)
+            {
+                cookie += HttpHelper.GetSmallCookie(result.Cookie);
+                cookie = HttpHelper.GetSmallCookie(cookie);
+            }
             doc.LoadHtml(result.Html);
             return doc;
         }

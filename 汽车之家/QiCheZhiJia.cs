@@ -8,6 +8,8 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using HtmlAgilityPack;
+using CsharpHttpHelper.Enum;
+using System.IO;
 
 namespace Aide
 {
@@ -43,27 +45,72 @@ namespace Aide
         string redisKey = "";
         string exponment = "";
         string modulus = "";
+        string cookie = "";
+        DAL dal = new DAL();
 
         public QiCheZhiJia(string js)
         {
             StrJS = js;
         }
 
+        #region Html
+        private HtmlDocument GetHtml(string url)
+        {
+            var item = new HttpItem()
+            {
+                URL = url,
+                Method = "get",
+                ContentType = "text/html",
+                Cookie = cookie
+            };
+
+            HttpHelper http = new HttpHelper();
+            HttpResult htmlr = http.GetHtml(item);
+            HtmlDocument htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(htmlr.Html);
+            return htmlDoc;
+        }
+        #endregion
+
         public Image LoadValidateCode()
         {
-            return html.GetImage(validateCode);
+            HttpItem item = new HttpItem()
+            {
+                URL = validateCode,
+                Method = "get",
+                ResultType = ResultType.Byte
+            };
+
+            HttpHelper http = new HttpHelper();
+            var result = http.GetHtml(item);
+            cookie += HttpHelper.GetSmallCookie(result.Cookie);
+            MemoryStream ms = new MemoryStream(result.ResultByte);
+            return Bitmap.FromStream(ms, true);
         }
 
         public void GotoLoginPage()
         {
-            var htmlDoc = html.Get(loginurl);
+            var item = new HttpItem()
+            {
+                URL = loginurl,
+                Method = "get",
+                ContentType = "text/html"
+            };
+            HttpHelper http = new HttpHelper();
+            HttpResult result = http.GetHtml(item);
+            cookie = HttpHelper.GetSmallCookie(result.Cookie);
+
+            HtmlDocument htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(result.Html);
 
             token = htmlDoc.DocumentNode.SelectNodes("//input[@name='__RequestVerificationToken']")[0].GetAttributeValue("value", "");
             redisKey = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='rkey']").GetAttributeValue("value", "");
             exponment = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='hidPublicKeyExponent']").GetAttributeValue("value", "");
             modulus = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"hidPublicKeyModulus\"]").GetAttributeValue("value", "");
 
-            html.Get(entervalidateCode);
+            item.URL = entervalidateCode;            
+            result = http.GetHtml(item);
+            cookie += HttpHelper.GetSmallCookie(result.Cookie);            
         }
 
         /// <summary>
@@ -101,12 +148,14 @@ namespace Aide
         private ViewResult LoadPersonalInfo(string userName, string passWord)
         {
             ViewResult vresult = new ViewResult();
-            var htmlDoc = html.Get(employeelist);
+            
+            HtmlDocument htmlDoc = GetHtml(employeelist);
+            
             var result = JsonConvert.DeserializeObject<LinkResult>(htmlDoc.DocumentNode.OuterHtml);
             var infoformat = "姓名:{0};性别:{1};职位:{2};手机:{3};座机:{4}" + Environment.NewLine;
             StringBuilder sb = new StringBuilder(result.Data.SaleList.Count * 25);
 
-            result.Data.SaleList.ForEach(item => sb.AppendFormat(infoformat, item.Name, item.Sex == "1" ? "男" : "女", item.RoleName, item.Phone, item.TelPhone));
+            result.Data.SaleList.ForEach(a => sb.AppendFormat(infoformat, a.Name, a.Sex == "1" ? "男" : "女", a.RoleName, a.Phone, a.TelPhone));
 
             Service.User user = new Service.User
             {
@@ -161,7 +210,8 @@ namespace Aide
                 Method = "post",
                 Postdata = string.Format(postdata, token, username, passenc, redisKey, code),
                 Referer = loginurl,
-                UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"
+                UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
+                Cookie = cookie
             };
             item.Header.Add("X-Requested-With", "XMLHttpRequest");
             item.Allowautoredirect = false;
@@ -169,8 +219,16 @@ namespace Aide
             ViewResult result = new ViewResult();
             result.Result = false;
             result.Exit = false;
+            
+            HttpHelper http = new HttpHelper();
+            HttpResult htmlr = http.GetHtml(item);
+            cookie += HttpHelper.GetSmallCookie(htmlr.Cookie);
+            cookie = HttpHelper.GetSmallCookie(cookie);
 
-            var strhtml = html.Post(item).DocumentNode.OuterHtml;
+            HtmlDocument htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(htmlr.Html);
+
+            var strhtml = htmlDoc.DocumentNode.OuterHtml;
 
             if (strhtml.IndexOf("8|1") != -1)
             {
@@ -212,7 +270,156 @@ namespace Aide
         /// </summary>
         public HtmlDocument LoadOrder()
         {
-            return html.Get(dmsOrder);
+            //var item = new HttpItem()
+            //{
+            //    URL = dmsOrder,
+            //    Method = "get",
+            //    ContentType = "text/html",
+            //    Cookie = cookie
+            //};
+
+            //HttpHelper http = new HttpHelper();
+            //HttpResult htmlr = http.GetHtml(item);
+
+            //HtmlDocument htmlDoc = new HtmlDocument();
+            //htmlDoc.LoadHtml(htmlr.Html);
+
+            //return htmlDoc;
+
+            return GetHtml(dmsOrder);
+        }
+
+        public List<Nicks> GetNicks()
+        {
+            //var item = new HttpItem()
+            //{
+            //    URL = "http://ics.autohome.com.cn/dms/Order/GetDealerSales",
+            //    Method = "get",
+            //    ContentType = "text/html",
+            //    Cookie = cookie
+            //};
+
+            //HttpHelper http = new HttpHelper();
+            //HttpResult htmlr = http.GetHtml(item);
+
+            //HtmlDocument htmlDoc = new HtmlDocument();
+            //htmlDoc.LoadHtml(htmlr.Html);
+
+            HtmlDocument htmlDoc = GetHtml("http://ics.autohome.com.cn/dms/Order/GetDealerSales");
+            
+            //string[] strArray = Regex.Split(MyHttpHelper.MyGetHtml(item).Html, "},{");
+            //foreach (string str2 in strArray)
+            //{
+            //    string str3 = HttpHelper.GetBetweenHtml(str2, "saleID\":", ",");
+            //    string str4 = HttpHelper.GetBetweenHtml(str2, "saleName\":\"", "\"");
+            //    DbHelperOleDb.ExecuteSql("Insert into Nicks (Id,Nick,[Check],Send) values (@Id,@Nick,true,0)", new OleDbParameter[] { new OleDbParameter("@Id", str3), new OleDbParameter("@Nick", str4) });
+            //}
+
+            return new List<Nicks>();
+        }
+
+        private List<PublicOrder> GetNewOrder(string pid, string cid, string sid, string oid)
+        {
+            HtmlDocument htmlDoc = GetHtml(string.Format(publicOrder, GetTimeStamp(), pid, cid, sid, oid));
+
+            var result = JsonConvert.DeserializeObject<ReturnResult>(htmlDoc.DocumentNode.OuterHtml);
+
+            return result.Result.List;
+        }
+
+        /// <summary>
+        /// 执行分配订单
+        /// </summary>
+        /// <param name="pid"></param>
+        /// <param name="cid"></param>
+        /// <param name="sid"></param>
+        /// <param name="oid"></param>
+        /// <param name="nicks"></param>
+        /// <returns></returns>
+        public ViewResult SendOrder(string pid, string cid, string sid, string oid, List<Nicks> nicks)
+        {
+            var orders = GetNewOrder(pid, cid, sid, oid);
+
+            if(orders != null)
+            {
+                ViewResult result = new ViewResult();
+                result.Result = true;
+
+                var sendlogs = dal.GetTodaySendLog();
+
+                var total = orders.Count + sendlogs.Sum(s => s.OrderCount);
+                var count = nicks.Count;
+
+                for (int i = 0; i < nicks.Count; i++)
+                {
+                    var sendcount = GetAvg(total, count);
+                    if (sendcount <= 0)
+                        break;
+
+                    int send = sendcount;
+                    int sendSuccess = 0;
+                    total -= sendcount;
+                    count--;
+
+                    if(sendlogs != null)
+                    {
+                        var sendlog = sendlogs.FirstOrDefault(f => f.NickID == nicks[i].Id);
+                        if(sendlog != null && sendlog.OrderCount < sendcount)
+                        {
+                            send = sendcount - sendlog.OrderCount;
+                        }
+                    }
+
+                    var sendorders = orders.Take(send).ToList();
+                    orders.RemoveRange(0, send);
+
+                    sendorders.ForEach(a => {
+                        if (SendOrder(nicks[i], a))
+                        {
+                            dal.UpdateOrderSend(a.Id, nicks[i].Id);
+                            dal.UpdateSendCount(nicks[i].Id);
+                            sendSuccess++;
+                        }
+                    });
+
+                    result.Message += string.Format("{0}分配给{1}订单{2}条{3}", DateTime.Now.ToString(), nicks[i].Nick, sendSuccess, Environment.NewLine);
+                }
+                return result;
+            }
+
+            return new ViewResult();
+        }
+
+        private bool SendOrder(Nicks nick, PublicOrder order)
+        {
+            string str = HttpHelper.URLEncode(nick.Nick, Encoding.UTF8).ToUpper();
+            string str2 = string.Format("phone={0}&orderID={1}&dealerID=0&saleId={2}&saleName={3}", new object[] { order.CustomerPhone, order.Id, nick.Id, str });
+            HttpItem item = new HttpItem
+            {
+                URL = "http://ics.autohome.com.cn/dms/Order/AssignOrder",
+                Method = "post",
+                Cookie = cookie,
+                Postdata = str2,
+                ContentType = "application/x-www-form-urlencoded; charset=UTF-8",
+                Referer = "http://ics.autohome.com.cn/dms/Order/Index",
+                UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"
+            };
+            item.Header.Add("X-Requested-With", "XMLHttpRequest");
+            item.Allowautoredirect = false;
+
+            HttpHelper http = new HttpHelper();
+            HttpResult htmlr = http.GetHtml(item);
+
+            if (htmlr.Html.IndexOf(":true}") == -1)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        private int GetAvg(int total, int count)
+        {
+            return (int)Math.Ceiling(total / (count * 1.0));
         }
     }
 }

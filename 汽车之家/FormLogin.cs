@@ -7,6 +7,7 @@ using System.Configuration;
 using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Model;
+using System.Collections.Generic;
 
 namespace Aide
 {
@@ -206,15 +207,61 @@ namespace Aide
 
         private void LoadOrder_QC()
         {
-            var province = dal.GetProvince();
-            province.Insert(0, new Area { ProId = "-1", Pro = "全部省份" });
-            ddlProvince.DataSource = province;
-            ddlProvince.SelectedIndex = 0;
+            ddlProvince.DisplayMember = "ProId";
+            ddlProvince.ValueMember = "Pro";
+
+            ddlCity.DisplayMember = "CityId";
+            ddlCity.ValueMember = "City";
+
+            ddlSeries.DisplayMember = "Text";
+            ddlSeries.ValueMember = "Value";
+
+            ddlOrderType.DisplayMember = "Text";
+            ddlOrderType.ValueMember = "Value";
+
+            //var province = dal.GetProvince();
+            //province.Insert(0, new Area { ProId = "-1", Pro = "全部省份" });
+            //ddlProvince.DataSource = province;
+            //ddlProvince.SelectedIndex = 0;
+
+            ddlCity.Items.Add("全部城市");
 
             var doc = qiche.LoadOrder();
             var series = doc.DocumentNode.SelectNodes("//*[@id=\"sel_series\"]");
             var ordertype = doc.DocumentNode.SelectNodes("//*[@id=\"sel_orderType\"]");
+
+            List<TextValue> seriesList = new List<TextValue>();
+            foreach(HtmlNode node in series[0].ChildNodes)
+            {
+                if(node.Name == "option")
+                {
+                    seriesList.Add(new TextValue{
+                        Text = node.NextSibling.OuterHtml.Replace("&nbsp", ""),
+                        Value = node.GetAttributeValue("value", "")
+                    });
+                }
+            }
+
+            List<TextValue> ordertypeList = new List<TextValue>();
+            foreach (HtmlNode node in ordertype[0].ChildNodes)
+            {
+                if (node.Name == "option")
+                {
+                    ordertypeList.Add(new TextValue
+                    {
+                        Text = node.NextSibling.OuterHtml,
+                        Value = node.GetAttributeValue("value", "")
+                    });
+                }
+            }
+
+            ddlSeries.DataSource = seriesList;
+            ddlOrderType.DataSource = ordertypeList;
+
+            var nicks = qiche.GetNicks();
         }
+
+
     }
 
     public class TextValue
