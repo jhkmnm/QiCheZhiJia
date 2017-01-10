@@ -71,7 +71,7 @@ public class DAL
         {
             uptModel.SendTo = nickId;
             uptModel.SendTime = DateTime.Now;
-            return DB.Context.Update<Orders>(uptModel);
+            return DB.Context.Update(uptModel);
         }
         return 0;
     }

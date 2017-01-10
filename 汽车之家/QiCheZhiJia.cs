@@ -37,7 +37,7 @@ namespace Aide
         /// <summary>
         /// 获取公共订单
         /// </summary>
-        string publicOrder = "http://ics.autohome.com.cn/Dms/Order/GetPublicOrders?timeStamp={0}&ik=9DF3FD033BAD49F2AD12824D56DB11A9&appid=dms&provinceid={1}&cityid={2}&factoryID={3}&seriesid={4}&logicType={5}&pageindex=1&pagesize=200&tk=2644691E-91BE-4F2F-97B3-57FD0356D52C";
+        string publicOrder = "http://ics.autohome.com.cn/Dms/Order/GetPublicOrders?ki=9DF3FD033BAD49F2AD12724D56DB11A9&appid=dms&provinceid={0}&cityid={1}&factoryID={2}&seriesid={3}&logicType={4}&pageindex=1&pagesize=200&kt=2644691E-91BE-4F2F-97B3-57FD0316D52C";
 
         string onsalelist = "http://ics.autohome.com.cn/Price/CarPrice/GetOnSaleList?dealerId={0}";
 
@@ -53,6 +53,7 @@ namespace Aide
         public string pid{get;set;}
         public string cid{get;set;}
         public string sid{get;set;}
+        public string fid { get; set; }
         public string oid{get;set;}
         public List<Nicks> nicks { get; set; }
 
@@ -169,6 +170,7 @@ namespace Aide
             {
                 Company = result.Data.SaleList[0].CompanyString.TrimEnd(','),
                 CompanyID = result.Data.SaleList[0].CompanyID.ToString(),
+                SiteName = "汽车之家",
                 PassWord = passWord,
                 UserName = userName,
                 Status = 1,
@@ -308,9 +310,9 @@ namespace Aide
             return result.rows;
         }
 
-        private List<PublicOrder> GetNewOrder(string pid, string cid, string sid, string oid)
+        private List<PublicOrder> GetNewOrder(string pid, string cid, string sid, string fid, string oid)
         {
-            HtmlDocument htmlDoc = GetHtml(string.Format(publicOrder, GetTimeStamp(), pid, cid, sid, oid));
+            HtmlDocument htmlDoc = GetHtml(string.Format(publicOrder, pid, cid, fid, sid, oid));
 
             var result = JsonConvert.DeserializeObject<ReturnResult>(htmlDoc.DocumentNode.OuterHtml);
 
@@ -324,12 +326,14 @@ namespace Aide
         {
             while (true)
             {
-                var orders = GetNewOrder(pid, cid, sid, oid);
+                var orders = GetNewOrder(pid, cid, fid, sid, oid);
 
-                if (orders != null)
+                if (orders.Count > 0)
                 {
                     ViewResult result = new ViewResult();
                     result.Result = true;
+
+                    orders.ForEach(a => dal.AddOrders(new Orders { CustomerName = a.CustomerName, Id = a.Id }));
 
                     var sendlogs = dal.GetTodaySendLog();
 
@@ -342,12 +346,11 @@ namespace Aide
                         if (sendcount <= 0)
                             break;
 
-                        int send = sendcount;
-                        int sendSuccess = 0;
+                        int send = sendcount;                        
                         total -= sendcount;
                         count--;
 
-                        if (sendlogs != null)
+                        if (sendlogs.Count > 0)
                         {
                             var sendlog = sendlogs.FirstOrDefault(f => f.NickID == nicks[i].Id);
                             if (sendlog != null && sendlog.OrderCount < sendcount)
@@ -365,11 +368,9 @@ namespace Aide
                             {
                                 dal.UpdateOrderSend(a.Id, nicks[i].Id);
                                 dal.UpdateSendCount(nicks[i].Id);
-                                sendSuccess++;
+                                result.Message += string.Format("系统事件{0}将客户分配给销售顾问{1}{2}", DateTime.Now.ToString(), nicks[i].Nick, Environment.NewLine);
                             }
                         });
-
-                        result.Message += string.Format("{0}分配给{1}订单{2}条{3}", DateTime.Now.ToString(), nicks[i].Nick, sendSuccess, Environment.NewLine);
                     }
                     SendResult(result);
                     continue;
@@ -399,7 +400,7 @@ namespace Aide
             HttpHelper http = new HttpHelper();
             HttpResult htmlr = http.GetHtml(item);
 
-            if (htmlr.Html.IndexOf(":true}") == -1)
+            if (htmlr.Html.IndexOf(":0}") == -1)
             {
                 return false;
             }
@@ -428,7 +429,7 @@ namespace Aide
         {
             var result = new List<SaleData>();
             
-            HtmlDocument htmlDoc = GetHtml(onsalelist);
+            HtmlDocument htmlDoc = GetHtml(string.Format(onsalelist, Tool.userInfo_qc.CompanyID));
             var saledata = JsonConvert.DeserializeObject<OnSaleData>(htmlDoc.DocumentNode.OuterHtml);
             result.AddRange(saledata.Data);
             if(saledata.RecordCount > 2)
@@ -436,8 +437,10 @@ namespace Aide
                 int index = 2;
                 while(index <= saledata.RecordCount)
                 {
-                    htmlDoc = GetHtml(onsalelist + "&skip=" + index.ToString());
+                    htmlDoc = GetHtml(string.Format(onsalelist, Tool.userInfo_qc.CompanyID) + "&skip=" + index.ToString());
                     saledata = JsonConvert.DeserializeObject<OnSaleData>(htmlDoc.DocumentNode.OuterHtml);
+                    if (saledata.Data == null)
+                        break;
                     index += 2;
                     result.AddRange(saledata.Data);
                 }
@@ -446,6 +449,10 @@ namespace Aide
             return result;
         }
 
+        /// <summary>
+        /// 保存价格
+        /// </summary>
+        /// <returns></returns>
         public ViewResult SavePrice()
         {
             ViewResult result = new ViewResult();
@@ -454,7 +461,10 @@ namespace Aide
             var saledata = GetOnSaleList();
 
             if (saledata.Count == 0)
+            {
+                result.Message = "未找到数据";
                 return result;
+            }
 
             int companyid = Convert.ToInt32(Tool.userInfo_qc.CompanyID);
             int[] dealerIds = { companyid };
@@ -482,6 +492,7 @@ namespace Aide
             HttpHelper http = new HttpHelper();
             HttpResult htmlr = http.GetHtml(item);
             result.Result = true;
+            result.Message = "一共成功保存"+ saledata.Count.ToString() +"条报价";
             return result;
         }
     }

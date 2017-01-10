@@ -15,7 +15,7 @@ namespace Model
         #region Model
         private string _Id;
         private string _Nick;
-        private object _Check;
+        private bool _Check;
         private int? _Send;
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace Model
         /// 
         /// </summary>
         [Field("Check")]
-        public object Check
+        public bool Check
         {
             get { return _Check; }
             set
@@ -155,6 +155,8 @@ namespace Model
 
     public class Rows
     {
+        private bool selected = true;
+        public bool IsSelected { get { return selected; } set { selected = value; } }
         public int saleID{get;set;}
         public string saleName{get;set;}
     }

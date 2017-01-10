@@ -197,6 +197,7 @@ namespace Model
                 _.UserName,
                 _.PassWord,
                 _.Company,
+                _.CompanyID,
                 _.LinkInfo,
                 _.UserType,
                 _.DueTime,

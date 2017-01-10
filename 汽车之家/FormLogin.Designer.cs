@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.pbCode = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
             this.txtCode = new System.Windows.Forms.TextBox();
@@ -37,10 +38,16 @@
             this.btnRefImg = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.ddlOrderType = new System.Windows.Forms.ComboBox();
-            this.ddlSeries = new System.Windows.Forms.ComboBox();
-            this.ddlCity = new System.Windows.Forms.ComboBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ddlProvince = new System.Windows.Forms.ComboBox();
+            this.btnStop = new System.Windows.Forms.Button();
+            this.ddlCity = new System.Windows.Forms.ComboBox();
+            this.btnSendOrder = new System.Windows.Forms.Button();
+            this.ddlSeries = new System.Windows.Forms.ComboBox();
+            this.lbxSendOrder = new System.Windows.Forms.ListBox();
+            this.ddlOrderType = new System.Windows.Forms.ComboBox();
+            this.chkAll = new System.Windows.Forms.CheckBox();
+            this.dgvOrder = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -58,27 +65,41 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.colSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colSaleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSaleID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.dtpQuer = new System.Windows.Forms.DateTimePicker();
+            this.btnSetting_QC = new System.Windows.Forms.Button();
+            this.lbxQuer = new System.Windows.Forms.ListBox();
+            this.lblState = new System.Windows.Forms.Label();
+            this.tm_qc_quer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbCode)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pbCode
             // 
-            this.pbCode.Location = new System.Drawing.Point(180, 63);
+            this.pbCode.Location = new System.Drawing.Point(180, 84);
             this.pbCode.Name = "pbCode";
-            this.pbCode.Size = new System.Drawing.Size(88, 21);
+            this.pbCode.Size = new System.Drawing.Size(88, 25);
             this.pbCode.TabIndex = 0;
             this.pbCode.TabStop = false;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(126, 90);
+            this.button1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.button1.Location = new System.Drawing.Point(102, 119);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(75, 26);
             this.button1.TabIndex = 1;
             this.button1.Text = "登录";
             this.button1.UseVisualStyleBackColor = true;
@@ -86,40 +107,45 @@
             // 
             // txtCode
             // 
-            this.txtCode.Location = new System.Drawing.Point(57, 63);
+            this.txtCode.Font = new System.Drawing.Font("宋体", 12F);
+            this.txtCode.Location = new System.Drawing.Point(74, 84);
             this.txtCode.Name = "txtCode";
-            this.txtCode.Size = new System.Drawing.Size(117, 21);
+            this.txtCode.Size = new System.Drawing.Size(100, 26);
             this.txtCode.TabIndex = 2;
             // 
             // chkSavePass
             // 
             this.chkSavePass.AutoSize = true;
-            this.chkSavePass.Location = new System.Drawing.Point(226, 94);
+            this.chkSavePass.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.chkSavePass.Location = new System.Drawing.Point(195, 122);
             this.chkSavePass.Name = "chkSavePass";
-            this.chkSavePass.Size = new System.Drawing.Size(120, 16);
+            this.chkSavePass.Size = new System.Drawing.Size(155, 20);
             this.chkSavePass.TabIndex = 3;
             this.chkSavePass.Text = "记住用户名、密码";
             this.chkSavePass.UseVisualStyleBackColor = true;
             // 
             // txtUserName
             // 
-            this.txtUserName.Location = new System.Drawing.Point(57, 3);
+            this.txtUserName.Font = new System.Drawing.Font("宋体", 12F);
+            this.txtUserName.Location = new System.Drawing.Point(74, 12);
             this.txtUserName.Name = "txtUserName";
-            this.txtUserName.Size = new System.Drawing.Size(211, 21);
+            this.txtUserName.Size = new System.Drawing.Size(211, 26);
             this.txtUserName.TabIndex = 4;
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(57, 33);
+            this.txtPassword.Font = new System.Drawing.Font("宋体", 12F);
+            this.txtPassword.Location = new System.Drawing.Point(74, 48);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(211, 21);
+            this.txtPassword.Size = new System.Drawing.Size(211, 26);
             this.txtPassword.TabIndex = 5;
             // 
             // btnRefImg
             // 
-            this.btnRefImg.Location = new System.Drawing.Point(274, 63);
+            this.btnRefImg.Font = new System.Drawing.Font("宋体", 12F);
+            this.btnRefImg.Location = new System.Drawing.Point(274, 84);
             this.btnRefImg.Name = "btnRefImg";
-            this.btnRefImg.Size = new System.Drawing.Size(75, 23);
+            this.btnRefImg.Size = new System.Drawing.Size(104, 26);
             this.btnRefImg.TabIndex = 6;
             this.btnRefImg.Text = "刷新验证码";
             this.btnRefImg.UseVisualStyleBackColor = true;
@@ -141,10 +167,8 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.ddlOrderType);
-            this.tabPage1.Controls.Add(this.ddlSeries);
-            this.tabPage1.Controls.Add(this.ddlCity);
-            this.tabPage1.Controls.Add(this.ddlProvince);
+            this.tabPage1.Controls.Add(this.groupBox3);
+            this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Controls.Add(this.statusStrip1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
@@ -155,41 +179,116 @@
             this.tabPage1.Text = "汽车之家";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // ddlOrderType
+            // groupBox2
             // 
-            this.ddlOrderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddlOrderType.FormattingEnabled = true;
-            this.ddlOrderType.Location = new System.Drawing.Point(540, 41);
-            this.ddlOrderType.Name = "ddlOrderType";
-            this.ddlOrderType.Size = new System.Drawing.Size(121, 20);
-            this.ddlOrderType.TabIndex = 14;
-            // 
-            // ddlSeries
-            // 
-            this.ddlSeries.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddlSeries.FormattingEnabled = true;
-            this.ddlSeries.Location = new System.Drawing.Point(389, 41);
-            this.ddlSeries.Name = "ddlSeries";
-            this.ddlSeries.Size = new System.Drawing.Size(121, 20);
-            this.ddlSeries.TabIndex = 13;
-            // 
-            // ddlCity
-            // 
-            this.ddlCity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddlCity.FormattingEnabled = true;
-            this.ddlCity.Location = new System.Drawing.Point(227, 41);
-            this.ddlCity.Name = "ddlCity";
-            this.ddlCity.Size = new System.Drawing.Size(121, 20);
-            this.ddlCity.TabIndex = 12;
+            this.groupBox2.Controls.Add(this.ddlProvince);
+            this.groupBox2.Controls.Add(this.btnStop);
+            this.groupBox2.Controls.Add(this.ddlCity);
+            this.groupBox2.Controls.Add(this.btnSendOrder);
+            this.groupBox2.Controls.Add(this.ddlSeries);
+            this.groupBox2.Controls.Add(this.lbxSendOrder);
+            this.groupBox2.Controls.Add(this.ddlOrderType);
+            this.groupBox2.Controls.Add(this.chkAll);
+            this.groupBox2.Controls.Add(this.dgvOrder);
+            this.groupBox2.Location = new System.Drawing.Point(2, 2);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(433, 249);
+            this.groupBox2.TabIndex = 20;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "抢单";
             // 
             // ddlProvince
             // 
             this.ddlProvince.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddlProvince.FormattingEnabled = true;
-            this.ddlProvince.Location = new System.Drawing.Point(70, 41);
+            this.ddlProvince.Location = new System.Drawing.Point(6, 20);
             this.ddlProvince.Name = "ddlProvince";
-            this.ddlProvince.Size = new System.Drawing.Size(121, 20);
+            this.ddlProvince.Size = new System.Drawing.Size(110, 20);
             this.ddlProvince.TabIndex = 11;
+            // 
+            // btnStop
+            // 
+            this.btnStop.Location = new System.Drawing.Point(186, 164);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(46, 76);
+            this.btnStop.TabIndex = 19;
+            this.btnStop.Text = "停止";
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // ddlCity
+            // 
+            this.ddlCity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlCity.FormattingEnabled = true;
+            this.ddlCity.Location = new System.Drawing.Point(122, 20);
+            this.ddlCity.Name = "ddlCity";
+            this.ddlCity.Size = new System.Drawing.Size(110, 20);
+            this.ddlCity.TabIndex = 12;
+            // 
+            // btnSendOrder
+            // 
+            this.btnSendOrder.Location = new System.Drawing.Point(186, 72);
+            this.btnSendOrder.Name = "btnSendOrder";
+            this.btnSendOrder.Size = new System.Drawing.Size(46, 76);
+            this.btnSendOrder.TabIndex = 18;
+            this.btnSendOrder.Text = "开始";
+            this.btnSendOrder.UseVisualStyleBackColor = true;
+            this.btnSendOrder.Click += new System.EventHandler(this.btnSendOrder_Click);
+            // 
+            // ddlSeries
+            // 
+            this.ddlSeries.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlSeries.FormattingEnabled = true;
+            this.ddlSeries.Location = new System.Drawing.Point(6, 46);
+            this.ddlSeries.Name = "ddlSeries";
+            this.ddlSeries.Size = new System.Drawing.Size(110, 20);
+            this.ddlSeries.TabIndex = 13;
+            // 
+            // lbxSendOrder
+            // 
+            this.lbxSendOrder.FormattingEnabled = true;
+            this.lbxSendOrder.ItemHeight = 12;
+            this.lbxSendOrder.Location = new System.Drawing.Point(238, 20);
+            this.lbxSendOrder.Name = "lbxSendOrder";
+            this.lbxSendOrder.Size = new System.Drawing.Size(186, 220);
+            this.lbxSendOrder.TabIndex = 17;
+            // 
+            // ddlOrderType
+            // 
+            this.ddlOrderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlOrderType.FormattingEnabled = true;
+            this.ddlOrderType.Location = new System.Drawing.Point(122, 46);
+            this.ddlOrderType.Name = "ddlOrderType";
+            this.ddlOrderType.Size = new System.Drawing.Size(110, 20);
+            this.ddlOrderType.TabIndex = 14;
+            // 
+            // chkAll
+            // 
+            this.chkAll.AutoSize = true;
+            this.chkAll.Location = new System.Drawing.Point(41, 76);
+            this.chkAll.Name = "chkAll";
+            this.chkAll.Size = new System.Drawing.Size(15, 14);
+            this.chkAll.TabIndex = 16;
+            this.chkAll.UseVisualStyleBackColor = true;
+            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
+            // 
+            // dgvOrder
+            // 
+            this.dgvOrder.AllowUserToAddRows = false;
+            this.dgvOrder.AllowUserToDeleteRows = false;
+            this.dgvOrder.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dgvOrder.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvOrder.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colSelected,
+            this.colSaleName,
+            this.colSaleID});
+            this.dgvOrder.Location = new System.Drawing.Point(6, 72);
+            this.dgvOrder.Name = "dgvOrder";
+            this.dgvOrder.ReadOnly = true;
+            this.dgvOrder.RowHeadersWidth = 21;
+            this.dgvOrder.RowTemplate.Height = 23;
+            this.dgvOrder.Size = new System.Drawing.Size(174, 168);
+            this.dgvOrder.TabIndex = 15;
             // 
             // label1
             // 
@@ -325,7 +424,7 @@
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Location = new System.Drawing.Point(4, 455);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(910, 118);
+            this.panel1.Size = new System.Drawing.Size(910, 162);
             this.panel1.TabIndex = 7;
             // 
             // panel2
@@ -341,37 +440,135 @@
             this.panel2.Controls.Add(this.btnRefImg);
             this.panel2.Controls.Add(this.txtPassword);
             this.panel2.Controls.Add(this.label2);
-            this.panel2.Location = new System.Drawing.Point(280, 0);
+            this.panel2.Location = new System.Drawing.Point(252, 6);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(355, 119);
+            this.panel2.Size = new System.Drawing.Size(384, 150);
             this.panel2.TabIndex = 7;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(4, 66);
+            this.label4.Font = new System.Drawing.Font("宋体", 12F);
+            this.label4.Location = new System.Drawing.Point(4, 87);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(47, 12);
+            this.label4.Size = new System.Drawing.Size(64, 16);
             this.label4.TabIndex = 6;
             this.label4.Text = "验证码:";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 38);
+            this.label3.Font = new System.Drawing.Font("宋体", 12F);
+            this.label3.Location = new System.Drawing.Point(4, 53);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(47, 12);
+            this.label3.Size = new System.Drawing.Size(64, 16);
             this.label3.TabIndex = 1;
             this.label3.Text = "密  码:";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 6);
+            this.label2.Font = new System.Drawing.Font("宋体", 12F);
+            this.label2.Location = new System.Drawing.Point(4, 16);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 12);
+            this.label2.Size = new System.Drawing.Size(64, 16);
             this.label2.TabIndex = 0;
             this.label2.Text = "用户名:";
+            // 
+            // colSelected
+            // 
+            this.colSelected.DataPropertyName = "IsSelected";
+            this.colSelected.FalseValue = "";
+            this.colSelected.HeaderText = "";
+            this.colSelected.Name = "colSelected";
+            this.colSelected.ReadOnly = true;
+            this.colSelected.TrueValue = "";
+            this.colSelected.Width = 40;
+            // 
+            // colSaleName
+            // 
+            this.colSaleName.DataPropertyName = "saleName";
+            this.colSaleName.HeaderText = "姓名";
+            this.colSaleName.Name = "colSaleName";
+            this.colSaleName.ReadOnly = true;
+            this.colSaleName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSaleName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colSaleID
+            // 
+            this.colSaleID.DataPropertyName = "saleID";
+            this.colSaleID.HeaderText = "SaleID";
+            this.colSaleID.Name = "colSaleID";
+            this.colSaleID.ReadOnly = true;
+            this.colSaleID.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSaleID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colSaleID.Visible = false;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.lblState);
+            this.groupBox3.Controls.Add(this.lbxQuer);
+            this.groupBox3.Controls.Add(this.btnSetting_QC);
+            this.groupBox3.Controls.Add(this.dtpQuer);
+            this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Location = new System.Drawing.Point(2, 257);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(433, 125);
+            this.groupBox3.TabIndex = 21;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "报价";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(9, 66);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(29, 12);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "每天";
+            // 
+            // dtpQuer
+            // 
+            this.dtpQuer.CustomFormat = "HH:mm:ss";
+            this.dtpQuer.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpQuer.Location = new System.Drawing.Point(44, 62);
+            this.dtpQuer.Name = "dtpQuer";
+            this.dtpQuer.ShowUpDown = true;
+            this.dtpQuer.Size = new System.Drawing.Size(87, 21);
+            this.dtpQuer.TabIndex = 2;
+            // 
+            // btnSetting_QC
+            // 
+            this.btnSetting_QC.Location = new System.Drawing.Point(137, 60);
+            this.btnSetting_QC.Name = "btnSetting_QC";
+            this.btnSetting_QC.Size = new System.Drawing.Size(75, 23);
+            this.btnSetting_QC.TabIndex = 7;
+            this.btnSetting_QC.Text = "设置";
+            this.btnSetting_QC.UseVisualStyleBackColor = true;
+            this.btnSetting_QC.Click += new System.EventHandler(this.btnSetting_QC_Click);
+            // 
+            // lbxQuer
+            // 
+            this.lbxQuer.FormattingEnabled = true;
+            this.lbxQuer.ItemHeight = 12;
+            this.lbxQuer.Location = new System.Drawing.Point(238, 10);
+            this.lbxQuer.Name = "lbxQuer";
+            this.lbxQuer.Size = new System.Drawing.Size(186, 112);
+            this.lbxQuer.TabIndex = 20;
+            // 
+            // lblState
+            // 
+            this.lblState.AutoSize = true;
+            this.lblState.Location = new System.Drawing.Point(99, 87);
+            this.lblState.Name = "lblState";
+            this.lblState.Size = new System.Drawing.Size(41, 12);
+            this.lblState.TabIndex = 21;
+            this.lblState.Text = "未设置";
+            // 
+            // tm_qc_quer
+            // 
+            this.tm_qc_quer.Interval = 30000;
+            this.tm_qc_quer.Tick += new System.EventHandler(this.tm_qc_quer_Tick);
             // 
             // FormLogin
             // 
@@ -388,11 +585,16 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -429,6 +631,22 @@
         private System.Windows.Forms.ComboBox ddlSeries;
         private System.Windows.Forms.ComboBox ddlCity;
         private System.Windows.Forms.ComboBox ddlProvince;
+        private System.Windows.Forms.DataGridView dgvOrder;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Button btnSendOrder;
+        private System.Windows.Forms.ListBox lbxSendOrder;
+        private System.Windows.Forms.CheckBox chkAll;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn colSelected;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSaleName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSaleID;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.DateTimePicker dtpQuer;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label lblState;
+        private System.Windows.Forms.ListBox lbxQuer;
+        private System.Windows.Forms.Button btnSetting_QC;
+        private System.Windows.Forms.Timer tm_qc_quer;
     }
 }
 

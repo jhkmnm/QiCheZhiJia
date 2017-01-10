@@ -18,7 +18,7 @@ namespace Aide
         YiChe yiche;
         string site;
         DAL dal = new DAL();
-
+        Thread th_qc;
         public FormLogin()
         {
             InitializeComponent();
@@ -51,7 +51,8 @@ namespace Aide
             qiche = new QiCheZhiJia(File.ReadAllText(path));
             yiche = new YiChe();            
             InitUser();
-
+            th_qc = new Thread(qiche.SendOrder);
+            dtpQuer.Value = new DateTime(2000, 01, 01, 0, 0, 0);
 #if DEBUG
             if (site == "汽车")
             {
@@ -91,13 +92,20 @@ namespace Aide
                     }
                     LoadUser(Tool.userInfo_qc);
                     LoadOrder_QC();
+                    var job_qc = dal.GetJob("汽车之家报价");
+                    if (job_qc != null)
+                    {
+                        var _qc = job_qc.Time.Split(':');
+                        dtpQuer.Value = new DateTime(2000, 01, 01, Convert.ToInt32(_qc[0]), Convert.ToInt32(_qc[1]), Convert.ToInt32(_qc[2]));
+                        lblState.Text = "已设置";
+                    }
                 }
                 else
                 {
                     if (chkSavePass.Checked)
                     {
                         yiche.SavePw();
-                    }                    
+                    }
                     LoadUser(Tool.userInfo_yc);
                 }
                 //this.DialogResult = DialogResult.OK;
@@ -187,32 +195,13 @@ namespace Aide
             lblUserType.Text = user.UserType == 0 ? "试用" : "付费";
         }
 
-        private void InitDDL()
-        {
-            ddlProvince.DisplayMember = "ProId";
-            ddlProvince.ValueMember = "Pro";
-            ddlCity.Text = "全部省份";
-
-            ddlCity.DisplayMember = "CityId";
-            ddlCity.ValueMember = "City";
-            ddlCity.Text = "全部城市";
-
-            ddlSeries.DisplayMember = "Text";
-            ddlSeries.ValueMember = "Value";
-            ddlSeries.Text = "全部车系";
-
-            ddlOrderType.DisplayMember = "Text";
-            ddlOrderType.ValueMember = "Value";
-            ddlSeries.Text = "全部类型";
-        }
-
         private void LoadOrder_QC()
         {
-            ddlProvince.DisplayMember = "ProId";
-            ddlProvince.ValueMember = "Pro";
+            ddlProvince.DisplayMember = "Pro";
+            ddlProvince.ValueMember = "ProId";
 
-            ddlCity.DisplayMember = "CityId";
-            ddlCity.ValueMember = "City";
+            ddlCity.DisplayMember = "City";
+            ddlCity.ValueMember = "CityId";
 
             ddlSeries.DisplayMember = "Text";
             ddlSeries.ValueMember = "Value";
@@ -220,12 +209,14 @@ namespace Aide
             ddlOrderType.DisplayMember = "Text";
             ddlOrderType.ValueMember = "Value";
 
-            //var province = dal.GetProvince();
-            //province.Insert(0, new Area { ProId = "-1", Pro = "全部省份" });
-            //ddlProvince.DataSource = province;
-            //ddlProvince.SelectedIndex = 0;
+            var province = dal.GetProvince();
+            province.Insert(0, new Area { ProId = "0", Pro = "全部省份" });
+            ddlProvince.DataSource = province;
+            ddlProvince.SelectedIndex = 0;
+            ddlProvince.SelectedIndexChanged += ddlProvince_SelectedIndexChanged;
 
-            ddlCity.Items.Add("全部城市");
+            ddlCity.DataSource = new List<Area>() { new Area { CityId = "0", City = "全部城市" } };
+            ddlCity.SelectedIndex = 0;
 
             var doc = qiche.LoadOrder();
             var series = doc.DocumentNode.SelectNodes("//*[@id=\"sel_series\"]");
@@ -236,9 +227,9 @@ namespace Aide
             {
                 if(node.Name == "option")
                 {
-                    seriesList.Add(new TextValue{
-                        Text = node.NextSibling.OuterHtml.Replace("&nbsp", ""),
-                        Value = node.GetAttributeValue("value", "")
+                    seriesList.Add(new TextValue {
+                        Text = node.NextSibling.OuterHtml.Replace("&nbsp;", ""),
+                        Value = node.GetAttributeValue("value", "") + ":" + node.GetAttributeValue("factoryid", "")
                     });
                 }
             }
@@ -260,26 +251,81 @@ namespace Aide
             ddlOrderType.DataSource = ordertypeList;
 
             var nicks = qiche.GetNicks();
+            dgvOrder.DataSource = nicks;
         }
 
         private void SendOrder_QC()
         {
             qiche.pid = ddlProvince.SelectedValue.ToString();
             qiche.cid = ddlCity.SelectedValue.ToString();
-            qiche.sid = ddlSeries.SelectedValue.ToString();
+            string[] series = ddlSeries.SelectedValue.ToString().Split(':');
+            qiche.sid = series[0];
+            qiche.fid = series[1];
             qiche.oid = ddlOrderType.SelectedValue.ToString();
+            qiche.nicks = new List<Nicks>();
+            foreach (DataGridViewRow row in dgvOrder.Rows)
+            {
+                if(row.Cells[colSelected.Name].Value.ToString() == "True")
+                {
+                    qiche.nicks.Add(new Nicks { Nick = row.Cells[colSaleName.Name].Value.ToString(), Id = row.Cells[colSaleID.Name].Value.ToString() });
+                }
+            }
 
-            qiche.SendOrderEvent += qiche_SendOrderEvent;
-
-            Thread th = new Thread(qiche.SendOrder);
-            th.Start();
+            qiche.SendOrderEvent += qiche_SendOrderEvent;            
+            th_qc.Start();
         }
 
         void qiche_SendOrderEvent(ViewResult vr)
         {
             this.Invoke(new Action(() => {
-                Console.WriteLine(vr.Message);
+                lbxSendOrder.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") +":"+ vr.Message);                
             }));
+        }
+
+        private void btnSendOrder_Click(object sender, EventArgs e)
+        {
+            btnSendOrder.Enabled = false;
+            SendOrder_QC();
+        }
+
+        private void chkAll_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach(DataGridViewRow row in dgvOrder.Rows)
+            {
+                row.Cells[colSelected.Name].Value = chkAll.Checked;
+            }
+        }
+
+        private void ddlProvince_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var proid = ddlProvince.SelectedValue.ToString();
+            var city = dal.GetCity(proid);
+            city.Insert(0, new Area { CityId = "0", City = "全部城市" });
+            ddlCity.DataSource = city;
+        }
+
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            th_qc.Abort();
+            btnSendOrder.Enabled = true;
+        }
+
+        private void btnSetting_QC_Click(object sender, EventArgs e)
+        {
+            dal.AddJob(new Job { JobName = "汽车之家报价", Time = dtpQuer.Value.ToString("HH:mm:ss") });
+            lblState.Text = "已设置";
+            tm_qc_quer.Enabled = true;
+        }
+
+        private void tm_qc_quer_Tick(object sender, EventArgs e)
+        {
+            tm_qc_quer.Enabled = false;
+            if (DateTime.Now.Hour == dtpQuer.Value.Hour && DateTime.Now.Minute == dtpQuer.Value.Minute)
+            {
+                var result = qiche.SavePrice();
+                lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
+            }
+            tm_qc_quer.Enabled = true;
         }
     }
 

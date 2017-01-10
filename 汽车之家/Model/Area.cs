@@ -15,7 +15,7 @@ namespace Model
             private string _Pro;
             private string _City;
             private string _CityId;
-            private object _IsChecked;
+            private bool _IsChecked;
 
             /// <summary>
             /// 
@@ -73,7 +73,7 @@ namespace Model
             /// 
             /// </summary>
             [Field("IsChecked")]
-            public object IsChecked
+            public bool IsChecked
             {
                 get { return _IsChecked; }
                 set

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Model;
+using Dos.Common;
 
 public class DAL
 {
@@ -84,7 +85,15 @@ public class DAL
 
     public int AddUser(User user)
     {
-        return DB.Context.Insert(user);
+        try
+        {
+            return DB.Context.Insert(user);
+        }
+        catch(Exception ex)
+        {
+            LogHelper.Debug(ex.StackTrace + ex.Message, "日志");
+            return 0;
+        }
     }
 
     /// <summary>
