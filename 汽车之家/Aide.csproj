@@ -86,7 +86,10 @@
     <Compile Include="Html.cs" />
     <Compile Include="Model\Area.cs" />
     <Compile Include="Model\Employee.cs" />
+    <Compile Include="Model\Job.cs" />
+    <Compile Include="Model\JobLog.cs" />
     <Compile Include="Model\Nicks.cs" />
+    <Compile Include="Model\OnSaleData.cs" />
     <Compile Include="Model\Orders.cs" />
     <Compile Include="Model\PublicOrder.cs" />
     <Compile Include="Model\Result.cs" />

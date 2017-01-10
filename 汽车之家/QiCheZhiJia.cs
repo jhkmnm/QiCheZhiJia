@@ -39,6 +39,8 @@ namespace Aide
         /// </summary>
         string publicOrder = "http://ics.autohome.com.cn/Dms/Order/GetPublicOrders?timeStamp={0}&ik=9DF3FD033BAD49F2AD12824D56DB11A9&appid=dms&provinceid={1}&cityid={2}&factoryID={3}&seriesid={4}&logicType={5}&pageindex=1&pagesize=200&tk=2644691E-91BE-4F2F-97B3-57FD0356D52C";
 
+        string onsalelist = "http://ics.autohome.com.cn/Price/CarPrice/GetOnSaleList?dealerId={0}";
+
         Html html = new Html();
         private static string StrJS = "";
         string token = "";
@@ -47,6 +49,12 @@ namespace Aide
         string modulus = "";
         string cookie = "";
         DAL dal = new DAL();
+
+        public string pid{get;set;}
+        public string cid{get;set;}
+        public string sid{get;set;}
+        public string oid{get;set;}
+        public List<Nicks> nicks { get; set; }
 
         public QiCheZhiJia(string js)
         {
@@ -159,7 +167,8 @@ namespace Aide
 
             Service.User user = new Service.User
             {
-                Company = result.Data.SaleList[0].CompanyString,
+                Company = result.Data.SaleList[0].CompanyString.TrimEnd(','),
+                CompanyID = result.Data.SaleList[0].CompanyID.ToString(),
                 PassWord = passWord,
                 UserName = userName,
                 Status = 1,
@@ -257,8 +266,9 @@ namespace Aide
             }            
 
             return result;
-        }        
+        }
 
+        #region 抢单
         private static string GetTimeStamp()
         {
             TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
@@ -289,33 +299,13 @@ namespace Aide
             return GetHtml(dmsOrder);
         }
 
-        public List<Nicks> GetNicks()
+        public List<Rows> GetNicks()
         {
-            //var item = new HttpItem()
-            //{
-            //    URL = "http://ics.autohome.com.cn/dms/Order/GetDealerSales",
-            //    Method = "get",
-            //    ContentType = "text/html",
-            //    Cookie = cookie
-            //};
-
-            //HttpHelper http = new HttpHelper();
-            //HttpResult htmlr = http.GetHtml(item);
-
-            //HtmlDocument htmlDoc = new HtmlDocument();
-            //htmlDoc.LoadHtml(htmlr.Html);
-
             HtmlDocument htmlDoc = GetHtml("http://ics.autohome.com.cn/dms/Order/GetDealerSales");
-            
-            //string[] strArray = Regex.Split(MyHttpHelper.MyGetHtml(item).Html, "},{");
-            //foreach (string str2 in strArray)
-            //{
-            //    string str3 = HttpHelper.GetBetweenHtml(str2, "saleID\":", ",");
-            //    string str4 = HttpHelper.GetBetweenHtml(str2, "saleName\":\"", "\"");
-            //    DbHelperOleDb.ExecuteSql("Insert into Nicks (Id,Nick,[Check],Send) values (@Id,@Nick,true,0)", new OleDbParameter[] { new OleDbParameter("@Id", str3), new OleDbParameter("@Nick", str4) });
-            //}
 
-            return new List<Nicks>();
+            var result = JsonConvert.DeserializeObject<NicksResult>(htmlDoc.DocumentNode.OuterHtml);
+
+            return result.rows;
         }
 
         private List<PublicOrder> GetNewOrder(string pid, string cid, string sid, string oid)
@@ -330,64 +320,63 @@ namespace Aide
         /// <summary>
         /// 执行分配订单
         /// </summary>
-        /// <param name="pid"></param>
-        /// <param name="cid"></param>
-        /// <param name="sid"></param>
-        /// <param name="oid"></param>
-        /// <param name="nicks"></param>
-        /// <returns></returns>
-        public ViewResult SendOrder(string pid, string cid, string sid, string oid, List<Nicks> nicks)
+        public void SendOrder()
         {
-            var orders = GetNewOrder(pid, cid, sid, oid);
-
-            if(orders != null)
+            while (true)
             {
-                ViewResult result = new ViewResult();
-                result.Result = true;
+                var orders = GetNewOrder(pid, cid, sid, oid);
 
-                var sendlogs = dal.GetTodaySendLog();
-
-                var total = orders.Count + sendlogs.Sum(s => s.OrderCount);
-                var count = nicks.Count;
-
-                for (int i = 0; i < nicks.Count; i++)
+                if (orders != null)
                 {
-                    var sendcount = GetAvg(total, count);
-                    if (sendcount <= 0)
-                        break;
+                    ViewResult result = new ViewResult();
+                    result.Result = true;
 
-                    int send = sendcount;
-                    int sendSuccess = 0;
-                    total -= sendcount;
-                    count--;
+                    var sendlogs = dal.GetTodaySendLog();
 
-                    if(sendlogs != null)
+                    var total = orders.Count + sendlogs.Sum(s => s.OrderCount);
+                    var count = nicks.Count;
+
+                    for (int i = 0; i < nicks.Count; i++)
                     {
-                        var sendlog = sendlogs.FirstOrDefault(f => f.NickID == nicks[i].Id);
-                        if(sendlog != null && sendlog.OrderCount < sendcount)
+                        var sendcount = GetAvg(total, count);
+                        if (sendcount <= 0)
+                            break;
+
+                        int send = sendcount;
+                        int sendSuccess = 0;
+                        total -= sendcount;
+                        count--;
+
+                        if (sendlogs != null)
                         {
-                            send = sendcount - sendlog.OrderCount;
+                            var sendlog = sendlogs.FirstOrDefault(f => f.NickID == nicks[i].Id);
+                            if (sendlog != null && sendlog.OrderCount < sendcount)
+                            {
+                                send = sendcount - sendlog.OrderCount;
+                            }
                         }
+
+                        var sendorders = orders.Take(send).ToList();
+                        orders.RemoveRange(0, send);
+
+                        sendorders.ForEach(a =>
+                        {
+                            if (SendOrder(nicks[i], a))
+                            {
+                                dal.UpdateOrderSend(a.Id, nicks[i].Id);
+                                dal.UpdateSendCount(nicks[i].Id);
+                                sendSuccess++;
+                            }
+                        });
+
+                        result.Message += string.Format("{0}分配给{1}订单{2}条{3}", DateTime.Now.ToString(), nicks[i].Nick, sendSuccess, Environment.NewLine);
                     }
-
-                    var sendorders = orders.Take(send).ToList();
-                    orders.RemoveRange(0, send);
-
-                    sendorders.ForEach(a => {
-                        if (SendOrder(nicks[i], a))
-                        {
-                            dal.UpdateOrderSend(a.Id, nicks[i].Id);
-                            dal.UpdateSendCount(nicks[i].Id);
-                            sendSuccess++;
-                        }
-                    });
-
-                    result.Message += string.Format("{0}分配给{1}订单{2}条{3}", DateTime.Now.ToString(), nicks[i].Nick, sendSuccess, Environment.NewLine);
+                    SendResult(result);
+                    continue;
                 }
-                return result;
-            }
 
-            return new ViewResult();
+                SendResult(new ViewResult());
+            }
         }
 
         private bool SendOrder(Nicks nick, PublicOrder order)
@@ -420,6 +409,80 @@ namespace Aide
         private int GetAvg(int total, int count)
         {
             return (int)Math.Ceiling(total / (count * 1.0));
+        }
+
+        public delegate void delsendorder(ViewResult vr);
+        public event delsendorder SendOrderEvent;
+
+        public void SendResult(ViewResult vr)
+        {
+            if (SendOrderEvent != null)
+            {
+                SendOrderEvent(vr);
+            }
+        }
+
+        #endregion
+
+        private List<SaleData> GetOnSaleList()
+        {
+            var result = new List<SaleData>();
+            
+            HtmlDocument htmlDoc = GetHtml(onsalelist);
+            var saledata = JsonConvert.DeserializeObject<OnSaleData>(htmlDoc.DocumentNode.OuterHtml);
+            result.AddRange(saledata.Data);
+            if(saledata.RecordCount > 2)
+            {
+                int index = 2;
+                while(index <= saledata.RecordCount)
+                {
+                    htmlDoc = GetHtml(onsalelist + "&skip=" + index.ToString());
+                    saledata = JsonConvert.DeserializeObject<OnSaleData>(htmlDoc.DocumentNode.OuterHtml);
+                    index += 2;
+                    result.AddRange(saledata.Data);
+                }
+            }
+
+            return result;
+        }
+
+        public ViewResult SavePrice()
+        {
+            ViewResult result = new ViewResult();
+            result.Result = false;
+
+            var saledata = GetOnSaleList();
+
+            if (saledata.Count == 0)
+                return result;
+
+            int companyid = Convert.ToInt32(Tool.userInfo_qc.CompanyID);
+            int[] dealerIds = { companyid };
+
+            int[] specIds = saledata.Select(a => a.SpecId).ToArray();
+            int[] prices = saledata.Select(a => a.Price).ToArray();
+            int[] minPrices = saledata.Select(a => a.MinPrice).ToArray();
+
+            var posturl = "http://ics.autohome.com.cn/Price/CarPrice/SavePrice?r=0.4723048365226039";
+            var postData = "dealerIds: "+ dealerIds +", specIds: "+ specIds +", prices: "+ prices +", minPrices: "+ minPrices +" }";
+
+            var item = new HttpItem
+            {
+                URL = posturl,
+                ContentType = "application/x-www-form-urlencoded; charset=UTF-8",
+                Method = "post",
+                Postdata = postData,
+                Referer = "http://ics.autohome.com.cn/Price/CarPrice/OnSale",
+                UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
+                Cookie = cookie
+            };
+            item.Header.Add("X-Requested-With", "XMLHttpRequest");
+            item.Allowautoredirect = false;
+
+            HttpHelper http = new HttpHelper();
+            HttpResult htmlr = http.GetHtml(item);
+            result.Result = true;
+            return result;
         }
     }
 }

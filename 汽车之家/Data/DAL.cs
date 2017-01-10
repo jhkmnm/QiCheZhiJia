@@ -101,4 +101,41 @@ public class DAL
             .ToList();
     }
     #endregion
+
+    #region Job
+    public int AddJob(Job job)
+    {
+        var uptModel = DB.Context.From<Job>().Where(a => a.JobName == job.JobName).ToFirst();
+        if(uptModel == null)
+        {
+            return DB.Context.Insert(job);
+        }
+        else
+        {
+            uptModel.Time = job.Time;
+            return DB.Context.Update(uptModel);
+        }
+    }
+
+    public Job GetJob(string jobName)
+    {
+        return DB.Context.From<Job>().Where(a => a.JobName == jobName).ToFirst();
+    }
+    #endregion
+
+    #region JobLog
+    public int AddJobLog(JobLog log)
+    {
+        return DB.Context.Insert(log);
+    }
+
+    public JobLog GetJobLog(string jobName)
+    {
+        return DB.Context.From<JobLog>()
+            .Select(JobLog._.All, Job._.JobName)
+            .InnerJoin<Job>((a, b) => a.JobID == b.ID)
+            .Where<Job>((a, b) => b.JobName == jobName && a.Time.PadLeft(10) == DateTime.Today.ToString("yyyy-MM-dd"))
+            .ToFirst();
+    }
+    #endregion
 }

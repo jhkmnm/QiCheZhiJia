@@ -8,6 +8,7 @@ using HtmlAgilityPack;
 using Newtonsoft.Json;
 using Model;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Aide
 {
@@ -261,7 +262,25 @@ namespace Aide
             var nicks = qiche.GetNicks();
         }
 
+        private void SendOrder_QC()
+        {
+            qiche.pid = ddlProvince.SelectedValue.ToString();
+            qiche.cid = ddlCity.SelectedValue.ToString();
+            qiche.sid = ddlSeries.SelectedValue.ToString();
+            qiche.oid = ddlOrderType.SelectedValue.ToString();
 
+            qiche.SendOrderEvent += qiche_SendOrderEvent;
+
+            Thread th = new Thread(qiche.SendOrder);
+            th.Start();
+        }
+
+        void qiche_SendOrderEvent(ViewResult vr)
+        {
+            this.Invoke(new Action(() => {
+                Console.WriteLine(vr.Message);
+            }));
+        }
     }
 
     public class TextValue

@@ -32,6 +32,8 @@ namespace Model
 
         public string RoleName { get; set; }
 
+        public int CompanyID { get; set; }
+
         public string CompanyString { get; set; }
     }
 }

@@ -17,6 +17,7 @@ namespace Model
         private string _UserName;
         private string _PassWord;
         private string _Company;
+        private string _CompanyID;
         private string _LinkInfo;
         private int _UserType;
         private DateTime? _DueTime;
@@ -86,6 +87,19 @@ namespace Model
             {
                 this.OnPropertyValueChange("Company");
                 this._Company = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Field("CompanyID")]
+        public string CompanyID
+        {
+            get { return _CompanyID; }
+            set
+            {
+                this.OnPropertyValueChange("CompanyID");
+                this._CompanyID = value;
             }
         }
         /// <summary>
@@ -201,6 +215,7 @@ namespace Model
                 this._UserName,
                 this._PassWord,
                 this._Company,
+                this._CompanyID,
                 this._LinkInfo,
                 this._UserType,
                 this._DueTime,
@@ -248,6 +263,10 @@ namespace Model
             /// 
             /// </summary>
             public readonly static Field Company = new Field("Company", "User", "");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field CompanyID = new Field("CompanyID", "User", "");
             /// <summary>
             /// 
             /// </summary>

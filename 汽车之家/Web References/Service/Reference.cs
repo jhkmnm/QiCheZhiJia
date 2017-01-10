@@ -439,11 +439,15 @@ namespace Aide.Service {
         
         private int idField;
         
+        private string siteNameField;
+        
         private string userNameField;
         
         private string passWordField;
         
         private string companyField;
+        
+        private string companyIDField;
         
         private string linkInfoField;
         
@@ -462,6 +466,16 @@ namespace Aide.Service {
             }
             set {
                 this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string SiteName {
+            get {
+                return this.siteNameField;
+            }
+            set {
+                this.siteNameField = value;
             }
         }
         
@@ -492,6 +506,16 @@ namespace Aide.Service {
             }
             set {
                 this.companyField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string CompanyID {
+            get {
+                return this.companyIDField;
+            }
+            set {
+                this.companyIDField = value;
             }
         }
         
