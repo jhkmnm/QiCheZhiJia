@@ -49,9 +49,8 @@ namespace Aide
                 base.Close();
             }
             qiche = new QiCheZhiJia(File.ReadAllText(path));
-            yiche = new YiChe();            
-            InitUser();
-            th_qc = new Thread(qiche.SendOrder);
+            yiche = new YiChe(File.ReadAllText(path));
+            InitUser();            
             dtpQuer.Value = new DateTime(2000, 01, 01, 0, 0, 0);
 #if DEBUG
             if (site == "汽车")
@@ -98,6 +97,7 @@ namespace Aide
                         var _qc = job_qc.Time.Split(':');
                         dtpQuer.Value = new DateTime(2000, 01, 01, Convert.ToInt32(_qc[0]), Convert.ToInt32(_qc[1]), Convert.ToInt32(_qc[2]));
                         lblState.Text = "已设置";
+                        btnSendOrder.Enabled = true;
                     }
                 }
                 else
@@ -107,9 +107,7 @@ namespace Aide
                         yiche.SavePw();
                     }
                     LoadUser(Tool.userInfo_yc);
-                }
-                //this.DialogResult = DialogResult.OK;
-                
+                }                
             }         
         }
 
@@ -165,7 +163,8 @@ namespace Aide
                     LoadValidateCode();
                 }
                 else
-                {                    
+                {
+                    panel1.Visible = false;
                     LoadUser(Tool.userInfo_qc);
                 }
             }
@@ -271,14 +270,16 @@ namespace Aide
                 }
             }
 
-            qiche.SendOrderEvent += qiche_SendOrderEvent;            
+            qiche.SendOrderEvent += qiche_SendOrderEvent;
+            th_qc = new Thread(qiche.SendOrder);
             th_qc.Start();
         }
 
         void qiche_SendOrderEvent(ViewResult vr)
         {
             this.Invoke(new Action(() => {
-                lbxSendOrder.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") +":"+ vr.Message);                
+                if(vr.Result)
+                    lbxSendOrder.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") +":"+ vr.Message);
             }));
         }
 
@@ -326,6 +327,25 @@ namespace Aide
                 lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
             }
             tm_qc_quer.Enabled = true;
+        }
+
+        private void LoadOrder_YC()
+        {
+            ddlPro_YC.DisplayMember = "Pro";
+            ddlPro_YC.ValueMember = "ProId";
+
+            ddlCity_YC.DisplayMember = "City";
+            ddlCity_YC.ValueMember = "CityId";
+
+            ddlType_YC.ValueMember = "Value";
+            ddlType_YC.DisplayMember = "Text";
+
+            var htmlDoc = yiche.LoadOrder();
+        }
+
+        private void btnStart_YC_Click(object sender, EventArgs e)
+        {
+            LoadOrder_YC();
         }
     }
 

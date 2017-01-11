@@ -38,6 +38,12 @@
             this.btnRefImg = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lblState = new System.Windows.Forms.Label();
+            this.lbxQuer = new System.Windows.Forms.ListBox();
+            this.btnSetting_QC = new System.Windows.Forms.Button();
+            this.dtpQuer = new System.Windows.Forms.DateTimePicker();
+            this.label9 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.ddlProvince = new System.Windows.Forms.ComboBox();
             this.btnStop = new System.Windows.Forms.Button();
@@ -48,9 +54,24 @@
             this.ddlOrderType = new System.Windows.Forms.ComboBox();
             this.chkAll = new System.Windows.Forms.CheckBox();
             this.dgvOrder = new System.Windows.Forms.DataGridView();
+            this.colSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colSaleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSaleID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.ddlPro_YC = new System.Windows.Forms.ComboBox();
+            this.button2 = new System.Windows.Forms.Button();
+            this.ddlCity_YC = new System.Windows.Forms.ComboBox();
+            this.btnStart_YC = new System.Windows.Forms.Button();
+            this.ddlType_YC = new System.Windows.Forms.ComboBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridViewCheckBoxColumn1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblEnd = new System.Windows.Forms.Label();
             this.lblUserName = new System.Windows.Forms.Label();
@@ -65,25 +86,19 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.colSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colSaleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSaleID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.dtpQuer = new System.Windows.Forms.DateTimePicker();
-            this.btnSetting_QC = new System.Windows.Forms.Button();
-            this.lbxQuer = new System.Windows.Forms.ListBox();
-            this.lblState = new System.Windows.Forms.Label();
             this.tm_qc_quer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbCode)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).BeginInit();
+            this.tabPage2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // pbCode
@@ -178,6 +193,67 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "汽车之家";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.lblState);
+            this.groupBox3.Controls.Add(this.lbxQuer);
+            this.groupBox3.Controls.Add(this.btnSetting_QC);
+            this.groupBox3.Controls.Add(this.dtpQuer);
+            this.groupBox3.Controls.Add(this.label9);
+            this.groupBox3.Location = new System.Drawing.Point(2, 257);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(433, 125);
+            this.groupBox3.TabIndex = 21;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "报价";
+            // 
+            // lblState
+            // 
+            this.lblState.AutoSize = true;
+            this.lblState.Location = new System.Drawing.Point(99, 87);
+            this.lblState.Name = "lblState";
+            this.lblState.Size = new System.Drawing.Size(41, 12);
+            this.lblState.TabIndex = 21;
+            this.lblState.Text = "未设置";
+            // 
+            // lbxQuer
+            // 
+            this.lbxQuer.FormattingEnabled = true;
+            this.lbxQuer.ItemHeight = 12;
+            this.lbxQuer.Location = new System.Drawing.Point(238, 10);
+            this.lbxQuer.Name = "lbxQuer";
+            this.lbxQuer.Size = new System.Drawing.Size(186, 112);
+            this.lbxQuer.TabIndex = 20;
+            // 
+            // btnSetting_QC
+            // 
+            this.btnSetting_QC.Location = new System.Drawing.Point(137, 60);
+            this.btnSetting_QC.Name = "btnSetting_QC";
+            this.btnSetting_QC.Size = new System.Drawing.Size(75, 23);
+            this.btnSetting_QC.TabIndex = 7;
+            this.btnSetting_QC.Text = "设置";
+            this.btnSetting_QC.UseVisualStyleBackColor = true;
+            this.btnSetting_QC.Click += new System.EventHandler(this.btnSetting_QC_Click);
+            // 
+            // dtpQuer
+            // 
+            this.dtpQuer.CustomFormat = "HH:mm:ss";
+            this.dtpQuer.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpQuer.Location = new System.Drawing.Point(44, 62);
+            this.dtpQuer.Name = "dtpQuer";
+            this.dtpQuer.ShowUpDown = true;
+            this.dtpQuer.Size = new System.Drawing.Size(87, 21);
+            this.dtpQuer.TabIndex = 2;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(9, 66);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(29, 12);
+            this.label9.TabIndex = 0;
+            this.label9.Text = "每天";
             // 
             // groupBox2
             // 
@@ -290,6 +366,35 @@
             this.dgvOrder.Size = new System.Drawing.Size(174, 168);
             this.dgvOrder.TabIndex = 15;
             // 
+            // colSelected
+            // 
+            this.colSelected.DataPropertyName = "IsSelected";
+            this.colSelected.FalseValue = "";
+            this.colSelected.HeaderText = "";
+            this.colSelected.Name = "colSelected";
+            this.colSelected.ReadOnly = true;
+            this.colSelected.TrueValue = "";
+            this.colSelected.Width = 40;
+            // 
+            // colSaleName
+            // 
+            this.colSaleName.DataPropertyName = "saleName";
+            this.colSaleName.HeaderText = "姓名";
+            this.colSaleName.Name = "colSaleName";
+            this.colSaleName.ReadOnly = true;
+            this.colSaleName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSaleName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colSaleID
+            // 
+            this.colSaleID.DataPropertyName = "saleID";
+            this.colSaleID.HeaderText = "SaleID";
+            this.colSaleID.Name = "colSaleID";
+            this.colSaleID.ReadOnly = true;
+            this.colSaleID.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSaleID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colSaleID.Visible = false;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -309,6 +414,7 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox4);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
@@ -316,6 +422,134 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "易车网";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.ddlPro_YC);
+            this.groupBox4.Controls.Add(this.button2);
+            this.groupBox4.Controls.Add(this.ddlCity_YC);
+            this.groupBox4.Controls.Add(this.btnStart_YC);
+            this.groupBox4.Controls.Add(this.ddlType_YC);
+            this.groupBox4.Controls.Add(this.listBox1);
+            this.groupBox4.Controls.Add(this.checkBox1);
+            this.groupBox4.Controls.Add(this.dataGridView1);
+            this.groupBox4.Location = new System.Drawing.Point(2, 2);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(433, 249);
+            this.groupBox4.TabIndex = 21;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "抢单";
+            // 
+            // ddlPro_YC
+            // 
+            this.ddlPro_YC.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlPro_YC.FormattingEnabled = true;
+            this.ddlPro_YC.Location = new System.Drawing.Point(6, 20);
+            this.ddlPro_YC.Name = "ddlPro_YC";
+            this.ddlPro_YC.Size = new System.Drawing.Size(110, 20);
+            this.ddlPro_YC.TabIndex = 11;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(186, 164);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(46, 76);
+            this.button2.TabIndex = 19;
+            this.button2.Text = "停止";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // ddlCity_YC
+            // 
+            this.ddlCity_YC.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlCity_YC.FormattingEnabled = true;
+            this.ddlCity_YC.Location = new System.Drawing.Point(122, 20);
+            this.ddlCity_YC.Name = "ddlCity_YC";
+            this.ddlCity_YC.Size = new System.Drawing.Size(110, 20);
+            this.ddlCity_YC.TabIndex = 12;
+            // 
+            // btnStart_YC
+            // 
+            this.btnStart_YC.Location = new System.Drawing.Point(186, 72);
+            this.btnStart_YC.Name = "btnStart_YC";
+            this.btnStart_YC.Size = new System.Drawing.Size(46, 76);
+            this.btnStart_YC.TabIndex = 18;
+            this.btnStart_YC.Text = "开始";
+            this.btnStart_YC.UseVisualStyleBackColor = true;
+            this.btnStart_YC.Click += new System.EventHandler(this.btnStart_YC_Click);
+            // 
+            // ddlType_YC
+            // 
+            this.ddlType_YC.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlType_YC.FormattingEnabled = true;
+            this.ddlType_YC.Location = new System.Drawing.Point(6, 46);
+            this.ddlType_YC.Name = "ddlType_YC";
+            this.ddlType_YC.Size = new System.Drawing.Size(110, 20);
+            this.ddlType_YC.TabIndex = 13;
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 12;
+            this.listBox1.Location = new System.Drawing.Point(238, 20);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(186, 220);
+            this.listBox1.TabIndex = 17;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(41, 76);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1.TabIndex = 16;
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewCheckBoxColumn1,
+            this.dataGridViewTextBoxColumn1,
+            this.dataGridViewTextBoxColumn2});
+            this.dataGridView1.Location = new System.Drawing.Point(6, 72);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowHeadersWidth = 21;
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(174, 168);
+            this.dataGridView1.TabIndex = 15;
+            // 
+            // dataGridViewCheckBoxColumn1
+            // 
+            this.dataGridViewCheckBoxColumn1.DataPropertyName = "IsSelected";
+            this.dataGridViewCheckBoxColumn1.FalseValue = "";
+            this.dataGridViewCheckBoxColumn1.HeaderText = "";
+            this.dataGridViewCheckBoxColumn1.Name = "dataGridViewCheckBoxColumn1";
+            this.dataGridViewCheckBoxColumn1.ReadOnly = true;
+            this.dataGridViewCheckBoxColumn1.TrueValue = "";
+            this.dataGridViewCheckBoxColumn1.Width = 40;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.DataPropertyName = "saleName";
+            this.dataGridViewTextBoxColumn1.HeaderText = "姓名";
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.ReadOnly = true;
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            this.dataGridViewTextBoxColumn2.DataPropertyName = "saleID";
+            this.dataGridViewTextBoxColumn2.HeaderText = "SaleID";
+            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            this.dataGridViewTextBoxColumn2.ReadOnly = true;
+            this.dataGridViewTextBoxColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridViewTextBoxColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.dataGridViewTextBoxColumn2.Visible = false;
             // 
             // groupBox1
             // 
@@ -475,96 +709,6 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "用户名:";
             // 
-            // colSelected
-            // 
-            this.colSelected.DataPropertyName = "IsSelected";
-            this.colSelected.FalseValue = "";
-            this.colSelected.HeaderText = "";
-            this.colSelected.Name = "colSelected";
-            this.colSelected.ReadOnly = true;
-            this.colSelected.TrueValue = "";
-            this.colSelected.Width = 40;
-            // 
-            // colSaleName
-            // 
-            this.colSaleName.DataPropertyName = "saleName";
-            this.colSaleName.HeaderText = "姓名";
-            this.colSaleName.Name = "colSaleName";
-            this.colSaleName.ReadOnly = true;
-            this.colSaleName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colSaleName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            // 
-            // colSaleID
-            // 
-            this.colSaleID.DataPropertyName = "saleID";
-            this.colSaleID.HeaderText = "SaleID";
-            this.colSaleID.Name = "colSaleID";
-            this.colSaleID.ReadOnly = true;
-            this.colSaleID.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colSaleID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.colSaleID.Visible = false;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.lblState);
-            this.groupBox3.Controls.Add(this.lbxQuer);
-            this.groupBox3.Controls.Add(this.btnSetting_QC);
-            this.groupBox3.Controls.Add(this.dtpQuer);
-            this.groupBox3.Controls.Add(this.label9);
-            this.groupBox3.Location = new System.Drawing.Point(2, 257);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(433, 125);
-            this.groupBox3.TabIndex = 21;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "报价";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(9, 66);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(29, 12);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "每天";
-            // 
-            // dtpQuer
-            // 
-            this.dtpQuer.CustomFormat = "HH:mm:ss";
-            this.dtpQuer.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpQuer.Location = new System.Drawing.Point(44, 62);
-            this.dtpQuer.Name = "dtpQuer";
-            this.dtpQuer.ShowUpDown = true;
-            this.dtpQuer.Size = new System.Drawing.Size(87, 21);
-            this.dtpQuer.TabIndex = 2;
-            // 
-            // btnSetting_QC
-            // 
-            this.btnSetting_QC.Location = new System.Drawing.Point(137, 60);
-            this.btnSetting_QC.Name = "btnSetting_QC";
-            this.btnSetting_QC.Size = new System.Drawing.Size(75, 23);
-            this.btnSetting_QC.TabIndex = 7;
-            this.btnSetting_QC.Text = "设置";
-            this.btnSetting_QC.UseVisualStyleBackColor = true;
-            this.btnSetting_QC.Click += new System.EventHandler(this.btnSetting_QC_Click);
-            // 
-            // lbxQuer
-            // 
-            this.lbxQuer.FormattingEnabled = true;
-            this.lbxQuer.ItemHeight = 12;
-            this.lbxQuer.Location = new System.Drawing.Point(238, 10);
-            this.lbxQuer.Name = "lbxQuer";
-            this.lbxQuer.Size = new System.Drawing.Size(186, 112);
-            this.lbxQuer.TabIndex = 20;
-            // 
-            // lblState
-            // 
-            this.lblState.AutoSize = true;
-            this.lblState.Location = new System.Drawing.Point(99, 87);
-            this.lblState.Name = "lblState";
-            this.lblState.Size = new System.Drawing.Size(41, 12);
-            this.lblState.TabIndex = 21;
-            this.lblState.Text = "未设置";
-            // 
             // tm_qc_quer
             // 
             this.tm_qc_quer.Interval = 30000;
@@ -585,16 +729,20 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).EndInit();
+            this.tabPage2.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -647,6 +795,18 @@
         private System.Windows.Forms.ListBox lbxQuer;
         private System.Windows.Forms.Button btnSetting_QC;
         private System.Windows.Forms.Timer tm_qc_quer;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.ComboBox ddlPro_YC;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.ComboBox ddlCity_YC;
+        private System.Windows.Forms.Button btnStart_YC;
+        private System.Windows.Forms.ComboBox ddlType_YC;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn dataGridViewCheckBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
     }
 }
 
