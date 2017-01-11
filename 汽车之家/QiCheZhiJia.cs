@@ -10,6 +10,7 @@ using System.Text;
 using HtmlAgilityPack;
 using CsharpHttpHelper.Enum;
 using System.IO;
+using System.Threading;
 
 namespace Aide
 {
@@ -81,6 +82,7 @@ namespace Aide
         }
         #endregion
 
+        #region 登录
         public Image LoadValidateCode()
         {
             HttpItem item = new HttpItem()
@@ -270,34 +272,14 @@ namespace Aide
             return result;
         }
 
-        #region 抢单
-        private static string GetTimeStamp()
-        {
-            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
-            return Convert.ToInt64(ts.TotalSeconds).ToString();
-        }
+        #endregion
 
+        #region 抢单
         /// <summary>
         /// 加载公共订单页面，省，市，车型，订单类型选项
         /// </summary>
         public HtmlDocument LoadOrder()
         {
-            //var item = new HttpItem()
-            //{
-            //    URL = dmsOrder,
-            //    Method = "get",
-            //    ContentType = "text/html",
-            //    Cookie = cookie
-            //};
-
-            //HttpHelper http = new HttpHelper();
-            //HttpResult htmlr = http.GetHtml(item);
-
-            //HtmlDocument htmlDoc = new HtmlDocument();
-            //htmlDoc.LoadHtml(htmlr.Html);
-
-            //return htmlDoc;
-
             return GetHtml(dmsOrder);
         }
 
@@ -324,15 +306,13 @@ namespace Aide
         /// </summary>
         public void SendOrder()
         {
+            ViewResult result = new ViewResult();
             while (true)
             {
                 var orders = GetNewOrder(pid, cid, fid, sid, oid);
-
+                result.Result = false;
                 if (orders.Count > 0)
                 {
-                    ViewResult result = new ViewResult();
-                    result.Result = true;
-
                     orders.ForEach(a => dal.AddOrders(new Orders { CustomerName = a.CustomerName, Id = a.Id }));
 
                     var sendlogs = dal.GetTodaySendLog();
@@ -369,14 +349,17 @@ namespace Aide
                                 dal.UpdateOrderSend(a.Id, nicks[i].Id);
                                 dal.UpdateSendCount(nicks[i].Id);
                                 result.Message += string.Format("系统事件{0}将客户分配给销售顾问{1}{2}", DateTime.Now.ToString(), nicks[i].Nick, Environment.NewLine);
+                                result.Result = true;
+                                SendResult(result);
                             }
                         });
                     }
-                    SendResult(result);
-                    continue;
                 }
+                else
+                    SendResult(result);
 
-                SendResult(new ViewResult());
+                //间隔2分钟
+                Thread.Sleep(1000 * 60 * 2);
             }
         }
 
@@ -425,6 +408,7 @@ namespace Aide
 
         #endregion
 
+        #region 保存价格
         private List<SaleData> GetOnSaleList()
         {
             var result = new List<SaleData>();
@@ -466,22 +450,34 @@ namespace Aide
                 return result;
             }
 
-            int companyid = Convert.ToInt32(Tool.userInfo_qc.CompanyID);
-            int[] dealerIds = { companyid };
+            int companyid = Convert.ToInt32(Tool.userInfo_qc.CompanyID);           
 
             int[] specIds = saledata.Select(a => a.SpecId).ToArray();
             int[] prices = saledata.Select(a => a.Price).ToArray();
             int[] minPrices = saledata.Select(a => a.MinPrice).ToArray();
 
             var posturl = "http://ics.autohome.com.cn/Price/CarPrice/SavePrice?r=0.4723048365226039";
-            var postData = "dealerIds: "+ dealerIds +", specIds: "+ specIds +", prices: "+ prices +", minPrices: "+ minPrices +" }";
+            StringBuilder sb = new StringBuilder(specIds.Length * 30);
+            sb.Append("dealerIds%5B%5D=" + companyid);
+            foreach (int i in specIds)
+            {
+                sb.Append("&specIds%5B%5D=" + i);
+            }
+            foreach (int i in prices)
+            {
+                sb.AppendFormat("&prices%5B%5D=" + i);
+            }
+            foreach (int i in minPrices)
+            {
+                sb.AppendFormat("&minPrices%5B%5D=" + i);
+            }
 
             var item = new HttpItem
             {
                 URL = posturl,
                 ContentType = "application/x-www-form-urlencoded; charset=UTF-8",
                 Method = "post",
-                Postdata = postData,
+                Postdata = sb.ToString(),
                 Referer = "http://ics.autohome.com.cn/Price/CarPrice/OnSale",
                 UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
                 Cookie = cookie
@@ -495,5 +491,7 @@ namespace Aide
             result.Message = "一共成功保存"+ saledata.Count.ToString() +"条报价";
             return result;
         }
+
+        #endregion
     }
 }

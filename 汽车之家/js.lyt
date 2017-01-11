@@ -867,5 +867,6 @@ function doPostBack(eventTarget, eventArgument) {
         theForm.__EVENTARGUMENT.value = eventArgument;
         theForm.submit();
     }
+	return "";
 }
 
