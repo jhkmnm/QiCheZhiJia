@@ -107,9 +107,7 @@ namespace Aide
                         yiche.SavePw();
                     }
                     LoadUser(Tool.userInfo_yc);
-                }
-                //this.DialogResult = DialogResult.OK;
-                
+                }                
             }         
         }
 
@@ -329,6 +327,25 @@ namespace Aide
                 lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
             }
             tm_qc_quer.Enabled = true;
+        }
+
+        private void LoadOrder_YC()
+        {
+            ddlPro_YC.DisplayMember = "Pro";
+            ddlPro_YC.ValueMember = "ProId";
+
+            ddlCity_YC.DisplayMember = "City";
+            ddlCity_YC.ValueMember = "CityId";
+
+            ddlType_YC.ValueMember = "Value";
+            ddlType_YC.DisplayMember = "Text";
+
+            var htmlDoc = yiche.LoadOrder();
+        }
+
+        private void btnStart_YC_Click(object sender, EventArgs e)
+        {
+            LoadOrder_YC();
         }
     }
 

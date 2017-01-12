@@ -27,7 +27,14 @@ namespace Aide
 
         string validateCode = "http://dealer.easypass.cn/LoginCheckCode.ashx";
         string homeindex = "http://dealer.easypass.cn/HomeIndex.aspx";
-        string useradmin = "http://dealer.easypass.cn/UserManager/UserAdmin.aspx";        
+        /// <summary>
+        /// 用户列表
+        /// </summary>
+        string useradmin = "http://dealer.easypass.cn/UserManager/UserAdmin.aspx";
+        /// <summary>
+        /// 公共线索
+        /// </summary>
+        string commonorder = "http://app.easypass.cn/lmsnew/CommonOrder.aspx?customer=1";
 
         string cookie = "";
         private static string StrJS = "";
@@ -132,8 +139,17 @@ namespace Aide
             var password = HttpHelper.URLEncode(passWord, Encoding.UTF8);
             var url = string.Format(postlogin, username, code, password);
 
-            var htmlDoc = GetHtml(url);
-            
+            var item = new HttpItem()
+            {
+                URL = url,
+                Cookie = cookie
+            };
+
+            HttpHelper http = new HttpHelper();
+            HttpResult htmlr = http.GetHtml(item);
+            HtmlDocument htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(htmlr.Html);
+                        
             ViewResult result = new ViewResult();
             result.Result = false;
             result.Exit = false;
@@ -148,10 +164,11 @@ namespace Aide
             }
             else
             {
+                cookie += HttpHelper.GetSmallCookie(htmlr.Cookie);
                 result.Result = true;
                 result.Exit = true;
                 htmlDoc = GetHtml(homeindex);
-                company = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"form1\"]/div[5]/div[2]/div[2]/div[1]/h3").InnerText;
+                company = htmlDoc.DocumentNode.SelectSingleNode("//div[@class=\"user_rank\"]/div/h3").InnerText.Trim();
             }
 
             return result;
@@ -165,17 +182,17 @@ namespace Aide
 
             var rowcount = Convert.ToInt32(htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"ContentPlaceHolder1_UpdatePanel1\"]/div/div/div[3]/ul/li[2]/strong").InnerText.Trim());
 
-            var infoformat = "姓名:{0};性别:{1};职位:{2};手机:{3};座机:{4}" + Environment.NewLine;
+            var infoformat = "姓名:{0};职位:{1};手机:{2}" + Environment.NewLine;
             StringBuilder sb = new StringBuilder(rowcount * 25);            
 
             var trs = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"ContentPlaceHolder1_dgvUserList\"]/tr");
             for (int i = 1; i < trs.Count; i++)
             {
                 var tr = trs[i];
-                var name = tr.SelectSingleNode("//*[@id=\"ContentPlaceHolder1_dgvUserList_UserManageHead_0\"]").InnerText;
-                var rolename = tr.SelectNodes("td")[1].InnerText.Trim();
-                var phone = tr.SelectNodes("td")[3].InnerText.Trim().Split('\r')[0];
-                sb.AppendFormat(infoformat, name, "", rolename, phone, "");
+                var name = tr.SelectSingleNode("//*[@id=\"ContentPlaceHolder1_dgvUserList_UserManageHead_"+ (i-1).ToString() +"\"]").InnerText;
+                var rolename = tr.ChildNodes[2].InnerText.Trim();
+                var phone = tr.ChildNodes[4].InnerText.Trim().Split('\r')[0];
+                sb.AppendFormat(infoformat, name, rolename, phone);
             }            
 
             string type = "ctl00%24ContentPlaceHolder1%24dgvUserList%24ctl{0}%24hideAccountType";
@@ -218,10 +235,10 @@ namespace Aide
                 for (int i = 1; i < trs.Count; i++)
                 {
                     var tr = trs[i];
-                    var name = tr.SelectSingleNode("//*[@id=\"ContentPlaceHolder1_dgvUserList_UserManageHead_0\"]").InnerText;
-                    var rolename = tr.SelectNodes("td")[1].InnerText.Trim();
-                    var phone = tr.SelectNodes("td")[3].InnerText.Trim().Split('\r')[0];
-                    sb.AppendFormat(infoformat, name, "", rolename, phone, "");
+                    var name = tr.SelectSingleNode("//*[@id=\"ContentPlaceHolder1_dgvUserList_UserManageHead_" + (i - 1).ToString() + "\"]").InnerText;
+                    var rolename = tr.ChildNodes[2].InnerText.Trim();
+                    var phone = tr.ChildNodes[4].InnerText.Trim().Split('\r')[0];
+                    sb.AppendFormat(infoformat, name, rolename, phone);
                 }
                 rowcount -= 10;
             }
@@ -278,6 +295,17 @@ namespace Aide
             configuration.AppSettings.Settings["PassWord_YC"].Value = Tool.userInfo_qc.PassWord;
             configuration.AppSettings.Settings["chkSavePass_YC"].Value = "True";
             configuration.Save();
+        }
+        #endregion
+
+        #region 抢单
+        /// <summary>
+        /// 加载公共订单页面
+        /// </summary>
+        /// <returns></returns>
+        public HtmlDocument LoadOrder()
+        {
+            return GetHtml(commonorder);
         }
         #endregion
     }
