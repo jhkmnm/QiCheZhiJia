@@ -32,17 +32,21 @@ namespace Aide
         /// </summary>
         string useradmin = "http://dealer.easypass.cn/UserManager/UserAdmin.aspx";
 
-        string gotoapp = "";
+        string app_Shangji = "";
+        string app_Shangji_Cookie = "";
+        string app_CheYiTong = "";
+        string app_CheYiTong_Cookie = "";
 
         /// <summary>
         /// 公共线索
         /// </summary>
         string commonorder = "http://app.easypass.cn/lmsnew/CommonOrder.aspx?customer=1";
 
-        string cookie = "";
-        string appcookie = "";
+        string cookie = "";        
         private static string StrJS = "";
         string company = "";
+        string viewstate = "";
+        string viewrator = "";
 
         public YiChe(string js)
         {
@@ -182,7 +186,8 @@ namespace Aide
                 htmlDoc.LoadHtml(htmlr.Html);
                 cookie += HttpHelper.GetSmallCookie(htmlr.Cookie);
                 company = htmlDoc.DocumentNode.SelectSingleNode("//div[@class=\"user_rank\"]/div/h3").InnerText.Trim();
-                gotoapp = "http://dealer.easypass.cn/" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"appList\"]/ul[2]/li[1]/a").GetAttributeValue("href", "");
+                app_Shangji = "http://dealer.easypass.cn/" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"appList\"]/ul[2]/li[1]/a").GetAttributeValue("href", "");
+                app_CheYiTong = "http://dealer.easypass.cn/" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"appList\"]/ul[1]/li[1]/a").GetAttributeValue("href", "");                
             }
 
             return result;
@@ -312,16 +317,15 @@ namespace Aide
         }
         #endregion
 
-        #region 抢单
         /// <summary>
-        /// 加载公共订单页面
+        /// 站点跳转
         /// </summary>
         /// <returns></returns>
-        public HtmlDocument LoadOrder()
+        private string OsLogin(string url)
         {
             var item = new HttpItem()
             {
-                URL = gotoapp,
+                URL = url,
                 Cookie = cookie
             };
 
@@ -341,7 +345,7 @@ namespace Aide
             var SuperFlag = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"SuperFlag\"]").GetAttributeValue("value", "");
             var WeakOPUserID = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"WeakOPUserID\"]").GetAttributeValue("value", "");
             var ImitateUserID = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"ImitateUserID\"]").GetAttributeValue("value", "");
-            
+
             var postdata = string.Format("AppKey={0}&AppValue={1}&OP_UserID={2}&Check_Code={3}&radomCode={4}&ClientIP={5}&SuperFlag={6}&WeakOPUserID={7}&ImitateUserID={8}&ClientTime={9}", AppKey, AppValue, OP_UserID, Check_Code, radomCode, ClientIP, SuperFlag, WeakOPUserID, ImitateUserID, DateTime.Now.ToString());
 
             item = new HttpItem
@@ -354,18 +358,122 @@ namespace Aide
                 UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
             };
             htmlr = http.GetHtml(item);
-            appcookie = HttpHelper.GetSmallCookie(htmlr.Cookie);           
+            return HttpHelper.GetSmallCookie(htmlr.Cookie);            
+        }
 
-            item = new HttpItem()
+        #region 抢单
+        /// <summary>
+        /// 加载公共订单页面
+        /// </summary>
+        /// <returns></returns>
+        public HtmlDocument GoToOrder()
+        {
+            app_Shangji_Cookie =  OsLogin(app_Shangji);
+
+            var item = new HttpItem()
             {
                 URL = commonorder,
-                Cookie = appcookie,
+                Cookie = app_Shangji_Cookie,
                 Referer = "http://dealer.easypass.cn/gotoapp.aspx?appid=4e236245-4f49-4965-8f86-a490f8bfb657&r=636198532169784090&urls=http%3a%2f%2fapp.easypass.cn%2flmsnew%2fCommonOrder.aspx%3fcustomer%3d1"
             };
+            var htmlDoc = GetHtml(item);
 
-            htmlr = http.GetHtml(item);
-            htmlDoc.LoadHtml(htmlr.Html);
+            viewstate = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"__VIEWSTATE\"]").GetAttributeValue("value", "");
+            viewrator = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"__VIEWSTATEGENERATOR\"]").GetAttributeValue("value", "");
             return htmlDoc;
+        }
+
+        public HtmlDocument LoadCityByPro(string dealerid, string provid)
+        {
+            var item = new HttpItem
+            {
+                URL = "http://app.easypass.cn/lmsnew/ajaxLoad/AjaxRequest.aspx?op=GetLocationByDealerIdAndProvinceId",
+                Postdata = "DealerId:"+ dealerid +"&ProvId=" + provid,
+                Cookie = appcookie,
+                ContentType = "application/x-www-form-urlencoded",
+                Method = "POST",
+                UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
+            };
+            return GetHtml(item);
+            
+        }
+
+        public HtmlDocument LoadOrder(string type, string pro, string city)
+        {
+            var postdata = "ScriptManager1=UpdatePanel1|btnSearch&hf_OrderType={0}&hf_Province={1}&hf_Location={2}&__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE={3}__VIEWSTATEGENERATOR={4}__VIEWSTATEENCRYPTED=&__ASYNCPOST=true&btnSearch=查询";
+
+            var item = new HttpItem
+            {
+                URL = commonorder,
+                Postdata = string.Format(postdata, type, pro, city, viewstate, viewrator),
+                Cookie = app_Shangji_Cookie,
+                ContentType = "application/x-www-form-urlencoded",
+                Method = "POST",
+                UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
+            };
+            return GetHtml(item);
+        }
+        #endregion
+
+        #region 报价
+        private HtmlDocument GoToPrice()
+        {
+            app_CheYiTong_Cookie = OsLogin(app_CheYiTong);
+
+            var item = new HttpItem()
+            {
+                URL = "http://das.app.easypass.cn/Price/PriceManage.aspx",
+                Cookie = app_CheYiTong_Cookie
+            };
+            var htmlDoc = GetHtml(item);
+
+            return htmlDoc;
+        }
+
+        public void SavePrice()
+        {
+            var htmlDoc = GoToPrice();
+
+            var total = Convert.ToInt32(htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"table_cx\"]/table/tbody/tr[1]/th[2]/span/label").InnerText.Trim());
+
+            while (total > 0)
+            {
+                var postdata = "ScriptManager1=UpdatePanel2|lbtnBatchUpdate&__EVENTTARGET=lbtnBatchUpdate&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE={0}__VIEWSTATEGENERATOR={1}&__EVENTVALIDATION=&ddlCarSerial=0&ddlSMSPriceStatus=0";
+
+                var trs = htmlDoc.DocumentNode.SelectNodes("//tr[contains(@id,'tr-price-')]");
+
+                total -= trs.Count;
+
+                var strpid = "rpDealerPriceList$ctl00$rpDealerPriceCarList$ctl{0:D2}$hfDPId";
+                var strcarid = "rpDealerPriceList$ctl00$rpDealerPriceCarList$ctl{0:D2}$hfCarId";
+                var strcsid = "rpDealerPriceList$ctl00$rpDealerPriceCarList$ctl{0:D2}$hfCsId";
+                var strprice = "rpDealerPriceList$ctl00$rpDealerPriceCarList$ctl{0:D2}$txtSalePrice";
+
+                for (int i = 0; i < trs.Count; i++)
+                {
+                    var pid = string.Format(strpid, i);
+                    var carid = string.Format(strcarid, i);
+                    var csid = string.Format(strcsid, i);
+                    var price = string.Format(strprice, i);
+
+                    postdata += "&" + pid + "=" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"" + pid + "\"]").GetAttributeValue("value", "");
+                    postdata += "&" + carid + "=" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"" + carid + "\"]").GetAttributeValue("value", "");
+                    postdata += "&" + csid + "=" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"" + csid + "\"]").GetAttributeValue("value", "");
+                    postdata += "&" + price + "=" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"" + price + "\"]").GetAttributeValue("value", "");
+                }
+
+                postdata += "&hfDealerPriceId=&hfEditPriceCarId=&hfEditSMSPriceCarId=&hfWeekSuperLogin=&txtSMSPrice=&txtBeginDate=&txtEndDate=&ddlSMSPromotionCategory=1&ddlSMSPromotionType=1&txtPromotion=&txtBatchBeginDate=&txtBatchEndDate=&__ASYNCPOST=true";
+
+                var item = new HttpItem
+                {
+                    URL = "http://das.app.easypass.cn/Price/PriceManage.aspx",
+                    Postdata = postdata,
+                    Cookie = app_CheYiTong_Cookie,
+                    ContentType = "application/x-www-form-urlencoded",
+                    Method = "POST",
+                    UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
+                };
+            }
         }
         #endregion
     }

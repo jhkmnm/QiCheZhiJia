@@ -19,6 +19,8 @@ namespace Aide
         string site;
         DAL dal = new DAL();
         Thread th_qc;
+        string dealerid_yc = "";
+
         public FormLogin()
         {
             InitializeComponent();
@@ -107,6 +109,7 @@ namespace Aide
                         yiche.SavePw();
                     }
                     LoadUser(Tool.userInfo_yc);
+                    LoadOrder_YC();
                 }                
             }         
         }
@@ -331,21 +334,89 @@ namespace Aide
 
         private void LoadOrder_YC()
         {
-            ddlPro_YC.DisplayMember = "Pro";
-            ddlPro_YC.ValueMember = "ProId";
+            ddlPro_YC.DisplayMember = "Text";
+            ddlPro_YC.ValueMember = "Value";
 
-            ddlCity_YC.DisplayMember = "City";
-            ddlCity_YC.ValueMember = "CityId";
+            ddlCity_YC.DisplayMember = "Text";
+            ddlCity_YC.ValueMember = "Value";
 
             ddlType_YC.ValueMember = "Value";
             ddlType_YC.DisplayMember = "Text";
 
-            var htmlDoc = yiche.LoadOrder();
+            List<TextValue> pro = new List<TextValue>();
+            List<TextValue> type = new List<TextValue>();
+            List<TextValue> city = new List<TextValue>();
+
+            var htmlDoc = yiche.GoToOrder();
+            var script = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"Head1\"]/script[7]/text()").InnerText.Replace(" ", "").Replace("\r", "").Split('\n');
+            foreach(string str in script)
+            {
+                if(str.StartsWith("SetOrderType:"))
+                {
+                    type = JsonConvert.DeserializeObject<List<TextValue>>(str.TrimEnd(',').Replace("SetOrderType:", ""));
+                }
+                else if(str.StartsWith("SetProvince:"))
+                {
+                    pro = JsonConvert.DeserializeObject<List<TextValue>>(str.TrimEnd(',').Replace("SetProvince:", ""));
+                }
+                else if(str.StartsWith("SetLocation:"))
+                {
+                    city = JsonConvert.DeserializeObject<List<TextValue>>(str.TrimEnd(',').Replace("SetLocation:", ""));
+                }
+                else if (str.Contains("DealerId"))
+                {
+                    dealerid_yc = str.Replace("data: { DealerId: ", "").Replace(", ProvId: provId },", "");
+                }
+
+                if (pro.Count > 0 && type.Count > 0 && city.Count > 0 && !string.IsNullOrWhiteSpace(dealerid_yc))
+                    break;
+            }
+            ddlPro_YC.DataSource = pro;
+            ddlPro_YC.SelectedIndexChanged += ddlPro_YC_SelectedIndexChanged;
+            ddlType_YC.DataSource = type;
+            ddlCity_YC.DataSource = city;
+        }
+
+        void ddlPro_YC_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var proid = ddlPro_YC.SelectedValue.ToString();
+            var doc = yiche.LoadCityByPro(dealerid_yc, proid);
+            var city = JsonConvert.DeserializeObject<List<TextValue>>(doc.DocumentNode.OuterHtml);
+            ddlCity_YC.DataSource = city;
         }
 
         private void btnStart_YC_Click(object sender, EventArgs e)
         {
-            LoadOrder_YC();
+            btnStart_YC.Enabled = false;
+            SendOrder_YC();            
+        }
+
+        private void SendOrder_YC()
+        {
+            var type = ddlType_YC.SelectedValue.ToString();
+            var pro = ddlPro_YC.SelectedValue.ToString();
+            var city = ddlCity_YC.SelectedValue.ToString();            
+            var htmlDoc = yiche.LoadOrder(type, pro, city);
+            var strcount = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"commonarea\"]/ul/li[2]/strong").InnerText.Trim();
+            int ordercount = 0;
+            int.TryParse(strcount, out ordercount);
+            while(ordercount > 0)
+            {
+
+            }
+        }
+
+        private void FormLogin_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if(Tool.userInfo_qc != null)
+            {
+                Tool.service.UpdateLoginLogByLogOut(Tool.userInfo_qc.Id);
+            }
+
+            if(Tool.userInfo_yc != null)
+            {
+                Tool.service.UpdateLoginLogByLogOut(Tool.userInfo_yc.Id);
+            }
         }
     }
 

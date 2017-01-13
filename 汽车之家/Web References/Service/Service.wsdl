@@ -170,6 +170,20 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="UpdateLoginLogByLogOut">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="UpdateLoginLogByLogOutResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UpdateLoginLogByLogOutResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="CheckTasteTime">
         <s:complexType>
           <s:sequence>
@@ -240,6 +254,12 @@
   <wsdl:message name="UpdateLoginLogByLoginSoapOut">
     <wsdl:part name="parameters" element="tns:UpdateLoginLogByLoginResponse" />
   </wsdl:message>
+  <wsdl:message name="UpdateLoginLogByLogOutSoapIn">
+    <wsdl:part name="parameters" element="tns:UpdateLoginLogByLogOut" />
+  </wsdl:message>
+  <wsdl:message name="UpdateLoginLogByLogOutSoapOut">
+    <wsdl:part name="parameters" element="tns:UpdateLoginLogByLogOutResponse" />
+  </wsdl:message>
   <wsdl:message name="CheckTasteTimeSoapIn">
     <wsdl:part name="parameters" element="tns:CheckTasteTime" />
   </wsdl:message>
@@ -282,6 +302,10 @@
     <wsdl:operation name="UpdateLoginLogByLogin">
       <wsdl:input message="tns:UpdateLoginLogByLoginSoapIn" />
       <wsdl:output message="tns:UpdateLoginLogByLoginSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateLoginLogByLogOut">
+      <wsdl:input message="tns:UpdateLoginLogByLogOutSoapIn" />
+      <wsdl:output message="tns:UpdateLoginLogByLogOutSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="CheckTasteTime">
       <wsdl:input message="tns:CheckTasteTimeSoapIn" />
@@ -364,6 +388,15 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateLoginLogByLogin">
       <soap:operation soapAction="http://tempuri.org/UpdateLoginLogByLogin" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateLoginLogByLogOut">
+      <soap:operation soapAction="http://tempuri.org/UpdateLoginLogByLogOut" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -457,6 +490,15 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateLoginLogByLogin">
       <soap12:operation soapAction="http://tempuri.org/UpdateLoginLogByLogin" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateLoginLogByLogOut">
+      <soap12:operation soapAction="http://tempuri.org/UpdateLoginLogByLogOut" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

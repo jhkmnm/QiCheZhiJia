@@ -160,6 +160,12 @@ public class Service : System.Web.Services.WebService
     }
 
     [WebMethod]
+    public int UpdateLoginLogByLogOut(int userId)
+    {
+        return dal.UpdateLoginLogByLogOut(userId);
+    }
+
+    [WebMethod]
     public bool CheckTasteTime(int userId)
     {
         return dal.CheckTasteTime(userId);
