@@ -78,9 +78,6 @@ namespace Aide
             if (!result.Result)
             {
                 MessageBox.Show(result.Message);
-                //if (!result.Exit)
-                //    return;
-                //this.DialogResult = DialogResult.No;
             }
             else
             {
@@ -99,7 +96,7 @@ namespace Aide
                         var _qc = job_qc.Time.Split(':');
                         dtpQuer.Value = new DateTime(2000, 01, 01, Convert.ToInt32(_qc[0]), Convert.ToInt32(_qc[1]), Convert.ToInt32(_qc[2]));
                         lblState.Text = "已设置";
-                        btnSendOrder.Enabled = true;
+                        tm_qc_quer.Enabled = true;
                     }
                 }
                 else
@@ -110,6 +107,14 @@ namespace Aide
                     }
                     LoadUser(Tool.userInfo_yc);
                     LoadOrder_YC();
+                    var job = dal.GetJob("易车网报价");
+                    if (job != null)
+                    {
+                        var _qc = job.Time.Split(':');
+                        dtpQuer_YC.Value = new DateTime(2000, 01, 01, Convert.ToInt32(_qc[0]), Convert.ToInt32(_qc[1]), Convert.ToInt32(_qc[2]));
+                        lblState_YC.Text = "已设置";
+                        tm_yc_query.Enabled = true;
+                    }
                 }                
             }         
         }
@@ -329,7 +334,7 @@ namespace Aide
                 var result = qiche.SavePrice();
                 lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
             }
-            tm_qc_quer.Enabled = true;
+            //tm_qc_quer.Enabled = true;
         }
 
         private void LoadOrder_YC()
@@ -417,6 +422,29 @@ namespace Aide
             {
                 Tool.service.UpdateLoginLogByLogOut(Tool.userInfo_yc.Id);
             }
+        }
+
+        private void btnStop_YC_Click(object sender, EventArgs e)
+        {
+            yiche.SavePrice();
+        }
+
+        private void btnSetting_YC_Click(object sender, EventArgs e)
+        {
+            dal.AddJob(new Job { JobName = "易车网报价", Time = dtpQuer_YC.Value.ToString("HH:mm:ss") });
+            lblState_YC.Text = "已设置";
+            tm_yc_query.Enabled = true;
+        }
+
+        private void tm_yc_query_Tick(object sender, EventArgs e)
+        {
+            tm_yc_query.Enabled = false;
+            if (DateTime.Now.Hour == dtpQuer_YC.Value.Hour && DateTime.Now.Minute == dtpQuer_YC.Value.Minute)
+            {
+                var result = yiche.SavePrice();
+                lbxQuer_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
+            }
+            //tm_yc_query.Enabled = true;
         }
     }
 

@@ -310,8 +310,8 @@ namespace Aide
         public void SavePw()
         {
             Configuration configuration = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-            configuration.AppSettings.Settings["UserName_YC"].Value = Tool.userInfo_qc.UserName;
-            configuration.AppSettings.Settings["PassWord_YC"].Value = Tool.userInfo_qc.PassWord;
+            configuration.AppSettings.Settings["UserName_YC"].Value = Tool.userInfo_yc.UserName;
+            configuration.AppSettings.Settings["PassWord_YC"].Value = Tool.userInfo_yc.PassWord;
             configuration.AppSettings.Settings["chkSavePass_YC"].Value = "True";
             configuration.Save();
         }
@@ -389,7 +389,7 @@ namespace Aide
             {
                 URL = "http://app.easypass.cn/lmsnew/ajaxLoad/AjaxRequest.aspx?op=GetLocationByDealerIdAndProvinceId",
                 Postdata = "DealerId:"+ dealerid +"&ProvId=" + provid,
-                Cookie = appcookie,
+                Cookie = app_Shangji_Cookie,
                 ContentType = "application/x-www-form-urlencoded",
                 Method = "POST",
                 UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
@@ -430,50 +430,47 @@ namespace Aide
             return htmlDoc;
         }
 
-        public void SavePrice()
+        public ViewResult SavePrice()
         {
             var htmlDoc = GoToPrice();
 
-            var total = Convert.ToInt32(htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"table_cx\"]/table/tbody/tr[1]/th[2]/span/label").InnerText.Trim());
+            var total = Convert.ToInt32(htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"table_cx\"]/table/tr[1]/th[2]/span/label").InnerText.Trim().Replace("车款(", "").Replace(")", ""));
+
+            StringBuilder sb = new StringBuilder(5500);
 
             while (total > 0)
             {
-                var postdata = "ScriptManager1=UpdatePanel2|lbtnBatchUpdate&__EVENTTARGET=lbtnBatchUpdate&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE={0}__VIEWSTATEGENERATOR={1}&__EVENTVALIDATION=&ddlCarSerial=0&ddlSMSPriceStatus=0";
-
+                sb.Clear();
                 var trs = htmlDoc.DocumentNode.SelectNodes("//tr[contains(@id,'tr-price-')]");
-
                 total -= trs.Count;
+                var viewstate = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='__VIEWSTATE']").GetAttributeValue("value", "");
+                var viewrator = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='__VIEWSTATEGENERATOR']").GetAttributeValue("value", "");
+                var dation = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='__EVENTVALIDATION']").GetAttributeValue("value", "");
+                sb.AppendFormat("ScriptManager1={0}&__EVENTTARGET=lbtnBatchUpdate&__EVENTARGUMENT=&__LASTFOCUS=&__VIEWSTATE={1}&__VIEWSTATEGENERATOR={2}&__EVENTVALIDATION={3}&ddlCarSerial=0&ddlSMSPriceStatus=0", HttpHelper.URLEncode("UpdatePanel2|lbtnBatchUpdate"), HttpHelper.URLEncode(viewstate), viewrator, HttpHelper.URLEncode(dation));
 
-                var strpid = "rpDealerPriceList$ctl00$rpDealerPriceCarList$ctl{0:D2}$hfDPId";
-                var strcarid = "rpDealerPriceList$ctl00$rpDealerPriceCarList$ctl{0:D2}$hfCarId";
-                var strcsid = "rpDealerPriceList$ctl00$rpDealerPriceCarList$ctl{0:D2}$hfCsId";
-                var strprice = "rpDealerPriceList$ctl00$rpDealerPriceCarList$ctl{0:D2}$txtSalePrice";
-
-                for (int i = 0; i < trs.Count; i++)
+                foreach (var tr in trs)
                 {
-                    var pid = string.Format(strpid, i);
-                    var carid = string.Format(strcarid, i);
-                    var csid = string.Format(strcsid, i);
-                    var price = string.Format(strprice, i);
-
-                    postdata += "&" + pid + "=" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"" + pid + "\"]").GetAttributeValue("value", "");
-                    postdata += "&" + carid + "=" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"" + carid + "\"]").GetAttributeValue("value", "");
-                    postdata += "&" + csid + "=" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"" + csid + "\"]").GetAttributeValue("value", "");
-                    postdata += "&" + price + "=" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"" + price + "\"]").GetAttributeValue("value", "");
+                    var inputs = tr.SelectNodes(".//input[@type='hidden']");
+                    foreach(var input in inputs)
+                    {
+                        sb.AppendFormat("&{0}={1}", HttpHelper.URLEncode(input.GetAttributeValue("name", "")), input.GetAttributeValue("value", ""));
+                    }
                 }
 
-                postdata += "&hfDealerPriceId=&hfEditPriceCarId=&hfEditSMSPriceCarId=&hfWeekSuperLogin=&txtSMSPrice=&txtBeginDate=&txtEndDate=&ddlSMSPromotionCategory=1&ddlSMSPromotionType=1&txtPromotion=&txtBatchBeginDate=&txtBatchEndDate=&__ASYNCPOST=true";
+                sb.Append("&hfDealerPriceId=&hfEditPriceCarId=&hfEditSMSPriceCarId=&hfWeekSuperLogin=&txtSMSPrice=&txtBeginDate=&txtEndDate=&ddlSMSPromotionCategory=1&ddlSMSPromotionType=1&txtPromotion=&txtBatchBeginDate=&txtBatchEndDate=&__ASYNCPOST=true&");
 
                 var item = new HttpItem
                 {
                     URL = "http://das.app.easypass.cn/Price/PriceManage.aspx",
-                    Postdata = postdata,
+                    Postdata = sb.ToString(),
                     Cookie = app_CheYiTong_Cookie,
                     ContentType = "application/x-www-form-urlencoded",
                     Method = "POST",
                     UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
                 };
+                var doc = GetHtml(item);
             }
+            return new ViewResult { Result = true, Message = "您的报价已经是最新的了" };
         }
         #endregion
     }
