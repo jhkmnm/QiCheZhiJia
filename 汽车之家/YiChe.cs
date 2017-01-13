@@ -31,12 +31,16 @@ namespace Aide
         /// 用户列表
         /// </summary>
         string useradmin = "http://dealer.easypass.cn/UserManager/UserAdmin.aspx";
+
+        string gotoapp = "";
+
         /// <summary>
         /// 公共线索
         /// </summary>
         string commonorder = "http://app.easypass.cn/lmsnew/CommonOrder.aspx?customer=1";
 
         string cookie = "";
+        string appcookie = "";
         private static string StrJS = "";
         string company = "";
 
@@ -167,8 +171,18 @@ namespace Aide
                 cookie += HttpHelper.GetSmallCookie(htmlr.Cookie);
                 result.Result = true;
                 result.Exit = true;
-                htmlDoc = GetHtml(homeindex);
+                item = new HttpItem()
+                {
+                    URL = homeindex,
+                    Cookie = cookie
+                };
+                http = new HttpHelper();
+                htmlr = http.GetHtml(item);
+                htmlDoc = new HtmlDocument();
+                htmlDoc.LoadHtml(htmlr.Html);
+                cookie += HttpHelper.GetSmallCookie(htmlr.Cookie);
                 company = htmlDoc.DocumentNode.SelectSingleNode("//div[@class=\"user_rank\"]/div/h3").InnerText.Trim();
+                gotoapp = "http://dealer.easypass.cn/" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"appList\"]/ul[2]/li[1]/a").GetAttributeValue("href", "");
             }
 
             return result;
@@ -305,7 +319,53 @@ namespace Aide
         /// <returns></returns>
         public HtmlDocument LoadOrder()
         {
-            return GetHtml(commonorder);
+            var item = new HttpItem()
+            {
+                URL = gotoapp,
+                Cookie = cookie
+            };
+
+            HttpHelper http = new HttpHelper();
+            HttpResult htmlr = http.GetHtml(item);
+            cookie += HttpHelper.GetSmallCookie(htmlr.Cookie);
+            var htmlDoc = new HtmlDocument();
+            htmlDoc.LoadHtml(htmlr.Html);
+
+            var form1 = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"form1\"]").GetAttributeValue("action", "");
+            var AppKey = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"AppKey\"]").GetAttributeValue("value", "");
+            var AppValue = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"AppValue\"]").GetAttributeValue("value", "");
+            var OP_UserID = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"OP_UserID\"]").GetAttributeValue("value", "");
+            var Check_Code = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"Check_Code\"]").GetAttributeValue("value", "");
+            var radomCode = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"radomCode\"]").GetAttributeValue("value", "");
+            var ClientIP = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"ClientIP\"]").GetAttributeValue("value", "");
+            var SuperFlag = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"SuperFlag\"]").GetAttributeValue("value", "");
+            var WeakOPUserID = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"WeakOPUserID\"]").GetAttributeValue("value", "");
+            var ImitateUserID = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"ImitateUserID\"]").GetAttributeValue("value", "");
+            
+            var postdata = string.Format("AppKey={0}&AppValue={1}&OP_UserID={2}&Check_Code={3}&radomCode={4}&ClientIP={5}&SuperFlag={6}&WeakOPUserID={7}&ImitateUserID={8}&ClientTime={9}", AppKey, AppValue, OP_UserID, Check_Code, radomCode, ClientIP, SuperFlag, WeakOPUserID, ImitateUserID, DateTime.Now.ToString());
+
+            item = new HttpItem
+            {
+                URL = form1,
+                Postdata = postdata,
+                Cookie = cookie,
+                ContentType = "application/x-www-form-urlencoded",
+                Method = "POST",
+                UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
+            };
+            htmlr = http.GetHtml(item);
+            appcookie = HttpHelper.GetSmallCookie(htmlr.Cookie);           
+
+            item = new HttpItem()
+            {
+                URL = commonorder,
+                Cookie = appcookie,
+                Referer = "http://dealer.easypass.cn/gotoapp.aspx?appid=4e236245-4f49-4965-8f86-a490f8bfb657&r=636198532169784090&urls=http%3a%2f%2fapp.easypass.cn%2flmsnew%2fCommonOrder.aspx%3fcustomer%3d1"
+            };
+
+            htmlr = http.GetHtml(item);
+            htmlDoc.LoadHtml(htmlr.Html);
+            return htmlDoc;
         }
         #endregion
     }
