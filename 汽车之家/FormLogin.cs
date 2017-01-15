@@ -58,12 +58,13 @@ namespace Aide
             if (site == "汽车")
             {
                 txtUserName.Text = "晋江嘉华雷克萨斯";
+                txtPassword.Text = "qzzs8888.";
             }
             else
             {
-                txtUserName.Text = "344801178@qq.com";
-            }
-            txtPassword.Text = "qzzs8888.";
+                txtUserName.Text = "100005907";
+                txtPassword.Text = "a2343567";
+            }            
 #endif
         }
 
@@ -398,17 +399,11 @@ namespace Aide
 
         private void SendOrder_YC()
         {
-            var type = ddlType_YC.SelectedValue.ToString();
-            var pro = ddlPro_YC.SelectedValue.ToString();
-            var city = ddlCity_YC.SelectedValue.ToString();            
-            var htmlDoc = yiche.LoadOrder(type, pro, city);
-            var strcount = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"commonarea\"]/ul/li[2]/strong").InnerText.Trim();
-            int ordercount = 0;
-            int.TryParse(strcount, out ordercount);
-            while(ordercount > 0)
-            {
+            yiche.Type = ddlType_YC.SelectedValue.ToString();
+            yiche.Pro = ddlPro_YC.SelectedValue.ToString();
+            yiche.City = ddlCity_YC.SelectedValue.ToString();
 
-            }
+            yiche.SendOrder();
         }
 
         private void FormLogin_FormClosing(object sender, FormClosingEventArgs e)

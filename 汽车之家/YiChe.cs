@@ -47,6 +47,12 @@ namespace Aide
         string company = "";
         string viewstate = "";
         string viewrator = "";
+        string dccid = "";
+        string dsid = "";
+
+        public string Type { get; set; }
+        public string Pro { get; set; }
+        public string City { get; set; }
 
         public YiChe(string js)
         {
@@ -380,6 +386,8 @@ namespace Aide
 
             viewstate = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"__VIEWSTATE\"]").GetAttributeValue("value", "");
             viewrator = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"__VIEWSTATEGENERATOR\"]").GetAttributeValue("value", "");
+            dccid = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"HADRDCCID\"]").GetAttributeValue("value", "");
+            dsid = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"HCBCIDSID\"]").GetAttributeValue("value", "");
             return htmlDoc;
         }
 
@@ -398,9 +406,9 @@ namespace Aide
             
         }
 
-        public HtmlDocument LoadOrder(string type, string pro, string city)
+        private HtmlDocument LoadOrder(string type, string pro, string city)
         {
-            var postdata = "ScriptManager1=UpdatePanel1|btnSearch&hf_OrderType={0}&hf_Province={1}&hf_Location={2}&__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE={3}__VIEWSTATEGENERATOR={4}__VIEWSTATEENCRYPTED=&__ASYNCPOST=true&btnSearch=查询";
+            var postdata = "ScriptManager1=" + HttpHelper.URLEncode("UpdatePanel1|btnSearch") + "&__EVENTTARGET=&__EVENTARGUMENT=&HADRDCCID=&HACBCIDSID=grvNewCarOpportunity_AllCheckBox&HCBCIDSID=grvNewCarOpportunity_CheckBox_0&__VIEWSTATE=" + HttpHelper.URLEncode(viewstate) + "&__VIEWSTATEGENERATOR=" + viewrator + "&__VIEWSTATEENCRYPTED=&hf_OrderType=" + type + "&hf_Province=" + pro + "&hf_Location=" + city + "&__ASYNCPOST=true&btnSearch=" + HttpHelper.URLEncode("查询");
 
             var item = new HttpItem
             {
@@ -412,6 +420,43 @@ namespace Aide
                 UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
             };
             return GetHtml(item);
+        }
+
+        public void SendOrder()
+        {
+            var htmlDoc = LoadOrder(Type, Pro, City);
+            var strcount = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"commonarea\"]/ul/li[2]/strong").InnerText.Trim();
+            int ordercount = 0;
+            int.TryParse(strcount, out ordercount);
+            while (ordercount > 0)
+            {
+                var trs = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"grvNewCarOpportunity\"]/tr[@onmouseover]");
+
+                StringBuilder sb = new StringBuilder();
+                sb.Append("ScriptManager1=" + HttpHelper.URLEncode("UpdatePanel1|btnFetchAll") + "&hf_OrderType=" + Type + "&hf_Province=" + Pro + "&hf_Location=" + City);
+
+                var allchk = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"grvNewCarOpportunity_AllCheckBox\"]");
+                sb.AppendFormat("&{0}=on", HttpHelper.URLEncode(allchk.GetAttributeValue("name", "")));
+
+                foreach (var tr in trs)
+                {
+                    var chk = tr.SelectSingleNode(".//input[@type='checkbox']");
+                    sb.AppendFormat("&{0}=on", HttpHelper.URLEncode(chk.GetAttributeValue("name", "")));
+                }                
+
+                sb.Append("&__EVENTTARGET=btnFetchAll&__EVENTARGUMENT=&__VIEWSTATE=" + HttpHelper.URLEncode(viewstate) + "&__VIEWSTATEGENERATOR=" + viewrator + "&HADRDCCID=" + HttpHelper.URLEncode(dccid) + "&HCBCIDSID=" + HttpHelper.URLEncode(dsid) + "&__VIEWSTATEENCRYPTED=&__ASYNCPOST=true&");
+
+                var item = new HttpItem
+                {
+                    URL = commonorder,
+                    Postdata = sb.ToString(),
+                    Cookie = app_Shangji_Cookie,
+                    ContentType = "application/x-www-form-urlencoded",
+                    Method = "POST",
+                    UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
+                };
+                var doc = GetHtml(item);
+            }
         }
         #endregion
 
