@@ -10,6 +10,8 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Aide
 {
@@ -42,6 +44,8 @@ namespace Aide
         /// </summary>
         string commonorder = "http://app.easypass.cn/lmsnew/CommonOrder.aspx?customer=1";
 
+        DAL dal = new DAL();
+
         string cookie = "";        
         private static string StrJS = "";
         string company = "";
@@ -49,7 +53,7 @@ namespace Aide
         string viewrator = "";
         string dccid = "";
         string dsid = "";
-
+        string hacdsid = "";
         public string Type { get; set; }
         public string Pro { get; set; }
         public string City { get; set; }
@@ -388,6 +392,7 @@ namespace Aide
             viewrator = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"__VIEWSTATEGENERATOR\"]").GetAttributeValue("value", "");
             dccid = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"HADRDCCID\"]").GetAttributeValue("value", "");
             dsid = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"HCBCIDSID\"]").GetAttributeValue("value", "");
+            hacdsid = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"HACBCIDSID\"]").GetAttributeValue("value", "");
             return htmlDoc;
         }
 
@@ -424,38 +429,105 @@ namespace Aide
 
         public void SendOrder()
         {
-            var htmlDoc = LoadOrder(Type, Pro, City);
-            var strcount = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"commonarea\"]/ul/li[2]/strong").InnerText.Trim();
-            int ordercount = 0;
-            int.TryParse(strcount, out ordercount);
-            while (ordercount > 0)
+            ViewResult result = new ViewResult();
+            while (true)
             {
-                var trs = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"grvNewCarOpportunity\"]/tr[@onmouseover]");
-
+                var htmlDoc = LoadOrder(Type, Pro, City);
+                var strcount = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"commonarea\"]/ul/li[2]/strong").InnerText.Trim();
+                int ordercount = 0;
+                int.TryParse(strcount, out ordercount);
                 StringBuilder sb = new StringBuilder();
-                sb.Append("ScriptManager1=" + HttpHelper.URLEncode("UpdatePanel1|btnFetchAll") + "&hf_OrderType=" + Type + "&hf_Province=" + Pro + "&hf_Location=" + City);
 
-                var allchk = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"grvNewCarOpportunity_AllCheckBox\"]");
-                sb.AppendFormat("&{0}=on", HttpHelper.URLEncode(allchk.GetAttributeValue("name", "")));
+                var staticstr = "ScriptManager1=" + HttpHelper.URLEncode("UpdatePanel1|btnFetchAll") + "&hf_OrderType=" + Type + "&hf_Province=" + Pro + " &hf_Location=" + City + "&HACBCIDSID=" + hacdsid + "&HADRDCCID=" + HttpHelper.URLEncode(dccid) + "&HCBCIDSID=" + HttpHelper.URLEncode(dsid) + "&__VIEWSTATEGENERATOR=" + viewrator + "&__VIEWSTATEENCRYPTED=&__VIEWSTATE=" + HttpHelper.URLEncode(viewstate) + "&__EVENTTARGET={0}&__EVENTARGUMENT={1}&__ASYNCPOST=true&";
+                int page = 1;
+                result.Result = false;
 
-                foreach (var tr in trs)
+                while (ordercount > 0)
                 {
-                    var chk = tr.SelectSingleNode(".//input[@type='checkbox']");
-                    sb.AppendFormat("&{0}=on", HttpHelper.URLEncode(chk.GetAttributeValue("name", "")));
-                }                
+                    sb.Clear();
+                    var trs = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"grvNewCarOpportunity\"]/tr[@onmouseover]");
+                    sb.AppendFormat(staticstr, "btnFetchAll", "");
+                    ordercount -= trs.Count;
 
-                sb.Append("&__EVENTTARGET=btnFetchAll&__EVENTARGUMENT=&__VIEWSTATE=" + HttpHelper.URLEncode(viewstate) + "&__VIEWSTATEGENERATOR=" + viewrator + "&HADRDCCID=" + HttpHelper.URLEncode(dccid) + "&HCBCIDSID=" + HttpHelper.URLEncode(dsid) + "&__VIEWSTATEENCRYPTED=&__ASYNCPOST=true&");
+                    var allchk = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"grvNewCarOpportunity_AllCheckBox\"]");
+                    sb.AppendFormat("&{0}=on", HttpHelper.URLEncode(allchk.GetAttributeValue("name", "")));
 
-                var item = new HttpItem
-                {
-                    URL = commonorder,
-                    Postdata = sb.ToString(),
-                    Cookie = app_Shangji_Cookie,
-                    ContentType = "application/x-www-form-urlencoded",
-                    Method = "POST",
-                    UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
-                };
-                var doc = GetHtml(item);
+                    foreach (var tr in trs)
+                    {
+                        var chk = tr.SelectSingleNode(".//input[@type='checkbox']");
+                        sb.AppendFormat("&{0}=on", HttpHelper.URLEncode(chk.GetAttributeValue("name", "")));
+                    }
+
+                    var item = new HttpItem
+                    {
+                        URL = commonorder,
+                        Postdata = sb.ToString(),
+                        Cookie = app_Shangji_Cookie,
+                        ContentType = "application/x-www-form-urlencoded",
+                        Method = "POST",
+                        UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
+                    };
+                    htmlDoc = GetHtml(item);
+
+                    var scripts = htmlDoc.DocumentNode.SelectNodes("//script");
+                    var text = "";
+                    int rnum = 0;
+                    var num = "";
+                    if (scripts != null)
+                    {
+                        text = scripts[scripts.Count - 1].InnerText;
+                        num = GetNum(text);
+                    }
+                    else
+                    {
+                        text = htmlDoc.DocumentNode.ChildNodes[8].InnerText.Trim();
+                        num = GetNum(text.Split('|')[56].Replace("\\u0027", ""));
+                        int.TryParse(num, out rnum);
+                    }
+
+                    if(rnum > 0)
+                    {
+                        dal.UpdateOrderSend(0, Tool.userInfo_yc.UserName);
+                        dal.UpdateSendCount(Tool.userInfo_yc.UserName);
+                        result.Message += string.Format("成功认领{1}条线索{2}", DateTime.Now.ToString(), rnum, Environment.NewLine);
+                        result.Result = true;
+                        SendResult(result);
+                    }
+
+                    page++;
+                    sb.Clear();
+                    sb.AppendFormat(staticstr, "pager1", page);
+                    item = new HttpItem
+                    {
+                        URL = commonorder,
+                        Postdata = sb.ToString(),
+                        Cookie = app_Shangji_Cookie,
+                        ContentType = "application/x-www-form-urlencoded",
+                        Method = "POST",
+                        UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
+                    };
+                    htmlDoc = GetHtml(item);
+                }
+
+                //间隔2分钟
+                Thread.Sleep(1000 * 60 * 2);
+            }
+        }
+
+        private string GetNum(string str)
+        {
+            Regex reg = new Regex("[0-9]+");
+            return reg.Match(str).Value;
+        }
+
+        public delegate void delsendorder(ViewResult vr);
+        public event delsendorder SendOrderEvent;
+
+        public void SendResult(ViewResult vr)
+        {
+            if (SendOrderEvent != null)
+            {
+                SendOrderEvent(vr);
             }
         }
         #endregion

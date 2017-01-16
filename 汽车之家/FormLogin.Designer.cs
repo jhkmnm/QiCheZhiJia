@@ -60,13 +60,19 @@
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.lblState_YC = new System.Windows.Forms.Label();
+            this.lbxQuer_YC = new System.Windows.Forms.ListBox();
+            this.btnSetting_YC = new System.Windows.Forms.Button();
+            this.dtpQuer_YC = new System.Windows.Forms.DateTimePicker();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.ddlPro_YC = new System.Windows.Forms.ComboBox();
             this.btnStop_YC = new System.Windows.Forms.Button();
             this.ddlCity_YC = new System.Windows.Forms.ComboBox();
             this.btnStart_YC = new System.Windows.Forms.Button();
             this.ddlType_YC = new System.Windows.Forms.ComboBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.lbxSendOrder_YC = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lblEnd = new System.Windows.Forms.Label();
             this.lblUserName = new System.Windows.Forms.Label();
@@ -82,12 +88,6 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tm_qc_quer = new System.Windows.Forms.Timer(this.components);
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.lblState_YC = new System.Windows.Forms.Label();
-            this.lbxQuer_YC = new System.Windows.Forms.ListBox();
-            this.btnSetting_YC = new System.Windows.Forms.Button();
-            this.dtpQuer_YC = new System.Windows.Forms.DateTimePicker();
-            this.label11 = new System.Windows.Forms.Label();
             this.tm_yc_query = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbCode)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -96,11 +96,11 @@
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).BeginInit();
             this.tabPage2.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // pbCode
@@ -426,6 +426,67 @@
             this.tabPage2.Text = "易车网";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.lblState_YC);
+            this.groupBox5.Controls.Add(this.lbxQuer_YC);
+            this.groupBox5.Controls.Add(this.btnSetting_YC);
+            this.groupBox5.Controls.Add(this.dtpQuer_YC);
+            this.groupBox5.Controls.Add(this.label11);
+            this.groupBox5.Location = new System.Drawing.Point(2, 269);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(433, 125);
+            this.groupBox5.TabIndex = 22;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "报价";
+            // 
+            // lblState_YC
+            // 
+            this.lblState_YC.AutoSize = true;
+            this.lblState_YC.Location = new System.Drawing.Point(99, 87);
+            this.lblState_YC.Name = "lblState_YC";
+            this.lblState_YC.Size = new System.Drawing.Size(41, 12);
+            this.lblState_YC.TabIndex = 21;
+            this.lblState_YC.Text = "未设置";
+            // 
+            // lbxQuer_YC
+            // 
+            this.lbxQuer_YC.FormattingEnabled = true;
+            this.lbxQuer_YC.ItemHeight = 12;
+            this.lbxQuer_YC.Location = new System.Drawing.Point(238, 10);
+            this.lbxQuer_YC.Name = "lbxQuer_YC";
+            this.lbxQuer_YC.Size = new System.Drawing.Size(186, 112);
+            this.lbxQuer_YC.TabIndex = 20;
+            // 
+            // btnSetting_YC
+            // 
+            this.btnSetting_YC.Location = new System.Drawing.Point(137, 60);
+            this.btnSetting_YC.Name = "btnSetting_YC";
+            this.btnSetting_YC.Size = new System.Drawing.Size(75, 23);
+            this.btnSetting_YC.TabIndex = 7;
+            this.btnSetting_YC.Text = "设置";
+            this.btnSetting_YC.UseVisualStyleBackColor = true;
+            this.btnSetting_YC.Click += new System.EventHandler(this.btnSetting_YC_Click);
+            // 
+            // dtpQuer_YC
+            // 
+            this.dtpQuer_YC.CustomFormat = "HH:mm:ss";
+            this.dtpQuer_YC.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpQuer_YC.Location = new System.Drawing.Point(44, 62);
+            this.dtpQuer_YC.Name = "dtpQuer_YC";
+            this.dtpQuer_YC.ShowUpDown = true;
+            this.dtpQuer_YC.Size = new System.Drawing.Size(87, 21);
+            this.dtpQuer_YC.TabIndex = 2;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(9, 66);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(29, 12);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "每天";
+            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.ddlPro_YC);
@@ -433,7 +494,7 @@
             this.groupBox4.Controls.Add(this.ddlCity_YC);
             this.groupBox4.Controls.Add(this.btnStart_YC);
             this.groupBox4.Controls.Add(this.ddlType_YC);
-            this.groupBox4.Controls.Add(this.listBox1);
+            this.groupBox4.Controls.Add(this.lbxSendOrder_YC);
             this.groupBox4.Location = new System.Drawing.Point(2, 2);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(433, 249);
@@ -488,14 +549,14 @@
             this.ddlType_YC.Size = new System.Drawing.Size(110, 20);
             this.ddlType_YC.TabIndex = 13;
             // 
-            // listBox1
+            // lbxSendOrder_YC
             // 
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.ItemHeight = 12;
-            this.listBox1.Location = new System.Drawing.Point(238, 20);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(186, 220);
-            this.listBox1.TabIndex = 17;
+            this.lbxSendOrder_YC.FormattingEnabled = true;
+            this.lbxSendOrder_YC.ItemHeight = 12;
+            this.lbxSendOrder_YC.Location = new System.Drawing.Point(238, 20);
+            this.lbxSendOrder_YC.Name = "lbxSendOrder_YC";
+            this.lbxSendOrder_YC.Size = new System.Drawing.Size(186, 220);
+            this.lbxSendOrder_YC.TabIndex = 17;
             // 
             // groupBox1
             // 
@@ -660,67 +721,6 @@
             this.tm_qc_quer.Interval = 30000;
             this.tm_qc_quer.Tick += new System.EventHandler(this.tm_qc_quer_Tick);
             // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.lblState_YC);
-            this.groupBox5.Controls.Add(this.lbxQuer_YC);
-            this.groupBox5.Controls.Add(this.btnSetting_YC);
-            this.groupBox5.Controls.Add(this.dtpQuer_YC);
-            this.groupBox5.Controls.Add(this.label11);
-            this.groupBox5.Location = new System.Drawing.Point(2, 269);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(433, 125);
-            this.groupBox5.TabIndex = 22;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "报价";
-            // 
-            // lblState_YC
-            // 
-            this.lblState_YC.AutoSize = true;
-            this.lblState_YC.Location = new System.Drawing.Point(99, 87);
-            this.lblState_YC.Name = "lblState_YC";
-            this.lblState_YC.Size = new System.Drawing.Size(41, 12);
-            this.lblState_YC.TabIndex = 21;
-            this.lblState_YC.Text = "未设置";
-            // 
-            // lbxQuer_YC
-            // 
-            this.lbxQuer_YC.FormattingEnabled = true;
-            this.lbxQuer_YC.ItemHeight = 12;
-            this.lbxQuer_YC.Location = new System.Drawing.Point(238, 10);
-            this.lbxQuer_YC.Name = "lbxQuer_YC";
-            this.lbxQuer_YC.Size = new System.Drawing.Size(186, 112);
-            this.lbxQuer_YC.TabIndex = 20;
-            // 
-            // btnSetting_YC
-            // 
-            this.btnSetting_YC.Location = new System.Drawing.Point(137, 60);
-            this.btnSetting_YC.Name = "btnSetting_YC";
-            this.btnSetting_YC.Size = new System.Drawing.Size(75, 23);
-            this.btnSetting_YC.TabIndex = 7;
-            this.btnSetting_YC.Text = "设置";
-            this.btnSetting_YC.UseVisualStyleBackColor = true;
-            this.btnSetting_YC.Click += new System.EventHandler(this.btnSetting_YC_Click);
-            // 
-            // dtpQuer_YC
-            // 
-            this.dtpQuer_YC.CustomFormat = "HH:mm:ss";
-            this.dtpQuer_YC.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpQuer_YC.Location = new System.Drawing.Point(44, 62);
-            this.dtpQuer_YC.Name = "dtpQuer_YC";
-            this.dtpQuer_YC.ShowUpDown = true;
-            this.dtpQuer_YC.Size = new System.Drawing.Size(87, 21);
-            this.dtpQuer_YC.TabIndex = 2;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(9, 66);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(29, 12);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "每天";
-            // 
             // tm_yc_query
             // 
             this.tm_yc_query.Interval = 30000;
@@ -748,14 +748,14 @@
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).EndInit();
             this.tabPage2.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -814,7 +814,7 @@
         private System.Windows.Forms.ComboBox ddlCity_YC;
         private System.Windows.Forms.Button btnStart_YC;
         private System.Windows.Forms.ComboBox ddlType_YC;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListBox lbxSendOrder_YC;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label lblState_YC;
         private System.Windows.Forms.ListBox lbxQuer_YC;

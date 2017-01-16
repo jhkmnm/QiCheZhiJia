@@ -19,6 +19,7 @@ namespace Aide
         string site;
         DAL dal = new DAL();
         Thread th_qc;
+        Thread th_yc;
         string dealerid_yc = "";
 
         public FormLogin()
@@ -403,7 +404,17 @@ namespace Aide
             yiche.Pro = ddlPro_YC.SelectedValue.ToString();
             yiche.City = ddlCity_YC.SelectedValue.ToString();
 
-            yiche.SendOrder();
+            yiche.SendOrderEvent += Yiche_SendOrderEvent;
+            th_yc = new Thread(yiche.SendOrder);
+            th_yc.Start();
+        }
+
+        private void Yiche_SendOrderEvent(ViewResult vr)
+        {
+            this.Invoke(new Action(() => {
+                if (vr.Result)
+                    lbxSendOrder_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + vr.Message);
+            }));
         }
 
         private void FormLogin_FormClosing(object sender, FormClosingEventArgs e)
