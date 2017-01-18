@@ -355,9 +355,7 @@ namespace Aide
                         });
                     }
                 }
-                else
-                    SendResult(result);
-
+                
                 //间隔2分钟
                 Thread.Sleep(1000 * 60 * 2);
             }

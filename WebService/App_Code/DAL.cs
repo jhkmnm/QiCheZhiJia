@@ -19,10 +19,13 @@ public class DAL
         {
             where.And(d => d.Status == status);
         }
-        if (due >= 0)
+        if (due == 0)//0到期 1未到期
+        {            
+            where.And(d => d.DueTime > DateTime.Now);
+        }
+        else if (due == 1)
         {
-            //0到期 1未到期
-            where.And(d => (due == 0 && d.DueTime > DateTime.Now) || (due == 1 && d.DueTime <= DateTime.Now));
+            where.And(d => d.DueTime <= DateTime.Now);
         }
 
         return DB.Context.From<User>()
@@ -107,6 +110,26 @@ public class DAL
     }
 
     /// <summary>
+    /// 更新最后报价时间
+    /// </summary>
+    /// <param name="Id"></param>
+    /// <returns></returns>
+    public int UpdateLastQuoteTime(int Id)
+    {
+        return DB.Context.Update<User>(User._.LastQuoteTime, DateTime.Now, User._.Id == Id);
+    }
+
+    /// <summary>
+    /// 更新最后资讯时间
+    /// </summary>
+    /// <param name="Id"></param>
+    /// <returns></returns>
+    public int UpdateLastNewsTime(int Id)
+    {
+        return DB.Context.Update<User>(User._.LastNewsTime, DateTime.Now, User._.Id == Id);
+    }
+
+    /// <summary>
     /// 修改用户类型
     /// </summary>
     /// <param name="Id"></param>
@@ -137,6 +160,17 @@ public class DAL
         var user = GetUser(userName, company, sitename);
 
         return user.DueTime > DateTime.Now;
+    }
+
+    /// <summary>
+    /// 更新到期时间
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="dueTime"></param>
+    /// <returns></returns>
+    public int UpdUserDueTime(int id, DateTime dueTime)
+    {
+        return DB.Context.Update<User>(User._.DueTime, dueTime, User._.Id == id);
     }
     #endregion
 
@@ -199,12 +233,16 @@ public class DAL
         where.And(d => d.UserId == userId);
         where.And(d => d.ToDay == today);
 
+        var user = GetUser(userId);
+        user.Status = 0;
+        DB.Context.Update(user);
+
         var log = DB.Context.From<LoginLog>()
             .Where(where).ToFirst();
 
         if(log != null)
         {
-            log.LoginTime = ((log.LoginTime.HasValue ? log.LoginTime.Value : 0) + (float)(DateTime.Now - log.LastLoginTime).TotalHours);
+            log.LoginTime = ((log.LoginTime.HasValue ? log.LoginTime.Value : 0) + (float)(DateTime.Now - log.LastLoginTime).TotalHours);            
             return DB.Context.Update(log);
         }
         return 0;

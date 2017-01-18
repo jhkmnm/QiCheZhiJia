@@ -52,6 +52,12 @@ namespace Aide.Service {
         
         private System.Threading.SendOrPostCallback CheckTasteTimeOperationCompleted;
         
+        private System.Threading.SendOrPostCallback UpdUserDueTimeOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback UpdateLastQuoteTimeOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback UpdateLastNewsTimeOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -122,6 +128,15 @@ namespace Aide.Service {
         
         /// <remarks/>
         public event CheckTasteTimeCompletedEventHandler CheckTasteTimeCompleted;
+        
+        /// <remarks/>
+        public event UpdUserDueTimeCompletedEventHandler UpdUserDueTimeCompleted;
+        
+        /// <remarks/>
+        public event UpdateLastQuoteTimeCompletedEventHandler UpdateLastQuoteTimeCompleted;
+        
+        /// <remarks/>
+        public event UpdateLastNewsTimeCompletedEventHandler UpdateLastNewsTimeCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/HelloWorld", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -445,6 +460,95 @@ namespace Aide.Service {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UpdUserDueTime", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public int UpdUserDueTime(int id, System.DateTime dueTime) {
+            object[] results = this.Invoke("UpdUserDueTime", new object[] {
+                        id,
+                        dueTime});
+            return ((int)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UpdUserDueTimeAsync(int id, System.DateTime dueTime) {
+            this.UpdUserDueTimeAsync(id, dueTime, null);
+        }
+        
+        /// <remarks/>
+        public void UpdUserDueTimeAsync(int id, System.DateTime dueTime, object userState) {
+            if ((this.UpdUserDueTimeOperationCompleted == null)) {
+                this.UpdUserDueTimeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdUserDueTimeOperationCompleted);
+            }
+            this.InvokeAsync("UpdUserDueTime", new object[] {
+                        id,
+                        dueTime}, this.UpdUserDueTimeOperationCompleted, userState);
+        }
+        
+        private void OnUpdUserDueTimeOperationCompleted(object arg) {
+            if ((this.UpdUserDueTimeCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UpdUserDueTimeCompleted(this, new UpdUserDueTimeCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UpdateLastQuoteTime", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public int UpdateLastQuoteTime(int Id) {
+            object[] results = this.Invoke("UpdateLastQuoteTime", new object[] {
+                        Id});
+            return ((int)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UpdateLastQuoteTimeAsync(int Id) {
+            this.UpdateLastQuoteTimeAsync(Id, null);
+        }
+        
+        /// <remarks/>
+        public void UpdateLastQuoteTimeAsync(int Id, object userState) {
+            if ((this.UpdateLastQuoteTimeOperationCompleted == null)) {
+                this.UpdateLastQuoteTimeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateLastQuoteTimeOperationCompleted);
+            }
+            this.InvokeAsync("UpdateLastQuoteTime", new object[] {
+                        Id}, this.UpdateLastQuoteTimeOperationCompleted, userState);
+        }
+        
+        private void OnUpdateLastQuoteTimeOperationCompleted(object arg) {
+            if ((this.UpdateLastQuoteTimeCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UpdateLastQuoteTimeCompleted(this, new UpdateLastQuoteTimeCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UpdateLastNewsTime", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public int UpdateLastNewsTime(int Id) {
+            object[] results = this.Invoke("UpdateLastNewsTime", new object[] {
+                        Id});
+            return ((int)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UpdateLastNewsTimeAsync(int Id) {
+            this.UpdateLastNewsTimeAsync(Id, null);
+        }
+        
+        /// <remarks/>
+        public void UpdateLastNewsTimeAsync(int Id, object userState) {
+            if ((this.UpdateLastNewsTimeOperationCompleted == null)) {
+                this.UpdateLastNewsTimeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateLastNewsTimeOperationCompleted);
+            }
+            this.InvokeAsync("UpdateLastNewsTime", new object[] {
+                        Id}, this.UpdateLastNewsTimeOperationCompleted, userState);
+        }
+        
+        private void OnUpdateLastNewsTimeOperationCompleted(object arg) {
+            if ((this.UpdateLastNewsTimeCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UpdateLastNewsTimeCompleted(this, new UpdateLastNewsTimeCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -492,6 +596,10 @@ namespace Aide.Service {
         private int statusField;
         
         private System.Nullable<System.DateTime> lastAllotTimeField;
+        
+        private System.Nullable<System.DateTime> lastQuoteTimeField;
+        
+        private System.Nullable<System.DateTime> lastNewsTimeField;
         
         /// <remarks/>
         public int Id {
@@ -602,6 +710,28 @@ namespace Aide.Service {
             }
             set {
                 this.lastAllotTimeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> LastQuoteTime {
+            get {
+                return this.lastQuoteTimeField;
+            }
+            set {
+                this.lastQuoteTimeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> LastNewsTime {
+            get {
+                return this.lastNewsTimeField;
+            }
+            set {
+                this.lastNewsTimeField = value;
             }
         }
     }
@@ -977,6 +1107,84 @@ namespace Aide.Service {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((bool)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void UpdUserDueTimeCompletedEventHandler(object sender, UpdUserDueTimeCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UpdUserDueTimeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UpdUserDueTimeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public int Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void UpdateLastQuoteTimeCompletedEventHandler(object sender, UpdateLastQuoteTimeCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UpdateLastQuoteTimeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UpdateLastQuoteTimeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public int Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void UpdateLastNewsTimeCompletedEventHandler(object sender, UpdateLastNewsTimeCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UpdateLastNewsTimeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UpdateLastNewsTimeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public int Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
             }
         }
     }

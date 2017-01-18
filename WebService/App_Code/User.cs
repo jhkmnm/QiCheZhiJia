@@ -23,6 +23,8 @@ namespace Model
         private DateTime? _DueTime;
         private int _Status;
         private DateTime? _LastAllotTime;
+        private DateTime? _LastQuoteTime;
+        private DateTime? _LastNewsTime;
 
         /// <summary>
         /// 
@@ -167,6 +169,34 @@ namespace Model
                 this._LastAllotTime = value;
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Field("LastQuoteTime")]
+        public DateTime? LastQuoteTime
+        {
+            get { return _LastQuoteTime; }
+            set
+            {
+                this.OnPropertyValueChange("LastQuoteTime");
+                this._LastQuoteTime = value;
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [Field("LastNewsTime")]
+        public DateTime? LastNewsTime
+        {
+            get { return _LastNewsTime; }
+            set
+            {
+                this.OnPropertyValueChange("LastNewsTime");
+                this._LastNewsTime = value;
+            }
+        }
         #endregion
 
         #region Method
@@ -222,6 +252,8 @@ namespace Model
                 this._DueTime,
                 this._Status,
                 this._LastAllotTime,
+                this._LastQuoteTime,
+                this._LastNewsTime
             };
         }
         /// <summary>
@@ -288,6 +320,14 @@ namespace Model
             /// 
             /// </summary>
             public readonly static Field LastAllotTime = new Field("LastAllotTime", "User", "");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field LastQuoteTime = new Field("LastQuoteTime", "User", "");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field LastNewsTime = new Field("LastNewsTime", "User", "");
         }
         #endregion
     }

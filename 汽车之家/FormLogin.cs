@@ -335,8 +335,8 @@ namespace Aide
             {
                 var result = qiche.SavePrice();
                 lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
+                Tool.service.UpdateLastQuoteTime(Tool.userInfo_qc.Id);
             }
-            //tm_qc_quer.Enabled = true;
         }
 
         private void LoadOrder_YC()
@@ -432,7 +432,8 @@ namespace Aide
 
         private void btnStop_YC_Click(object sender, EventArgs e)
         {
-            yiche.SavePrice();
+            th_yc.Abort();
+            btnStart_YC.Enabled = true;
         }
 
         private void btnSetting_YC_Click(object sender, EventArgs e)
@@ -449,8 +450,8 @@ namespace Aide
             {
                 var result = yiche.SavePrice();
                 lbxQuer_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
+                Tool.service.UpdateLastQuoteTime(Tool.userInfo_yc.Id);
             }
-            //tm_yc_query.Enabled = true;
         }
     }
 

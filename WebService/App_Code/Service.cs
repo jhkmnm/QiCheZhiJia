@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Web.Services;
 using Model;
+using System;
 
 /// <summary>
 /// Service 的摘要说明
@@ -169,5 +170,23 @@ public class Service : System.Web.Services.WebService
     public bool CheckTasteTime(int userId)
     {
         return dal.CheckTasteTime(userId);
+    }
+
+    [WebMethod]
+    public int UpdUserDueTime(int id, DateTime dueTime)
+    {
+        return dal.UpdUserDueTime(id, dueTime);
+    }
+
+    [WebMethod]
+    public int UpdateLastQuoteTime(int Id)
+    {
+        return dal.UpdateLastQuoteTime(Id);
+    }
+
+    [WebMethod]
+    public int UpdateLastNewsTime(int Id)
+    {
+        return dal.UpdateLastNewsTime(Id);
     }
 }
