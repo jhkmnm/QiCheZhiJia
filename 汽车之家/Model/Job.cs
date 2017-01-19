@@ -13,7 +13,12 @@ namespace Model
         #region Model
         private int _ID;
         private string _JobName;
+        private int? _JobType;
+        private string _JobDate;
         private string _Time;
+        private int? _Space;
+        private string _StartTime;
+        private string _EndTime;
 
         /// <summary>
         /// 
@@ -44,6 +49,32 @@ namespace Model
         /// <summary>
         /// 
         /// </summary>
+        [Field("JobType")]
+        public int? JobType
+        {
+            get { return _JobType; }
+            set
+            {
+                this.OnPropertyValueChange("JobType");
+                this._JobType = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Field("JobDate")]
+        public string JobDate
+        {
+            get { return _JobDate; }
+            set
+            {
+                this.OnPropertyValueChange("JobDate");
+                this._JobDate = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
         [Field("Time")]
         public string Time
         {
@@ -52,6 +83,45 @@ namespace Model
             {
                 this.OnPropertyValueChange("Time");
                 this._Time = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Field("Space")]
+        public int? Space
+        {
+            get { return _Space; }
+            set
+            {
+                this.OnPropertyValueChange("Space");
+                this._Space = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Field("StartTime")]
+        public string StartTime
+        {
+            get { return _StartTime; }
+            set
+            {
+                this.OnPropertyValueChange("StartTime");
+                this._StartTime = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Field("EndTime")]
+        public string EndTime
+        {
+            get { return _EndTime; }
+            set
+            {
+                this.OnPropertyValueChange("EndTime");
+                this._EndTime = value;
             }
         }
         #endregion
@@ -81,7 +151,12 @@ namespace Model
             return new Field[] {
 				_.ID,
 				_.JobName,
+				_.JobType,
+				_.JobDate,
 				_.Time,
+				_.Space,
+				_.StartTime,
+				_.EndTime,
 			};
         }
         /// <summary>
@@ -92,7 +167,12 @@ namespace Model
             return new object[] {
 				this._ID,
 				this._JobName,
+				this._JobType,
+				this._JobDate,
 				this._Time,
+				this._Space,
+				this._StartTime,
+				this._EndTime,
 			};
         }
         /// <summary>
@@ -126,7 +206,27 @@ namespace Model
             /// <summary>
             /// 
             /// </summary>
+            public readonly static Field JobType = new Field("JobType", "Job", "");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field JobDate = new Field("JobDate", "Job", "");
+            /// <summary>
+            /// 
+            /// </summary>
             public readonly static Field Time = new Field("Time", "Job", "");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field Space = new Field("Space", "Job", "");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field StartTime = new Field("StartTime", "Job", "");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field EndTime = new Field("EndTime", "Job", "");
         }
         #endregion
     }

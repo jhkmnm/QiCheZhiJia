@@ -22,6 +22,11 @@ namespace Aide
         Thread th_yc;
         string dealerid_yc = "";
 
+        Job qc_quote;
+        Job qc_news;
+        Job yc_quote;
+        Job yc_news;
+
         public FormLogin()
         {
             InitializeComponent();
@@ -323,7 +328,37 @@ namespace Aide
 
         private void btnSetting_QC_Click(object sender, EventArgs e)
         {
-            dal.AddJob(new Job { JobName = "汽车之家报价", Time = dtpQuer.Value.ToString("HH:mm:ss") });
+            qc_quote = new Job { JobName = "汽车之家报价" };
+            tm_qc_quer.Interval = 30 * 1000;
+            if (ddlPalnType_Quote.Text == "执行一次")
+            {
+                qc_quote.JobType = 1;
+                qc_quote.JobDate = dtpJobDate_Quote.Value.ToString("yyyy-MM-dd");
+                qc_quote.Time = dtpQuoteTime_QC.Value.ToString("HH:mm:ss");
+            }
+            else
+            {
+                qc_quote.JobType = 2;
+                if (rbtQuote_A_QC.Checked)
+                {
+                    qc_quote.Time = dtpQuer.Value.ToString("HH:mm:ss");
+                    qc_quote.StartTime = "00:00:00";
+                    qc_quote.EndTime = "23:59:59";
+                    int interval = 24 * 60 * 60 * 1000;
+                    qc_quote.Space = interval;
+                    tm_qc_quer.Interval = interval;
+                }
+                else
+                {
+                    qc_quote.StartTime = dtpQuote_S_QC.Value.ToString("HH:mm:ss");
+                    qc_quote.EndTime = dtpQuote_E_QC.Value.ToString("HH:mm:ss");
+                    int interval = nudQuote_QC.Text == "分钟" ? Convert.ToInt32(nudQuote_QC.Value) * 60 * 1000 : Convert.ToInt32(nudQuote_QC.Value) * 60 * 60 * 1000;
+                    qc_quote.Space = interval;
+                    tm_qc_quer.Interval = interval;
+                }
+            }
+
+            dal.AddJob(qc_quote);
             lblState.Text = "已设置";
             tm_qc_quer.Enabled = true;
         }
@@ -331,6 +366,20 @@ namespace Aide
         private void tm_qc_quer_Tick(object sender, EventArgs e)
         {
             tm_qc_quer.Enabled = false;
+            if(qc_quote.JobType == 1)
+            {
+                DateTime dt = Convert.ToDateTime(qc_quote.JobDate + " " + qc_quote.Time);
+
+                if()
+
+                if (DateTime.Now.Hour == dtpQuer.Value.Hour && DateTime.Now.Minute == dtpQuer.Value.Minute)
+                {
+                    var result = qiche.SavePrice();
+                    lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
+                    Tool.service.UpdateLastQuoteTime(Tool.userInfo_qc.Id);
+                }
+            }
+
             if (DateTime.Now.Hour == dtpQuer.Value.Hour && DateTime.Now.Minute == dtpQuer.Value.Minute)
             {
                 var result = qiche.SavePrice();
@@ -451,6 +500,26 @@ namespace Aide
                 var result = yiche.SavePrice();
                 lbxQuer_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
                 Tool.service.UpdateLastQuoteTime(Tool.userInfo_yc.Id);
+            }
+        }
+
+        private void rbtQuote_QC_CheckedChanged(object sender, EventArgs e)
+        {
+            var obj = (RadioButton)sender;
+            if(obj.Checked)
+            {
+                if(obj == rbtQuote_A_QC)
+                {
+                    p_A_QC.Enabled = true;
+                    p_B_QC.Enabled = false;
+                    rbtQuote_B_QC.Checked = false;
+                }
+                else
+                {
+                    p_A_QC.Enabled = false;
+                    p_B_QC.Enabled = true;
+                    rbtQuote_A_QC.Checked = false;
+                }
             }
         }
     }

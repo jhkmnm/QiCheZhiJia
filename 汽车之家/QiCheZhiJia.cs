@@ -42,6 +42,10 @@ namespace Aide
 
         string onsalelist = "http://ics.autohome.com.cn/Price/CarPrice/GetOnSaleList?dealerId={0}";
 
+        #region 资讯模板
+        string model_TS = "http://ics.autohome.com.cn/Price/NewsTemplateSection1";
+        #endregion
+
         Html html = new Html();
         private static string StrJS = "";
         string token = "";
@@ -490,6 +494,13 @@ namespace Aide
             return result;
         }
 
+        #endregion
+
+        #region 资讯
+        public HtmlDocument GoToNews()
+        {
+            return GetHtml(model_TS);
+        }
         #endregion
     }
 }
