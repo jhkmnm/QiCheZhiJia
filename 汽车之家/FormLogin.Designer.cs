@@ -38,40 +38,29 @@
             this.btnRefImg = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.p_B_QC = new System.Windows.Forms.Panel();
-            this.dtpQuote_S_QC = new System.Windows.Forms.DateTimePicker();
-            this.dtpQuote_E_QC = new System.Windows.Forms.DateTimePicker();
-            this.rbtQuote_B_QC = new System.Windows.Forms.RadioButton();
-            this.nudQuote_QC = new System.Windows.Forms.NumericUpDown();
-            this.label12 = new System.Windows.Forms.Label();
-            this.ddlQuote_QC = new System.Windows.Forms.ComboBox();
-            this.label10 = new System.Windows.Forms.Label();
-            this.p_A_QC = new System.Windows.Forms.Panel();
-            this.dtpQuer = new System.Windows.Forms.DateTimePicker();
-            this.lblState = new System.Windows.Forms.Label();
-            this.lbxQuer = new System.Windows.Forms.ListBox();
-            this.btnSetting_QC = new System.Windows.Forms.Button();
-            this.label9 = new System.Windows.Forms.Label();
+            this.tbcJob_Query_QC = new System.Windows.Forms.TabControl();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
             this.ddlProvince = new System.Windows.Forms.ComboBox();
             this.btnStop = new System.Windows.Forms.Button();
             this.ddlCity = new System.Windows.Forms.ComboBox();
-            this.btnSendOrder = new System.Windows.Forms.Button();
-            this.ddlSeries = new System.Windows.Forms.ComboBox();
-            this.lbxSendOrder = new System.Windows.Forms.ListBox();
-            this.ddlOrderType = new System.Windows.Forms.ComboBox();
-            this.chkAll = new System.Windows.Forms.CheckBox();
             this.dgvOrder = new System.Windows.Forms.DataGridView();
             this.colSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colSaleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSaleID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnSendOrder = new System.Windows.Forms.Button();
+            this.chkAll = new System.Windows.Forms.CheckBox();
+            this.ddlSeries = new System.Windows.Forms.ComboBox();
+            this.ddlOrderType = new System.Windows.Forms.ComboBox();
+            this.lbxSendOrder = new System.Windows.Forms.ListBox();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.jct_QC_Query = new Aide.JobControl();
+            this.lbxQuer = new System.Windows.Forms.ListBox();
+            this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.jct_QC_News = new Aide.JobControl();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.lblState_YC = new System.Windows.Forms.Label();
             this.lbxQuer_YC = new System.Windows.Forms.ListBox();
-            this.btnSetting_YC = new System.Windows.Forms.Button();
-            this.dtpQuer_YC = new System.Windows.Forms.DateTimePicker();
-            this.label11 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.ddlPro_YC = new System.Windows.Forms.ComboBox();
             this.btnStop_YC = new System.Windows.Forms.Button();
@@ -95,60 +84,24 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tm_qc_quer = new System.Windows.Forms.Timer(this.components);
             this.tm_yc_query = new System.Windows.Forms.Timer(this.components);
-            this.tabControl2 = new System.Windows.Forms.TabControl();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.ddlPalnType_Quote = new System.Windows.Forms.ComboBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.rbtQuote_A_QC = new System.Windows.Forms.RadioButton();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.dtpJobDate_Quote = new System.Windows.Forms.DateTimePicker();
-            this.dtpQuoteTime_QC = new System.Windows.Forms.DateTimePicker();
-            this.panel4 = new System.Windows.Forms.Panel();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.panel5 = new System.Windows.Forms.Panel();
-            this.panel6 = new System.Windows.Forms.Panel();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.dateTimePicker2 = new System.Windows.Forms.DateTimePicker();
-            this.panel7 = new System.Windows.Forms.Panel();
-            this.dateTimePicker3 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker4 = new System.Windows.Forms.DateTimePicker();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label13 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.panel8 = new System.Windows.Forms.Panel();
-            this.dateTimePicker5 = new System.Windows.Forms.DateTimePicker();
-            this.dateTimePicker6 = new System.Windows.Forms.DateTimePicker();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
+            this.jct_YC_Query = new Aide.JobControl();
+            this.jct_YC_News = new Aide.JobControl();
+            this.tm_qc_news = new System.Windows.Forms.Timer(this.components);
+            this.tm_yc_news = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pbCode)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.p_B_QC.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudQuote_QC)).BeginInit();
-            this.p_A_QC.SuspendLayout();
+            this.tbcJob_Query_QC.SuspendLayout();
+            this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).BeginInit();
+            this.tabPage4.SuspendLayout();
+            this.tabPage5.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.tabControl2.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
-            this.tabPage5.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.panel3.SuspendLayout();
-            this.panel4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.panel5.SuspendLayout();
-            this.panel6.SuspendLayout();
-            this.panel7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            this.panel8.SuspendLayout();
             this.SuspendLayout();
             // 
             // pbCode
@@ -232,7 +185,7 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.tabControl2);
+            this.tabPage1.Controls.Add(this.tbcJob_Query_QC);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
@@ -242,143 +195,36 @@
             this.tabPage1.Text = "汽车之家";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
-            // p_B_QC
+            // tbcJob_Query_QC
             // 
-            this.p_B_QC.Controls.Add(this.dtpQuote_S_QC);
-            this.p_B_QC.Controls.Add(this.dtpQuote_E_QC);
-            this.p_B_QC.Controls.Add(this.rbtQuote_B_QC);
-            this.p_B_QC.Controls.Add(this.nudQuote_QC);
-            this.p_B_QC.Controls.Add(this.label12);
-            this.p_B_QC.Controls.Add(this.ddlQuote_QC);
-            this.p_B_QC.Controls.Add(this.label10);
-            this.p_B_QC.Location = new System.Drawing.Point(5, 36);
-            this.p_B_QC.Name = "p_B_QC";
-            this.p_B_QC.Size = new System.Drawing.Size(244, 87);
-            this.p_B_QC.TabIndex = 31;
+            this.tbcJob_Query_QC.Controls.Add(this.tabPage3);
+            this.tbcJob_Query_QC.Controls.Add(this.tabPage4);
+            this.tbcJob_Query_QC.Controls.Add(this.tabPage5);
+            this.tbcJob_Query_QC.Location = new System.Drawing.Point(45, 34);
+            this.tbcJob_Query_QC.Name = "tbcJob_Query_QC";
+            this.tbcJob_Query_QC.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.tbcJob_Query_QC.SelectedIndex = 0;
+            this.tbcJob_Query_QC.Size = new System.Drawing.Size(814, 498);
+            this.tbcJob_Query_QC.TabIndex = 22;
             // 
-            // dtpQuote_S_QC
+            // tabPage3
             // 
-            this.dtpQuote_S_QC.CustomFormat = "HH:mm:ss";
-            this.dtpQuote_S_QC.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpQuote_S_QC.Location = new System.Drawing.Point(148, 34);
-            this.dtpQuote_S_QC.Name = "dtpQuote_S_QC";
-            this.dtpQuote_S_QC.ShowUpDown = true;
-            this.dtpQuote_S_QC.Size = new System.Drawing.Size(87, 21);
-            this.dtpQuote_S_QC.TabIndex = 29;
-            // 
-            // dtpQuote_E_QC
-            // 
-            this.dtpQuote_E_QC.CustomFormat = "HH:mm:ss";
-            this.dtpQuote_E_QC.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpQuote_E_QC.Location = new System.Drawing.Point(148, 60);
-            this.dtpQuote_E_QC.Name = "dtpQuote_E_QC";
-            this.dtpQuote_E_QC.ShowUpDown = true;
-            this.dtpQuote_E_QC.Size = new System.Drawing.Size(87, 21);
-            this.dtpQuote_E_QC.TabIndex = 30;
-            // 
-            // rbtQuote_B_QC
-            // 
-            this.rbtQuote_B_QC.AutoSize = true;
-            this.rbtQuote_B_QC.Location = new System.Drawing.Point(5, 8);
-            this.rbtQuote_B_QC.Name = "rbtQuote_B_QC";
-            this.rbtQuote_B_QC.Size = new System.Drawing.Size(71, 16);
-            this.rbtQuote_B_QC.TabIndex = 24;
-            this.rbtQuote_B_QC.TabStop = true;
-            this.rbtQuote_B_QC.Text = "执行间隔";
-            this.rbtQuote_B_QC.UseVisualStyleBackColor = true;
-            // 
-            // nudQuote_QC
-            // 
-            this.nudQuote_QC.Location = new System.Drawing.Point(91, 8);
-            this.nudQuote_QC.Name = "nudQuote_QC";
-            this.nudQuote_QC.Size = new System.Drawing.Size(61, 21);
-            this.nudQuote_QC.TabIndex = 25;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(89, 60);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(53, 12);
-            this.label12.TabIndex = 28;
-            this.label12.Text = "结束时间";
-            // 
-            // ddlQuote_QC
-            // 
-            this.ddlQuote_QC.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddlQuote_QC.FormattingEnabled = true;
-            this.ddlQuote_QC.Items.AddRange(new object[] {
-            "分钟",
-            "小时"});
-            this.ddlQuote_QC.Location = new System.Drawing.Point(158, 9);
-            this.ddlQuote_QC.Name = "ddlQuote_QC";
-            this.ddlQuote_QC.Size = new System.Drawing.Size(77, 20);
-            this.ddlQuote_QC.TabIndex = 26;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(89, 38);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(53, 12);
-            this.label10.TabIndex = 27;
-            this.label10.Text = "开始时间";
-            // 
-            // p_A_QC
-            // 
-            this.p_A_QC.Controls.Add(this.rbtQuote_A_QC);
-            this.p_A_QC.Controls.Add(this.dtpQuer);
-            this.p_A_QC.Location = new System.Drawing.Point(5, 5);
-            this.p_A_QC.Name = "p_A_QC";
-            this.p_A_QC.Size = new System.Drawing.Size(217, 27);
-            this.p_A_QC.TabIndex = 22;
-            // 
-            // dtpQuer
-            // 
-            this.dtpQuer.CustomFormat = "HH:mm:ss";
-            this.dtpQuer.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpQuer.Location = new System.Drawing.Point(128, 4);
-            this.dtpQuer.Name = "dtpQuer";
-            this.dtpQuer.ShowUpDown = true;
-            this.dtpQuer.Size = new System.Drawing.Size(87, 21);
-            this.dtpQuer.TabIndex = 2;
-            // 
-            // lblState
-            // 
-            this.lblState.AutoSize = true;
-            this.lblState.Location = new System.Drawing.Point(176, 213);
-            this.lblState.Name = "lblState";
-            this.lblState.Size = new System.Drawing.Size(41, 12);
-            this.lblState.TabIndex = 21;
-            this.lblState.Text = "未设置";
-            // 
-            // lbxQuer
-            // 
-            this.lbxQuer.FormattingEnabled = true;
-            this.lbxQuer.ItemHeight = 12;
-            this.lbxQuer.Location = new System.Drawing.Point(405, 21);
-            this.lbxQuer.Name = "lbxQuer";
-            this.lbxQuer.Size = new System.Drawing.Size(395, 244);
-            this.lbxQuer.TabIndex = 20;
-            // 
-            // btnSetting_QC
-            // 
-            this.btnSetting_QC.Location = new System.Drawing.Point(318, 208);
-            this.btnSetting_QC.Name = "btnSetting_QC";
-            this.btnSetting_QC.Size = new System.Drawing.Size(75, 23);
-            this.btnSetting_QC.TabIndex = 7;
-            this.btnSetting_QC.Text = "设置";
-            this.btnSetting_QC.UseVisualStyleBackColor = true;
-            this.btnSetting_QC.Click += new System.EventHandler(this.btnSetting_QC_Click);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(166, 141);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(29, 12);
-            this.label9.TabIndex = 0;
-            this.label9.Text = "每天";
+            this.tabPage3.Controls.Add(this.ddlProvince);
+            this.tabPage3.Controls.Add(this.btnStop);
+            this.tabPage3.Controls.Add(this.ddlCity);
+            this.tabPage3.Controls.Add(this.dgvOrder);
+            this.tabPage3.Controls.Add(this.btnSendOrder);
+            this.tabPage3.Controls.Add(this.chkAll);
+            this.tabPage3.Controls.Add(this.ddlSeries);
+            this.tabPage3.Controls.Add(this.ddlOrderType);
+            this.tabPage3.Controls.Add(this.lbxSendOrder);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(806, 472);
+            this.tabPage3.TabIndex = 0;
+            this.tabPage3.Text = "抢单";
+            this.tabPage3.UseVisualStyleBackColor = true;
             // 
             // ddlProvince
             // 
@@ -407,53 +253,6 @@
             this.ddlCity.Name = "ddlCity";
             this.ddlCity.Size = new System.Drawing.Size(110, 20);
             this.ddlCity.TabIndex = 12;
-            // 
-            // btnSendOrder
-            // 
-            this.btnSendOrder.Location = new System.Drawing.Point(190, 67);
-            this.btnSendOrder.Name = "btnSendOrder";
-            this.btnSendOrder.Size = new System.Drawing.Size(46, 76);
-            this.btnSendOrder.TabIndex = 18;
-            this.btnSendOrder.Text = "开始";
-            this.btnSendOrder.UseVisualStyleBackColor = true;
-            this.btnSendOrder.Click += new System.EventHandler(this.btnSendOrder_Click);
-            // 
-            // ddlSeries
-            // 
-            this.ddlSeries.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddlSeries.FormattingEnabled = true;
-            this.ddlSeries.Location = new System.Drawing.Point(10, 41);
-            this.ddlSeries.Name = "ddlSeries";
-            this.ddlSeries.Size = new System.Drawing.Size(110, 20);
-            this.ddlSeries.TabIndex = 13;
-            // 
-            // lbxSendOrder
-            // 
-            this.lbxSendOrder.FormattingEnabled = true;
-            this.lbxSendOrder.ItemHeight = 12;
-            this.lbxSendOrder.Location = new System.Drawing.Point(242, 15);
-            this.lbxSendOrder.Name = "lbxSendOrder";
-            this.lbxSendOrder.Size = new System.Drawing.Size(543, 220);
-            this.lbxSendOrder.TabIndex = 17;
-            // 
-            // ddlOrderType
-            // 
-            this.ddlOrderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddlOrderType.FormattingEnabled = true;
-            this.ddlOrderType.Location = new System.Drawing.Point(126, 41);
-            this.ddlOrderType.Name = "ddlOrderType";
-            this.ddlOrderType.Size = new System.Drawing.Size(110, 20);
-            this.ddlOrderType.TabIndex = 14;
-            // 
-            // chkAll
-            // 
-            this.chkAll.AutoSize = true;
-            this.chkAll.Location = new System.Drawing.Point(45, 71);
-            this.chkAll.Name = "chkAll";
-            this.chkAll.Size = new System.Drawing.Size(15, 14);
-            this.chkAll.TabIndex = 16;
-            this.chkAll.UseVisualStyleBackColor = true;
-            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
             // 
             // dgvOrder
             // 
@@ -502,6 +301,98 @@
             this.colSaleID.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.colSaleID.Visible = false;
             // 
+            // btnSendOrder
+            // 
+            this.btnSendOrder.Location = new System.Drawing.Point(190, 67);
+            this.btnSendOrder.Name = "btnSendOrder";
+            this.btnSendOrder.Size = new System.Drawing.Size(46, 76);
+            this.btnSendOrder.TabIndex = 18;
+            this.btnSendOrder.Text = "开始";
+            this.btnSendOrder.UseVisualStyleBackColor = true;
+            this.btnSendOrder.Click += new System.EventHandler(this.btnSendOrder_Click);
+            // 
+            // chkAll
+            // 
+            this.chkAll.AutoSize = true;
+            this.chkAll.Location = new System.Drawing.Point(45, 71);
+            this.chkAll.Name = "chkAll";
+            this.chkAll.Size = new System.Drawing.Size(15, 14);
+            this.chkAll.TabIndex = 16;
+            this.chkAll.UseVisualStyleBackColor = true;
+            this.chkAll.CheckedChanged += new System.EventHandler(this.chkAll_CheckedChanged);
+            // 
+            // ddlSeries
+            // 
+            this.ddlSeries.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlSeries.FormattingEnabled = true;
+            this.ddlSeries.Location = new System.Drawing.Point(10, 41);
+            this.ddlSeries.Name = "ddlSeries";
+            this.ddlSeries.Size = new System.Drawing.Size(110, 20);
+            this.ddlSeries.TabIndex = 13;
+            // 
+            // ddlOrderType
+            // 
+            this.ddlOrderType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlOrderType.FormattingEnabled = true;
+            this.ddlOrderType.Location = new System.Drawing.Point(126, 41);
+            this.ddlOrderType.Name = "ddlOrderType";
+            this.ddlOrderType.Size = new System.Drawing.Size(110, 20);
+            this.ddlOrderType.TabIndex = 14;
+            // 
+            // lbxSendOrder
+            // 
+            this.lbxSendOrder.FormattingEnabled = true;
+            this.lbxSendOrder.ItemHeight = 12;
+            this.lbxSendOrder.Location = new System.Drawing.Point(242, 15);
+            this.lbxSendOrder.Name = "lbxSendOrder";
+            this.lbxSendOrder.Size = new System.Drawing.Size(543, 220);
+            this.lbxSendOrder.TabIndex = 17;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.jct_QC_Query);
+            this.tabPage4.Controls.Add(this.lbxQuer);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(806, 472);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "报价";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // jct_QC_Query
+            // 
+            this.jct_QC_Query.Location = new System.Drawing.Point(2, 11);
+            this.jct_QC_Query.Name = "jct_QC_Query";
+            this.jct_QC_Query.Size = new System.Drawing.Size(399, 215);
+            this.jct_QC_Query.TabIndex = 21;
+            // 
+            // lbxQuer
+            // 
+            this.lbxQuer.FormattingEnabled = true;
+            this.lbxQuer.ItemHeight = 12;
+            this.lbxQuer.Location = new System.Drawing.Point(405, 21);
+            this.lbxQuer.Name = "lbxQuer";
+            this.lbxQuer.Size = new System.Drawing.Size(395, 244);
+            this.lbxQuer.TabIndex = 20;
+            // 
+            // tabPage5
+            // 
+            this.tabPage5.Controls.Add(this.jct_QC_News);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Name = "tabPage5";
+            this.tabPage5.Size = new System.Drawing.Size(806, 472);
+            this.tabPage5.TabIndex = 2;
+            this.tabPage5.Text = "新闻";
+            this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // jct_QC_News
+            // 
+            this.jct_QC_News.Location = new System.Drawing.Point(18, 14);
+            this.jct_QC_News.Name = "jct_QC_News";
+            this.jct_QC_News.Size = new System.Drawing.Size(399, 215);
+            this.jct_QC_News.TabIndex = 22;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -513,6 +404,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.jct_YC_News);
+            this.tabPage2.Controls.Add(this.jct_YC_Query);
             this.tabPage2.Controls.Add(this.groupBox5);
             this.tabPage2.Controls.Add(this.groupBox4);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
@@ -525,26 +418,13 @@
             // 
             // groupBox5
             // 
-            this.groupBox5.Controls.Add(this.lblState_YC);
             this.groupBox5.Controls.Add(this.lbxQuer_YC);
-            this.groupBox5.Controls.Add(this.btnSetting_YC);
-            this.groupBox5.Controls.Add(this.dtpQuer_YC);
-            this.groupBox5.Controls.Add(this.label11);
             this.groupBox5.Location = new System.Drawing.Point(2, 269);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(433, 125);
             this.groupBox5.TabIndex = 22;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "报价";
-            // 
-            // lblState_YC
-            // 
-            this.lblState_YC.AutoSize = true;
-            this.lblState_YC.Location = new System.Drawing.Point(99, 87);
-            this.lblState_YC.Name = "lblState_YC";
-            this.lblState_YC.Size = new System.Drawing.Size(41, 12);
-            this.lblState_YC.TabIndex = 21;
-            this.lblState_YC.Text = "未设置";
             // 
             // lbxQuer_YC
             // 
@@ -554,35 +434,6 @@
             this.lbxQuer_YC.Name = "lbxQuer_YC";
             this.lbxQuer_YC.Size = new System.Drawing.Size(186, 112);
             this.lbxQuer_YC.TabIndex = 20;
-            // 
-            // btnSetting_YC
-            // 
-            this.btnSetting_YC.Location = new System.Drawing.Point(137, 60);
-            this.btnSetting_YC.Name = "btnSetting_YC";
-            this.btnSetting_YC.Size = new System.Drawing.Size(75, 23);
-            this.btnSetting_YC.TabIndex = 7;
-            this.btnSetting_YC.Text = "设置";
-            this.btnSetting_YC.UseVisualStyleBackColor = true;
-            this.btnSetting_YC.Click += new System.EventHandler(this.btnSetting_YC_Click);
-            // 
-            // dtpQuer_YC
-            // 
-            this.dtpQuer_YC.CustomFormat = "HH:mm:ss";
-            this.dtpQuer_YC.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpQuer_YC.Location = new System.Drawing.Point(44, 62);
-            this.dtpQuer_YC.Name = "dtpQuer_YC";
-            this.dtpQuer_YC.ShowUpDown = true;
-            this.dtpQuer_YC.Size = new System.Drawing.Size(87, 21);
-            this.dtpQuer_YC.TabIndex = 2;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(9, 66);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(29, 12);
-            this.label11.TabIndex = 0;
-            this.label11.Text = "每天";
             // 
             // groupBox4
             // 
@@ -823,306 +674,27 @@
             this.tm_yc_query.Interval = 30000;
             this.tm_yc_query.Tick += new System.EventHandler(this.tm_yc_query_Tick);
             // 
-            // tabControl2
+            // jct_YC_Query
             // 
-            this.tabControl2.Controls.Add(this.tabPage3);
-            this.tabControl2.Controls.Add(this.tabPage4);
-            this.tabControl2.Controls.Add(this.tabPage5);
-            this.tabControl2.Location = new System.Drawing.Point(45, 34);
-            this.tabControl2.Name = "tabControl2";
-            this.tabControl2.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(814, 498);
-            this.tabControl2.TabIndex = 22;
+            this.jct_YC_Query.Location = new System.Drawing.Point(467, 36);
+            this.jct_YC_Query.Name = "jct_YC_Query";
+            this.jct_YC_Query.Size = new System.Drawing.Size(399, 215);
+            this.jct_YC_Query.TabIndex = 23;
             // 
-            // tabPage3
+            // jct_YC_News
             // 
-            this.tabPage3.Controls.Add(this.ddlProvince);
-            this.tabPage3.Controls.Add(this.btnStop);
-            this.tabPage3.Controls.Add(this.ddlCity);
-            this.tabPage3.Controls.Add(this.dgvOrder);
-            this.tabPage3.Controls.Add(this.btnSendOrder);
-            this.tabPage3.Controls.Add(this.chkAll);
-            this.tabPage3.Controls.Add(this.ddlSeries);
-            this.tabPage3.Controls.Add(this.ddlOrderType);
-            this.tabPage3.Controls.Add(this.lbxSendOrder);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(806, 418);
-            this.tabPage3.TabIndex = 0;
-            this.tabPage3.Text = "抢单";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.jct_YC_News.Location = new System.Drawing.Point(453, 279);
+            this.jct_YC_News.Name = "jct_YC_News";
+            this.jct_YC_News.Size = new System.Drawing.Size(399, 215);
+            this.jct_YC_News.TabIndex = 24;
             // 
-            // tabPage4
+            // tm_qc_news
             // 
-            this.tabPage4.Controls.Add(this.groupBox2);
-            this.tabPage4.Controls.Add(this.lbxQuer);
-            this.tabPage4.Controls.Add(this.lblState);
-            this.tabPage4.Controls.Add(this.label9);
-            this.tabPage4.Controls.Add(this.btnSetting_QC);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(806, 472);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "报价";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.tm_qc_news.Interval = 30000;
             // 
-            // tabPage5
+            // tm_yc_news
             // 
-            this.tabPage5.Controls.Add(this.groupBox3);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
-            this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(806, 472);
-            this.tabPage5.TabIndex = 2;
-            this.tabPage5.Text = "新闻";
-            this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // ddlPalnType_Quote
-            // 
-            this.ddlPalnType_Quote.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddlPalnType_Quote.FormattingEnabled = true;
-            this.ddlPalnType_Quote.Items.AddRange(new object[] {
-            "执行一次",
-            "重复执行"});
-            this.ddlPalnType_Quote.Location = new System.Drawing.Point(30, 20);
-            this.ddlPalnType_Quote.Name = "ddlPalnType_Quote";
-            this.ddlPalnType_Quote.Size = new System.Drawing.Size(86, 20);
-            this.ddlPalnType_Quote.TabIndex = 31;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.panel4);
-            this.groupBox2.Controls.Add(this.panel3);
-            this.groupBox2.Controls.Add(this.ddlPalnType_Quote);
-            this.groupBox2.Location = new System.Drawing.Point(6, 21);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(393, 181);
-            this.groupBox2.TabIndex = 32;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "计划";
-            // 
-            // rbtQuote_A_QC
-            // 
-            this.rbtQuote_A_QC.AutoSize = true;
-            this.rbtQuote_A_QC.Location = new System.Drawing.Point(5, 6);
-            this.rbtQuote_A_QC.Name = "rbtQuote_A_QC";
-            this.rbtQuote_A_QC.Size = new System.Drawing.Size(119, 16);
-            this.rbtQuote_A_QC.TabIndex = 23;
-            this.rbtQuote_A_QC.TabStop = true;
-            this.rbtQuote_A_QC.Text = "执行一次，时间为";
-            this.rbtQuote_A_QC.UseVisualStyleBackColor = true;
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.dtpJobDate_Quote);
-            this.panel3.Controls.Add(this.dtpQuoteTime_QC);
-            this.panel3.Location = new System.Drawing.Point(130, 16);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(217, 27);
-            this.panel3.TabIndex = 32;
-            // 
-            // dtpJobDate_Quote
-            // 
-            this.dtpJobDate_Quote.CustomFormat = "yyyy-MM-dd";
-            this.dtpJobDate_Quote.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpJobDate_Quote.Location = new System.Drawing.Point(6, 3);
-            this.dtpJobDate_Quote.Name = "dtpJobDate_Quote";
-            this.dtpJobDate_Quote.Size = new System.Drawing.Size(116, 21);
-            this.dtpJobDate_Quote.TabIndex = 3;
-            // 
-            // dtpQuoteTime_QC
-            // 
-            this.dtpQuoteTime_QC.CustomFormat = "HH:mm:ss";
-            this.dtpQuoteTime_QC.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpQuoteTime_QC.Location = new System.Drawing.Point(128, 3);
-            this.dtpQuoteTime_QC.Name = "dtpQuoteTime_QC";
-            this.dtpQuoteTime_QC.ShowUpDown = true;
-            this.dtpQuoteTime_QC.Size = new System.Drawing.Size(87, 21);
-            this.dtpQuoteTime_QC.TabIndex = 2;
-            // 
-            // panel4
-            // 
-            this.panel4.Controls.Add(this.p_A_QC);
-            this.panel4.Controls.Add(this.p_B_QC);
-            this.panel4.Location = new System.Drawing.Point(130, 49);
-            this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(257, 126);
-            this.panel4.TabIndex = 33;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.panel5);
-            this.groupBox3.Controls.Add(this.panel8);
-            this.groupBox3.Controls.Add(this.comboBox2);
-            this.groupBox3.Location = new System.Drawing.Point(24, 20);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(393, 181);
-            this.groupBox3.TabIndex = 33;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "计划";
-            // 
-            // panel5
-            // 
-            this.panel5.Controls.Add(this.panel6);
-            this.panel5.Controls.Add(this.panel7);
-            this.panel5.Location = new System.Drawing.Point(130, 49);
-            this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(257, 126);
-            this.panel5.TabIndex = 33;
-            // 
-            // panel6
-            // 
-            this.panel6.Controls.Add(this.radioButton1);
-            this.panel6.Controls.Add(this.dateTimePicker2);
-            this.panel6.Location = new System.Drawing.Point(5, 5);
-            this.panel6.Name = "panel6";
-            this.panel6.Size = new System.Drawing.Size(217, 27);
-            this.panel6.TabIndex = 22;
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(5, 6);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(119, 16);
-            this.radioButton1.TabIndex = 23;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "执行一次，时间为";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            // 
-            // dateTimePicker2
-            // 
-            this.dateTimePicker2.CustomFormat = "HH:mm:ss";
-            this.dateTimePicker2.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker2.Location = new System.Drawing.Point(128, 4);
-            this.dateTimePicker2.Name = "dateTimePicker2";
-            this.dateTimePicker2.ShowUpDown = true;
-            this.dateTimePicker2.Size = new System.Drawing.Size(87, 21);
-            this.dateTimePicker2.TabIndex = 2;
-            // 
-            // panel7
-            // 
-            this.panel7.Controls.Add(this.dateTimePicker3);
-            this.panel7.Controls.Add(this.dateTimePicker4);
-            this.panel7.Controls.Add(this.radioButton2);
-            this.panel7.Controls.Add(this.numericUpDown1);
-            this.panel7.Controls.Add(this.label13);
-            this.panel7.Controls.Add(this.comboBox1);
-            this.panel7.Controls.Add(this.label14);
-            this.panel7.Location = new System.Drawing.Point(5, 36);
-            this.panel7.Name = "panel7";
-            this.panel7.Size = new System.Drawing.Size(244, 87);
-            this.panel7.TabIndex = 31;
-            // 
-            // dateTimePicker3
-            // 
-            this.dateTimePicker3.CustomFormat = "HH:mm:ss";
-            this.dateTimePicker3.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker3.Location = new System.Drawing.Point(148, 34);
-            this.dateTimePicker3.Name = "dateTimePicker3";
-            this.dateTimePicker3.ShowUpDown = true;
-            this.dateTimePicker3.Size = new System.Drawing.Size(87, 21);
-            this.dateTimePicker3.TabIndex = 29;
-            // 
-            // dateTimePicker4
-            // 
-            this.dateTimePicker4.CustomFormat = "HH:mm:ss";
-            this.dateTimePicker4.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker4.Location = new System.Drawing.Point(148, 60);
-            this.dateTimePicker4.Name = "dateTimePicker4";
-            this.dateTimePicker4.ShowUpDown = true;
-            this.dateTimePicker4.Size = new System.Drawing.Size(87, 21);
-            this.dateTimePicker4.TabIndex = 30;
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(5, 8);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(71, 16);
-            this.radioButton2.TabIndex = 24;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "执行间隔";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Location = new System.Drawing.Point(91, 8);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(61, 21);
-            this.numericUpDown1.TabIndex = 25;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(89, 60);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(53, 12);
-            this.label13.TabIndex = 28;
-            this.label13.Text = "结束时间";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
-            "分钟",
-            "小时"});
-            this.comboBox1.Location = new System.Drawing.Point(158, 9);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(77, 20);
-            this.comboBox1.TabIndex = 26;
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(89, 38);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(53, 12);
-            this.label14.TabIndex = 27;
-            this.label14.Text = "开始时间";
-            // 
-            // panel8
-            // 
-            this.panel8.Controls.Add(this.dateTimePicker5);
-            this.panel8.Controls.Add(this.dateTimePicker6);
-            this.panel8.Location = new System.Drawing.Point(130, 16);
-            this.panel8.Name = "panel8";
-            this.panel8.Size = new System.Drawing.Size(217, 27);
-            this.panel8.TabIndex = 32;
-            // 
-            // dateTimePicker5
-            // 
-            this.dateTimePicker5.CustomFormat = "yyyy-MM-dd";
-            this.dateTimePicker5.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker5.Location = new System.Drawing.Point(6, 3);
-            this.dateTimePicker5.Name = "dateTimePicker5";
-            this.dateTimePicker5.Size = new System.Drawing.Size(116, 21);
-            this.dateTimePicker5.TabIndex = 3;
-            // 
-            // dateTimePicker6
-            // 
-            this.dateTimePicker6.CustomFormat = "HH:mm:ss";
-            this.dateTimePicker6.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dateTimePicker6.Location = new System.Drawing.Point(128, 4);
-            this.dateTimePicker6.Name = "dateTimePicker6";
-            this.dateTimePicker6.ShowUpDown = true;
-            this.dateTimePicker6.Size = new System.Drawing.Size(87, 21);
-            this.dateTimePicker6.TabIndex = 2;
-            // 
-            // comboBox2
-            // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "执行一次",
-            "重复执行"});
-            this.comboBox2.Location = new System.Drawing.Point(30, 20);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(86, 20);
-            this.comboBox2.TabIndex = 31;
+            this.tm_yc_news.Interval = 30000;
             // 
             // FormLogin
             // 
@@ -1140,38 +712,20 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.p_B_QC.ResumeLayout(false);
-            this.p_B_QC.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudQuote_QC)).EndInit();
-            this.p_A_QC.ResumeLayout(false);
-            this.p_A_QC.PerformLayout();
+            this.tbcJob_Query_QC.ResumeLayout(false);
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).EndInit();
+            this.tabPage4.ResumeLayout(false);
+            this.tabPage5.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            this.tabControl2.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage3.PerformLayout();
-            this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
-            this.tabPage5.ResumeLayout(false);
-            this.groupBox2.ResumeLayout(false);
-            this.panel3.ResumeLayout(false);
-            this.panel4.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
-            this.panel5.ResumeLayout(false);
-            this.panel6.ResumeLayout(false);
-            this.panel6.PerformLayout();
-            this.panel7.ResumeLayout(false);
-            this.panel7.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            this.panel8.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1215,11 +769,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn colSelected;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSaleName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSaleID;
-        private System.Windows.Forms.DateTimePicker dtpQuer;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label lblState;
         private System.Windows.Forms.ListBox lbxQuer;
-        private System.Windows.Forms.Button btnSetting_QC;
         private System.Windows.Forms.Timer tm_qc_quer;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ComboBox ddlPro_YC;
@@ -1229,49 +779,18 @@
         private System.Windows.Forms.ComboBox ddlType_YC;
         private System.Windows.Forms.ListBox lbxSendOrder_YC;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.Label lblState_YC;
         private System.Windows.Forms.ListBox lbxQuer_YC;
-        private System.Windows.Forms.Button btnSetting_YC;
-        private System.Windows.Forms.DateTimePicker dtpQuer_YC;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Timer tm_yc_query;
-        private System.Windows.Forms.Panel p_B_QC;
-        private System.Windows.Forms.DateTimePicker dtpQuote_S_QC;
-        private System.Windows.Forms.DateTimePicker dtpQuote_E_QC;
-        private System.Windows.Forms.RadioButton rbtQuote_B_QC;
-        private System.Windows.Forms.NumericUpDown nudQuote_QC;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.ComboBox ddlQuote_QC;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Panel p_A_QC;
-        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabControl tbcJob_Query_QC;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.Panel panel4;
-        private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.DateTimePicker dtpJobDate_Quote;
-        private System.Windows.Forms.DateTimePicker dtpQuoteTime_QC;
-        private System.Windows.Forms.ComboBox ddlPalnType_Quote;
-        private System.Windows.Forms.RadioButton rbtQuote_A_QC;
         private System.Windows.Forms.TabPage tabPage5;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.Panel panel5;
-        private System.Windows.Forms.Panel panel6;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker2;
-        private System.Windows.Forms.Panel panel7;
-        private System.Windows.Forms.DateTimePicker dateTimePicker3;
-        private System.Windows.Forms.DateTimePicker dateTimePicker4;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.Panel panel8;
-        private System.Windows.Forms.DateTimePicker dateTimePicker5;
-        private System.Windows.Forms.DateTimePicker dateTimePicker6;
-        private System.Windows.Forms.ComboBox comboBox2;
+        private JobControl jct_QC_Query;
+        private JobControl jct_QC_News;
+        private JobControl jct_YC_Query;
+        private JobControl jct_YC_News;
+        private System.Windows.Forms.Timer tm_qc_news;
+        private System.Windows.Forms.Timer tm_yc_news;
     }
 }
 

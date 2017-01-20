@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Dos.ORM;
 
 namespace Model
@@ -20,6 +19,9 @@ namespace Model
         private string _CompanyID;
         private string _LinkInfo;
         private int _UserType;
+        private bool? _SendOrder;
+        private bool? _Query;
+        private bool? _News;
         private DateTime? _DueTime;
         private int _Status;
         private DateTime? _LastAllotTime;
@@ -118,7 +120,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 用户类型:0试用 1付费
+        /// 
         /// </summary>
         [Field("UserType")]
         public int UserType
@@ -131,7 +133,46 @@ namespace Model
             }
         }
         /// <summary>
-        /// 到期时间
+        /// 
+        /// </summary>
+        [Field("SendOrder")]
+        public bool? SendOrder
+        {
+            get { return _SendOrder; }
+            set
+            {
+                this.OnPropertyValueChange("SendOrder");
+                this._SendOrder = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Field("Query")]
+        public bool? Query
+        {
+            get { return _Query; }
+            set
+            {
+                this.OnPropertyValueChange("Query");
+                this._Query = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Field("News")]
+        public bool? News
+        {
+            get { return _News; }
+            set
+            {
+                this.OnPropertyValueChange("News");
+                this._News = value;
+            }
+        }
+        /// <summary>
+        /// 
         /// </summary>
         [Field("DueTime")]
         public DateTime? DueTime
@@ -144,7 +185,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 软件状态:0离线 1运行
+        /// 
         /// </summary>
         [Field("Status")]
         public int Status
@@ -169,7 +210,6 @@ namespace Model
                 this._LastAllotTime = value;
             }
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -183,7 +223,6 @@ namespace Model
                 this._LastQuoteTime = value;
             }
         }
-
         /// <summary>
         /// 
         /// </summary>
@@ -206,8 +245,8 @@ namespace Model
         public override Field[] GetPrimaryKeyFields()
         {
             return new Field[] {
-                _.Id,
-            };
+				_.Id,
+			};
         }
         /// <summary>
         /// 获取实体中的标识列
@@ -222,18 +261,23 @@ namespace Model
         public override Field[] GetFields()
         {
             return new Field[] {
-                _.Id,
-                _.SiteName,
-                _.UserName,
-                _.PassWord,
-                _.Company,
-                _.CompanyID,
-                _.LinkInfo,
-                _.UserType,
-                _.DueTime,
-                _.Status,
-                _.LastAllotTime,
-            };
+				_.Id,
+				_.SiteName,
+				_.UserName,
+				_.PassWord,
+				_.Company,
+				_.CompanyID,
+				_.LinkInfo,
+				_.UserType,
+				_.SendOrder,
+				_.Query,
+				_.News,
+				_.DueTime,
+				_.Status,
+				_.LastAllotTime,
+				_.LastQuoteTime,
+				_.LastNewsTime,
+			};
         }
         /// <summary>
         /// 获取值信息
@@ -241,20 +285,23 @@ namespace Model
         public override object[] GetValues()
         {
             return new object[] {
-                this._Id,
-                this._SiteName,
-                this._UserName,
-                this._PassWord,
-                this._Company,
-                this._CompanyID,
-                this._LinkInfo,
-                this._UserType,
-                this._DueTime,
-                this._Status,
-                this._LastAllotTime,
-                this._LastQuoteTime,
-                this._LastNewsTime
-            };
+				this._Id,
+				this._SiteName,
+				this._UserName,
+				this._PassWord,
+				this._Company,
+				this._CompanyID,
+				this._LinkInfo,
+				this._UserType,
+				this._SendOrder,
+				this._Query,
+				this._News,
+				this._DueTime,
+				this._Status,
+				this._LastAllotTime,
+				this._LastQuoteTime,
+				this._LastNewsTime,
+			};
         }
         /// <summary>
         /// 是否是v1.10.5.6及以上版本实体。
@@ -283,7 +330,7 @@ namespace Model
             /// <summary>
             /// 
             /// </summary>
-            public readonly static Field SiteName = new Field("SiteName", "User", "");            
+            public readonly static Field SiteName = new Field("SiteName", "User", "");
             /// <summary>
             /// 
             /// </summary>
@@ -308,6 +355,18 @@ namespace Model
             /// 
             /// </summary>
             public readonly static Field UserType = new Field("UserType", "User", "");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field SendOrder = new Field("SendOrder", "User", "");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field Query = new Field("Query", "User", "");
+            /// <summary>
+            /// 
+            /// </summary>
+            public readonly static Field News = new Field("News", "User", "");
             /// <summary>
             /// 
             /// </summary>
@@ -339,5 +398,5 @@ namespace Model
         public string Message { get; set; }
 
         public User Data { get; set; }
-    }    
+    }
 }

@@ -87,7 +87,7 @@ public class Service : System.Web.Services.WebService
                     {
                         userResult.Data = result;
                     }
-                }                
+                }
             }
         }
 
@@ -188,5 +188,23 @@ public class Service : System.Web.Services.WebService
     public int UpdateLastNewsTime(int Id)
     {
         return dal.UpdateLastNewsTime(Id);
+    }
+
+    [WebMethod]
+    public int AddJobLog(JobLog log)
+    {
+        return dal.AddJobLog(log);
+    }
+
+    [WebMethod]
+    public int DelJobLog(int userId)
+    {
+        return dal.DelJobLog(userId);
+    }
+
+    [WebMethod]
+    public List<JobLog> GetJobLogByUser(int userId)
+    {
+        return dal.GetJobLogByUser(userId);
     }
 }

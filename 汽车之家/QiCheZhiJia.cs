@@ -249,7 +249,7 @@ namespace Aide
 
             if (strhtml.IndexOf("8|1") != -1)
             {
-                result.Message = "验证码输入有误，请重新输入！";                
+                result.Message = "验证码输入有误，请重新输入！";
             }
             else if (strhtml.IndexOf("3|1") != -1)
             {
@@ -489,7 +489,7 @@ namespace Aide
 
             HttpHelper http = new HttpHelper();
             HttpResult htmlr = http.GetHtml(item);
-            result.Result = true;
+            result.Result = saledata.Count > 0;
             result.Message = "一共成功保存"+ saledata.Count.ToString() +"条报价";
             return result;
         }

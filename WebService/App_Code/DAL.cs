@@ -283,4 +283,23 @@ public class DAL
         return Convert.ToInt32(duetime.Value) > ((log.LoginTime.HasValue ? log.LoginTime.Value : 0) + (float)(DateTime.Now - log.LastLoginTime).TotalHours);
     }
     #endregion
+
+    #region JobLog
+    public int AddJobLog(JobLog log)
+    {
+        return DB.Context.Insert(log);
+    }
+
+    public int DelJobLog(int userId)
+    {
+        return DB.Context.Delete<JobLog>(d => d.UserID == userId);
+    }
+
+    public List<JobLog> GetJobLogByUser(int userId)
+    {
+        return DB.Context.From<JobLog>()
+            .Where(w => w.UserID == userId)
+            .ToList();
+    }
+    #endregion
 }

@@ -90,6 +90,12 @@
       <DependentUpon>Form_YC.cs</DependentUpon>
     </Compile>
     <Compile Include="Html.cs" />
+    <Compile Include="JobControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="JobControl.Designer.cs">
+      <DependentUpon>JobControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Area.cs" />
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Job.cs" />
@@ -117,6 +123,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_YC.resx">
       <DependentUpon>Form_YC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="JobControl.resx">
+      <DependentUpon>JobControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -146,6 +155,9 @@
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\Service\Dictionaries1.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </None>
+    <None Include="Web References\Service\JobLog.datasource">
       <DependentUpon>Reference.map</DependentUpon>
     </None>
     <None Include="Web References\Service\Reference.map">

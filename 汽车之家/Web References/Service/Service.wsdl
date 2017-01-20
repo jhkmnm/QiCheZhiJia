@@ -31,6 +31,9 @@
               <s:element minOccurs="0" maxOccurs="1" name="CompanyID" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="LinkInfo" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="UserType" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="SendOrder" nillable="true" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Query" nillable="true" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="News" nillable="true" type="s:boolean" />
               <s:element minOccurs="1" maxOccurs="1" name="DueTime" nillable="true" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="LastAllotTime" nillable="true" type="s:dateTime" />
@@ -243,6 +246,65 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="AddJobLog">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="log" type="tns:JobLog" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="JobLog">
+        <s:complexContent mixed="false">
+          <s:extension base="tns:Entity">
+            <s:sequence>
+              <s:element minOccurs="1" maxOccurs="1" name="ID" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="UserID" type="s:int" />
+              <s:element minOccurs="0" maxOccurs="1" name="JobType" type="s:string" />
+              <s:element minOccurs="1" maxOccurs="1" name="JobTime" nillable="true" type="s:dateTime" />
+            </s:sequence>
+          </s:extension>
+        </s:complexContent>
+      </s:complexType>
+      <s:element name="AddJobLogResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AddJobLogResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DelJobLog">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DelJobLogResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="DelJobLogResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetJobLogByUser">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="userId" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetJobLogByUserResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetJobLogByUserResult" type="tns:ArrayOfJobLog" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ArrayOfJobLog">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="unbounded" name="JobLog" nillable="true" type="tns:JobLog" />
+        </s:sequence>
+      </s:complexType>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="HelloWorldSoapIn">
@@ -329,6 +391,24 @@
   <wsdl:message name="UpdateLastNewsTimeSoapOut">
     <wsdl:part name="parameters" element="tns:UpdateLastNewsTimeResponse" />
   </wsdl:message>
+  <wsdl:message name="AddJobLogSoapIn">
+    <wsdl:part name="parameters" element="tns:AddJobLog" />
+  </wsdl:message>
+  <wsdl:message name="AddJobLogSoapOut">
+    <wsdl:part name="parameters" element="tns:AddJobLogResponse" />
+  </wsdl:message>
+  <wsdl:message name="DelJobLogSoapIn">
+    <wsdl:part name="parameters" element="tns:DelJobLog" />
+  </wsdl:message>
+  <wsdl:message name="DelJobLogSoapOut">
+    <wsdl:part name="parameters" element="tns:DelJobLogResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetJobLogByUserSoapIn">
+    <wsdl:part name="parameters" element="tns:GetJobLogByUser" />
+  </wsdl:message>
+  <wsdl:message name="GetJobLogByUserSoapOut">
+    <wsdl:part name="parameters" element="tns:GetJobLogByUserResponse" />
+  </wsdl:message>
   <wsdl:portType name="ServiceSoap">
     <wsdl:operation name="HelloWorld">
       <wsdl:input message="tns:HelloWorldSoapIn" />
@@ -385,6 +465,18 @@
     <wsdl:operation name="UpdateLastNewsTime">
       <wsdl:input message="tns:UpdateLastNewsTimeSoapIn" />
       <wsdl:output message="tns:UpdateLastNewsTimeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AddJobLog">
+      <wsdl:input message="tns:AddJobLogSoapIn" />
+      <wsdl:output message="tns:AddJobLogSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DelJobLog">
+      <wsdl:input message="tns:DelJobLogSoapIn" />
+      <wsdl:output message="tns:DelJobLogSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetJobLogByUser">
+      <wsdl:input message="tns:GetJobLogByUserSoapIn" />
+      <wsdl:output message="tns:GetJobLogByUserSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ServiceSoap" type="tns:ServiceSoap">
@@ -515,6 +607,33 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddJobLog">
+      <soap:operation soapAction="http://tempuri.org/AddJobLog" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelJobLog">
+      <soap:operation soapAction="http://tempuri.org/DelJobLog" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJobLogByUser">
+      <soap:operation soapAction="http://tempuri.org/GetJobLogByUser" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="ServiceSoap12" type="tns:ServiceSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -637,6 +756,33 @@
     </wsdl:operation>
     <wsdl:operation name="UpdateLastNewsTime">
       <soap12:operation soapAction="http://tempuri.org/UpdateLastNewsTime" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddJobLog">
+      <soap12:operation soapAction="http://tempuri.org/AddJobLog" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DelJobLog">
+      <soap12:operation soapAction="http://tempuri.org/DelJobLog" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetJobLogByUser">
+      <soap12:operation soapAction="http://tempuri.org/GetJobLogByUser" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
