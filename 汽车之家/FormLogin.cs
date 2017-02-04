@@ -580,8 +580,6 @@ namespace Aide
         #endregion
 
         #endregion
-        private int NewCount = 0;
-        private string state;
 
         private void SaveNews_QC()
         {
