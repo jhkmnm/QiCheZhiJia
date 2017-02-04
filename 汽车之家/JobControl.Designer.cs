@@ -227,9 +227,9 @@
             "选择计划类型",
             "执行一次",
             "重复执行"});
-            this.ddlPalnType.Location = new System.Drawing.Point(30, 20);
+            this.ddlPalnType.Location = new System.Drawing.Point(6, 20);
             this.ddlPalnType.Name = "ddlPalnType";
-            this.ddlPalnType.Size = new System.Drawing.Size(86, 20);
+            this.ddlPalnType.Size = new System.Drawing.Size(110, 20);
             this.ddlPalnType.TabIndex = 31;
             this.ddlPalnType.SelectedIndexChanged += new System.EventHandler(this.ddlPalnType_SelectedIndexChanged);
             // 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 
 namespace Aide
@@ -35,5 +36,11 @@ namespace Aide
         public static Service.User userInfo_qc;
 
         public static Service.User userInfo_yc;
+
+        public static string UTF8ToGBK(string str)
+        {
+            var buffer = Encoding.UTF8.GetBytes(str);
+            return Encoding.GetEncoding("GBK").GetString(buffer);
+        }
     }
 }

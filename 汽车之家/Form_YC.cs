@@ -28,7 +28,7 @@ namespace Aide
 
             PurchaseTax.AddRange(new[] { new TextValue { Text = "不赠送购置税", Value = "0" }, new TextValue { Text = "赠送50%购置税", Value = "50" }, new TextValue { Text = "赠送100%购置税", Value = "100" } });
 
-            for (int i = 0; i < strCompulsory.Length;i++ )
+            for (int i = 0; i < strCompulsory.Length;i++)
             {
                 CompulsoryInsurance.Add(new TextValue { Text = strCompulsory[i], Value = i.ToString() });
             }
@@ -41,7 +41,7 @@ namespace Aide
 
         private void InitForm()
         {
-            var doc = qc.GoToNews();
+            //var doc = qc.GoToNews();
         }
     }
 }

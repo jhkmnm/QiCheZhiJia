@@ -59,6 +59,8 @@
             this.jct_QC_News = new Aide.JobControl();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.jct_YC_News = new Aide.JobControl();
+            this.jct_YC_Query = new Aide.JobControl();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.lbxQuer_YC = new System.Windows.Forms.ListBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
@@ -84,10 +86,10 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tm_qc_quer = new System.Windows.Forms.Timer(this.components);
             this.tm_yc_query = new System.Windows.Forms.Timer(this.components);
-            this.jct_YC_Query = new Aide.JobControl();
-            this.jct_YC_News = new Aide.JobControl();
-            this.tm_qc_news = new System.Windows.Forms.Timer(this.components);
+            this.tm_qcjob_news = new System.Windows.Forms.Timer(this.components);
             this.tm_yc_news = new System.Windows.Forms.Timer(this.components);
+            this.tm_qc_news = new System.Windows.Forms.Timer(this.components);
+            this.lblNews = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbCode)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -200,11 +202,11 @@
             this.tbcJob_Query_QC.Controls.Add(this.tabPage3);
             this.tbcJob_Query_QC.Controls.Add(this.tabPage4);
             this.tbcJob_Query_QC.Controls.Add(this.tabPage5);
-            this.tbcJob_Query_QC.Location = new System.Drawing.Point(45, 34);
+            this.tbcJob_Query_QC.Location = new System.Drawing.Point(6, 18);
             this.tbcJob_Query_QC.Name = "tbcJob_Query_QC";
             this.tbcJob_Query_QC.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tbcJob_Query_QC.SelectedIndex = 0;
-            this.tbcJob_Query_QC.Size = new System.Drawing.Size(814, 498);
+            this.tbcJob_Query_QC.Size = new System.Drawing.Size(895, 347);
             this.tbcJob_Query_QC.TabIndex = 22;
             // 
             // tabPage3
@@ -221,7 +223,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(806, 472);
+            this.tabPage3.Size = new System.Drawing.Size(887, 321);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "抢单";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -355,7 +357,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(806, 472);
+            this.tabPage4.Size = new System.Drawing.Size(887, 321);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "报价";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -378,10 +380,11 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.lblNews);
             this.tabPage5.Controls.Add(this.jct_QC_News);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(806, 472);
+            this.tabPage5.Size = new System.Drawing.Size(887, 321);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "新闻";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -415,6 +418,20 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "易车网";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // jct_YC_News
+            // 
+            this.jct_YC_News.Location = new System.Drawing.Point(453, 279);
+            this.jct_YC_News.Name = "jct_YC_News";
+            this.jct_YC_News.Size = new System.Drawing.Size(399, 215);
+            this.jct_YC_News.TabIndex = 24;
+            // 
+            // jct_YC_Query
+            // 
+            this.jct_YC_Query.Location = new System.Drawing.Point(467, 36);
+            this.jct_YC_Query.Name = "jct_YC_Query";
+            this.jct_YC_Query.Size = new System.Drawing.Size(399, 215);
+            this.jct_YC_Query.TabIndex = 23;
             // 
             // groupBox5
             // 
@@ -674,27 +691,27 @@
             this.tm_yc_query.Interval = 30000;
             this.tm_yc_query.Tick += new System.EventHandler(this.tm_yc_query_Tick);
             // 
-            // jct_YC_Query
+            // tm_qcjob_news
             // 
-            this.jct_YC_Query.Location = new System.Drawing.Point(467, 36);
-            this.jct_YC_Query.Name = "jct_YC_Query";
-            this.jct_YC_Query.Size = new System.Drawing.Size(399, 215);
-            this.jct_YC_Query.TabIndex = 23;
-            // 
-            // jct_YC_News
-            // 
-            this.jct_YC_News.Location = new System.Drawing.Point(453, 279);
-            this.jct_YC_News.Name = "jct_YC_News";
-            this.jct_YC_News.Size = new System.Drawing.Size(399, 215);
-            this.jct_YC_News.TabIndex = 24;
-            // 
-            // tm_qc_news
-            // 
-            this.tm_qc_news.Interval = 30000;
+            this.tm_qcjob_news.Interval = 30000;
             // 
             // tm_yc_news
             // 
             this.tm_yc_news.Interval = 30000;
+            // 
+            // tm_qc_news
+            // 
+            this.tm_qc_news.Interval = 3000;
+            this.tm_qc_news.Tick += new System.EventHandler(this.tm_qc_news_Tick);
+            // 
+            // lblNews
+            // 
+            this.lblNews.FormattingEnabled = true;
+            this.lblNews.ItemHeight = 12;
+            this.lblNews.Location = new System.Drawing.Point(434, 14);
+            this.lblNews.Name = "lblNews";
+            this.lblNews.Size = new System.Drawing.Size(395, 244);
+            this.lblNews.TabIndex = 23;
             // 
             // FormLogin
             // 
@@ -789,8 +806,10 @@
         private JobControl jct_QC_News;
         private JobControl jct_YC_Query;
         private JobControl jct_YC_News;
-        private System.Windows.Forms.Timer tm_qc_news;
+        private System.Windows.Forms.Timer tm_qcjob_news;
         private System.Windows.Forms.Timer tm_yc_news;
+        private System.Windows.Forms.Timer tm_qc_news;
+        private System.Windows.Forms.ListBox lblNews;
     }
 }
 

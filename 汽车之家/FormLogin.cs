@@ -9,6 +9,8 @@ using Newtonsoft.Json;
 using Model;
 using System.Collections.Generic;
 using System.Threading;
+using System.Runtime.InteropServices;
+using System.Net;
 
 namespace Aide
 {
@@ -477,7 +479,6 @@ namespace Aide
             if (job.JobType == 1)
             {
                 DateTime dt = Convert.ToDateTime(job.JobDate + " " + job.Time);
-
                 if ((dtnow - dt).Minutes >= 0 && (dtnow - dt).Minutes <= 1)
                 {
                     action();
@@ -488,16 +489,13 @@ namespace Aide
                 if (!string.IsNullOrWhiteSpace(job.Time))
                 {
                     DateTime dt = Convert.ToDateTime(job.Time);
-
                     if ((dtnow - dt).Minutes >= 0 && (dtnow - dt).Minutes <= 1)
                     {
-                        tm_qc_quer.Interval = job.Space.Value;
                         action();
                     }
                 }
                 else
                 {
-                    tm_qc_quer.Interval = job.Space.Value;
                     if ((dtnow - Convert.ToDateTime(job.StartTime)).Minutes >= 0 && (dtnow - Convert.ToDateTime(job.EndTime)).Minutes <= 0)
                     {
                         action();
@@ -508,9 +506,10 @@ namespace Aide
 
         #region 汽车之家
         private void tm_qc_quer_Tick(object sender, EventArgs e)
-        {            
+        {
             tm_qc_quer.Enabled = false;
             ExecJob(job_qc_quote, SavePrice_QC);
+            tm_qc_quer.Interval = job_qc_quote.Space.Value;
             tm_qc_quer.Enabled = job_qc_quote.JobType != 1;
         }
 
@@ -531,7 +530,7 @@ namespace Aide
             job_qc_news = job;
             job_qc_news.JobName = "汽车之家新闻";
             dal.AddJob(job_qc_news);
-            tm_qc_quer.Enabled = true;
+            tm_qc_news.Enabled = true;
         }
 
         void jct_QC_Query_SetJobEvent(Job job)
@@ -541,7 +540,7 @@ namespace Aide
             dal.AddJob(job_qc_quote);
             tm_qc_quer.Enabled = true;
         }
-        #endregion        
+        #endregion
 
         #region 易车网
         private void tm_yc_query_Tick(object sender, EventArgs e)
@@ -579,9 +578,29 @@ namespace Aide
             tm_yc_query.Enabled = true;
         }
         #endregion
-        #endregion
 
-        
+        #endregion
+        private int NewCount = 0;
+        private string state;
+
+        private void SaveNews_QC()
+        {
+            var result = qiche.PostNews();
+            lblNews.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":成功发布新闻" + result + "条");
+            dal.AddJobLog(new JobLog { JobID = job_qc_news.ID, Time = DateTime.Now.ToString("yyyy-MM-dd") });
+            if (result > 0)
+            {
+                Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_qc.Id, JobType = "资讯", JobTime = DateTime.Now });
+            }
+        }
+
+        private void tm_qc_news_Tick(object sender, EventArgs e)
+        {
+            tm_qc_news.Enabled = false;
+            ExecJob(job_qc_news, SaveNews_QC);
+            tm_qc_news.Interval = job_qc_news.Space.Value;
+            tm_qc_news.Enabled = job_qc_news.JobType != 1;
+        }
     }
 
     public class TextValue
