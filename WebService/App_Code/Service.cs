@@ -66,15 +66,20 @@ public class Service : System.Web.Services.WebService
 
                 if (result.UserType == 0)
                 {
-                    if (!dal.CheckTasteTime(result.Id))
-                    {
-                        userResult.Result = false;
-                        userResult.Message = "非常抱歉，该用户今天体验时间已到，暂时无法登陆。详询QQ：278815541。";
-                    }
-                    else
-                    {
-                        userResult.Data = result;
-                    }
+                    //如果是试用用户获取剩余的报价和新闻次数
+                    var num = dal.GetQueryAndNewsNum(result.Id);
+                    result.QueryNum = num[0];
+                    result.NewsNum = num[1];
+                    userResult.Data = result;
+                    //if (!dal.CheckTasteTime(result.Id))
+                    //{
+                    //    userResult.Result = false;
+                    //    userResult.Message = "非常抱歉，该用户今天体验时间已到，暂时无法登陆。详询QQ：278815541。";
+                    //}
+                    //else
+                    //{
+                    //    userResult.Data = result;
+                    //}
                 }
                 else
                 {
@@ -125,9 +130,9 @@ public class Service : System.Web.Services.WebService
     }
 
     [WebMethod]
-    public int UpdateUserType(int Id)
+    public int UpdateUserType(int Id, bool sendOrder, bool query, bool news)
     {
-        return dal.UpdateUserType(Id);
+        return dal.UpdateUserType(Id, sendOrder, query, news);
     }
 
     [WebMethod]

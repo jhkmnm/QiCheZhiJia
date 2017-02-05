@@ -27,6 +27,8 @@ namespace Model
         private DateTime? _LastAllotTime;
         private DateTime? _LastQuoteTime;
         private DateTime? _LastNewsTime;
+        private int? _QueryNum;
+        private int? _NewsNum;
 
         /// <summary>
         /// 
@@ -42,7 +44,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 
+        /// 来源网站
         /// </summary>
         [Field("SiteName")]
         public string SiteName
@@ -81,7 +83,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 
+        /// 企业名称
         /// </summary>
         [Field("Company")]
         public string Company
@@ -94,7 +96,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 
+        /// 企业ID
         /// </summary>
         [Field("CompanyID")]
         public string CompanyID
@@ -107,7 +109,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 
+        /// 联系信息
         /// </summary>
         [Field("LinkInfo")]
         public string LinkInfo
@@ -120,7 +122,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 
+        /// 用户类型 0试用 1付费
         /// </summary>
         [Field("UserType")]
         public int UserType
@@ -133,7 +135,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 
+        /// 付费标记, true已付费
         /// </summary>
         [Field("SendOrder")]
         public bool? SendOrder
@@ -146,7 +148,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 
+        /// 付费标记, true已付费
         /// </summary>
         [Field("Query")]
         public bool? Query
@@ -159,7 +161,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 
+        /// 付费标记, true已付费
         /// </summary>
         [Field("News")]
         public bool? News
@@ -172,7 +174,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 
+        /// 到期时间 付费服务全部使用这个时间进行判断
         /// </summary>
         [Field("DueTime")]
         public DateTime? DueTime
@@ -185,7 +187,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 
+        /// 运行状态
         /// </summary>
         [Field("Status")]
         public int Status
@@ -198,7 +200,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 
+        /// 最后抢单时间
         /// </summary>
         [Field("LastAllotTime")]
         public DateTime? LastAllotTime
@@ -211,7 +213,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 
+        /// 最后报价时间
         /// </summary>
         [Field("LastQuoteTime")]
         public DateTime? LastQuoteTime
@@ -224,7 +226,7 @@ namespace Model
             }
         }
         /// <summary>
-        /// 
+        /// 最后发布新闻时间
         /// </summary>
         [Field("LastNewsTime")]
         public DateTime? LastNewsTime
@@ -234,6 +236,32 @@ namespace Model
             {
                 this.OnPropertyValueChange("LastNewsTime");
                 this._LastNewsTime = value;
+            }
+        }
+        /// <summary>
+        /// 报价剩余次数
+        /// </summary>
+        [Field("QueryNum")]
+        public int? QueryNum
+        {
+            get { return _QueryNum; }
+            set
+            {
+                this.OnPropertyValueChange("QueryNum");
+                this._QueryNum = value;
+            }
+        }
+        /// <summary>
+        /// 发布新闻剩余次数
+        /// </summary>
+        [Field("NewsNum")]
+        public int? NewsNum
+        {
+            get { return _NewsNum; }
+            set
+            {
+                this.OnPropertyValueChange("NewsNum");
+                this._NewsNum = value;
             }
         }
         #endregion
@@ -277,6 +305,8 @@ namespace Model
 				_.LastAllotTime,
 				_.LastQuoteTime,
 				_.LastNewsTime,
+				_.QueryNum,
+				_.NewsNum,
 			};
         }
         /// <summary>
@@ -301,6 +331,8 @@ namespace Model
 				this._LastAllotTime,
 				this._LastQuoteTime,
 				this._LastNewsTime,
+				this._QueryNum,
+				this._NewsNum,
 			};
         }
         /// <summary>
@@ -328,9 +360,9 @@ namespace Model
             /// </summary>
             public readonly static Field Id = new Field("Id", "User", "");
             /// <summary>
-            /// 
+            /// 来源网站
             /// </summary>
-            public readonly static Field SiteName = new Field("SiteName", "User", "");
+            public readonly static Field SiteName = new Field("SiteName", "User", "来源网站");
             /// <summary>
             /// 
             /// </summary>
@@ -340,53 +372,61 @@ namespace Model
             /// </summary>
             public readonly static Field PassWord = new Field("PassWord", "User", "");
             /// <summary>
-            /// 
+            /// 企业名称
             /// </summary>
-            public readonly static Field Company = new Field("Company", "User", "");
+            public readonly static Field Company = new Field("Company", "User", "企业名称");
             /// <summary>
-            /// 
+            /// 企业ID
             /// </summary>
-            public readonly static Field CompanyID = new Field("CompanyID", "User", "");
+            public readonly static Field CompanyID = new Field("CompanyID", "User", "企业ID");
             /// <summary>
-            /// 
+            /// 联系信息
             /// </summary>
-            public readonly static Field LinkInfo = new Field("LinkInfo", "User", "");
+            public readonly static Field LinkInfo = new Field("LinkInfo", "User", "联系信息");
             /// <summary>
-            /// 
+            /// 用户类型 0试用 1付费
             /// </summary>
-            public readonly static Field UserType = new Field("UserType", "User", "");
+            public readonly static Field UserType = new Field("UserType", "User", "用户类型 0试用 1付费");
             /// <summary>
-            /// 
+            /// 付费标记, true已付费
             /// </summary>
-            public readonly static Field SendOrder = new Field("SendOrder", "User", "");
+            public readonly static Field SendOrder = new Field("SendOrder", "User", "付费标记, true已付费");
             /// <summary>
-            /// 
+            /// 付费标记, true已付费
             /// </summary>
-            public readonly static Field Query = new Field("Query", "User", "");
+            public readonly static Field Query = new Field("Query", "User", "付费标记, true已付费");
             /// <summary>
-            /// 
+            /// 付费标记, true已付费
             /// </summary>
-            public readonly static Field News = new Field("News", "User", "");
+            public readonly static Field News = new Field("News", "User", "付费标记, true已付费");
             /// <summary>
-            /// 
+            /// 到期时间 付费服务全部使用这个时间进行判断
             /// </summary>
-            public readonly static Field DueTime = new Field("DueTime", "User", "");
+            public readonly static Field DueTime = new Field("DueTime", "User", "到期时间 付费服务全部使用这个时间进行判断");
             /// <summary>
-            /// 
+            /// 运行状态
             /// </summary>
-            public readonly static Field Status = new Field("Status", "User", "");
+            public readonly static Field Status = new Field("Status", "User", "运行状态");
             /// <summary>
-            /// 
+            /// 最后抢单时间
             /// </summary>
-            public readonly static Field LastAllotTime = new Field("LastAllotTime", "User", "");
+            public readonly static Field LastAllotTime = new Field("LastAllotTime", "User", "最后抢单时间");
             /// <summary>
-            /// 
+            /// 最后报价时间
             /// </summary>
-            public readonly static Field LastQuoteTime = new Field("LastQuoteTime", "User", "");
+            public readonly static Field LastQuoteTime = new Field("LastQuoteTime", "User", "最后报价时间");
             /// <summary>
-            /// 
+            /// 最后发布新闻时间
             /// </summary>
-            public readonly static Field LastNewsTime = new Field("LastNewsTime", "User", "");
+            public readonly static Field LastNewsTime = new Field("LastNewsTime", "User", "最后发布新闻时间");
+            /// <summary>
+            /// 报价剩余次数
+            /// </summary>
+            public readonly static Field QueryNum = new Field("QueryNum", "User", "报价剩余次数");
+            /// <summary>
+            /// 发布新闻剩余次数
+            /// </summary>
+            public readonly static Field NewsNum = new Field("NewsNum", "User", "发布新闻剩余次数");
         }
         #endregion
     }

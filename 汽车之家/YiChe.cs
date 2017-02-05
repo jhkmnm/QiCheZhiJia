@@ -442,6 +442,13 @@ namespace Aide
                 int page = 1;
                 result.Result = false;
 
+                if(ordercount == 0)
+                {
+                    result.Message = "程序运行中，暂时未发现新线索";
+                    result.Result = true;
+                    SendResult(result);
+                }
+
                 while (ordercount > 0)
                 {
                     sb.Clear();
@@ -489,7 +496,7 @@ namespace Aide
                     {
                         dal.UpdateOrderSend(0, Tool.userInfo_yc.UserName);
                         dal.UpdateSendCount(Tool.userInfo_yc.UserName);
-                        result.Message += string.Format("成功认领{1}条线索{2}", DateTime.Now.ToString(), rnum, Environment.NewLine);
+                        result.Message = string.Format("成功认领{1}条线索{2}", DateTime.Now.ToString(), rnum, Environment.NewLine);
                         result.Result = true;
                         SendResult(result);
                     }

@@ -54,6 +54,16 @@ namespace AideAdmin.localhost {
         
         private System.Threading.SendOrPostCallback UpdUserDueTimeOperationCompleted;
         
+        private System.Threading.SendOrPostCallback UpdateLastQuoteTimeOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback UpdateLastNewsTimeOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback AddJobLogOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback DelJobLogOperationCompleted;
+        
+        private System.Threading.SendOrPostCallback GetJobLogByUserOperationCompleted;
+        
         private bool useDefaultCredentialsSetExplicitly;
         
         /// <remarks/>
@@ -127,6 +137,21 @@ namespace AideAdmin.localhost {
         
         /// <remarks/>
         public event UpdUserDueTimeCompletedEventHandler UpdUserDueTimeCompleted;
+        
+        /// <remarks/>
+        public event UpdateLastQuoteTimeCompletedEventHandler UpdateLastQuoteTimeCompleted;
+        
+        /// <remarks/>
+        public event UpdateLastNewsTimeCompletedEventHandler UpdateLastNewsTimeCompleted;
+        
+        /// <remarks/>
+        public event AddJobLogCompletedEventHandler AddJobLogCompleted;
+        
+        /// <remarks/>
+        public event DelJobLogCompletedEventHandler DelJobLogCompleted;
+        
+        /// <remarks/>
+        public event GetJobLogByUserCompletedEventHandler GetJobLogByUserCompleted;
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/HelloWorld", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
@@ -248,24 +273,30 @@ namespace AideAdmin.localhost {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UpdateUserType", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public int UpdateUserType(int Id) {
+        public int UpdateUserType(int Id, bool sendOrder, bool query, bool news) {
             object[] results = this.Invoke("UpdateUserType", new object[] {
-                        Id});
+                        Id,
+                        sendOrder,
+                        query,
+                        news});
             return ((int)(results[0]));
         }
         
         /// <remarks/>
-        public void UpdateUserTypeAsync(int Id) {
-            this.UpdateUserTypeAsync(Id, null);
+        public void UpdateUserTypeAsync(int Id, bool sendOrder, bool query, bool news) {
+            this.UpdateUserTypeAsync(Id, sendOrder, query, news, null);
         }
         
         /// <remarks/>
-        public void UpdateUserTypeAsync(int Id, object userState) {
+        public void UpdateUserTypeAsync(int Id, bool sendOrder, bool query, bool news, object userState) {
             if ((this.UpdateUserTypeOperationCompleted == null)) {
                 this.UpdateUserTypeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateUserTypeOperationCompleted);
             }
             this.InvokeAsync("UpdateUserType", new object[] {
-                        Id}, this.UpdateUserTypeOperationCompleted, userState);
+                        Id,
+                        sendOrder,
+                        query,
+                        news}, this.UpdateUserTypeOperationCompleted, userState);
         }
         
         private void OnUpdateUserTypeOperationCompleted(object arg) {
@@ -481,6 +512,151 @@ namespace AideAdmin.localhost {
         }
         
         /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UpdateLastQuoteTime", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public int UpdateLastQuoteTime(int Id) {
+            object[] results = this.Invoke("UpdateLastQuoteTime", new object[] {
+                        Id});
+            return ((int)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UpdateLastQuoteTimeAsync(int Id) {
+            this.UpdateLastQuoteTimeAsync(Id, null);
+        }
+        
+        /// <remarks/>
+        public void UpdateLastQuoteTimeAsync(int Id, object userState) {
+            if ((this.UpdateLastQuoteTimeOperationCompleted == null)) {
+                this.UpdateLastQuoteTimeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateLastQuoteTimeOperationCompleted);
+            }
+            this.InvokeAsync("UpdateLastQuoteTime", new object[] {
+                        Id}, this.UpdateLastQuoteTimeOperationCompleted, userState);
+        }
+        
+        private void OnUpdateLastQuoteTimeOperationCompleted(object arg) {
+            if ((this.UpdateLastQuoteTimeCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UpdateLastQuoteTimeCompleted(this, new UpdateLastQuoteTimeCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UpdateLastNewsTime", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public int UpdateLastNewsTime(int Id) {
+            object[] results = this.Invoke("UpdateLastNewsTime", new object[] {
+                        Id});
+            return ((int)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void UpdateLastNewsTimeAsync(int Id) {
+            this.UpdateLastNewsTimeAsync(Id, null);
+        }
+        
+        /// <remarks/>
+        public void UpdateLastNewsTimeAsync(int Id, object userState) {
+            if ((this.UpdateLastNewsTimeOperationCompleted == null)) {
+                this.UpdateLastNewsTimeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateLastNewsTimeOperationCompleted);
+            }
+            this.InvokeAsync("UpdateLastNewsTime", new object[] {
+                        Id}, this.UpdateLastNewsTimeOperationCompleted, userState);
+        }
+        
+        private void OnUpdateLastNewsTimeOperationCompleted(object arg) {
+            if ((this.UpdateLastNewsTimeCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.UpdateLastNewsTimeCompleted(this, new UpdateLastNewsTimeCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/AddJobLog", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public int AddJobLog(JobLog log) {
+            object[] results = this.Invoke("AddJobLog", new object[] {
+                        log});
+            return ((int)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void AddJobLogAsync(JobLog log) {
+            this.AddJobLogAsync(log, null);
+        }
+        
+        /// <remarks/>
+        public void AddJobLogAsync(JobLog log, object userState) {
+            if ((this.AddJobLogOperationCompleted == null)) {
+                this.AddJobLogOperationCompleted = new System.Threading.SendOrPostCallback(this.OnAddJobLogOperationCompleted);
+            }
+            this.InvokeAsync("AddJobLog", new object[] {
+                        log}, this.AddJobLogOperationCompleted, userState);
+        }
+        
+        private void OnAddJobLogOperationCompleted(object arg) {
+            if ((this.AddJobLogCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.AddJobLogCompleted(this, new AddJobLogCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/DelJobLog", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public int DelJobLog(int userId) {
+            object[] results = this.Invoke("DelJobLog", new object[] {
+                        userId});
+            return ((int)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void DelJobLogAsync(int userId) {
+            this.DelJobLogAsync(userId, null);
+        }
+        
+        /// <remarks/>
+        public void DelJobLogAsync(int userId, object userState) {
+            if ((this.DelJobLogOperationCompleted == null)) {
+                this.DelJobLogOperationCompleted = new System.Threading.SendOrPostCallback(this.OnDelJobLogOperationCompleted);
+            }
+            this.InvokeAsync("DelJobLog", new object[] {
+                        userId}, this.DelJobLogOperationCompleted, userState);
+        }
+        
+        private void OnDelJobLogOperationCompleted(object arg) {
+            if ((this.DelJobLogCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.DelJobLogCompleted(this, new DelJobLogCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetJobLogByUser", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public JobLog[] GetJobLogByUser(int userId) {
+            object[] results = this.Invoke("GetJobLogByUser", new object[] {
+                        userId});
+            return ((JobLog[])(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetJobLogByUserAsync(int userId) {
+            this.GetJobLogByUserAsync(userId, null);
+        }
+        
+        /// <remarks/>
+        public void GetJobLogByUserAsync(int userId, object userState) {
+            if ((this.GetJobLogByUserOperationCompleted == null)) {
+                this.GetJobLogByUserOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetJobLogByUserOperationCompleted);
+            }
+            this.InvokeAsync("GetJobLogByUser", new object[] {
+                        userId}, this.GetJobLogByUserOperationCompleted, userState);
+        }
+        
+        private void OnGetJobLogByUserOperationCompleted(object arg) {
+            if ((this.GetJobLogByUserCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetJobLogByUserCompleted(this, new GetJobLogByUserCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
         public new void CancelAsync(object userState) {
             base.CancelAsync(userState);
         }
@@ -523,6 +699,12 @@ namespace AideAdmin.localhost {
         
         private int userTypeField;
         
+        private System.Nullable<bool> sendOrderField;
+        
+        private System.Nullable<bool> queryField;
+        
+        private System.Nullable<bool> newsField;
+        
         private System.Nullable<System.DateTime> dueTimeField;
         
         private int statusField;
@@ -532,6 +714,10 @@ namespace AideAdmin.localhost {
         private System.Nullable<System.DateTime> lastQuoteTimeField;
         
         private System.Nullable<System.DateTime> lastNewsTimeField;
+        
+        private System.Nullable<int> queryNumField;
+        
+        private System.Nullable<int> newsNumField;
         
         /// <remarks/>
         public int Id {
@@ -615,6 +801,39 @@ namespace AideAdmin.localhost {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<bool> SendOrder {
+            get {
+                return this.sendOrderField;
+            }
+            set {
+                this.sendOrderField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<bool> Query {
+            get {
+                return this.queryField;
+            }
+            set {
+                this.queryField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<bool> News {
+            get {
+                return this.newsField;
+            }
+            set {
+                this.newsField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
         public System.Nullable<System.DateTime> DueTime {
             get {
                 return this.dueTimeField;
@@ -666,9 +885,32 @@ namespace AideAdmin.localhost {
                 this.lastNewsTimeField = value;
             }
         }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> QueryNum {
+            get {
+                return this.queryNumField;
+            }
+            set {
+                this.queryNumField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> NewsNum {
+            get {
+                return this.newsNumField;
+            }
+            set {
+                this.newsNumField = value;
+            }
+        }
     }
     
     /// <remarks/>
+    [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobLog))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Dictionaries))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(User))]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
@@ -720,6 +962,65 @@ namespace AideAdmin.localhost {
             }
             set {
                 this.dataField = value;
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.SerializableAttribute()]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://tempuri.org/")]
+    public partial class JobLog : Entity {
+        
+        private int idField;
+        
+        private System.Nullable<int> userIDField;
+        
+        private string jobTypeField;
+        
+        private System.Nullable<System.DateTime> jobTimeField;
+        
+        /// <remarks/>
+        public int ID {
+            get {
+                return this.idField;
+            }
+            set {
+                this.idField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> UserID {
+            get {
+                return this.userIDField;
+            }
+            set {
+                this.userIDField = value;
+            }
+        }
+        
+        /// <remarks/>
+        public string JobType {
+            get {
+                return this.jobTypeField;
+            }
+            set {
+                this.jobTypeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<System.DateTime> JobTime {
+            get {
+                return this.jobTimeField;
+            }
+            set {
+                this.jobTimeField = value;
             }
         }
     }
@@ -1065,6 +1366,136 @@ namespace AideAdmin.localhost {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void UpdateLastQuoteTimeCompletedEventHandler(object sender, UpdateLastQuoteTimeCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UpdateLastQuoteTimeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UpdateLastQuoteTimeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public int Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void UpdateLastNewsTimeCompletedEventHandler(object sender, UpdateLastNewsTimeCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class UpdateLastNewsTimeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal UpdateLastNewsTimeCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public int Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void AddJobLogCompletedEventHandler(object sender, AddJobLogCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class AddJobLogCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal AddJobLogCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public int Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void DelJobLogCompletedEventHandler(object sender, DelJobLogCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class DelJobLogCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal DelJobLogCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public int Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((int)(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    public delegate void GetJobLogByUserCompletedEventHandler(object sender, GetJobLogByUserCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetJobLogByUserCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetJobLogByUserCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public JobLog[] Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((JobLog[])(this.results[0]));
             }
         }
     }

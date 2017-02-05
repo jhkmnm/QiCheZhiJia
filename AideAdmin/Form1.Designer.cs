@@ -30,6 +30,20 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSiteName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colUserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCompany = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colLinkMan = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDueTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.textValueBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.textValueBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.lastAllotTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colQuote = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNews = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnDic = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
@@ -47,6 +61,10 @@
             this.rbtType_b = new System.Windows.Forms.RadioButton();
             this.rbtType_a = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txtLastNews = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.txtLastQuote = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.txtSiteName = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
             this.txtID = new System.Windows.Forms.TextBox();
@@ -70,33 +88,18 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.userBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.textValueBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.textValueBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.colID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSiteName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colUserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCompany = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colLinkMan = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDueTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.userTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.lastAllotTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colQuote = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colNews = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.txtLastQuote = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.txtLastNews = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
+            this.chkNews = new System.Windows.Forms.CheckBox();
+            this.chkQuery = new System.Windows.Forms.CheckBox();
+            this.chkSendOrder = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textValueBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textValueBindingSource1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textValueBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textValueBindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvData
@@ -130,6 +133,113 @@
             this.dgvData.Size = new System.Drawing.Size(614, 738);
             this.dgvData.TabIndex = 0;
             this.dgvData.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellClick);
+            // 
+            // colID
+            // 
+            this.colID.DataPropertyName = "Id";
+            this.colID.HeaderText = "序号";
+            this.colID.Name = "colID";
+            this.colID.ReadOnly = true;
+            this.colID.Width = 55;
+            // 
+            // colSiteName
+            // 
+            this.colSiteName.DataPropertyName = "SiteName";
+            this.colSiteName.HeaderText = "网站";
+            this.colSiteName.Name = "colSiteName";
+            this.colSiteName.ReadOnly = true;
+            this.colSiteName.Width = 80;
+            // 
+            // colUserName
+            // 
+            this.colUserName.DataPropertyName = "UserName";
+            this.colUserName.HeaderText = "用户名";
+            this.colUserName.Name = "colUserName";
+            this.colUserName.ReadOnly = true;
+            this.colUserName.Width = 80;
+            // 
+            // colCompany
+            // 
+            this.colCompany.DataPropertyName = "Company";
+            this.colCompany.HeaderText = "公司名称";
+            this.colCompany.Name = "colCompany";
+            this.colCompany.ReadOnly = true;
+            // 
+            // colLinkMan
+            // 
+            this.colLinkMan.DataPropertyName = "LinkInfo";
+            this.colLinkMan.HeaderText = "联系人";
+            this.colLinkMan.Name = "colLinkMan";
+            this.colLinkMan.ReadOnly = true;
+            // 
+            // colDueTime
+            // 
+            this.colDueTime.DataPropertyName = "DueTime";
+            this.colDueTime.HeaderText = "到期时间";
+            this.colDueTime.Name = "colDueTime";
+            this.colDueTime.ReadOnly = true;
+            this.colDueTime.Width = 90;
+            // 
+            // userTypeDataGridViewTextBoxColumn
+            // 
+            this.userTypeDataGridViewTextBoxColumn.DataPropertyName = "UserType";
+            this.userTypeDataGridViewTextBoxColumn.DataSource = this.textValueBindingSource;
+            this.userTypeDataGridViewTextBoxColumn.DisplayMember = "Text";
+            this.userTypeDataGridViewTextBoxColumn.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
+            this.userTypeDataGridViewTextBoxColumn.HeaderText = "类型";
+            this.userTypeDataGridViewTextBoxColumn.Name = "userTypeDataGridViewTextBoxColumn";
+            this.userTypeDataGridViewTextBoxColumn.ReadOnly = true;
+            this.userTypeDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.userTypeDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.userTypeDataGridViewTextBoxColumn.ValueMember = "Value";
+            this.userTypeDataGridViewTextBoxColumn.Width = 60;
+            // 
+            // textValueBindingSource
+            // 
+            this.textValueBindingSource.DataSource = typeof(AideAdmin.TextValue);
+            // 
+            // statusDataGridViewTextBoxColumn
+            // 
+            this.statusDataGridViewTextBoxColumn.DataPropertyName = "Status";
+            this.statusDataGridViewTextBoxColumn.DataSource = this.textValueBindingSource1;
+            this.statusDataGridViewTextBoxColumn.DisplayMember = "Text";
+            this.statusDataGridViewTextBoxColumn.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
+            this.statusDataGridViewTextBoxColumn.HeaderText = "状态";
+            this.statusDataGridViewTextBoxColumn.Name = "statusDataGridViewTextBoxColumn";
+            this.statusDataGridViewTextBoxColumn.ReadOnly = true;
+            this.statusDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.statusDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.statusDataGridViewTextBoxColumn.ValueMember = "Value";
+            this.statusDataGridViewTextBoxColumn.Width = 60;
+            // 
+            // textValueBindingSource1
+            // 
+            this.textValueBindingSource1.DataSource = typeof(AideAdmin.TextValue);
+            // 
+            // lastAllotTimeDataGridViewTextBoxColumn
+            // 
+            this.lastAllotTimeDataGridViewTextBoxColumn.DataPropertyName = "LastAllotTime";
+            this.lastAllotTimeDataGridViewTextBoxColumn.HeaderText = "抢单时间";
+            this.lastAllotTimeDataGridViewTextBoxColumn.Name = "lastAllotTimeDataGridViewTextBoxColumn";
+            this.lastAllotTimeDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // colQuote
+            // 
+            this.colQuote.DataPropertyName = "LastQuoteTime";
+            this.colQuote.HeaderText = "报价时间";
+            this.colQuote.Name = "colQuote";
+            this.colQuote.ReadOnly = true;
+            // 
+            // colNews
+            // 
+            this.colNews.DataPropertyName = "LastNewsTime";
+            this.colNews.HeaderText = "发布资讯时间";
+            this.colNews.Name = "colNews";
+            this.colNews.ReadOnly = true;
+            // 
+            // userBindingSource
+            // 
+            this.userBindingSource.DataSource = typeof(AideAdmin.localhost.User);
             // 
             // groupBox1
             // 
@@ -318,6 +428,9 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.chkNews);
+            this.groupBox2.Controls.Add(this.chkQuery);
+            this.groupBox2.Controls.Add(this.chkSendOrder);
             this.groupBox2.Controls.Add(this.txtLastNews);
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.txtLastQuote);
@@ -351,6 +464,40 @@
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "用户信息";
+            // 
+            // txtLastNews
+            // 
+            this.txtLastNews.Location = new System.Drawing.Point(95, 471);
+            this.txtLastNews.Name = "txtLastNews";
+            this.txtLastNews.ReadOnly = true;
+            this.txtLastNews.Size = new System.Drawing.Size(197, 21);
+            this.txtLastNews.TabIndex = 30;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(12, 475);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(77, 12);
+            this.label12.TabIndex = 29;
+            this.label12.Text = "最近资讯时间";
+            // 
+            // txtLastQuote
+            // 
+            this.txtLastQuote.Location = new System.Drawing.Point(95, 445);
+            this.txtLastQuote.Name = "txtLastQuote";
+            this.txtLastQuote.ReadOnly = true;
+            this.txtLastQuote.Size = new System.Drawing.Size(197, 21);
+            this.txtLastQuote.TabIndex = 28;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(12, 449);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(77, 12);
+            this.label11.TabIndex = 27;
+            this.label11.Text = "最近报价时间";
             // 
             // txtSiteName
             // 
@@ -398,9 +545,9 @@
             // 
             // btnUpdType
             // 
-            this.btnUpdType.Location = new System.Drawing.Point(69, 385);
+            this.btnUpdType.Location = new System.Drawing.Point(193, 385);
             this.btnUpdType.Name = "btnUpdType";
-            this.btnUpdType.Size = new System.Drawing.Size(223, 29);
+            this.btnUpdType.Size = new System.Drawing.Size(99, 29);
             this.btnUpdType.TabIndex = 21;
             this.btnUpdType.Text = "设置为付费用户";
             this.btnUpdType.UseVisualStyleBackColor = true;
@@ -556,146 +703,35 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "用户名";
             // 
-            // userBindingSource
+            // chkNews
             // 
-            this.userBindingSource.DataSource = typeof(AideAdmin.localhost.User);
+            this.chkNews.AutoSize = true;
+            this.chkNews.Location = new System.Drawing.Point(128, 392);
+            this.chkNews.Name = "chkNews";
+            this.chkNews.Size = new System.Drawing.Size(48, 16);
+            this.chkNews.TabIndex = 33;
+            this.chkNews.Text = "资讯";
+            this.chkNews.UseVisualStyleBackColor = true;
             // 
-            // textValueBindingSource
+            // chkQuery
             // 
-            this.textValueBindingSource.DataSource = typeof(AideAdmin.TextValue);
+            this.chkQuery.AutoSize = true;
+            this.chkQuery.Location = new System.Drawing.Point(72, 392);
+            this.chkQuery.Name = "chkQuery";
+            this.chkQuery.Size = new System.Drawing.Size(48, 16);
+            this.chkQuery.TabIndex = 32;
+            this.chkQuery.Text = "报价";
+            this.chkQuery.UseVisualStyleBackColor = true;
             // 
-            // textValueBindingSource1
+            // chkSendOrder
             // 
-            this.textValueBindingSource1.DataSource = typeof(AideAdmin.TextValue);
-            // 
-            // colID
-            // 
-            this.colID.DataPropertyName = "Id";
-            this.colID.HeaderText = "序号";
-            this.colID.Name = "colID";
-            this.colID.ReadOnly = true;
-            this.colID.Width = 55;
-            // 
-            // colSiteName
-            // 
-            this.colSiteName.DataPropertyName = "SiteName";
-            this.colSiteName.HeaderText = "网站";
-            this.colSiteName.Name = "colSiteName";
-            this.colSiteName.ReadOnly = true;
-            this.colSiteName.Width = 80;
-            // 
-            // colUserName
-            // 
-            this.colUserName.DataPropertyName = "UserName";
-            this.colUserName.HeaderText = "用户名";
-            this.colUserName.Name = "colUserName";
-            this.colUserName.ReadOnly = true;
-            this.colUserName.Width = 80;
-            // 
-            // colCompany
-            // 
-            this.colCompany.DataPropertyName = "Company";
-            this.colCompany.HeaderText = "公司名称";
-            this.colCompany.Name = "colCompany";
-            this.colCompany.ReadOnly = true;
-            // 
-            // colLinkMan
-            // 
-            this.colLinkMan.DataPropertyName = "LinkInfo";
-            this.colLinkMan.HeaderText = "联系人";
-            this.colLinkMan.Name = "colLinkMan";
-            this.colLinkMan.ReadOnly = true;
-            // 
-            // colDueTime
-            // 
-            this.colDueTime.DataPropertyName = "DueTime";
-            this.colDueTime.HeaderText = "到期时间";
-            this.colDueTime.Name = "colDueTime";
-            this.colDueTime.ReadOnly = true;
-            this.colDueTime.Width = 90;
-            // 
-            // userTypeDataGridViewTextBoxColumn
-            // 
-            this.userTypeDataGridViewTextBoxColumn.DataPropertyName = "UserType";
-            this.userTypeDataGridViewTextBoxColumn.DataSource = this.textValueBindingSource;
-            this.userTypeDataGridViewTextBoxColumn.DisplayMember = "Text";
-            this.userTypeDataGridViewTextBoxColumn.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.userTypeDataGridViewTextBoxColumn.HeaderText = "类型";
-            this.userTypeDataGridViewTextBoxColumn.Name = "userTypeDataGridViewTextBoxColumn";
-            this.userTypeDataGridViewTextBoxColumn.ReadOnly = true;
-            this.userTypeDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.userTypeDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.userTypeDataGridViewTextBoxColumn.ValueMember = "Value";
-            this.userTypeDataGridViewTextBoxColumn.Width = 60;
-            // 
-            // statusDataGridViewTextBoxColumn
-            // 
-            this.statusDataGridViewTextBoxColumn.DataPropertyName = "Status";
-            this.statusDataGridViewTextBoxColumn.DataSource = this.textValueBindingSource1;
-            this.statusDataGridViewTextBoxColumn.DisplayMember = "Text";
-            this.statusDataGridViewTextBoxColumn.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.statusDataGridViewTextBoxColumn.HeaderText = "状态";
-            this.statusDataGridViewTextBoxColumn.Name = "statusDataGridViewTextBoxColumn";
-            this.statusDataGridViewTextBoxColumn.ReadOnly = true;
-            this.statusDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.statusDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.statusDataGridViewTextBoxColumn.ValueMember = "Value";
-            this.statusDataGridViewTextBoxColumn.Width = 60;
-            // 
-            // lastAllotTimeDataGridViewTextBoxColumn
-            // 
-            this.lastAllotTimeDataGridViewTextBoxColumn.DataPropertyName = "LastAllotTime";
-            this.lastAllotTimeDataGridViewTextBoxColumn.HeaderText = "抢单时间";
-            this.lastAllotTimeDataGridViewTextBoxColumn.Name = "lastAllotTimeDataGridViewTextBoxColumn";
-            this.lastAllotTimeDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // colQuote
-            // 
-            this.colQuote.DataPropertyName = "LastQuoteTime";
-            this.colQuote.HeaderText = "报价时间";
-            this.colQuote.Name = "colQuote";
-            this.colQuote.ReadOnly = true;
-            // 
-            // colNews
-            // 
-            this.colNews.DataPropertyName = "LastNewsTime";
-            this.colNews.HeaderText = "发布资讯时间";
-            this.colNews.Name = "colNews";
-            this.colNews.ReadOnly = true;
-            // 
-            // txtLastQuote
-            // 
-            this.txtLastQuote.Location = new System.Drawing.Point(95, 445);
-            this.txtLastQuote.Name = "txtLastQuote";
-            this.txtLastQuote.ReadOnly = true;
-            this.txtLastQuote.Size = new System.Drawing.Size(197, 21);
-            this.txtLastQuote.TabIndex = 28;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 449);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(77, 12);
-            this.label11.TabIndex = 27;
-            this.label11.Text = "最近报价时间";
-            // 
-            // txtLastNews
-            // 
-            this.txtLastNews.Location = new System.Drawing.Point(95, 471);
-            this.txtLastNews.Name = "txtLastNews";
-            this.txtLastNews.ReadOnly = true;
-            this.txtLastNews.Size = new System.Drawing.Size(197, 21);
-            this.txtLastNews.TabIndex = 30;
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(12, 475);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(77, 12);
-            this.label12.TabIndex = 29;
-            this.label12.Text = "最近资讯时间";
+            this.chkSendOrder.AutoSize = true;
+            this.chkSendOrder.Location = new System.Drawing.Point(16, 392);
+            this.chkSendOrder.Name = "chkSendOrder";
+            this.chkSendOrder.Size = new System.Drawing.Size(48, 16);
+            this.chkSendOrder.TabIndex = 31;
+            this.chkSendOrder.Text = "抢单";
+            this.chkSendOrder.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -708,6 +744,9 @@
             this.Name = "Form1";
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textValueBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.textValueBindingSource1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
@@ -717,9 +756,6 @@
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.userBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textValueBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.textValueBindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -785,6 +821,9 @@
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtLastQuote;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.CheckBox chkNews;
+        private System.Windows.Forms.CheckBox chkQuery;
+        private System.Windows.Forms.CheckBox chkSendOrder;
     }
 }
 

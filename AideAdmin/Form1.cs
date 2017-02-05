@@ -58,7 +58,6 @@ namespace AideAdmin
             if (id > 0)
             {
                 DateTime dt = dtpDueTime.Value;
-
                 var v = Tool.service.UpdUserDueTime(id, dt);
             }
         }
@@ -86,7 +85,7 @@ namespace AideAdmin
             int id = GetUserID();
             if (id > 0)
             {
-                var r = Tool.service.UpdateUserType(id);
+                var r = Tool.service.UpdateUserType(id, chkSendOrder.Checked, chkQuery.Checked, chkNews.Checked);
 
                 if (r > 0)
                 {
@@ -176,6 +175,9 @@ namespace AideAdmin
             txtLastAllTime.Text = SelectedUser.LastAllotTime == null ? "" : SelectedUser.LastAllotTime.Value.ToString();
             txtLastQuote.Text = SelectedUser.LastQuoteTime == null ? "" : SelectedUser.LastQuoteTime.Value.ToString();
             txtLastNews.Text = SelectedUser.LastNewsTime == null ? "" : SelectedUser.LastNewsTime.Value.ToString();
+            chkSendOrder.Checked = SelectedUser.SendOrder.HasValue ? SelectedUser.SendOrder.Value : false;
+            chkQuery.Checked = SelectedUser.Query.HasValue ? SelectedUser.Query.Value : false;
+            chkNews.Checked = SelectedUser.News.HasValue ? SelectedUser.News.Value : false;
         }
 
         /// <summary>

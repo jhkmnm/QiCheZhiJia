@@ -325,13 +325,18 @@ namespace Aide
                     var total = orders.Count + sendlogs.Sum(s => s.OrderCount);
                     var count = nicks.Count;
 
+                    //更新发送数量
+                    nicks.ForEach(f => f.Send = sendlogs.Where(w => w.NickID == f.Id).Sum(s => s.OrderCount));
+                    //按发送数量排序，较少优先
+                    nicks.Sort((a, b) => a.Send.Value.CompareTo(b.Send.Value));
+
                     for (int i = 0; i < nicks.Count; i++)
                     {
                         var sendcount = GetAvg(total, count);
                         if (sendcount <= 0)
                             break;
 
-                        int send = sendcount;                        
+                        int send = sendcount;
                         total -= sendcount;
                         count--;
 
@@ -342,6 +347,8 @@ namespace Aide
                             {
                                 send = sendcount - sendlog.OrderCount;
                             }
+                            else
+                                send = 0;
                         }
 
                         var sendorders = orders.Take(send).ToList();
@@ -353,12 +360,19 @@ namespace Aide
                             {
                                 dal.UpdateOrderSend(a.Id, nicks[i].Id);
                                 dal.UpdateSendCount(nicks[i].Id);
-                                result.Message += string.Format("系统事件{0}将客户分配给销售顾问{1}{2}", DateTime.Now.ToString(), nicks[i].Nick, Environment.NewLine);
+                                dal.AddSendLog(nicks[i].Id, 1);
+                                result.Message = string.Format("系统事件{0}将客户分配给销售顾问{1}{2}", DateTime.Now.ToString(), nicks[i].Nick, Environment.NewLine);
                                 result.Result = true;
                                 SendResult(result);
                             }
                         });
                     }
+                }
+                else
+                {
+                    result.Message = "程序运行中，暂时未发现新线索";
+                    result.Result = true;
+                    SendResult(result);
                 }
                 
                 //间隔2分钟

@@ -709,6 +709,10 @@ namespace Aide.Service {
         
         private System.Nullable<System.DateTime> lastNewsTimeField;
         
+        private System.Nullable<int> queryNumField;
+        
+        private System.Nullable<int> newsNumField;
+        
         /// <remarks/>
         public int Id {
             get {
@@ -875,6 +879,28 @@ namespace Aide.Service {
                 this.lastNewsTimeField = value;
             }
         }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> QueryNum {
+            get {
+                return this.queryNumField;
+            }
+            set {
+                this.queryNumField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> NewsNum {
+            get {
+                return this.newsNumField;
+            }
+            set {
+                this.newsNumField = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -944,7 +970,7 @@ namespace Aide.Service {
         
         private int idField;
         
-        private int userIDField;
+        private System.Nullable<int> userIDField;
         
         private string jobTypeField;
         
@@ -961,7 +987,8 @@ namespace Aide.Service {
         }
         
         /// <remarks/>
-        public int UserID {
+        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
+        public System.Nullable<int> UserID {
             get {
                 return this.userIDField;
             }

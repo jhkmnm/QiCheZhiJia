@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Runtime.InteropServices;
 using System.Net;
+using Dos.Common;
 
 namespace Aide
 {
@@ -22,23 +23,22 @@ namespace Aide
         DAL dal = new DAL();
         Thread th_qc;
         Thread th_yc;
-        string dealerid_yc = "";
+        string dealerid_yc = "";        
 
         Job job_qc_quote;
         Job job_qc_news;
         Job job_yc_quote;
         Job job_yc_news;
 
-
         /*
          * 登录后,判断用户类型,如果是试用,抢单判断试用时间,新闻、报价判断已经报价过的次数
          * 如果是付费，判断付费模式(抢单、新闻、报价),在有效期内，购买的服务都可以使用
-         */         
-
+         */
 
         public FormLogin()
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterScreen;
         }
 
         #region 窗体事件
@@ -80,6 +80,10 @@ namespace Aide
             if (!result.Result)
             {
                 MessageBox.Show(result.Message);
+                if(result.Message.Contains("验证码输入有误"))
+                {
+                    LoadValidateCode();
+                }
             }
             else
             {
@@ -91,8 +95,6 @@ namespace Aide
                         qiche.SavePw();
                     }
                     LoadUser(Tool.userInfo_qc);
-                    LoadOrder_QC();
-                    LoadJob();
                 }
                 else
                 {
@@ -101,8 +103,6 @@ namespace Aide
                         yiche.SavePw();
                     }
                     LoadUser(Tool.userInfo_yc);
-                    LoadOrder_YC();
-                    LoadJob();
                 }
             }
         }
@@ -139,6 +139,9 @@ namespace Aide
             {
                 Tool.service.UpdateLoginLogByLogOut(Tool.userInfo_yc.Id);
             }
+
+            if (th_qc != null) th_qc.Abort();
+            if (th_yc != null) th_yc.Abort();
         }
         #endregion
 
@@ -219,14 +222,127 @@ namespace Aide
 
         private void LoadUser(Service.User user)
         {
-            lblCode.Text = user.Id.ToString();
-            lblEnd.Text = user.DueTime.HasValue ? user.DueTime.ToString() : "";
-            lblUserName.Text = user.UserName;
-            lblUserType.Text = user.UserType == 0 ? "试用" : "付费";
+            try
+            {
+                lblCode.Text = user.Id.ToString();
+                lblEnd.Text = user.DueTime.HasValue ? user.DueTime.ToString() : "";
+                lblUserName.Text = user.UserName;
+                lblUserType.Text = user.UserType == 0 ? "试用" : "付费";
+                lbl_QC_QueryNum.Text = user.Query.Value ? "按到期时间计算" : user.QueryNum.Value.ToString();
+                lbl_QC_NewsNum.Text = user.News.Value ? "按到期时间计算" : user.NewsNum.Value.ToString();
+
+                #region 抢单判断
+                if (user.UserType == 0 || !user.SendOrder.Value)
+                {
+                    if (!Tool.service.CheckTasteTime(user.Id))
+                    {
+                        if (site == "汽车")
+                        {
+                            lblQD_QC.Text = "非常抱歉，今天抢单体验时间已到";
+                            btnSendOrder.Enabled = btnStop.Enabled = false;
+                            if (th_qc != null)
+                                th_qc.Abort();
+                        }
+                        else
+                        {
+                            lblQD_YC.Text = "非常抱歉，今天抢单体验时间已到";
+                            btnStart_YC.Enabled = btnStop_YC.Enabled = false;
+                            if (th_yc != null)
+                                th_yc.Abort();
+                        }
+                    }
+                    else
+                    {
+                        if (site == "汽车")
+                        {
+                            if (th_qc == null)
+                                LoadOrder();
+                        }
+                        else
+                        {
+                            if (th_yc == null)
+                                LoadOrder();
+                        }
+                    }
+                }
+                else
+                {
+                    if (site == "汽车")
+                    {
+                        if (th_qc == null)
+                            LoadOrder();
+                    }
+                    else
+                    {
+                        if (th_yc == null)
+                            LoadOrder();
+                    }
+                }
+                #endregion
+
+                #region 报价判断
+                if (user.UserType == 0 || !user.Query.Value)
+                {
+                    if (user.QueryNum == 0)
+                    {
+                        if (site == "汽车")
+                        {
+                            lblQC_QC.Text = "非常抱歉，今天报价次数已使用完";
+                            jct_QC_Query.Enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        LoadJob_Query();
+                    }
+                }
+                else
+                {
+                    LoadJob_Query();
+                }
+                #endregion
+
+                #region 资讯判断
+                if (user.UserType == 0 || !user.News.Value)
+                {
+                    if (user.NewsNum == 0)
+                    {
+                        if (site == "汽车")
+                        {
+                            lbl_NS_QC.Text = "非常抱歉，今天发布资讯次数已使用完";
+                            jct_QC_News.Enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        LoadJob_News();
+                    }
+                }
+                else
+                {
+                    LoadJob_News();
+                }
+                #endregion
+            }
+            catch(Exception ex)
+            {
+                LogHelper.Error(ex.Message + ex.StackTrace);
+            }
         }
         #endregion
 
         #region 抢单
+        private void LoadOrder()
+        {
+            if (site == "汽车")
+            {
+                LoadOrder_QC();
+            }
+            else
+            {
+                LoadOrder_YC();
+            }
+        }
 
         #region 汽车之家
         private void LoadOrder_QC()
@@ -306,6 +422,7 @@ namespace Aide
                 }
             }
 
+            qiche.SendOrderEvent -= qiche_SendOrderEvent;
             qiche.SendOrderEvent += qiche_SendOrderEvent;
             th_qc = new Thread(qiche.SendOrder);
             th_qc.Start();
@@ -316,7 +433,11 @@ namespace Aide
             this.Invoke(new Action(() =>
             {
                 if (vr.Result)
+                {
                     lbxSendOrder.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + vr.Message);
+                }
+
+                LoadUser(Tool.userInfo_qc);
             }));
         }
 
@@ -423,13 +544,13 @@ namespace Aide
         private void Yiche_SendOrderEvent(ViewResult vr)
         {
             this.Invoke(new Action(() =>
-            {
+            {                
                 if (vr.Result)
                     lbxSendOrder_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + vr.Message);
+
+                LoadUser(Tool.userInfo_yc);
             }));
         }
-
-
 
         private void btnStop_YC_Click(object sender, EventArgs e)
         {
@@ -442,27 +563,35 @@ namespace Aide
 
         #region 报价
 
-        private void LoadJob()
+        private void LoadJob_Query()
         {
             if (site == "汽车")
             {
                 job_qc_quote = dal.GetJob("汽车之家报价");
-                jct_QC_Query.SetJob(job_qc_quote);
                 jct_QC_Query.SetJobEvent += jct_QC_Query_SetJobEvent;
-
-                job_qc_news = dal.GetJob("汽车之家新闻");
-                jct_QC_News.SetJob(job_qc_news);
-                jct_QC_News.SetJobEvent += jc_QC_News_SetJobEvent;
+                jct_QC_Query.SetJob(job_qc_quote);                
             }
             else
             {
                 job_yc_quote = dal.GetJob("易车网报价");
-                jct_YC_Query.SetJob(job_yc_quote);
                 jct_YC_Query.SetJobEvent += jct_YC_Query_SetJobEvent;
+                jct_YC_Query.SetJob(job_yc_quote);                
+            }
+        }
 
+        private void LoadJob_News()
+        {
+            if (site == "汽车")
+            {
+                job_qc_news = dal.GetJob("汽车之家新闻");
+                jct_QC_News.SetJobEvent += jc_QC_News_SetJobEvent;
+                jct_QC_News.SetJob(job_qc_news);                
+            }
+            else
+            {
                 job_yc_news = dal.GetJob("易车网新闻");
-                jct_YC_News.SetJob(job_yc_news);
                 jct_YC_News.SetJobEvent += jct_YC_News_SetJobEvent;
+                jct_YC_News.SetJob(job_yc_news);                
             }
         }
 
@@ -510,7 +639,8 @@ namespace Aide
             tm_qc_quer.Enabled = false;
             ExecJob(job_qc_quote, SavePrice_QC);
             tm_qc_quer.Interval = job_qc_quote.Space.Value;
-            tm_qc_quer.Enabled = job_qc_quote.JobType != 1;
+            LoadUser(Tool.userInfo_qc);
+            tm_qc_quer.Enabled = job_qc_quote.JobType != 1 && jct_QC_Query.Enabled;
         }
 
         private void SavePrice_QC()
@@ -522,15 +652,8 @@ namespace Aide
             {
                 Tool.service.UpdateLastQuoteTime(Tool.userInfo_qc.Id);
                 Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_qc.Id, JobType = "报价", JobTime = DateTime.Now });
+                Tool.userInfo_qc.QueryNum--;
             }
-        }
-
-        void jc_QC_News_SetJobEvent(Job job)
-        {
-            job_qc_news = job;
-            job_qc_news.JobName = "汽车之家新闻";
-            dal.AddJob(job_qc_news);
-            tm_qc_news.Enabled = true;
         }
 
         void jct_QC_Query_SetJobEvent(Job job)
@@ -547,7 +670,8 @@ namespace Aide
         {
             tm_yc_query.Enabled = false;
             ExecJob(job_yc_quote, SavePrice_YC);
-            tm_yc_query.Enabled = job_yc_quote.JobType != 1;
+            LoadUser(Tool.userInfo_qc);            
+            tm_yc_query.Enabled = job_yc_quote.JobType != 1 && jct_YC_Query.Enabled;
         }
 
         private void SavePrice_YC()
@@ -559,15 +683,8 @@ namespace Aide
             {
                 Tool.service.UpdateLastQuoteTime(Tool.userInfo_yc.Id);
                 Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_yc.Id, JobType = "报价", JobTime = DateTime.Now });
+                Tool.userInfo_yc.QueryNum--;
             }
-        }
-
-        void jct_YC_News_SetJobEvent(Job job)
-        {
-            job_yc_news = job;
-            job_yc_news.JobName = "易车网新闻";
-            dal.AddJob(job_yc_news);
-            tm_yc_news.Enabled = true;
         }
 
         private void jct_YC_Query_SetJobEvent(Job job)
@@ -581,6 +698,15 @@ namespace Aide
 
         #endregion
 
+        #region 资讯
+        #region 汽车之家
+        void jc_QC_News_SetJobEvent(Job job)
+        {
+            job_qc_news = job;
+            job_qc_news.JobName = "汽车之家新闻";
+            dal.AddJob(job_qc_news);
+            tm_qc_news.Enabled = true;
+        }
         private void SaveNews_QC()
         {
             var result = qiche.PostNews();
@@ -589,6 +715,7 @@ namespace Aide
             if (result > 0)
             {
                 Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_qc.Id, JobType = "资讯", JobTime = DateTime.Now });
+                Tool.userInfo_qc.NewsNum--;
             }
         }
 
@@ -597,8 +724,19 @@ namespace Aide
             tm_qc_news.Enabled = false;
             ExecJob(job_qc_news, SaveNews_QC);
             tm_qc_news.Interval = job_qc_news.Space.Value;
-            tm_qc_news.Enabled = job_qc_news.JobType != 1;
+            LoadUser(Tool.userInfo_qc);
+            tm_qc_news.Enabled = job_qc_news.JobType != 1 && jct_QC_News.Enabled;
         }
+        #endregion
+
+        void jct_YC_News_SetJobEvent(Job job)
+        {
+            job_yc_news = job;
+            job_yc_news.JobName = "易车网新闻";
+            dal.AddJob(job_yc_news);
+            tm_yc_news.Enabled = true;
+        }
+        #endregion
     }
 
     public class TextValue

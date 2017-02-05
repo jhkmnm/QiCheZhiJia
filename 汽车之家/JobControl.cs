@@ -61,13 +61,14 @@ namespace Aide
                 {
                     p_A_QC.Enabled = false;
                     p_B_QC.Enabled = true;
-                    rbtQuote_B_QC.Checked = true;
-                    nudQuote_QC.Value = job.Space.Value;
-                    ddlQuote_QC.SelectedIndex = job.Space.Value / 1000 / 60 / 60 == 24 ? 1 : 0;
+                    rbtQuote_B_QC.Checked = true;                    
+                    ddlQuote_QC.SelectedIndex = job.Space.Value / 1000 / 60 / 60 >= 1 ? 1 : 0;
+                    nudQuote_QC.Value = ddlQuote_QC.SelectedIndex == 1 ? job.Space.Value / 1000 / 60 / 60 : job.Space.Value / 1000 / 60;
                     dtpQuote_S_QC.Value = Convert.ToDateTime(job.StartTime);
                     dtpQuote_E_QC.Value = Convert.ToDateTime(job.EndTime);
-                    lblState.Text = string.Format("在每天的{0}到{1}，每隔{2}{3}执行一次", job.StartTime, job.EndTime, job.Space.Value, ddlQuote_QC.Text);
+                    lblState.Text = string.Format("在每天的{0}到{1}，每隔{2}{3}执行一次", job.StartTime, job.EndTime, nudQuote_QC.Value, ddlQuote_QC.Text);
                 }
+                SendResult(job);
             }
         }
 
@@ -112,7 +113,7 @@ namespace Aide
                     job.EndTime = dtpQuote_E_QC.Value.ToString("HH:mm:ss");
                     int interval = ddlQuote_QC.Text == "分钟" ? Convert.ToInt32(nudQuote_QC.Value) * 60 * 1000 : Convert.ToInt32(nudQuote_QC.Value) * 60 * 60 * 1000;
                     job.Space = interval;
-                    lblState.Text = string.Format("在每天的{0}到{1}，每隔{2}{3}执行一次", job.StartTime, job.EndTime, job.Space.Value, ddlQuote_QC.Text);
+                    lblState.Text = string.Format("在每天的{0}到{1}，每隔{2}{3}执行一次", job.StartTime, job.EndTime, nudQuote_QC.Value, ddlQuote_QC.Text);
                 }
             }
             SendResult(job);

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Model;
 using Dos.Common;
+using System.Linq;
 
 public class DAL
 {
@@ -134,9 +135,14 @@ public class DAL
     /// </summary>
     /// <param name="Id"></param>
     /// <returns></returns>
-    public int UpdateUserType(int Id)
+    public int UpdateUserType(int Id, bool sendOrder, bool query, bool news)
     {
-        return DB.Context.Update<User>(User._.UserType, 1, User._.Id == Id);
+        Dictionary<Field, object> upvalue = new Dictionary<Field, object>();
+        upvalue.Add(User._.UserType, 1);
+        upvalue.Add(User._.SendOrder, sendOrder);
+        upvalue.Add(User._.Query, query);
+        upvalue.Add(User._.News, news);
+        return DB.Context.Update<User>(upvalue, User._.Id == Id);
     }
 
     /// <summary>
@@ -281,6 +287,22 @@ public class DAL
             .Where(where).ToFirst();
 
         return Convert.ToInt32(duetime.Value) > ((log.LoginTime.HasValue ? log.LoginTime.Value : 0) + (float)(DateTime.Now - log.LastLoginTime).TotalHours);
+    }
+
+    /// <summary>
+    /// 获取指定用户剩余报价和新闻次数
+    /// </summary>
+    /// <param name="userId"></param>
+    /// <returns></returns>
+    public int[] GetQueryAndNewsNum(int userId)
+    {        
+        var queryDic = GetDic("报价次数");
+        var newDic = GetDic("发布新闻次数");
+
+        var log = GetJobLogByUser(userId);
+        var queryNum = Convert.ToInt32(queryDic.Value) - log.Where(w => w.JobType == "报价" && w.JobTime.Value.Date.Equals(DateTime.Now.Date)).Count();
+        var newNum = Convert.ToInt32(newDic.Value) - log.Where(w => w.JobType == "资讯" && w.JobTime.Value.Date.Equals(DateTime.Now.Date)).Count();
+        return new int[] { queryNum, newNum };
     }
     #endregion
 
