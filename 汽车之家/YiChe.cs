@@ -90,6 +90,20 @@ namespace Aide
             return GetHtml(item);
         }
 
+        public HtmlDocument Post_CheYiTong(string url, string postdata)
+        {
+            HttpItem item = new HttpItem
+            {
+                URL = url,
+                Postdata = postdata,
+                Cookie = app_CheYiTong_Cookie,
+                ContentType = "application/x-www-form-urlencoded",
+                Method = "POST",
+                UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
+            };
+            return GetHtml(item);
+        }
+
         private HtmlDocument GetHtml(HttpItem item)
         {
             HttpHelper http = new HttpHelper();
@@ -595,6 +609,30 @@ namespace Aide
                 var doc = GetHtml(item);
             }
             return new ViewResult { Result = true, Message = "您的报价已经是最新的了" };
+        }
+        #endregion
+
+        #region 新闻
+        /// <summary>
+        /// 获取指定页面内容
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public HtmlDocument InforManagerNews(string url)
+        {
+            if(string.IsNullOrEmpty(app_CheYiTong_Cookie))
+            {
+                app_CheYiTong_Cookie = OsLogin(app_CheYiTong);
+            }
+
+            var item = new HttpItem()
+            {
+                URL = url,
+                Cookie = app_CheYiTong_Cookie
+            };
+            var htmlDoc = GetHtml(item);
+
+            return htmlDoc;
         }
         #endregion
     }

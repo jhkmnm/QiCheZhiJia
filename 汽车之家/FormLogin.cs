@@ -737,6 +737,11 @@ namespace Aide
             tm_yc_news.Enabled = true;
         }
         #endregion
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            new Form_YC(yiche).Show();
+        }
     }
 
     public class TextValue
