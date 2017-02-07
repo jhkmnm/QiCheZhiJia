@@ -132,6 +132,63 @@ namespace Aide
             title_number.Text = number.InnerText;
             var lead = doc.GetElementbyId("txtLead");
             txtLead.Text = lead.GetAttributeValue("backvalue", "");
+            #region 颜色列表
+            var colorList = doc.DocumentNode.SelectNodes("//div[@id='UpdatePanel7']/span/label");
+            int xstep = 88;
+            int ystep = 22;
+            int xstart = 8;
+            int ystart = 30;
+            for (int i = 0; i < colorList.Count; i++)
+            {
+                var value = colorList[i].GetAttributeValue("for", "");
+                var title = colorList[i].GetAttributeValue("title", "");
+                int x = xstart + (xstep * i);
+                int y = ystart;
+
+                if (i > 3)
+                {
+                    x = xstart + (xstep * (i - 4));
+                    y = ystart + ystep;
+                }
+
+                var chk = new CheckBox();
+                
+                chk.Location = new System.Drawing.Point(x, y);
+                chk.Name = "chk" + value;
+                chk.Tag = value;
+                chk.Text = title;
+
+                chk.AutoSize = true;
+                chk.Size = new System.Drawing.Size(72, 16);
+                chk.TabStop = true;
+                chk.UseVisualStyleBackColor = true;
+                this.pColor.Controls.Add(chk);
+            }
+            #endregion
+
+            #region 车型
+            PromotionCars cars = new PromotionCars();
+            cars.Cars = new List<Car>();
+            var yeartype = doc.DocumentNode.SelectNodes("//input[@name='chklYearType']");
+            yeartype.ToList().ForEach(f => cars.YearType.Add(f.GetAttributeValue("value", "")));
+
+            var cartrs = doc.DocumentNode.SelectNodes("//tbody[@id='listInfo']/tr");
+            foreach(HtmlNode node in cartrs)
+            {
+                var carinfotr = node.GetAttributeValue("carinfotr", "");
+                if(!string.IsNullOrWhiteSpace(carinfotr))
+                {
+                    var tds = node.SelectNodes(".//td");
+                    var car = new Car();
+                    car.TypeName = tds[0].GetAttributeValue("title", "");
+                    var typeinput = tds[0].SelectSingleNode(".//input[@type='checkbox']");
+                    car.YearType = typeinput.GetAttributeValue("yeartype", "");
+                    car.ID = Convert.ToInt32(typeinput.GetAttributeValue("value", ""));
+                }
+            }
+            var note = doc.GetElementbyId("LimitCarListNote");
+            cars.Note = note.InnerText;
+            #endregion
         }
 
         void StoreState_CheckedChanged(object sender, EventArgs e)
@@ -187,7 +244,7 @@ namespace Aide
             var hdfnewstype = doc.GetElementbyId("hdfNewsType");
             sb.AppendFormat("hdfNewsType={0}&", hdfnewstype.GetAttributeValue("value", ""));
 
-            var rptcarbrandhdfcbid = doc.GetElementbyId("rptCarBrand$ctl00$hdfCBID");
+            var rptcarbrandhdfcbid = doc.GetElementbyId("rptCarBrand_ctl00_hdfCBID");
             sb.AppendFormat("{0}={1}&",HttpHelper.URLEncode("rptCarBrand$ctl00$hdfCBID"), rptcarbrandhdfcbid.GetAttributeValue("value", ""));
             
             sb.AppendFormat("CarSerialGroup={0}&hdfCarIDs=&hdfCarNewsList=&", value);
@@ -217,5 +274,66 @@ namespace Aide
             var rbt = (RadioButton)sender;
             InitForm(rbt.Tag.ToString());
         }
+
+        private void btnDetail_Click(object sender, EventArgs e)
+        {
+            btnDetail.Visible = false;
+            pDetail.Location = pSimple.Location;
+            pSimple.Visible = false;
+            btnSend.Location = new Point(btnSend.Location.X, btnSend.Location.Y + pDetail.Size.Height + 27);
+        }
+    }
+
+    public class PromotionCars
+    {
+        /// <summary>
+        /// 年款
+        /// </summary>
+        public List<string> YearType { get; set; }
+        /// <summary>
+        /// 车列表
+        /// </summary>
+        public List<Car> Cars { get; set; }
+        /// <summary>
+        /// 说明
+        /// </summary>
+        public string Note { get; set; }
+    }
+
+    public class Car
+    {
+        public int ID { get; set; }
+        /// <summary>
+        /// 年款
+        /// </summary>
+        public string YearType { get; set; }
+        /// <summary>
+        /// 车款名称
+        /// </summary>
+        public string TypeName { get; set; }
+        /// <summary>
+        /// 指导价(万)
+        /// </summary>
+        public decimal CarReferPrice { get; set; }
+        /// <summary>
+        /// 优惠金额(万)
+        /// </summary>
+        public decimal Money { get; set; }
+        /// <summary>
+        /// 新能源车补贴(万)
+        /// </summary>
+        public string Subsidies { get; set; }
+        /// <summary>
+        /// 优惠价(万)
+        /// </summary>
+        public decimal PromotionPrice { get; set; }
+        /// <summary>
+        /// 库存状态
+        /// </summary>
+        public int StoreState { get; set; }
+        /// <summary>
+        /// 车身颜色
+        /// </summary>
+        public string SelectColor { get; set; }
     }
 }
