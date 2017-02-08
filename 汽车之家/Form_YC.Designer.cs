@@ -39,21 +39,21 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.btnDetail = new System.Windows.Forms.Button();
             this.pDetail = new System.Windows.Forms.Panel();
-            //this.imgControl5 = new Aide.ImgControl();
-            //this.imgControl4 = new Aide.ImgControl();
-            //this.imgControl3 = new Aide.ImgControl();
-            //this.imgControl2 = new Aide.ImgControl();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
-            //this.imgControl1 = new Aide.ImgControl();
+            this.imgPosition4_hdf = new Aide.ImgControl();
+            this.imgPosition3_hdf = new Aide.ImgControl();
+            this.imgPosition2_hdf = new Aide.ImgControl();
+            this.imgPosition1_hdf = new Aide.ImgControl();
+            this.imgLogo_hdf = new Aide.ImgControl();
+            this.chkIsShowMap = new System.Windows.Forms.CheckBox();
             this.label31 = new System.Windows.Forms.Label();
-            this.checkBox8 = new System.Windows.Forms.CheckBox();
+            this.chkIsShow400Number = new System.Windows.Forms.CheckBox();
             this.label32 = new System.Windows.Forms.Label();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
+            this.chkIsShowMaintenance = new System.Windows.Forms.CheckBox();
             this.label40 = new System.Windows.Forms.Label();
             this.title_number = new System.Windows.Forms.Label();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            //this.carControl1 = new Aide.CarControl();
+            this.chkIsShowSaleAddr = new System.Windows.Forms.CheckBox();
+            this.carControl1 = new Aide.CarControl();
             this.label37 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
@@ -125,6 +125,11 @@
             this.equipClass3 = new System.Windows.Forms.RadioButton();
             this.equipClass2 = new System.Windows.Forms.RadioButton();
             this.equipClass1 = new System.Windows.Forms.RadioButton();
+            this.txtPrice = new System.Windows.Forms.TextBox();
+            this.ddlBusinessTax = new System.Windows.Forms.ComboBox();
+            this.ddlTrafficTax = new System.Windows.Forms.ComboBox();
+            this.txtPurchaseTax = new System.Windows.Forms.TextBox();
+            this.txtOtherInfo = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tpb_TP.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -269,21 +274,26 @@
             // 
             // pDetail
             // 
-            //this.pDetail.Controls.Add(this.imgControl5);
-            //this.pDetail.Controls.Add(this.imgControl4);
-            //this.pDetail.Controls.Add(this.imgControl3);
-            //this.pDetail.Controls.Add(this.imgControl2);
-            //this.pDetail.Controls.Add(this.imgControl1);
-            this.pDetail.Controls.Add(this.checkBox7);
+            this.pDetail.Controls.Add(this.txtOtherInfo);
+            this.pDetail.Controls.Add(this.txtPurchaseTax);
+            this.pDetail.Controls.Add(this.ddlTrafficTax);
+            this.pDetail.Controls.Add(this.ddlBusinessTax);
+            this.pDetail.Controls.Add(this.txtPrice);
+            this.pDetail.Controls.Add(this.imgPosition4_hdf);
+            this.pDetail.Controls.Add(this.imgPosition3_hdf);
+            this.pDetail.Controls.Add(this.imgPosition2_hdf);
+            this.pDetail.Controls.Add(this.imgPosition1_hdf);
+            this.pDetail.Controls.Add(this.imgLogo_hdf);
+            this.pDetail.Controls.Add(this.chkIsShowMap);
             this.pDetail.Controls.Add(this.label31);
-            this.pDetail.Controls.Add(this.checkBox8);
+            this.pDetail.Controls.Add(this.chkIsShow400Number);
             this.pDetail.Controls.Add(this.label32);
             this.pDetail.Controls.Add(this.checkBox4);
-            this.pDetail.Controls.Add(this.checkBox5);
+            this.pDetail.Controls.Add(this.chkIsShowMaintenance);
             this.pDetail.Controls.Add(this.label40);
             this.pDetail.Controls.Add(this.title_number);
-            this.pDetail.Controls.Add(this.checkBox6);
-            //this.pDetail.Controls.Add(this.carControl1);
+            this.pDetail.Controls.Add(this.chkIsShowSaleAddr);
+            this.pDetail.Controls.Add(this.carControl1);
             this.pDetail.Controls.Add(this.label37);
             this.pDetail.Controls.Add(this.label5);
             this.pDetail.Controls.Add(this.label34);
@@ -301,58 +311,58 @@
             this.pDetail.Name = "pDetail";
             this.pDetail.Size = new System.Drawing.Size(774, 779);
             this.pDetail.TabIndex = 110;
-            //// 
-            //// imgControl5
-            //// 
-            //this.imgControl5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            //this.imgControl5.Location = new System.Drawing.Point(535, 581);
-            //this.imgControl5.Name = "imgControl5";
-            //this.imgControl5.Size = new System.Drawing.Size(139, 97);
-            //this.imgControl5.TabIndex = 113;
-            //// 
-            //// imgControl4
-            //// 
-            //this.imgControl4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            //this.imgControl4.Location = new System.Drawing.Point(390, 581);
-            //this.imgControl4.Name = "imgControl4";
-            //this.imgControl4.Size = new System.Drawing.Size(139, 97);
-            //this.imgControl4.TabIndex = 112;
-            //// 
-            //// imgControl3
-            //// 
-            //this.imgControl3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            //this.imgControl3.Location = new System.Drawing.Point(245, 581);
-            //this.imgControl3.Name = "imgControl3";
-            //this.imgControl3.Size = new System.Drawing.Size(139, 97);
-            //this.imgControl3.TabIndex = 111;
-            //// 
-            //// imgControl2
-            //// 
-            //this.imgControl2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            //this.imgControl2.Location = new System.Drawing.Point(100, 581);
-            //this.imgControl2.Name = "imgControl2";
-            //this.imgControl2.Size = new System.Drawing.Size(139, 97);
-            //this.imgControl2.TabIndex = 110;
             // 
-            // checkBox7
+            // imgPosition4_hdf
             // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Checked = true;
-            this.checkBox7.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox7.Location = new System.Drawing.Point(104, 734);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(96, 16);
-            this.checkBox7.TabIndex = 85;
-            this.checkBox7.Tag = "1";
-            this.checkBox7.Text = "设置置换补贴";
-            this.checkBox7.UseVisualStyleBackColor = true;
-            //// 
-            //// imgControl1
-            //// 
-            //this.imgControl1.Location = new System.Drawing.Point(100, 348);
-            //this.imgControl1.Name = "imgControl1";
-            //this.imgControl1.Size = new System.Drawing.Size(300, 224);
-            //this.imgControl1.TabIndex = 109;
+            this.imgPosition4_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition4_hdf.Location = new System.Drawing.Point(535, 581);
+            this.imgPosition4_hdf.Name = "imgPosition4_hdf";
+            this.imgPosition4_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition4_hdf.TabIndex = 113;
+            // 
+            // imgPosition3_hdf
+            // 
+            this.imgPosition3_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition3_hdf.Location = new System.Drawing.Point(390, 581);
+            this.imgPosition3_hdf.Name = "imgPosition3_hdf";
+            this.imgPosition3_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition3_hdf.TabIndex = 112;
+            // 
+            // imgPosition2_hdf
+            // 
+            this.imgPosition2_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition2_hdf.Location = new System.Drawing.Point(245, 581);
+            this.imgPosition2_hdf.Name = "imgPosition2_hdf";
+            this.imgPosition2_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition2_hdf.TabIndex = 111;
+            // 
+            // imgPosition1_hdf
+            // 
+            this.imgPosition1_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition1_hdf.Location = new System.Drawing.Point(100, 581);
+            this.imgPosition1_hdf.Name = "imgPosition1_hdf";
+            this.imgPosition1_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition1_hdf.TabIndex = 110;
+            // 
+            // imgLogo_hdf
+            // 
+            this.imgLogo_hdf.Location = new System.Drawing.Point(100, 348);
+            this.imgLogo_hdf.Name = "imgLogo_hdf";
+            this.imgLogo_hdf.Size = new System.Drawing.Size(300, 224);
+            this.imgLogo_hdf.TabIndex = 109;
+            // 
+            // chkIsShowMap
+            // 
+            this.chkIsShowMap.AutoSize = true;
+            this.chkIsShowMap.Checked = true;
+            this.chkIsShowMap.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkIsShowMap.Location = new System.Drawing.Point(104, 734);
+            this.chkIsShowMap.Name = "chkIsShowMap";
+            this.chkIsShowMap.Size = new System.Drawing.Size(96, 16);
+            this.chkIsShowMap.TabIndex = 85;
+            this.chkIsShowMap.Tag = "1";
+            this.chkIsShowMap.Text = "设置置换补贴";
+            this.chkIsShowMap.UseVisualStyleBackColor = true;
             // 
             // label31
             // 
@@ -364,18 +374,18 @@
             this.label31.TabIndex = 62;
             this.label31.Text = "促销车款:";
             // 
-            // checkBox8
+            // chkIsShow400Number
             // 
-            this.checkBox8.AutoSize = true;
-            this.checkBox8.Checked = true;
-            this.checkBox8.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox8.Location = new System.Drawing.Point(103, 756);
-            this.checkBox8.Name = "checkBox8";
-            this.checkBox8.Size = new System.Drawing.Size(96, 16);
-            this.checkBox8.TabIndex = 84;
-            this.checkBox8.Tag = "2";
-            this.checkBox8.Text = "设置参考总价";
-            this.checkBox8.UseVisualStyleBackColor = true;
+            this.chkIsShow400Number.AutoSize = true;
+            this.chkIsShow400Number.Checked = true;
+            this.chkIsShow400Number.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkIsShow400Number.Location = new System.Drawing.Point(103, 756);
+            this.chkIsShow400Number.Name = "chkIsShow400Number";
+            this.chkIsShow400Number.Size = new System.Drawing.Size(96, 16);
+            this.chkIsShow400Number.TabIndex = 84;
+            this.chkIsShow400Number.Tag = "2";
+            this.chkIsShow400Number.Text = "设置参考总价";
+            this.chkIsShow400Number.UseVisualStyleBackColor = true;
             // 
             // label32
             // 
@@ -398,18 +408,18 @@
             this.checkBox4.Text = "赠送礼包";
             this.checkBox4.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // chkIsShowMaintenance
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Checked = true;
-            this.checkBox5.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox5.Location = new System.Drawing.Point(104, 690);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(96, 16);
-            this.checkBox5.TabIndex = 83;
-            this.checkBox5.Tag = "1";
-            this.checkBox5.Text = "设置置换补贴";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.chkIsShowMaintenance.AutoSize = true;
+            this.chkIsShowMaintenance.Checked = true;
+            this.chkIsShowMaintenance.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkIsShowMaintenance.Location = new System.Drawing.Point(104, 690);
+            this.chkIsShowMaintenance.Name = "chkIsShowMaintenance";
+            this.chkIsShowMaintenance.Size = new System.Drawing.Size(96, 16);
+            this.chkIsShowMaintenance.TabIndex = 83;
+            this.chkIsShowMaintenance.Tag = "1";
+            this.chkIsShowMaintenance.Text = "设置置换补贴";
+            this.chkIsShowMaintenance.UseVisualStyleBackColor = true;
             // 
             // label40
             // 
@@ -431,25 +441,25 @@
             this.title_number.TabIndex = 108;
             this.title_number.Text = "*";
             // 
-            // checkBox6
+            // chkIsShowSaleAddr
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Checked = true;
-            this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox6.Location = new System.Drawing.Point(103, 712);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(96, 16);
-            this.checkBox6.TabIndex = 82;
-            this.checkBox6.Tag = "2";
-            this.checkBox6.Text = "设置参考总价";
-            this.checkBox6.UseVisualStyleBackColor = true;
-            //// 
-            //// carControl1
-            //// 
-            //this.carControl1.Location = new System.Drawing.Point(100, 4);
-            //this.carControl1.Name = "carControl1";
-            //this.carControl1.Size = new System.Drawing.Size(444, 160);
-            //this.carControl1.TabIndex = 96;
+            this.chkIsShowSaleAddr.AutoSize = true;
+            this.chkIsShowSaleAddr.Checked = true;
+            this.chkIsShowSaleAddr.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkIsShowSaleAddr.Location = new System.Drawing.Point(103, 712);
+            this.chkIsShowSaleAddr.Name = "chkIsShowSaleAddr";
+            this.chkIsShowSaleAddr.Size = new System.Drawing.Size(96, 16);
+            this.chkIsShowSaleAddr.TabIndex = 82;
+            this.chkIsShowSaleAddr.Tag = "2";
+            this.chkIsShowSaleAddr.Text = "设置参考总价";
+            this.chkIsShowSaleAddr.UseVisualStyleBackColor = true;
+            // 
+            // carControl1
+            // 
+            this.carControl1.Location = new System.Drawing.Point(100, 4);
+            this.carControl1.Name = "carControl1";
+            this.carControl1.Size = new System.Drawing.Size(444, 160);
+            this.carControl1.TabIndex = 96;
             // 
             // label37
             // 
@@ -1211,6 +1221,44 @@
             this.equipClass1.Text = "新闻资讯";
             this.equipClass1.UseVisualStyleBackColor = true;
             // 
+            // txtPrice
+            // 
+            this.txtPrice.Location = new System.Drawing.Point(191, 321);
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.Size = new System.Drawing.Size(32, 21);
+            this.txtPrice.TabIndex = 114;
+            // 
+            // ddlBusinessTax
+            // 
+            this.ddlBusinessTax.FormattingEnabled = true;
+            this.ddlBusinessTax.Location = new System.Drawing.Point(241, 321);
+            this.ddlBusinessTax.Name = "ddlBusinessTax";
+            this.ddlBusinessTax.Size = new System.Drawing.Size(26, 20);
+            this.ddlBusinessTax.TabIndex = 115;
+            // 
+            // ddlTrafficTax
+            // 
+            this.ddlTrafficTax.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlTrafficTax.FormattingEnabled = true;
+            this.ddlTrafficTax.Location = new System.Drawing.Point(273, 323);
+            this.ddlTrafficTax.Name = "ddlTrafficTax";
+            this.ddlTrafficTax.Size = new System.Drawing.Size(50, 20);
+            this.ddlTrafficTax.TabIndex = 116;
+            // 
+            // txtPurchaseTax
+            // 
+            this.txtPurchaseTax.Location = new System.Drawing.Point(329, 323);
+            this.txtPurchaseTax.Name = "txtPurchaseTax";
+            this.txtPurchaseTax.Size = new System.Drawing.Size(32, 21);
+            this.txtPurchaseTax.TabIndex = 117;
+            // 
+            // txtOtherInfo
+            // 
+            this.txtOtherInfo.Location = new System.Drawing.Point(368, 324);
+            this.txtOtherInfo.Name = "txtOtherInfo";
+            this.txtOtherInfo.Size = new System.Drawing.Size(32, 21);
+            this.txtOtherInfo.TabIndex = 118;
+            // 
             // Form_YC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1287,10 +1335,10 @@
         private System.Windows.Forms.RadioButton radioButton5;
         private System.Windows.Forms.RadioButton rbtSource1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.CheckBox checkBox7;
-        private System.Windows.Forms.CheckBox checkBox8;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
+        private System.Windows.Forms.CheckBox chkIsShowMap;
+        private System.Windows.Forms.CheckBox chkIsShow400Number;
+        private System.Windows.Forms.CheckBox chkIsShowMaintenance;
+        private System.Windows.Forms.CheckBox chkIsShowSaleAddr;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
@@ -1320,7 +1368,7 @@
         private System.Windows.Forms.Panel pStoreState;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
-        //private CarControl carControl1;
+        private CarControl carControl1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.CheckBox checkBox4;
@@ -1340,10 +1388,15 @@
         private System.Windows.Forms.CheckBox chkAllColor;
         private System.Windows.Forms.Button btnSend;
         private System.Windows.Forms.Button btnDetail;
-        //private ImgControl imgControl5;
-        //private ImgControl imgControl4;
-        //private ImgControl imgControl3;
-        //private ImgControl imgControl2;
-        //private ImgControl imgControl1;
+        private ImgControl imgPosition4_hdf;
+        private ImgControl imgPosition3_hdf;
+        private ImgControl imgPosition2_hdf;
+        private ImgControl imgPosition1_hdf;
+        private ImgControl imgLogo_hdf;
+        private System.Windows.Forms.TextBox txtPrice;
+        private System.Windows.Forms.ComboBox ddlBusinessTax;
+        private System.Windows.Forms.ComboBox ddlTrafficTax;
+        private System.Windows.Forms.TextBox txtPurchaseTax;
+        private System.Windows.Forms.TextBox txtOtherInfo;
     }
 }

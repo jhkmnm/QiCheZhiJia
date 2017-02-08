@@ -69,6 +69,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CarControl.cs" />
+    <Compile Include="CarControl.Designer.cs">
+      <DependentUpon>CarControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="Data\DAL.cs" />
     <Compile Include="Data\Db.cs" />
     <Compile Include="FormLogin.cs">
@@ -90,6 +94,10 @@
       <DependentUpon>Form_YC.cs</DependentUpon>
     </Compile>
     <Compile Include="Html.cs" />
+    <Compile Include="ImgControl.cs" />
+    <Compile Include="ImgControl.Designer.cs">
+      <DependentUpon>ImgControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="JobControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -115,6 +123,9 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
     <Compile Include="YiChe.cs" />
+    <EmbeddedResource Include="CarControl.resx">
+      <DependentUpon>CarControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_YC.resx">
       <DependentUpon>Form_YC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImgControl.resx">
+      <DependentUpon>ImgControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JobControl.resx">
       <DependentUpon>JobControl.cs</DependentUpon>
