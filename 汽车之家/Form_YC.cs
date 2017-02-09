@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using HtmlAgilityPack;
 using CsharpHttpHelper;
+using Newtonsoft.Json;
 
 namespace Aide
 {
@@ -212,16 +213,25 @@ namespace Aide
                 {
                     var tds = node.SelectNodes(".//td");
                     var typeinput = tds[0].SelectSingleNode(".//input[@type='checkbox']");
-                    var colorcount = tds[7].SelectSingleNode(".//div/p/span");                    
-                    cars.Cars.Add(new Car { 
+                    var inputCarInfo = node.SelectSingleNode(".//input[@carinfo='carInfo']");
+                    var inputrate = node.SelectSingleNode(".//input[@rate='rate']");
+                    var inputallowance = node.SelectSingleNode(".//input[@allowance='allowance']");
+                    var inputprice = node.SelectSingleNode(".//input[@price='price']");                    
+
+                    var colorcount = tds[7].SelectSingleNode(".//div/p/span");
+                    cars.Cars.Add(new Car {
+                        CarID = Convert.ToInt32(inputCarInfo.GetAttributeValue("carid", "")),
+                        Discount = Convert.ToDecimal(inputrate.GetAttributeValue("value", "0")),
+                        IsAllowance = inputallowance != null ? inputallowance.GetAttributeValue("checked", "") : "", 
+                        IsCheck = "checked",
                         TypeName = tds[0].GetAttributeValue("title", ""),
                         YearType = typeinput.GetAttributeValue("yeartype", ""),
-                        ID = Convert.ToInt32(typeinput.GetAttributeValue("value", "")),
+                        
                         Subsidies = tds[4].InnerText,
                         StoreState = 1,
-                        CarReferPrice = Convert.ToDecimal(tds[1].InnerText),
-                        Money = 0,
-                        SelectColor = colorcount.InnerText,
+                        CarReferPrice = Convert.ToDecimal(inputCarInfo.GetAttributeValue("carreferprice", "0")),
+                        FavorablePrice = Convert.ToDecimal(inputprice.GetAttributeValue("value", "0")),
+                        ColorName = colorcount.InnerText,
                         PushedCount = tds[8].InnerText.Trim()
                     });
                 }
@@ -237,7 +247,7 @@ namespace Aide
                 {
                     var tds = node.SelectNodes(".//td");
                     var typeinput = tds[0].SelectSingleNode(".//input[@type='checkbox']");
-                    cars.PublishCarList.Add(new Car { ID = Convert.ToInt32(typeinput.GetAttributeValue("value", "")) });
+                    cars.PublishCarList.Add(new Car { CarID = Convert.ToInt32(typeinput.GetAttributeValue("value", "")) });
                 }
             }
             #endregion
@@ -365,14 +375,14 @@ namespace Aide
 
             for(int i=0;i < cars.Cars.Count;i++)
             {
-                sb.AppendFormat("{0}={1}&", HttpHelper.URLEncode(string.Format("rptFavourableList_ctl{0:00}_checkbox", i)), cars.Cars[i].ID);
-                sb.AppendFormat("{0}={1}&", HttpHelper.URLEncode(string.Format("rptFavourableList_ctl{0:00}_Text1", i)), cars.Cars[i].Money);
+                sb.AppendFormat("{0}={1}&", HttpHelper.URLEncode(string.Format("rptFavourableList_ctl{0:00}_checkbox", i)), cars.Cars[i].CarID);
+                sb.AppendFormat("{0}={1}&", HttpHelper.URLEncode(string.Format("rptFavourableList_ctl{0:00}_Text1", i)), cars.Cars[i].FavorablePrice);
             }
             //rptFavourableList_ctl00_rate      rptFavourableList%24ctl00%24rate=0&
 
             for (int i = 0; i < cars.PublishCarList.Count; i++)
             {
-                sb.AppendFormat("{0}={1}&", HttpHelper.URLEncode(string.Format("rtpNotPushCarList_ctl{0:00}_checkbox", i)), cars.PublishCarList[i].ID);
+                sb.AppendFormat("{0}={1}&", HttpHelper.URLEncode(string.Format("rtpNotPushCarList_ctl{0:00}_checkbox", i)), cars.PublishCarList[i].CarID);
             }
             sb.Append("NewEnergyTitleTemplate=2&");
             sb.AppendFormat("title_article={0}&", title_article.Text);
@@ -434,7 +444,15 @@ namespace Aide
         /// </summary>
         public List<Car> Cars { get; set; }
 
-        public string CarInfoJson { get; set; }
+        public string CarInfoJson { get {
+            StringBuilder sb = new StringBuilder(500);
+            sb.Append("[");
+            Cars.ForEach(f =>
+                sb.AppendFormat("{\"RelaID\"={0},\"CarID\"={1},\"Discount\"={2},\"IsCheck\"={3},\"CarReferPrice\"={4},\"FavorablePrice\"={5},\"IsAllowance\"={6},\"StoreState\"={7},\"ColorName\"=\"{8}\",\"CustomColorName\"=\"{9}\",\"Mark\"={10},\"ExtendCarID\"={11}},", f.RelaID, f.CarID, f.Discount, f.IsCheck, f.CarReferPrice, f.FavorablePrice, f.IsAllowance, f.StoreState, f.ColorName, f.CustomColorName, f.Mark, f.ExtendCarID)
+            );
+            sb.Append("]");
+            return sb.ToString();
+        } }
 
         /// <summary>
         /// 说明
@@ -442,11 +460,80 @@ namespace Aide
         public string Note { get; set; }
 
         public List<Car> PublishCarList { get; set; }
+
+        public List<GiftInfo> GiftInofList { get; set; }
+
+        public string GiftInofJson { get { return JsonConvert.SerializeObject(GiftInofList); } }
     }
 
     public class Car
     {
-        public int ID { get; set; }
+        //var trs = $("#listInfo tr[carinfotr]");
+        //var array = new Array();
+        //$(trs).each(function () {
+        //    var trObj = this;
+        //    var obj = new promotionCarInfo();
+        //    var inputCarInfo = $(trObj).find("input[carinfo]");
+        //    // 主键
+        //    obj.RelaID = 0;
+        //    //是否勾选
+        //    obj.IsCheck = $(trObj).find(":checkbox").eq(0).attr("checked"); 
+        //    //车款ID
+        //    obj.CarID = parseInt(inputCarInfo.attr("carid"));
+        //    // 指导价
+        //    obj.CarReferPrice = inputCarInfo.attr("carreferprice");
+        //    // 优惠金额
+        //    obj.FavorablePrice = $(trObj).find("input[price]").val() == "" ? 0 : $(trObj).find("input[price]").val();
+        //    // 折扣率
+        //    obj.Discount = $(trObj).find("input[rate]").val() == "" ? 0 : $(trObj).find("input[rate]").val();
+        //    // 是否包含惠民补贴
+        //    obj.IsAllowance = $(trObj).find("input[allowance]").attr("checked");
+        //    // 库存状态
+        //    obj.StoreState = $(trObj).find("select[storestate]").val() == "" ? 1 : $(trObj).find("select[storestate]").val();
+        //    obj.StoreState = obj.StoreState ? obj.StoreState : 1;
+        //    // 车型颜色
+        //    obj.ColorName = $(trObj).find(".pick_color a").attr("selectcolor");
+        //    // 车型颜色
+        //    obj.CustomColorName = $(trObj).find(".pick_color a").attr("costumcolor");
+        //    // 标识
+        //    obj.Mark = $(this).attr("mark");
+        //    // 标识 增配车ID
+        //    obj.ExtendCarID = $(this).attr("ExtendCarID");
+        //    obj.IsNewEnergy = $(this).attr("isNewEnergy")
+        //    if (obj.IsNewEnergy == 1) {
+        //        if ($(this).attr("StateSubsidies") != '--') {
+        //            obj.StateSubsidies = parseFloat($(this).attr("StateSubsidies")).toFixed(2);
+        //        } else {
+        //            obj.StateSubsidies = 0;
+        //        }
+        //        if ($(this).attr("LocalSubsidies") != '--') {
+        //            obj.LocalSubsidies = parseFloat($(this).attr("LocalSubsidies")).toFixed(2);
+        //        }
+        //        else {
+        //            obj.LocalSubsidies = 0;
+        //        }
+        //    } else {
+        //        obj.StateSubsidies = 0;
+        //        obj.LocalSubsidies = 0;
+        //    }
+        //    array.push(obj);
+        //});
+
+        public int RelaID { get; set; }
+
+        /// <summary>
+        /// 车款ID
+        /// obj.CarID = parseInt(inputCarInfo.attr("carid"));
+        /// </summary>
+
+        public int CarID { get; set; }
+
+        /// <summary>
+        /// 是否勾选
+        /// obj.IsCheck = $(trObj).find(":checkbox").eq(0).attr("checked"); 
+        /// </summary>
+        public string IsCheck { get; set; }
+
         /// <summary>
         /// 年款
         /// </summary>
@@ -455,14 +542,31 @@ namespace Aide
         /// 车款名称
         /// </summary>
         public string TypeName { get; set; }
+
         /// <summary>
         /// 指导价(万)
+        /// obj.CarReferPrice = inputCarInfo.attr("carreferprice");
         /// </summary>
         public decimal CarReferPrice { get; set; }
+
         /// <summary>
         /// 优惠金额(万)
+        /// obj.FavorablePrice = $(trObj).find("input[price]").val() == "" ? 0 : $(trObj).find("input[price]").val();
         /// </summary>
-        public decimal Money { get; set; }
+        public decimal FavorablePrice { get; set; }
+                
+        /// <summary>
+        /// 折扣率
+        /// obj.Discount = $(trObj).find("input[rate]").val() == "" ? 0 : $(trObj).find("input[rate]").val();
+        /// </summary>
+        public decimal Discount { get; set; }
+                
+        /// <summary>
+        /// 是否包含惠民补贴
+        /// obj.IsAllowance = $(trObj).find("input[allowance]").attr("checked");
+        /// </summary>
+        public string IsAllowance { get; set; }
+
         /// <summary>
         /// 新能源车补贴(万)
         /// </summary>
@@ -470,16 +574,251 @@ namespace Aide
         /// <summary>
         /// 优惠价(万)
         /// </summary>
-        public decimal PromotionPrice { get { return CarReferPrice - Money; } }
+        public decimal PromotionPrice { get { return CarReferPrice - FavorablePrice; } }
+
         /// <summary>
         /// 库存状态
+        //  obj.StoreState = $(trObj).find("select[storestate]").val() == "" ? 1 : $(trObj).find("select[storestate]").val();
+        //  obj.StoreState = obj.StoreState ? obj.StoreState : 1;
         /// </summary>
         public int StoreState { get; set; }
+                
         /// <summary>
-        /// 车身颜色
+        /// 车型颜色
+        /// obj.ColorName = $(trObj).find(".pick_color a").attr("selectcolor");
         /// </summary>
-        public string SelectColor { get; set; }
+        public string ColorName { get; set; }
+                
+        /// <summary>
+        /// 车型颜色
+        /// obj.CustomColorName = $(trObj).find(".pick_color a").attr("costumcolor");
+        /// </summary>
+        public string CustomColorName { get; set; }
 
         public string PushedCount { get; set; }
+                
+        /// <summary>
+        /// 标识
+        /// obj.Mark = $(this).attr("mark");
+        /// </summary>
+        public string Mark { get; set; }
+                
+        /// <summary>
+        /// 标识 增配车ID
+        /// obj.ExtendCarID = $(this).attr("ExtendCarID");
+        /// </summary>
+        public string ExtendCarID { get; set; }
+        
+        /// <summary>
+        /// obj.IsNewEnergy = $(this).attr("isNewEnergy")
+        /// </summary>
+        public string IsNewEnergy { get; set; }        
+
+        /// <summary>
+        /// //    if (obj.IsNewEnergy == 1) {
+        //        if ($(this).attr("StateSubsidies") != '--') {
+        //            obj.StateSubsidies = parseFloat($(this).attr("StateSubsidies")).toFixed(2);
+        //        } else {
+        //            obj.StateSubsidies = 0;
+        //        }
+        //        if ($(this).attr("LocalSubsidies") != '--') {
+        //            obj.LocalSubsidies = parseFloat($(this).attr("LocalSubsidies")).toFixed(2);
+        //        }
+        //        else {
+        //            obj.LocalSubsidies = 0;
+        //        }
+        //    } else {
+        //        obj.StateSubsidies = 0;
+        //        obj.LocalSubsidies = 0;
+        //    }
+        /// </summary>
+        public string StateSubsidies { get; set; }
+        /// <summary>
+        /// //    if (obj.IsNewEnergy == 1) {
+        //        if ($(this).attr("StateSubsidies") != '--') {
+        //            obj.StateSubsidies = parseFloat($(this).attr("StateSubsidies")).toFixed(2);
+        //        } else {
+        //            obj.StateSubsidies = 0;
+        //        }
+        //        if ($(this).attr("LocalSubsidies") != '--') {
+        //            obj.LocalSubsidies = parseFloat($(this).attr("LocalSubsidies")).toFixed(2);
+        //        }
+        //        else {
+        //            obj.LocalSubsidies = 0;
+        //        }
+        //    } else {
+        //        obj.StateSubsidies = 0;
+        //        obj.LocalSubsidies = 0;
+        //    }
+        /// </summary>
+        public string LocalSubsidies { get; set; }
     }
+
+    public class GiftInfo
+    {        
+        /// <summary>
+        /// 是否赠送礼包
+        /// </summary>
+        public bool IsCheck { get; set; }
+
+        //礼包 总价值
+        public int Price { get; set; }
+
+        // 汽车用品
+        public bool QCYPIsCheck { get; set; }
+        public string QCYPValue { get; set; }
+
+        // 油卡
+        public bool YKIsCheck { get; set; }
+        public int YKValue { get; set; }
+
+        // 商业险
+        public bool SYXIsCheck { get; set; }
+        public int SYXValue { get; set; }
+
+        // 交强险
+        public bool JQXIsCheck { get; set; }
+        public int JQXValue { get; set; }
+
+        // 购置税
+        public bool GZSIsCheck { get; set; }
+        public int GZSValue { get; set; }
+
+        // 保养
+        public bool BAOYANGIsCheck { get; set; }
+        public string BAOYANGValue { get; set; }
+
+        // 其他内容
+        public bool OherInfoIsCheck { get; set; }
+        public string OherInfoValue { get; set; }
+    }
+
+    //this.SetGiftInfoJson = function () {
+    //    /// <summary>
+    //    ///     设置礼包信息
+    //    /// </summary>
+    //    var info = JSON.parse($("#hdfGiftInfo").val());
+
+    //    // 是否赠送礼包
+    //    $("#btnGift").attr("checked", info.IsCheck);
+    //    self.IsShowGiftInfo(info.IsCheck);
+
+    //    if ($("#hdnPromotionType").val() == "1") {
+    //        $("#btnGift").attr("disabled", true);
+    //        this.IsSetPriceChange(true);
+    //    } else {
+    //        $("#btnGift").attr("disabled", false);
+    //        this.IsSetPriceChange(false);
+    //    }
+
+    //    if (info.IsCheck) {
+    //        $("#txtPrice").val(info.Price);
+    //    }
+
+    //    // 汽车用品
+    //    $("#gift1").attr("checked", info.QCYPIsCheck);
+    //    self.IsShowInfo($("#gift1"), info.QCYPIsCheck);
+    //    if (info.QCYPIsCheck) {
+    //        var qcyps = JSON.parse(info.QCYPValue);
+
+    //        merchandise.DelMerchandis();
+    //        for (var i = 0; i < qcyps.length; i++) {
+    //            var id = qcyps[i].mid;
+    //            var name = qcyps[i].mname;
+    //            var money = qcyps[i].msalePrice;
+
+    //            merchandise.AddMerchandise(id, name, money);
+    //        }
+    //    }
+
+    //    // 油卡
+    //    $("#gift2").attr("checked", info.YKIsCheck);
+    //    self.IsShowInfo($("#gift2"), info.YKIsCheck);
+    //    if (info.YKIsCheck) {
+    //        $("#txtOilCar").val(info.YKValue);
+    //    }
+
+
+    //    // 商业险
+    //    $("#gift3").attr("checked", info.SYXIsCheck);
+    //    self.IsShowInfo($("#gift3"), info.SYXIsCheck);
+    //    if (info.SYXIsCheck) {
+    //        $("#ddlBusinessTax").val(info.SYXValue);
+    //    }
+
+    //    // 交强险
+    //    $("#gift4").attr("checked", info.JQXIsCheck);
+    //    self.IsShowInfo($("#gift4"), info.JQXIsCheck);
+    //    if (info.JQXIsCheck) {
+    //        $("#ddlBusinessTax").val(info.JQXValue);
+    //    }
+
+    //    // 购置税
+    //    $("#gift5").attr("checked", info.GZSIsCheck);
+    //    self.IsShowInfo($("#gift5"), info.GZSIsCheck);
+    //    if (info.GZSIsCheck) {
+    //        $("dd[gzs] :radio[value='" + info.GZSValue + "']").attr("checked", true);
+    //    }
+
+    //    // 保养
+    //    $("#gift6").attr("checked", info.BAOYANGIsCheck);
+    //    self.IsShowInfo($("#gift6"), info.BAOYANGIsCheck);
+    //    if (info.BAOYANGIsCheck) {
+    //        $("dd[baoyang] :radio").attr("checked", false);
+    //        $("dd[baoyang] :text").attr("disabled", true);
+
+    //        // 赠送多少元
+    //        var baoyao;
+    //        if (info.BAOYANGValue.indexOf("元") != -1) {
+    //            $("dd[baoyang] :radio[value='1']").attr("checked", true);
+    //            $("dd[baoyang] :radio[value='1']").parent().find("input").attr("disabled", false);
+    //            baoyao = info.BAOYANGValue;
+    //            baoyao = baoyao.replace("元", "");
+    //            $("#txtMMoney").val(baoyao);
+    //        }
+
+    //        // 赠送多少元
+    //        if (info.BAOYANGValue.indexOf("次") != -1) {
+    //            $("dd[baoyang] :radio[value='2']").attr("checked", true);
+    //            $("dd[baoyang] :radio[value='2']").parent().find("input").attr("disabled", false);
+    //            baoyao = info.BAOYANGValue;
+    //            baoyao = baoyao.replace("次", "");
+    //            $("#txtMTimes").val(baoyao);
+    //        }
+
+    //        // 赠送N年：赠送N万公里：
+    //        if (info.BAOYANGValue.indexOf("年") != -1 || info.BAOYANGValue.indexOf("公里") != -1) {
+    //            $("dd[baoyang] :radio[value='3']").attr("checked", true);
+    //            $("dd[baoyang] :radio[value='3']").parent().find("input").attr("disabled", false);
+
+    //            if (info.BAOYANGValue.indexOf("/") != -1) {
+    //                baoyao = info.BAOYANGValue;
+    //                baoyao = baoyao.replace("年", "");
+    //                baoyao = baoyao.replace("万公里", "");
+
+    //                $("#txtMYear").val(baoyao.split("/")[0]);
+    //                $("#txtMMile").val(baoyao.split("/")[1]);
+    //            } else if (info.BAOYANGValue.indexOf("年") != -1) {
+    //                baoyao = info.BAOYANGValue;
+    //                baoyao = baoyao.replace("年", "");
+    //                $("#txtMYear").val(baoyao);
+    //            } else if (info.BAOYANGValue.indexOf("万公里") != -1) {
+    //                baoyao = info.BAOYANGValue;
+    //                baoyao = baoyao.replace("万公里", "");
+    //                $("#txtMMile").val(baoyao);
+    //            }
+    //        }
+    //    }
+
+
+    //    // 购置税
+    //    $("#gift7").attr("checked", info.OherInfoIsCheck);
+    //    self.IsShowInfo($("#gift7"), info.OherInfoIsCheck);
+    //    if (info.OherInfoIsCheck) {
+    //        $("#txtOtherInfo").val(info.OherInfoValue);
+    //        if (info.OherInfoValue != errorMsg) {
+    //            $("#txtOtherInfo").removeClass("moren");
+    //        }
+    //    }
+    //};
 }

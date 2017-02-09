@@ -69,7 +69,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CarControl.cs" />
+    <Compile Include="CarControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="CarControl.Designer.cs">
       <DependentUpon>CarControl.cs</DependentUpon>
     </Compile>
@@ -94,7 +96,9 @@
       <DependentUpon>Form_YC.cs</DependentUpon>
     </Compile>
     <Compile Include="Html.cs" />
-    <Compile Include="ImgControl.cs" />
+    <Compile Include="ImgControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="ImgControl.Designer.cs">
       <DependentUpon>ImgControl.cs</DependentUpon>
     </Compile>
