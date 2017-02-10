@@ -39,6 +39,11 @@
             this.btnSend = new System.Windows.Forms.Button();
             this.btnDetail = new System.Windows.Forms.Button();
             this.pDetail = new System.Windows.Forms.Panel();
+            this.txtOtherInfo = new System.Windows.Forms.TextBox();
+            this.txtPurchaseTax = new System.Windows.Forms.TextBox();
+            this.ddlTrafficTax = new System.Windows.Forms.ComboBox();
+            this.ddlBusinessTax = new System.Windows.Forms.ComboBox();
+            this.txtPrice = new System.Windows.Forms.TextBox();
             this.imgPosition4_hdf = new Aide.ImgControl();
             this.imgPosition3_hdf = new Aide.ImgControl();
             this.imgPosition2_hdf = new Aide.ImgControl();
@@ -125,11 +130,6 @@
             this.equipClass3 = new System.Windows.Forms.RadioButton();
             this.equipClass2 = new System.Windows.Forms.RadioButton();
             this.equipClass1 = new System.Windows.Forms.RadioButton();
-            this.txtPrice = new System.Windows.Forms.TextBox();
-            this.ddlBusinessTax = new System.Windows.Forms.ComboBox();
-            this.ddlTrafficTax = new System.Windows.Forms.ComboBox();
-            this.txtPurchaseTax = new System.Windows.Forms.TextBox();
-            this.txtOtherInfo = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tpb_TP.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -307,10 +307,48 @@
             this.pDetail.Controls.Add(this.label36);
             this.pDetail.Controls.Add(this.label1);
             this.pDetail.Controls.Add(this.label2);
-            this.pDetail.Location = new System.Drawing.Point(496, 100);
+            this.pDetail.Location = new System.Drawing.Point(496, 84);
             this.pDetail.Name = "pDetail";
             this.pDetail.Size = new System.Drawing.Size(774, 779);
             this.pDetail.TabIndex = 110;
+            // 
+            // txtOtherInfo
+            // 
+            this.txtOtherInfo.Location = new System.Drawing.Point(368, 324);
+            this.txtOtherInfo.Name = "txtOtherInfo";
+            this.txtOtherInfo.Size = new System.Drawing.Size(32, 21);
+            this.txtOtherInfo.TabIndex = 118;
+            // 
+            // txtPurchaseTax
+            // 
+            this.txtPurchaseTax.Location = new System.Drawing.Point(329, 323);
+            this.txtPurchaseTax.Name = "txtPurchaseTax";
+            this.txtPurchaseTax.Size = new System.Drawing.Size(32, 21);
+            this.txtPurchaseTax.TabIndex = 117;
+            // 
+            // ddlTrafficTax
+            // 
+            this.ddlTrafficTax.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlTrafficTax.FormattingEnabled = true;
+            this.ddlTrafficTax.Location = new System.Drawing.Point(273, 323);
+            this.ddlTrafficTax.Name = "ddlTrafficTax";
+            this.ddlTrafficTax.Size = new System.Drawing.Size(50, 20);
+            this.ddlTrafficTax.TabIndex = 116;
+            // 
+            // ddlBusinessTax
+            // 
+            this.ddlBusinessTax.FormattingEnabled = true;
+            this.ddlBusinessTax.Location = new System.Drawing.Point(241, 321);
+            this.ddlBusinessTax.Name = "ddlBusinessTax";
+            this.ddlBusinessTax.Size = new System.Drawing.Size(26, 20);
+            this.ddlBusinessTax.TabIndex = 115;
+            // 
+            // txtPrice
+            // 
+            this.txtPrice.Location = new System.Drawing.Point(191, 321);
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.Size = new System.Drawing.Size(32, 21);
+            this.txtPrice.TabIndex = 114;
             // 
             // imgPosition4_hdf
             // 
@@ -1220,44 +1258,6 @@
             this.equipClass1.Tag = "1";
             this.equipClass1.Text = "新闻资讯";
             this.equipClass1.UseVisualStyleBackColor = true;
-            // 
-            // txtPrice
-            // 
-            this.txtPrice.Location = new System.Drawing.Point(191, 321);
-            this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(32, 21);
-            this.txtPrice.TabIndex = 114;
-            // 
-            // ddlBusinessTax
-            // 
-            this.ddlBusinessTax.FormattingEnabled = true;
-            this.ddlBusinessTax.Location = new System.Drawing.Point(241, 321);
-            this.ddlBusinessTax.Name = "ddlBusinessTax";
-            this.ddlBusinessTax.Size = new System.Drawing.Size(26, 20);
-            this.ddlBusinessTax.TabIndex = 115;
-            // 
-            // ddlTrafficTax
-            // 
-            this.ddlTrafficTax.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddlTrafficTax.FormattingEnabled = true;
-            this.ddlTrafficTax.Location = new System.Drawing.Point(273, 323);
-            this.ddlTrafficTax.Name = "ddlTrafficTax";
-            this.ddlTrafficTax.Size = new System.Drawing.Size(50, 20);
-            this.ddlTrafficTax.TabIndex = 116;
-            // 
-            // txtPurchaseTax
-            // 
-            this.txtPurchaseTax.Location = new System.Drawing.Point(329, 323);
-            this.txtPurchaseTax.Name = "txtPurchaseTax";
-            this.txtPurchaseTax.Size = new System.Drawing.Size(32, 21);
-            this.txtPurchaseTax.TabIndex = 117;
-            // 
-            // txtOtherInfo
-            // 
-            this.txtOtherInfo.Location = new System.Drawing.Point(368, 324);
-            this.txtOtherInfo.Name = "txtOtherInfo";
-            this.txtOtherInfo.Size = new System.Drawing.Size(32, 21);
-            this.txtOtherInfo.TabIndex = 118;
             // 
             // Form_YC
             // 

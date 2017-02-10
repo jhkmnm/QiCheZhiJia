@@ -405,10 +405,14 @@ namespace Aide
             sb.AppendFormat("hdnType={0}&hdnCarMerchandiseID=&", ddlPromotionType.SelectedValue);
             sb.AppendFormat("hdnPromotionType={0}&", ddlPromotionType.SelectedIndex);
             sb.AppendFormat("hdfCarInfoJson={0}&", cars.CarInfoJson);
+            sb.AppendFormat("hdfGiftInfo={0}&imgUploadChangehidethumburl=&imgUploadChangehideUrl=&txtStartPrice=&", cars.GiftInofJson);
+            sb.Append("txtEndPrice=&txtKeyword=&__EVENTTARGET=&__EVENTARGUMENT=&");
 
-            //hdfGiftInfo=%7B%22IsCheck%22%3Afalse%2C%22Price%22%3A0%2C%22QCYPIsCheck%22%3Afalse%2C%22QCYPValue%22%3A%22%22%2C%22YKIsCheck%22%3Afalse%2C%22YKValue%22%3A0%2C%22SYXIsCheck%22%3Afalse%2C%22SYXValue%22%3A1%2C%22JQXIsCheck%22%3Afalse%2C%22JQXValue%22%3A1%2C%22GZSIsCheck%22%3Afalse%2C%22GZSValue%22%3A1%2C%22BAOYANGIsCheck%22%3Afalse%2C%22BAOYANGValue%22%3A%22%22%2C%22OherInfoIsCheck%22%3Afalse%2C%22OherInfoValue%22%3A%22%22%7D&
+            var viewstate = doc.GetElementbyId("__VIEWSTATE");
+            sb.AppendFormat("__VIEWSTATE={0}&", HttpHelper.URLEncode(viewstate.GetAttributeValue("value", "")));
 
-            //imgUploadChangehidethumburl=&imgUploadChangehideUrl=&txtStartPrice=&txtEndPrice=&txtKeyword=&__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=%2FwEPDwUKMTcyOTg5MDk4OA8WBB4JQ2FyU2VyaWFsMt8jAAEAAAD%2F%2F%2F%2F%2FAQAAAAAAAAAMAgAAAE5TeXN0ZW0uRGF0YSwgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAABVTeXN0ZW0uRGF0YS5EYXRhVGFibGUDAAAAGURhdGFUYWJsZS5SZW1vdGluZ1ZlcnNpb24JWG1sU2NoZW1hC1htbERpZmZHcmFtAwEBDlN5c3RlbS5WZXJzaW9uAgAAAAkDAAAABgQAAADVCDw%2FeG1sIHZlcnNpb249IjEuMCIgZW5jb2Rpbmc9InV0Zi0xNiI%2FPg0KPHhzOnNjaGVtYSB4bWxucz0iIiB4bWxuczp4cz0iaHR0cDovL3d3dy53My5vcmcvMjAwMS9YTUxTY2hlbWEiIHhtbG5zOm1zZGF0YT0idXJuOnNjaGVtYXMtbWljcm9zb2Z0LWNvbTp4bWwtbXNkYXRhIj4NCiAgPHhzOmVsZW1lbnQgbmFtZT0iVGFibGUiPg0KICAgIDx4czpjb21wbGV4VHlwZT4NCiAgICAgIDx4czpzZXF1ZW5jZT4NCiAgICAgICAgPHhzOmVsZW1lbnQgbmFtZT0iQ1NJRCIgdHlwZT0ieHM6aW50IiBtc2RhdGE6dGFyZ2V0TmFtZXNwYWNlPSIiIG1pbk9jY3Vycz0iMCIgLz4N&__VIEWSTATEGENERATOR=5DAC1E26&__ASYNCPOST=true&btnPublish=%E5%8F%91%E5%B8%83
+            var viewstategenerator = doc.GetElementbyId("__VIEWSTATEGENERATOR");
+            sb.AppendFormat("__VIEWSTATEGENERATOR={0}&__ASYNCPOST=true&btnPublish=%E5%8F%91%E5%B8%83", viewstategenerator.GetAttributeValue("value", ""));
         }
 
         private void rbtSource_CheckedChanged(object sender, EventArgs e)
