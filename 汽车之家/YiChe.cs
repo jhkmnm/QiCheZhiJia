@@ -99,6 +99,7 @@ namespace Aide
                 Cookie = app_CheYiTong_Cookie,
                 ContentType = "application/x-www-form-urlencoded",
                 Method = "POST",
+                Encoding = Encoding.UTF8,
                 UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
             };
             return GetHtml(item);

@@ -12,23 +12,46 @@ namespace Aide
     public partial class CarControl : UserControl
     {
         List<TextValue> StoreStateList = new List<TextValue>();
+        PromotionCars _promotioncars;
 
         public PromotionCars CarDataSource
         {
             get
             {
-                return carBindingSource.DataSource as PromotionCars;
+                return _promotioncars;
             }
             set
             {
+                _promotioncars = value;
                 if (value == null)
+                {
                     carBindingSource.Clear();
+                }
                 else
                 {
-                    carBindingSource.DataSource = value;
+                    carBindingSource.DataSource = value.Cars;
+                    bindingSource1.DataSource = value.PublishCarList;
                     InitYearType();
+                    label1.Text = value.Note;
+                    splitContainer1.Panel2Collapsed = true;
                 }
             }
+        }
+
+        /// <summary>
+        /// 是否显示明细
+        /// </summary>
+        /// <param name="isDetail"></param>
+        public void ShowType(bool isDetail)
+        {
+            colPushedCount.Visible = !isDetail;
+            colCarReferPrice.Visible = isDetail;
+            colPromotionPrice.Visible = isDetail;
+            colStoreState.Visible = isDetail;
+            colSubsidies.Visible = isDetail;
+            colFavorablePrice.Visible = isDetail;            
+            colColorName.Visible = isDetail;
+            colTypeName.Width = isDetail ? 100 : 300;
         }
 
         public CarControl()
@@ -49,6 +72,7 @@ namespace Aide
 
         public void InitYearType()
         {
+            this.panel1.Controls.Clear();
             int xstep = 79;
             int ystep = 22;
             int xstart = 7;
@@ -81,7 +105,9 @@ namespace Aide
 
         private void Chk_CheckedChanged(object sender, EventArgs e)
         {
-            //throw new NotImplementedException();
+            var chk = (CheckBox)sender;
+            _promotioncars.Cars.FindAll(w => w.YearType == chk.Text).ForEach(f => f.IsCheck = chk.Checked);
+            dgvCar.Refresh();
         }
 
         private void textBox_Leave(object sender, EventArgs e)
@@ -101,6 +127,20 @@ namespace Aide
             {
                 txt.Text = "";
                 txt.ForeColor = Color.Black;
+            }
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if(linkLabel1.Text == "查看")
+            {
+                linkLabel1.Text = "收起";
+                splitContainer1.Panel2Collapsed = false;
+            }
+            else
+            {
+                linkLabel1.Text = "查看";
+                splitContainer1.Panel2Collapsed = true;
             }
         }
     }

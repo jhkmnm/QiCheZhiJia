@@ -12,7 +12,10 @@ namespace Aide
 
         public void SendResult(Job job)
         {
-            SetJobEvent?.Invoke(job);
+            if(SetJobEvent != null)
+            {
+                SetJobEvent(job);
+            }            
         }
 
         public JobControl()

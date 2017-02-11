@@ -35,60 +35,57 @@
             this.rbtCT = new System.Windows.Forms.RadioButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpb_TP = new System.Windows.Forms.TabPage();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btnSend = new System.Windows.Forms.Button();
-            this.btnDetail = new System.Windows.Forms.Button();
-            this.pDetail = new System.Windows.Forms.Panel();
+            this.tabControl2 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.btnSend_Ex = new System.Windows.Forms.Button();
+            this.carA = new Aide.CarControl();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.pColor = new System.Windows.Forms.Panel();
+            this.chkAllColor = new System.Windows.Forms.CheckBox();
+            this.pStoreState = new System.Windows.Forms.Panel();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.ddlPromotionType = new System.Windows.Forms.ComboBox();
+            this.txtMoney = new System.Windows.Forms.TextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.txtOtherInfo = new System.Windows.Forms.TextBox();
+            this.label35 = new System.Windows.Forms.Label();
             this.txtPurchaseTax = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.ddlTrafficTax = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.ddlBusinessTax = new System.Windows.Forms.ComboBox();
+            this.label36 = new System.Windows.Forms.Label();
             this.txtPrice = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.title_article = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label39 = new System.Windows.Forms.Label();
+            this.label38 = new System.Windows.Forms.Label();
+            this.txtLead = new System.Windows.Forms.TextBox();
+            this.chkIsShowMap = new System.Windows.Forms.CheckBox();
+            this.label34 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.chkIsShow400Number = new System.Windows.Forms.CheckBox();
+            this.label37 = new System.Windows.Forms.Label();
+            this.chkIsShowSaleAddr = new System.Windows.Forms.CheckBox();
+            this.checkBox4 = new System.Windows.Forms.CheckBox();
+            this.title_number = new System.Windows.Forms.Label();
+            this.chkIsShowMaintenance = new System.Windows.Forms.CheckBox();
+            this.label40 = new System.Windows.Forms.Label();
+            this.label31 = new System.Windows.Forms.Label();
+            this.label32 = new System.Windows.Forms.Label();
             this.imgPosition4_hdf = new Aide.ImgControl();
             this.imgPosition3_hdf = new Aide.ImgControl();
             this.imgPosition2_hdf = new Aide.ImgControl();
             this.imgPosition1_hdf = new Aide.ImgControl();
             this.imgLogo_hdf = new Aide.ImgControl();
-            this.chkIsShowMap = new System.Windows.Forms.CheckBox();
-            this.label31 = new System.Windows.Forms.Label();
-            this.chkIsShow400Number = new System.Windows.Forms.CheckBox();
-            this.label32 = new System.Windows.Forms.Label();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.chkIsShowMaintenance = new System.Windows.Forms.CheckBox();
-            this.label40 = new System.Windows.Forms.Label();
-            this.title_number = new System.Windows.Forms.Label();
-            this.chkIsShowSaleAddr = new System.Windows.Forms.CheckBox();
             this.carControl1 = new Aide.CarControl();
-            this.label37 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label34 = new System.Windows.Forms.Label();
-            this.txtLead = new System.Windows.Forms.TextBox();
-            this.label35 = new System.Windows.Forms.Label();
-            this.label38 = new System.Windows.Forms.Label();
-            this.label39 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.title_article = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.pSimple = new System.Windows.Forms.Panel();
-            this.pColor = new System.Windows.Forms.Panel();
-            this.chkAllColor = new System.Windows.Forms.CheckBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.ddlPromotionType = new System.Windows.Forms.ComboBox();
-            this.txtMoney = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label29 = new System.Windows.Forms.Label();
-            this.label28 = new System.Windows.Forms.Label();
-            this.pStoreState = new System.Windows.Forms.Panel();
-            this.dtpPromotionA = new System.Windows.Forms.DateTimePicker();
-            this.label17 = new System.Windows.Forms.Label();
-            this.dtpPromotionB = new System.Windows.Forms.DateTimePicker();
-            this.label18 = new System.Windows.Forms.Label();
-            this.label30 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label13 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -100,6 +97,9 @@
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
+            this.label29 = new System.Windows.Forms.Label();
+            this.label28 = new System.Windows.Forms.Label();
+            this.dtpPromotionA = new System.Windows.Forms.DateTimePicker();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
@@ -108,6 +108,8 @@
             this.rbtSource3 = new System.Windows.Forms.RadioButton();
             this.rbtSource0 = new System.Windows.Forms.RadioButton();
             this.rbtSource1 = new System.Windows.Forms.RadioButton();
+            this.dtpPromotionB = new System.Windows.Forms.DateTimePicker();
+            this.label30 = new System.Windows.Forms.Label();
             this.tpb_NC = new System.Windows.Forms.TabPage();
             this.tpb_NW = new System.Windows.Forms.TabPage();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -132,10 +134,10 @@
             this.equipClass1 = new System.Windows.Forms.RadioButton();
             this.tabControl1.SuspendLayout();
             this.tpb_TP.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.pDetail.SuspendLayout();
-            this.pSimple.SuspendLayout();
+            this.tabControl2.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.pColor.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -146,9 +148,9 @@
             // 
             // gpbCarList
             // 
-            this.gpbCarList.Location = new System.Drawing.Point(9, 4);
+            this.gpbCarList.Location = new System.Drawing.Point(10, 84);
             this.gpbCarList.Name = "gpbCarList";
-            this.gpbCarList.Size = new System.Drawing.Size(711, 72);
+            this.gpbCarList.Size = new System.Drawing.Size(720, 72);
             this.gpbCarList.TabIndex = 4;
             this.gpbCarList.TabStop = false;
             this.gpbCarList.Text = "车型";
@@ -212,436 +214,119 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1107, 1041);
+            this.tabControl1.Size = new System.Drawing.Size(1175, 884);
             this.tabControl1.TabIndex = 5;
             // 
             // tpb_TP
             // 
-            this.tpb_TP.Controls.Add(this.panel1);
+            this.tpb_TP.Controls.Add(this.tabControl2);
             this.tpb_TP.Controls.Add(this.rbtES);
             this.tpb_TP.Controls.Add(this.groupBox3);
+            this.tpb_TP.Controls.Add(this.label29);
+            this.tpb_TP.Controls.Add(this.label28);
+            this.tpb_TP.Controls.Add(this.gpbCarList);
             this.tpb_TP.Controls.Add(this.rbtGS);
+            this.tpb_TP.Controls.Add(this.dtpPromotionA);
             this.tpb_TP.Controls.Add(this.rbtLX);
             this.tpb_TP.Controls.Add(this.groupBox2);
+            this.tpb_TP.Controls.Add(this.dtpPromotionB);
             this.tpb_TP.Controls.Add(this.rbtCT);
+            this.tpb_TP.Controls.Add(this.label30);
             this.tpb_TP.Location = new System.Drawing.Point(4, 22);
             this.tpb_TP.Name = "tpb_TP";
             this.tpb_TP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpb_TP.Size = new System.Drawing.Size(1099, 1015);
+            this.tpb_TP.Size = new System.Drawing.Size(1167, 858);
             this.tpb_TP.TabIndex = 0;
             this.tpb_TP.Text = "优惠促销";
             this.tpb_TP.UseVisualStyleBackColor = true;
             // 
-            // panel1
-            // 
-            this.panel1.AutoScroll = true;
-            this.panel1.Controls.Add(this.btnSend);
-            this.panel1.Controls.Add(this.btnDetail);
-            this.panel1.Controls.Add(this.pDetail);
-            this.panel1.Controls.Add(this.pSimple);
-            this.panel1.Controls.Add(this.gpbCarList);
-            this.panel1.Controls.Add(this.label29);
-            this.panel1.Controls.Add(this.label28);
-            this.panel1.Controls.Add(this.pStoreState);
-            this.panel1.Controls.Add(this.dtpPromotionA);
-            this.panel1.Controls.Add(this.label17);
-            this.panel1.Controls.Add(this.dtpPromotionB);
-            this.panel1.Controls.Add(this.label18);
-            this.panel1.Controls.Add(this.label30);
-            this.panel1.Location = new System.Drawing.Point(11, 86);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1082, 879);
-            this.panel1.TabIndex = 14;
-            // 
-            // btnSend
-            // 
-            this.btnSend.Location = new System.Drawing.Point(188, 487);
-            this.btnSend.Name = "btnSend";
-            this.btnSend.Size = new System.Drawing.Size(75, 23);
-            this.btnSend.TabIndex = 112;
-            this.btnSend.Text = "保存";
-            this.btnSend.UseVisualStyleBackColor = true;
-            // 
-            // btnDetail
-            // 
-            this.btnDetail.Location = new System.Drawing.Point(94, 487);
-            this.btnDetail.Name = "btnDetail";
-            this.btnDetail.Size = new System.Drawing.Size(75, 23);
-            this.btnDetail.TabIndex = 111;
-            this.btnDetail.Text = "编辑详细";
-            this.btnDetail.UseVisualStyleBackColor = true;
-            this.btnDetail.Click += new System.EventHandler(this.btnDetail_Click);
-            // 
-            // pDetail
-            // 
-            this.pDetail.Controls.Add(this.txtOtherInfo);
-            this.pDetail.Controls.Add(this.txtPurchaseTax);
-            this.pDetail.Controls.Add(this.ddlTrafficTax);
-            this.pDetail.Controls.Add(this.ddlBusinessTax);
-            this.pDetail.Controls.Add(this.txtPrice);
-            this.pDetail.Controls.Add(this.imgPosition4_hdf);
-            this.pDetail.Controls.Add(this.imgPosition3_hdf);
-            this.pDetail.Controls.Add(this.imgPosition2_hdf);
-            this.pDetail.Controls.Add(this.imgPosition1_hdf);
-            this.pDetail.Controls.Add(this.imgLogo_hdf);
-            this.pDetail.Controls.Add(this.chkIsShowMap);
-            this.pDetail.Controls.Add(this.label31);
-            this.pDetail.Controls.Add(this.chkIsShow400Number);
-            this.pDetail.Controls.Add(this.label32);
-            this.pDetail.Controls.Add(this.checkBox4);
-            this.pDetail.Controls.Add(this.chkIsShowMaintenance);
-            this.pDetail.Controls.Add(this.label40);
-            this.pDetail.Controls.Add(this.title_number);
-            this.pDetail.Controls.Add(this.chkIsShowSaleAddr);
-            this.pDetail.Controls.Add(this.carControl1);
-            this.pDetail.Controls.Add(this.label37);
-            this.pDetail.Controls.Add(this.label5);
-            this.pDetail.Controls.Add(this.label34);
-            this.pDetail.Controls.Add(this.txtLead);
-            this.pDetail.Controls.Add(this.label35);
-            this.pDetail.Controls.Add(this.label38);
-            this.pDetail.Controls.Add(this.label39);
-            this.pDetail.Controls.Add(this.label3);
-            this.pDetail.Controls.Add(this.title_article);
-            this.pDetail.Controls.Add(this.label4);
-            this.pDetail.Controls.Add(this.label36);
-            this.pDetail.Controls.Add(this.label1);
-            this.pDetail.Controls.Add(this.label2);
-            this.pDetail.Location = new System.Drawing.Point(496, 84);
-            this.pDetail.Name = "pDetail";
-            this.pDetail.Size = new System.Drawing.Size(774, 779);
-            this.pDetail.TabIndex = 110;
-            // 
-            // txtOtherInfo
-            // 
-            this.txtOtherInfo.Location = new System.Drawing.Point(368, 324);
-            this.txtOtherInfo.Name = "txtOtherInfo";
-            this.txtOtherInfo.Size = new System.Drawing.Size(32, 21);
-            this.txtOtherInfo.TabIndex = 118;
-            // 
-            // txtPurchaseTax
-            // 
-            this.txtPurchaseTax.Location = new System.Drawing.Point(329, 323);
-            this.txtPurchaseTax.Name = "txtPurchaseTax";
-            this.txtPurchaseTax.Size = new System.Drawing.Size(32, 21);
-            this.txtPurchaseTax.TabIndex = 117;
-            // 
-            // ddlTrafficTax
-            // 
-            this.ddlTrafficTax.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddlTrafficTax.FormattingEnabled = true;
-            this.ddlTrafficTax.Location = new System.Drawing.Point(273, 323);
-            this.ddlTrafficTax.Name = "ddlTrafficTax";
-            this.ddlTrafficTax.Size = new System.Drawing.Size(50, 20);
-            this.ddlTrafficTax.TabIndex = 116;
-            // 
-            // ddlBusinessTax
-            // 
-            this.ddlBusinessTax.FormattingEnabled = true;
-            this.ddlBusinessTax.Location = new System.Drawing.Point(241, 321);
-            this.ddlBusinessTax.Name = "ddlBusinessTax";
-            this.ddlBusinessTax.Size = new System.Drawing.Size(26, 20);
-            this.ddlBusinessTax.TabIndex = 115;
-            // 
-            // txtPrice
-            // 
-            this.txtPrice.Location = new System.Drawing.Point(191, 321);
-            this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(32, 21);
-            this.txtPrice.TabIndex = 114;
-            // 
-            // imgPosition4_hdf
-            // 
-            this.imgPosition4_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition4_hdf.Location = new System.Drawing.Point(535, 581);
-            this.imgPosition4_hdf.Name = "imgPosition4_hdf";
-            this.imgPosition4_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition4_hdf.TabIndex = 113;
-            // 
-            // imgPosition3_hdf
-            // 
-            this.imgPosition3_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition3_hdf.Location = new System.Drawing.Point(390, 581);
-            this.imgPosition3_hdf.Name = "imgPosition3_hdf";
-            this.imgPosition3_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition3_hdf.TabIndex = 112;
-            // 
-            // imgPosition2_hdf
-            // 
-            this.imgPosition2_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition2_hdf.Location = new System.Drawing.Point(245, 581);
-            this.imgPosition2_hdf.Name = "imgPosition2_hdf";
-            this.imgPosition2_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition2_hdf.TabIndex = 111;
-            // 
-            // imgPosition1_hdf
-            // 
-            this.imgPosition1_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition1_hdf.Location = new System.Drawing.Point(100, 581);
-            this.imgPosition1_hdf.Name = "imgPosition1_hdf";
-            this.imgPosition1_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition1_hdf.TabIndex = 110;
-            // 
-            // imgLogo_hdf
-            // 
-            this.imgLogo_hdf.Location = new System.Drawing.Point(100, 348);
-            this.imgLogo_hdf.Name = "imgLogo_hdf";
-            this.imgLogo_hdf.Size = new System.Drawing.Size(300, 224);
-            this.imgLogo_hdf.TabIndex = 109;
-            // 
-            // chkIsShowMap
-            // 
-            this.chkIsShowMap.AutoSize = true;
-            this.chkIsShowMap.Checked = true;
-            this.chkIsShowMap.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkIsShowMap.Location = new System.Drawing.Point(104, 734);
-            this.chkIsShowMap.Name = "chkIsShowMap";
-            this.chkIsShowMap.Size = new System.Drawing.Size(96, 16);
-            this.chkIsShowMap.TabIndex = 85;
-            this.chkIsShowMap.Tag = "1";
-            this.chkIsShowMap.Text = "设置置换补贴";
-            this.chkIsShowMap.UseVisualStyleBackColor = true;
-            // 
-            // label31
-            // 
-            this.label31.AutoSize = true;
-            this.label31.ForeColor = System.Drawing.Color.Black;
-            this.label31.Location = new System.Drawing.Point(35, 13);
-            this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(59, 12);
-            this.label31.TabIndex = 62;
-            this.label31.Text = "促销车款:";
-            // 
-            // chkIsShow400Number
-            // 
-            this.chkIsShow400Number.AutoSize = true;
-            this.chkIsShow400Number.Checked = true;
-            this.chkIsShow400Number.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkIsShow400Number.Location = new System.Drawing.Point(103, 756);
-            this.chkIsShow400Number.Name = "chkIsShow400Number";
-            this.chkIsShow400Number.Size = new System.Drawing.Size(96, 16);
-            this.chkIsShow400Number.TabIndex = 84;
-            this.chkIsShow400Number.Tag = "2";
-            this.chkIsShow400Number.Text = "设置参考总价";
-            this.chkIsShow400Number.UseVisualStyleBackColor = true;
-            // 
-            // label32
-            // 
-            this.label32.AutoSize = true;
-            this.label32.ForeColor = System.Drawing.Color.Red;
-            this.label32.Location = new System.Drawing.Point(16, 13);
-            this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(11, 12);
-            this.label32.TabIndex = 61;
-            this.label32.Text = "*";
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(100, 323);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(72, 16);
-            this.checkBox4.TabIndex = 106;
-            this.checkBox4.Tag = "2";
-            this.checkBox4.Text = "赠送礼包";
-            this.checkBox4.UseVisualStyleBackColor = true;
-            // 
-            // chkIsShowMaintenance
-            // 
-            this.chkIsShowMaintenance.AutoSize = true;
-            this.chkIsShowMaintenance.Checked = true;
-            this.chkIsShowMaintenance.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkIsShowMaintenance.Location = new System.Drawing.Point(104, 690);
-            this.chkIsShowMaintenance.Name = "chkIsShowMaintenance";
-            this.chkIsShowMaintenance.Size = new System.Drawing.Size(96, 16);
-            this.chkIsShowMaintenance.TabIndex = 83;
-            this.chkIsShowMaintenance.Tag = "1";
-            this.chkIsShowMaintenance.Text = "设置置换补贴";
-            this.chkIsShowMaintenance.UseVisualStyleBackColor = true;
-            // 
-            // label40
-            // 
-            this.label40.AutoSize = true;
-            this.label40.ForeColor = System.Drawing.Color.Black;
-            this.label40.Location = new System.Drawing.Point(59, 324);
-            this.label40.Name = "label40";
-            this.label40.Size = new System.Drawing.Size(35, 12);
-            this.label40.TabIndex = 105;
-            this.label40.Text = "礼包:";
-            // 
-            // title_number
-            // 
-            this.title_number.AutoSize = true;
-            this.title_number.ForeColor = System.Drawing.Color.Red;
-            this.title_number.Location = new System.Drawing.Point(386, 180);
-            this.title_number.Name = "title_number";
-            this.title_number.Size = new System.Drawing.Size(11, 12);
-            this.title_number.TabIndex = 108;
-            this.title_number.Text = "*";
-            // 
-            // chkIsShowSaleAddr
-            // 
-            this.chkIsShowSaleAddr.AutoSize = true;
-            this.chkIsShowSaleAddr.Checked = true;
-            this.chkIsShowSaleAddr.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkIsShowSaleAddr.Location = new System.Drawing.Point(103, 712);
-            this.chkIsShowSaleAddr.Name = "chkIsShowSaleAddr";
-            this.chkIsShowSaleAddr.Size = new System.Drawing.Size(96, 16);
-            this.chkIsShowSaleAddr.TabIndex = 82;
-            this.chkIsShowSaleAddr.Tag = "2";
-            this.chkIsShowSaleAddr.Text = "设置参考总价";
-            this.chkIsShowSaleAddr.UseVisualStyleBackColor = true;
-            // 
-            // carControl1
-            // 
-            this.carControl1.Location = new System.Drawing.Point(100, 4);
-            this.carControl1.Name = "carControl1";
-            this.carControl1.Size = new System.Drawing.Size(444, 160);
-            this.carControl1.TabIndex = 96;
-            // 
-            // label37
-            // 
-            this.label37.AutoSize = true;
-            this.label37.ForeColor = System.Drawing.Color.Black;
-            this.label37.Location = new System.Drawing.Point(110, 297);
-            this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(83, 12);
-            this.label37.TabIndex = 104;
-            this.label37.Text = "最多500个汉字";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(35, 691);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(59, 12);
-            this.label5.TabIndex = 81;
-            this.label5.Text = "添加信息:";
-            // 
-            // label34
-            // 
-            this.label34.AutoSize = true;
-            this.label34.ForeColor = System.Drawing.Color.Black;
-            this.label34.Location = new System.Drawing.Point(35, 178);
-            this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(59, 12);
-            this.label34.TabIndex = 98;
-            this.label34.Text = "新闻标题:";
-            // 
-            // txtLead
-            // 
-            this.txtLead.Location = new System.Drawing.Point(100, 226);
-            this.txtLead.Multiline = true;
-            this.txtLead.Name = "txtLead";
-            this.txtLead.Size = new System.Drawing.Size(444, 63);
-            this.txtLead.TabIndex = 103;
-            // 
-            // label35
-            // 
-            this.label35.AutoSize = true;
-            this.label35.ForeColor = System.Drawing.Color.Red;
-            this.label35.Location = new System.Drawing.Point(16, 178);
-            this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(11, 12);
-            this.label35.TabIndex = 97;
-            this.label35.Text = "*";
-            // 
-            // label38
-            // 
-            this.label38.AutoSize = true;
-            this.label38.ForeColor = System.Drawing.Color.Black;
-            this.label38.Location = new System.Drawing.Point(59, 229);
-            this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(35, 12);
-            this.label38.TabIndex = 102;
-            this.label38.Text = "导语:";
-            // 
-            // label39
-            // 
-            this.label39.AutoSize = true;
-            this.label39.ForeColor = System.Drawing.Color.Red;
-            this.label39.Location = new System.Drawing.Point(16, 229);
-            this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(11, 12);
-            this.label39.TabIndex = 101;
-            this.label39.Text = "*";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(35, 604);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 12);
-            this.label3.TabIndex = 80;
-            this.label3.Text = "车型小图:";
-            // 
-            // title_article
-            // 
-            this.title_article.Location = new System.Drawing.Point(100, 175);
-            this.title_article.Name = "title_article";
-            this.title_article.Size = new System.Drawing.Size(280, 21);
-            this.title_article.TabIndex = 99;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.Red;
-            this.label4.Location = new System.Drawing.Point(16, 604);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(11, 12);
-            this.label4.TabIndex = 79;
-            this.label4.Text = "*";
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.ForeColor = System.Drawing.Color.Black;
-            this.label36.Location = new System.Drawing.Point(109, 199);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(137, 12);
-            this.label36.TabIndex = 100;
-            this.label36.Text = "标题最小6个字,最多18字";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.Black;
-            this.label1.Location = new System.Drawing.Point(35, 353);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(59, 12);
-            this.label1.TabIndex = 78;
-            this.label1.Text = "车型大图:";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.Color.Red;
-            this.label2.Location = new System.Drawing.Point(16, 353);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(11, 12);
-            this.label2.TabIndex = 77;
-            this.label2.Text = "*";
-            // 
-            // pSimple
-            // 
-            this.pSimple.Controls.Add(this.pColor);
-            this.pSimple.Controls.Add(this.label14);
-            this.pSimple.Controls.Add(this.label15);
-            this.pSimple.Controls.Add(this.label19);
-            this.pSimple.Controls.Add(this.ddlPromotionType);
-            this.pSimple.Controls.Add(this.txtMoney);
-            this.pSimple.Controls.Add(this.label16);
-            this.pSimple.Location = new System.Drawing.Point(6, 145);
-            this.pSimple.Name = "pSimple";
-            this.pSimple.Size = new System.Drawing.Size(472, 315);
-            this.pSimple.TabIndex = 109;
+            // tabControl2
+            // 
+            this.tabControl2.Controls.Add(this.tabPage1);
+            this.tabControl2.Controls.Add(this.tabPage2);
+            this.tabControl2.Location = new System.Drawing.Point(10, 188);
+            this.tabControl2.Name = "tabControl2";
+            this.tabControl2.SelectedIndex = 0;
+            this.tabControl2.Size = new System.Drawing.Size(732, 670);
+            this.tabControl2.TabIndex = 15;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.AutoScroll = true;
+            this.tabPage1.Controls.Add(this.btnSend_Ex);
+            this.tabPage1.Controls.Add(this.carA);
+            this.tabPage1.Controls.Add(this.label20);
+            this.tabPage1.Controls.Add(this.label21);
+            this.tabPage1.Controls.Add(this.label16);
+            this.tabPage1.Controls.Add(this.pColor);
+            this.tabPage1.Controls.Add(this.pStoreState);
+            this.tabPage1.Controls.Add(this.label14);
+            this.tabPage1.Controls.Add(this.label18);
+            this.tabPage1.Controls.Add(this.label15);
+            this.tabPage1.Controls.Add(this.label17);
+            this.tabPage1.Controls.Add(this.label19);
+            this.tabPage1.Controls.Add(this.ddlPromotionType);
+            this.tabPage1.Controls.Add(this.txtMoney);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(724, 644);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "快捷发布";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // btnSend_Ex
+            // 
+            this.btnSend_Ex.Location = new System.Drawing.Point(535, 515);
+            this.btnSend_Ex.Name = "btnSend_Ex";
+            this.btnSend_Ex.Size = new System.Drawing.Size(101, 33);
+            this.btnSend_Ex.TabIndex = 112;
+            this.btnSend_Ex.Text = "发布";
+            this.btnSend_Ex.UseVisualStyleBackColor = true;
+            this.btnSend_Ex.Click += new System.EventHandler(this.btnSend_Ex_Click);
+            // 
+            // carA
+            // 
+            this.carA.CarDataSource = null;
+            this.carA.Location = new System.Drawing.Point(87, 6);
+            this.carA.Name = "carA";
+            this.carA.Size = new System.Drawing.Size(603, 353);
+            this.carA.TabIndex = 111;
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.ForeColor = System.Drawing.Color.Black;
+            this.label20.Location = new System.Drawing.Point(22, 15);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(59, 12);
+            this.label20.TabIndex = 110;
+            this.label20.Text = "促销车款:";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.ForeColor = System.Drawing.Color.Red;
+            this.label21.Location = new System.Drawing.Point(3, 15);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(11, 12);
+            this.label21.TabIndex = 109;
+            this.label21.Text = "*";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.ForeColor = System.Drawing.Color.Black;
+            this.label16.Location = new System.Drawing.Point(355, 409);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(41, 12);
+            this.label16.TabIndex = 90;
+            this.label16.Text = "(万元)";
             // 
             // pColor
             // 
             this.pColor.Controls.Add(this.chkAllColor);
-            this.pColor.Location = new System.Drawing.Point(88, 31);
+            this.pColor.Location = new System.Drawing.Point(107, 431);
             this.pColor.Name = "pColor";
             this.pColor.Size = new System.Drawing.Size(372, 277);
             this.pColor.TabIndex = 108;
@@ -657,31 +342,58 @@
             this.chkAllColor.Text = "颜色齐全";
             this.chkAllColor.UseVisualStyleBackColor = true;
             // 
+            // pStoreState
+            // 
+            this.pStoreState.Location = new System.Drawing.Point(106, 365);
+            this.pStoreState.Name = "pStoreState";
+            this.pStoreState.Size = new System.Drawing.Size(372, 29);
+            this.pStoreState.TabIndex = 93;
+            // 
             // label14
             // 
             this.label14.AutoSize = true;
             this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Location = new System.Drawing.Point(26, 9);
+            this.label14.Location = new System.Drawing.Point(45, 409);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(59, 12);
             this.label14.TabIndex = 87;
             this.label14.Text = "优惠金额:";
             // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.ForeColor = System.Drawing.Color.Red;
+            this.label18.Location = new System.Drawing.Point(26, 374);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(11, 12);
+            this.label18.TabIndex = 91;
+            this.label18.Text = "*";
+            // 
             // label15
             // 
             this.label15.AutoSize = true;
             this.label15.ForeColor = System.Drawing.Color.Red;
-            this.label15.Location = new System.Drawing.Point(7, 9);
+            this.label15.Location = new System.Drawing.Point(26, 409);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(11, 12);
             this.label15.TabIndex = 86;
             this.label15.Text = "*";
             // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.ForeColor = System.Drawing.Color.Black;
+            this.label17.Location = new System.Drawing.Point(45, 374);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(59, 12);
+            this.label17.TabIndex = 92;
+            this.label17.Text = "库存状态:";
+            // 
             // label19
             // 
             this.label19.AutoSize = true;
             this.label19.ForeColor = System.Drawing.Color.Black;
-            this.label19.Location = new System.Drawing.Point(26, 39);
+            this.label19.Location = new System.Drawing.Point(45, 439);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(59, 12);
             this.label19.TabIndex = 107;
@@ -691,102 +403,386 @@
             // 
             this.ddlPromotionType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddlPromotionType.FormattingEnabled = true;
-            this.ddlPromotionType.Location = new System.Drawing.Point(94, 4);
+            this.ddlPromotionType.Location = new System.Drawing.Point(113, 404);
             this.ddlPromotionType.Name = "ddlPromotionType";
             this.ddlPromotionType.Size = new System.Drawing.Size(109, 20);
             this.ddlPromotionType.TabIndex = 88;
             // 
             // txtMoney
             // 
-            this.txtMoney.Location = new System.Drawing.Point(220, 4);
+            this.txtMoney.Location = new System.Drawing.Point(239, 404);
             this.txtMoney.Name = "txtMoney";
             this.txtMoney.Size = new System.Drawing.Size(110, 21);
             this.txtMoney.TabIndex = 89;
             // 
-            // label16
+            // tabPage2
             // 
-            this.label16.AutoSize = true;
-            this.label16.ForeColor = System.Drawing.Color.Black;
-            this.label16.Location = new System.Drawing.Point(332, 9);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(41, 12);
-            this.label16.TabIndex = 90;
-            this.label16.Text = "(万元)";
+            this.tabPage2.AutoScroll = true;
+            this.tabPage2.Controls.Add(this.txtOtherInfo);
+            this.tabPage2.Controls.Add(this.label35);
+            this.tabPage2.Controls.Add(this.txtPurchaseTax);
+            this.tabPage2.Controls.Add(this.label2);
+            this.tabPage2.Controls.Add(this.ddlTrafficTax);
+            this.tabPage2.Controls.Add(this.label1);
+            this.tabPage2.Controls.Add(this.ddlBusinessTax);
+            this.tabPage2.Controls.Add(this.label36);
+            this.tabPage2.Controls.Add(this.txtPrice);
+            this.tabPage2.Controls.Add(this.label4);
+            this.tabPage2.Controls.Add(this.title_article);
+            this.tabPage2.Controls.Add(this.label3);
+            this.tabPage2.Controls.Add(this.label39);
+            this.tabPage2.Controls.Add(this.label38);
+            this.tabPage2.Controls.Add(this.txtLead);
+            this.tabPage2.Controls.Add(this.chkIsShowMap);
+            this.tabPage2.Controls.Add(this.label34);
+            this.tabPage2.Controls.Add(this.label5);
+            this.tabPage2.Controls.Add(this.chkIsShow400Number);
+            this.tabPage2.Controls.Add(this.label37);
+            this.tabPage2.Controls.Add(this.chkIsShowSaleAddr);
+            this.tabPage2.Controls.Add(this.checkBox4);
+            this.tabPage2.Controls.Add(this.title_number);
+            this.tabPage2.Controls.Add(this.chkIsShowMaintenance);
+            this.tabPage2.Controls.Add(this.label40);
+            this.tabPage2.Controls.Add(this.label31);
+            this.tabPage2.Controls.Add(this.label32);
+            this.tabPage2.Controls.Add(this.imgPosition4_hdf);
+            this.tabPage2.Controls.Add(this.imgPosition3_hdf);
+            this.tabPage2.Controls.Add(this.imgPosition2_hdf);
+            this.tabPage2.Controls.Add(this.imgPosition1_hdf);
+            this.tabPage2.Controls.Add(this.imgLogo_hdf);
+            this.tabPage2.Controls.Add(this.carControl1);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(724, 644);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "编辑明细";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // label29
+            // txtOtherInfo
             // 
-            this.label29.AutoSize = true;
-            this.label29.ForeColor = System.Drawing.Color.Black;
-            this.label29.Location = new System.Drawing.Point(33, 82);
-            this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(59, 12);
-            this.label29.TabIndex = 6;
-            this.label29.Text = "促销时间:";
+            this.txtOtherInfo.Location = new System.Drawing.Point(366, 471);
+            this.txtOtherInfo.Name = "txtOtherInfo";
+            this.txtOtherInfo.Size = new System.Drawing.Size(32, 21);
+            this.txtOtherInfo.TabIndex = 148;
+            this.txtOtherInfo.Text = "如礼包规则或礼包内容";
             // 
-            // label28
+            // label35
             // 
-            this.label28.AutoSize = true;
-            this.label28.ForeColor = System.Drawing.Color.Red;
-            this.label28.Location = new System.Drawing.Point(14, 82);
-            this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(11, 12);
-            this.label28.TabIndex = 5;
-            this.label28.Text = "*";
+            this.label35.AutoSize = true;
+            this.label35.ForeColor = System.Drawing.Color.Red;
+            this.label35.Location = new System.Drawing.Point(14, 338);
+            this.label35.Name = "label35";
+            this.label35.Size = new System.Drawing.Size(11, 12);
+            this.label35.TabIndex = 128;
+            this.label35.Text = "*";
             // 
-            // pStoreState
+            // txtPurchaseTax
             // 
-            this.pStoreState.Location = new System.Drawing.Point(94, 110);
-            this.pStoreState.Name = "pStoreState";
-            this.pStoreState.Size = new System.Drawing.Size(372, 29);
-            this.pStoreState.TabIndex = 93;
+            this.txtPurchaseTax.Location = new System.Drawing.Point(327, 470);
+            this.txtPurchaseTax.Name = "txtPurchaseTax";
+            this.txtPurchaseTax.Size = new System.Drawing.Size(32, 21);
+            this.txtPurchaseTax.TabIndex = 147;
+            this.txtPurchaseTax.Text = "单选";
             // 
-            // dtpPromotionA
+            // label2
             // 
-            this.dtpPromotionA.CustomFormat = "yyyy-MM-dd";
-            this.dtpPromotionA.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpPromotionA.Location = new System.Drawing.Point(100, 78);
-            this.dtpPromotionA.Name = "dtpPromotionA";
-            this.dtpPromotionA.Size = new System.Drawing.Size(107, 21);
-            this.dtpPromotionA.TabIndex = 58;
+            this.label2.AutoSize = true;
+            this.label2.ForeColor = System.Drawing.Color.Red;
+            this.label2.Location = new System.Drawing.Point(14, 502);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(11, 12);
+            this.label2.TabIndex = 119;
+            this.label2.Text = "*";
             // 
-            // label17
+            // ddlTrafficTax
             // 
-            this.label17.AutoSize = true;
-            this.label17.ForeColor = System.Drawing.Color.Black;
-            this.label17.Location = new System.Drawing.Point(33, 119);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(59, 12);
-            this.label17.TabIndex = 92;
-            this.label17.Text = "库存状态:";
+            this.ddlTrafficTax.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ddlTrafficTax.FormattingEnabled = true;
+            this.ddlTrafficTax.Location = new System.Drawing.Point(271, 470);
+            this.ddlTrafficTax.Name = "ddlTrafficTax";
+            this.ddlTrafficTax.Size = new System.Drawing.Size(50, 20);
+            this.ddlTrafficTax.TabIndex = 146;
             // 
-            // dtpPromotionB
+            // label1
             // 
-            this.dtpPromotionB.CustomFormat = "yyyy-MM-dd";
-            this.dtpPromotionB.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpPromotionB.Location = new System.Drawing.Point(225, 78);
-            this.dtpPromotionB.Name = "dtpPromotionB";
-            this.dtpPromotionB.Size = new System.Drawing.Size(107, 21);
-            this.dtpPromotionB.TabIndex = 59;
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.Color.Black;
+            this.label1.Location = new System.Drawing.Point(33, 502);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(59, 12);
+            this.label1.TabIndex = 120;
+            this.label1.Text = "车型大图:";
             // 
-            // label18
+            // ddlBusinessTax
             // 
-            this.label18.AutoSize = true;
-            this.label18.ForeColor = System.Drawing.Color.Red;
-            this.label18.Location = new System.Drawing.Point(14, 119);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(11, 12);
-            this.label18.TabIndex = 91;
-            this.label18.Text = "*";
+            this.ddlBusinessTax.FormattingEnabled = true;
+            this.ddlBusinessTax.Location = new System.Drawing.Point(239, 468);
+            this.ddlBusinessTax.Name = "ddlBusinessTax";
+            this.ddlBusinessTax.Size = new System.Drawing.Size(26, 20);
+            this.ddlBusinessTax.TabIndex = 145;
             // 
-            // label30
+            // label36
             // 
-            this.label30.AutoSize = true;
-            this.label30.ForeColor = System.Drawing.Color.Black;
-            this.label30.Location = new System.Drawing.Point(208, 82);
-            this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(17, 12);
-            this.label30.TabIndex = 60;
-            this.label30.Text = "到";
+            this.label36.AutoSize = true;
+            this.label36.ForeColor = System.Drawing.Color.Black;
+            this.label36.Location = new System.Drawing.Point(107, 359);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(137, 12);
+            this.label36.TabIndex = 131;
+            this.label36.Text = "标题最小6个字,最多18字";
+            // 
+            // txtPrice
+            // 
+            this.txtPrice.Location = new System.Drawing.Point(189, 468);
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.Size = new System.Drawing.Size(32, 21);
+            this.txtPrice.TabIndex = 144;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.Color.Red;
+            this.label4.Location = new System.Drawing.Point(14, 747);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(11, 12);
+            this.label4.TabIndex = 121;
+            this.label4.Text = "*";
+            // 
+            // title_article
+            // 
+            this.title_article.Location = new System.Drawing.Point(98, 335);
+            this.title_article.Name = "title_article";
+            this.title_article.Size = new System.Drawing.Size(280, 21);
+            this.title_article.TabIndex = 130;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.Color.Black;
+            this.label3.Location = new System.Drawing.Point(33, 747);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(59, 12);
+            this.label3.TabIndex = 122;
+            this.label3.Text = "车型小图:";
+            // 
+            // label39
+            // 
+            this.label39.AutoSize = true;
+            this.label39.ForeColor = System.Drawing.Color.Red;
+            this.label39.Location = new System.Drawing.Point(14, 380);
+            this.label39.Name = "label39";
+            this.label39.Size = new System.Drawing.Size(11, 12);
+            this.label39.TabIndex = 132;
+            this.label39.Text = "*";
+            // 
+            // label38
+            // 
+            this.label38.AutoSize = true;
+            this.label38.ForeColor = System.Drawing.Color.Black;
+            this.label38.Location = new System.Drawing.Point(57, 380);
+            this.label38.Name = "label38";
+            this.label38.Size = new System.Drawing.Size(35, 12);
+            this.label38.TabIndex = 133;
+            this.label38.Text = "导语:";
+            // 
+            // txtLead
+            // 
+            this.txtLead.Location = new System.Drawing.Point(98, 377);
+            this.txtLead.Multiline = true;
+            this.txtLead.Name = "txtLead";
+            this.txtLead.Size = new System.Drawing.Size(444, 63);
+            this.txtLead.TabIndex = 134;
+            // 
+            // chkIsShowMap
+            // 
+            this.chkIsShowMap.AutoSize = true;
+            this.chkIsShowMap.Checked = true;
+            this.chkIsShowMap.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkIsShowMap.Location = new System.Drawing.Point(102, 894);
+            this.chkIsShowMap.Name = "chkIsShowMap";
+            this.chkIsShowMap.Size = new System.Drawing.Size(96, 16);
+            this.chkIsShowMap.TabIndex = 127;
+            this.chkIsShowMap.Tag = "1";
+            this.chkIsShowMap.Text = "设置置换补贴";
+            this.chkIsShowMap.UseVisualStyleBackColor = true;
+            // 
+            // label34
+            // 
+            this.label34.AutoSize = true;
+            this.label34.ForeColor = System.Drawing.Color.Black;
+            this.label34.Location = new System.Drawing.Point(33, 338);
+            this.label34.Name = "label34";
+            this.label34.Size = new System.Drawing.Size(59, 12);
+            this.label34.TabIndex = 129;
+            this.label34.Text = "新闻标题:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.Color.Black;
+            this.label5.Location = new System.Drawing.Point(33, 851);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(59, 12);
+            this.label5.TabIndex = 123;
+            this.label5.Text = "添加信息:";
+            // 
+            // chkIsShow400Number
+            // 
+            this.chkIsShow400Number.AutoSize = true;
+            this.chkIsShow400Number.Checked = true;
+            this.chkIsShow400Number.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkIsShow400Number.Location = new System.Drawing.Point(101, 916);
+            this.chkIsShow400Number.Name = "chkIsShow400Number";
+            this.chkIsShow400Number.Size = new System.Drawing.Size(96, 16);
+            this.chkIsShow400Number.TabIndex = 126;
+            this.chkIsShow400Number.Tag = "2";
+            this.chkIsShow400Number.Text = "设置参考总价";
+            this.chkIsShow400Number.UseVisualStyleBackColor = true;
+            // 
+            // label37
+            // 
+            this.label37.AutoSize = true;
+            this.label37.ForeColor = System.Drawing.Color.Black;
+            this.label37.Location = new System.Drawing.Point(108, 448);
+            this.label37.Name = "label37";
+            this.label37.Size = new System.Drawing.Size(83, 12);
+            this.label37.TabIndex = 135;
+            this.label37.Text = "最多500个汉字";
+            // 
+            // chkIsShowSaleAddr
+            // 
+            this.chkIsShowSaleAddr.AutoSize = true;
+            this.chkIsShowSaleAddr.Checked = true;
+            this.chkIsShowSaleAddr.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkIsShowSaleAddr.Location = new System.Drawing.Point(101, 872);
+            this.chkIsShowSaleAddr.Name = "chkIsShowSaleAddr";
+            this.chkIsShowSaleAddr.Size = new System.Drawing.Size(96, 16);
+            this.chkIsShowSaleAddr.TabIndex = 124;
+            this.chkIsShowSaleAddr.Tag = "2";
+            this.chkIsShowSaleAddr.Text = "设置参考总价";
+            this.chkIsShowSaleAddr.UseVisualStyleBackColor = true;
+            // 
+            // checkBox4
+            // 
+            this.checkBox4.AutoSize = true;
+            this.checkBox4.Location = new System.Drawing.Point(98, 470);
+            this.checkBox4.Name = "checkBox4";
+            this.checkBox4.Size = new System.Drawing.Size(72, 16);
+            this.checkBox4.TabIndex = 137;
+            this.checkBox4.Tag = "2";
+            this.checkBox4.Text = "赠送礼包";
+            this.checkBox4.UseVisualStyleBackColor = true;
+            // 
+            // title_number
+            // 
+            this.title_number.AutoSize = true;
+            this.title_number.ForeColor = System.Drawing.Color.Red;
+            this.title_number.Location = new System.Drawing.Point(384, 340);
+            this.title_number.Name = "title_number";
+            this.title_number.Size = new System.Drawing.Size(11, 12);
+            this.title_number.TabIndex = 138;
+            this.title_number.Text = "*";
+            // 
+            // chkIsShowMaintenance
+            // 
+            this.chkIsShowMaintenance.AutoSize = true;
+            this.chkIsShowMaintenance.Checked = true;
+            this.chkIsShowMaintenance.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkIsShowMaintenance.Location = new System.Drawing.Point(102, 850);
+            this.chkIsShowMaintenance.Name = "chkIsShowMaintenance";
+            this.chkIsShowMaintenance.Size = new System.Drawing.Size(96, 16);
+            this.chkIsShowMaintenance.TabIndex = 125;
+            this.chkIsShowMaintenance.Tag = "1";
+            this.chkIsShowMaintenance.Text = "设置置换补贴";
+            this.chkIsShowMaintenance.UseVisualStyleBackColor = true;
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.ForeColor = System.Drawing.Color.Black;
+            this.label40.Location = new System.Drawing.Point(57, 471);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(35, 12);
+            this.label40.TabIndex = 136;
+            this.label40.Text = "礼包:";
+            // 
+            // label31
+            // 
+            this.label31.AutoSize = true;
+            this.label31.ForeColor = System.Drawing.Color.Black;
+            this.label31.Location = new System.Drawing.Point(33, 22);
+            this.label31.Name = "label31";
+            this.label31.Size = new System.Drawing.Size(59, 12);
+            this.label31.TabIndex = 62;
+            this.label31.Text = "促销车款:";
+            // 
+            // label32
+            // 
+            this.label32.AutoSize = true;
+            this.label32.ForeColor = System.Drawing.Color.Red;
+            this.label32.Location = new System.Drawing.Point(14, 22);
+            this.label32.Name = "label32";
+            this.label32.Size = new System.Drawing.Size(11, 12);
+            this.label32.TabIndex = 61;
+            this.label32.Text = "*";
+            // 
+            // imgPosition4_hdf
+            // 
+            this.imgPosition4_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition4_hdf.ImgSelectID = null;
+            this.imgPosition4_hdf.ImgUrl = null;
+            this.imgPosition4_hdf.Location = new System.Drawing.Point(533, 724);
+            this.imgPosition4_hdf.Name = "imgPosition4_hdf";
+            this.imgPosition4_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition4_hdf.TabIndex = 143;
+            // 
+            // imgPosition3_hdf
+            // 
+            this.imgPosition3_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition3_hdf.ImgSelectID = null;
+            this.imgPosition3_hdf.ImgUrl = null;
+            this.imgPosition3_hdf.Location = new System.Drawing.Point(388, 724);
+            this.imgPosition3_hdf.Name = "imgPosition3_hdf";
+            this.imgPosition3_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition3_hdf.TabIndex = 142;
+            // 
+            // imgPosition2_hdf
+            // 
+            this.imgPosition2_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition2_hdf.ImgSelectID = null;
+            this.imgPosition2_hdf.ImgUrl = null;
+            this.imgPosition2_hdf.Location = new System.Drawing.Point(243, 724);
+            this.imgPosition2_hdf.Name = "imgPosition2_hdf";
+            this.imgPosition2_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition2_hdf.TabIndex = 141;
+            // 
+            // imgPosition1_hdf
+            // 
+            this.imgPosition1_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition1_hdf.ImgSelectID = null;
+            this.imgPosition1_hdf.ImgUrl = null;
+            this.imgPosition1_hdf.Location = new System.Drawing.Point(98, 724);
+            this.imgPosition1_hdf.Name = "imgPosition1_hdf";
+            this.imgPosition1_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition1_hdf.TabIndex = 140;
+            // 
+            // imgLogo_hdf
+            // 
+            this.imgLogo_hdf.ImgSelectID = null;
+            this.imgLogo_hdf.ImgUrl = null;
+            this.imgLogo_hdf.Location = new System.Drawing.Point(98, 497);
+            this.imgLogo_hdf.Name = "imgLogo_hdf";
+            this.imgLogo_hdf.Size = new System.Drawing.Size(300, 224);
+            this.imgLogo_hdf.TabIndex = 139;
+            // 
+            // carControl1
+            // 
+            this.carControl1.CarDataSource = null;
+            this.carControl1.Location = new System.Drawing.Point(98, 13);
+            this.carControl1.Name = "carControl1";
+            this.carControl1.Size = new System.Drawing.Size(603, 312);
+            this.carControl1.TabIndex = 96;
             // 
             // groupBox3
             // 
@@ -800,7 +796,7 @@
             this.groupBox3.Controls.Add(this.textBox3);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Location = new System.Drawing.Point(36, 971);
+            this.groupBox3.Location = new System.Drawing.Point(748, 61);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(402, 165);
             this.groupBox3.TabIndex = 10;
@@ -902,6 +898,35 @@
             this.label8.TabIndex = 71;
             this.label8.Text = "*";
             // 
+            // label29
+            // 
+            this.label29.AutoSize = true;
+            this.label29.ForeColor = System.Drawing.Color.Black;
+            this.label29.Location = new System.Drawing.Point(34, 164);
+            this.label29.Name = "label29";
+            this.label29.Size = new System.Drawing.Size(59, 12);
+            this.label29.TabIndex = 6;
+            this.label29.Text = "促销时间:";
+            // 
+            // label28
+            // 
+            this.label28.AutoSize = true;
+            this.label28.ForeColor = System.Drawing.Color.Red;
+            this.label28.Location = new System.Drawing.Point(15, 164);
+            this.label28.Name = "label28";
+            this.label28.Size = new System.Drawing.Size(11, 12);
+            this.label28.TabIndex = 5;
+            this.label28.Text = "*";
+            // 
+            // dtpPromotionA
+            // 
+            this.dtpPromotionA.CustomFormat = "yyyy-MM-dd";
+            this.dtpPromotionA.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpPromotionA.Location = new System.Drawing.Point(101, 160);
+            this.dtpPromotionA.Name = "dtpPromotionA";
+            this.dtpPromotionA.Size = new System.Drawing.Size(107, 21);
+            this.dtpPromotionA.TabIndex = 58;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.groupBox4);
@@ -999,12 +1024,31 @@
             this.rbtSource1.Text = "降价促销";
             this.rbtSource1.UseVisualStyleBackColor = true;
             // 
+            // dtpPromotionB
+            // 
+            this.dtpPromotionB.CustomFormat = "yyyy-MM-dd";
+            this.dtpPromotionB.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtpPromotionB.Location = new System.Drawing.Point(226, 160);
+            this.dtpPromotionB.Name = "dtpPromotionB";
+            this.dtpPromotionB.Size = new System.Drawing.Size(107, 21);
+            this.dtpPromotionB.TabIndex = 59;
+            // 
+            // label30
+            // 
+            this.label30.AutoSize = true;
+            this.label30.ForeColor = System.Drawing.Color.Black;
+            this.label30.Location = new System.Drawing.Point(209, 164);
+            this.label30.Name = "label30";
+            this.label30.Size = new System.Drawing.Size(17, 12);
+            this.label30.TabIndex = 60;
+            this.label30.Text = "到";
+            // 
             // tpb_NC
             // 
             this.tpb_NC.Location = new System.Drawing.Point(4, 22);
             this.tpb_NC.Name = "tpb_NC";
             this.tpb_NC.Padding = new System.Windows.Forms.Padding(3);
-            this.tpb_NC.Size = new System.Drawing.Size(1099, 1015);
+            this.tpb_NC.Size = new System.Drawing.Size(1167, 858);
             this.tpb_NC.TabIndex = 1;
             this.tpb_NC.Text = "新车信息";
             this.tpb_NC.UseVisualStyleBackColor = true;
@@ -1018,7 +1062,7 @@
             this.tpb_NW.Location = new System.Drawing.Point(4, 22);
             this.tpb_NW.Name = "tpb_NW";
             this.tpb_NW.Padding = new System.Windows.Forms.Padding(3);
-            this.tpb_NW.Size = new System.Drawing.Size(1099, 1015);
+            this.tpb_NW.Size = new System.Drawing.Size(1167, 858);
             this.tpb_NW.TabIndex = 2;
             this.tpb_NW.Text = "新闻资讯";
             this.tpb_NW.UseVisualStyleBackColor = true;
@@ -1263,21 +1307,20 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1115, 1045);
+            this.ClientSize = new System.Drawing.Size(1183, 888);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form_YC";
             this.Text = "Form_YC";
             this.tabControl1.ResumeLayout(false);
             this.tpb_TP.ResumeLayout(false);
             this.tpb_TP.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.pDetail.ResumeLayout(false);
-            this.pDetail.PerformLayout();
-            this.pSimple.ResumeLayout(false);
-            this.pSimple.PerformLayout();
+            this.tabControl2.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.pColor.ResumeLayout(false);
             this.pColor.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
@@ -1335,15 +1378,6 @@
         private System.Windows.Forms.RadioButton radioButton5;
         private System.Windows.Forms.RadioButton rbtSource1;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.CheckBox chkIsShowMap;
-        private System.Windows.Forms.CheckBox chkIsShow400Number;
-        private System.Windows.Forms.CheckBox chkIsShowMaintenance;
-        private System.Windows.Forms.CheckBox chkIsShowSaleAddr;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label31;
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label30;
@@ -1369,34 +1403,45 @@
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Label label18;
         private CarControl carControl1;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label19;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.Label label40;
-        private System.Windows.Forms.Label label37;
-        private System.Windows.Forms.TextBox txtLead;
-        private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.TextBox title_article;
-        private System.Windows.Forms.Label label34;
-        private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.Label title_number;
-        private System.Windows.Forms.Panel pDetail;
-        private System.Windows.Forms.Panel pSimple;
         private System.Windows.Forms.Panel pColor;
         private System.Windows.Forms.CheckBox chkAllColor;
-        private System.Windows.Forms.Button btnSend;
-        private System.Windows.Forms.Button btnDetail;
-        private ImgControl imgPosition4_hdf;
-        private ImgControl imgPosition3_hdf;
-        private ImgControl imgPosition2_hdf;
-        private ImgControl imgPosition1_hdf;
-        private ImgControl imgLogo_hdf;
-        private System.Windows.Forms.TextBox txtPrice;
-        private System.Windows.Forms.ComboBox ddlBusinessTax;
-        private System.Windows.Forms.ComboBox ddlTrafficTax;
-        private System.Windows.Forms.TextBox txtPurchaseTax;
+        private System.Windows.Forms.TabControl tabControl2;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.Button btnSend_Ex;
+        private CarControl carA;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TextBox txtOtherInfo;
+        private System.Windows.Forms.Label label35;
+        private System.Windows.Forms.TextBox txtPurchaseTax;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.ComboBox ddlTrafficTax;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox ddlBusinessTax;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.TextBox txtPrice;
+        private System.Windows.Forms.Label label4;
+        private ImgControl imgPosition4_hdf;
+        private System.Windows.Forms.TextBox title_article;
+        private ImgControl imgPosition3_hdf;
+        private System.Windows.Forms.Label label3;
+        private ImgControl imgPosition2_hdf;
+        private System.Windows.Forms.Label label39;
+        private ImgControl imgPosition1_hdf;
+        private System.Windows.Forms.Label label38;
+        private ImgControl imgLogo_hdf;
+        private System.Windows.Forms.TextBox txtLead;
+        private System.Windows.Forms.CheckBox chkIsShowMap;
+        private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.CheckBox chkIsShow400Number;
+        private System.Windows.Forms.Label label37;
+        private System.Windows.Forms.CheckBox chkIsShowSaleAddr;
+        private System.Windows.Forms.CheckBox checkBox4;
+        private System.Windows.Forms.Label title_number;
+        private System.Windows.Forms.CheckBox chkIsShowMaintenance;
+        private System.Windows.Forms.Label label40;
     }
 }

@@ -11,7 +11,10 @@ namespace Aide
 {
     public partial class ImgControl : UserControl
     {
-        public string ImgUrl { get; set; }
+        public string ImgUrl { 
+            get { return ptbImg.ImageLocation; } 
+            set { ptbImg.ImageLocation = value; } 
+        }
 
         public string ImgSelectID { get; set; }
 
