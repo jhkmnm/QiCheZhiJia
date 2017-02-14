@@ -38,6 +38,23 @@ namespace Aide
             }
         }
 
+        public List<string> YearTypeList
+        {
+            get
+            {
+                var list = new List<string>();
+                foreach(Control con in panel1.Controls)
+                {
+                    var chk = con as CheckBox;
+                    if(chk != null && chk.Checked)
+                    {
+                        list.Add(chk.Text);
+                    }
+                }
+                return list;
+            }
+        }
+
         /// <summary>
         /// 是否显示明细
         /// </summary>
@@ -49,7 +66,7 @@ namespace Aide
             colPromotionPrice.Visible = isDetail;
             colStoreState.Visible = isDetail;
             colSubsidies.Visible = isDetail;
-            colFavorablePrice.Visible = isDetail;            
+            colFavorablePrice.Visible = isDetail;
             colColorName.Visible = isDetail;
             colTypeName.Width = isDetail ? 100 : 300;
         }
@@ -60,9 +77,9 @@ namespace Aide
 
             StoreStateList.AddRange(new[] {
                 new TextValue { Text = "库存状态", Value = "-1" },
-                new TextValue { Text = "库存状态", Value = "-1" },
-                new TextValue { Text = "库存状态", Value = "-1" },
-                new TextValue { Text = "库存状态", Value = "-1" }
+                new TextValue { Text = "现车充足", Value = "1" },
+                new TextValue { Text = "少量现车", Value = "2" },
+                new TextValue { Text = "需提前预定", Value = "3" }
             });
 
             ddlStoreState.DataSource = StoreStateList;
