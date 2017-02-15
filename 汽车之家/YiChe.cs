@@ -110,6 +110,7 @@ namespace Aide
             HttpHelper http = new HttpHelper();
             HttpResult htmlr = http.GetHtml(item);
             HtmlDocument htmlDoc = new HtmlDocument();
+            
             htmlDoc.LoadHtml(htmlr.Html);
             return htmlDoc;
         }
@@ -405,9 +406,15 @@ namespace Aide
 
             viewstate = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"__VIEWSTATE\"]").GetAttributeValue("value", "");
             viewrator = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"__VIEWSTATEGENERATOR\"]").GetAttributeValue("value", "");
-            dccid = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"HADRDCCID\"]").GetAttributeValue("value", "");
-            dsid = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"HCBCIDSID\"]").GetAttributeValue("value", "");
-            hacdsid = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"HACBCIDSID\"]").GetAttributeValue("value", "");
+            var hadrdccid = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"HADRDCCID\"]");
+            if(hadrdccid != null)
+                dccid = hadrdccid.GetAttributeValue("value", "");
+            var hcbcidsid = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"HCBCIDSID\"]");
+            if (hcbcidsid != null)
+                dsid = hcbcidsid.GetAttributeValue("value", "");
+            var hacbcidsid = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"HACBCIDSID\"]");
+            if(hacbcidsid != null)
+                hacdsid = hacbcidsid.GetAttributeValue("value", "");
             return htmlDoc;
         }
 
@@ -629,7 +636,8 @@ namespace Aide
             var item = new HttpItem()
             {
                 URL = url,
-                Cookie = app_CheYiTong_Cookie
+                Cookie = app_CheYiTong_Cookie,
+                ContentType = "text/html"
             };
             var htmlDoc = GetHtml(item);
 

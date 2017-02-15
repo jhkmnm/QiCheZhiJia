@@ -69,6 +69,7 @@
             this.llbInclude.TabIndex = 2;
             this.llbInclude.TabStop = true;
             this.llbInclude.Text = "图库";
+            this.llbInclude.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llbInclude_LinkClicked);
             // 
             // ImgControl
             // 

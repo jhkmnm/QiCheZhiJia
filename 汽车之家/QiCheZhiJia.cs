@@ -101,7 +101,7 @@ namespace Aide
             var result = http.GetHtml(item);
             cookie += HttpHelper.GetSmallCookie(result.Cookie);
             MemoryStream ms = new MemoryStream(result.ResultByte);
-            return Bitmap.FromStream(ms, true);
+            return Image.FromStream(ms, true);
         }
 
         public void GotoLoginPage()
@@ -124,7 +124,7 @@ namespace Aide
             exponment = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='hidPublicKeyExponent']").GetAttributeValue("value", "");
             modulus = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"hidPublicKeyModulus\"]").GetAttributeValue("value", "");
 
-            item.URL = entervalidateCode;            
+            item.URL = entervalidateCode;
             result = http.GetHtml(item);
             cookie += HttpHelper.GetSmallCookie(result.Cookie);            
         }

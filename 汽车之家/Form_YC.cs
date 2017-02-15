@@ -290,14 +290,24 @@ namespace Aide
             #region 图片
             var imgLogo = doc.GetElementbyId("imgLogo");
             imgLogo_hdf.ImgUrl = imgLogo.GetAttributeValue("src", "");
+            imgLogo_hdf.CSID = carid;
+            imgLogo_hdf.yiche = yc;
             var imgPosition1 = doc.GetElementbyId("imgPosition1");
             imgPosition1_hdf.ImgUrl = imgPosition1.GetAttributeValue("src", "");
+            imgPosition1_hdf.CSID = carid;
+            imgPosition1_hdf.yiche = yc;
             var imgPosition2 = doc.GetElementbyId("imgPosition2");
             imgPosition2_hdf.ImgUrl = imgPosition2.GetAttributeValue("src", "");
+            imgPosition2_hdf.CSID = carid;
+            imgPosition2_hdf.yiche = yc;
             var imgPosition3 = doc.GetElementbyId("imgPosition3");
             imgPosition3_hdf.ImgUrl = imgPosition3.GetAttributeValue("src", "");
+            imgPosition3_hdf.CSID = carid;
+            imgPosition3_hdf.yiche = yc;
             var imgPosition4 = doc.GetElementbyId("imgPosition4");
             imgPosition4_hdf.ImgUrl = imgPosition4.GetAttributeValue("src", "");
+            imgPosition4_hdf.CSID = carid;
+            imgPosition4_hdf.yiche = yc;
             #endregion
 
             carA.CarDataSource = cars;
