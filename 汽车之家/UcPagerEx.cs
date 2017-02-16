@@ -19,7 +19,7 @@ namespace Aide
         public UcPagerEx()
         {
             InitializeComponent();
-            this._pageSize = 10;
+            this._pageSize = 15;
             this._recordCount = 0;
             this._pageIndex = 1; //默认为第一页
         }
@@ -94,6 +94,8 @@ namespace Aide
             }
         }
 
+        public int PreviousPage { get; set; }        
+
         /// <summary> 
         /// 初始化分页信息
         /// <param name="pageSize">每页记录数</param>
@@ -121,7 +123,7 @@ namespace Aide
         public void InitPageInfo()
         {
             if (this._pageSize < 1)
-                this._pageSize = 10; //如果每页记录数不正确，即更改为10
+                this._pageSize = 15; //如果每页记录数不正确，即更改为10
             if (this._recordCount < 0)
                 this._recordCount = 0; //如果记录总数不正确，即更改为0
 
@@ -166,6 +168,7 @@ namespace Aide
 
         public void RefreshData(int page)
         {
+            PreviousPage = this._pageIndex;
             this._pageIndex = page;
             EventArgs e = new EventArgs();
             OnPageChanged(e);

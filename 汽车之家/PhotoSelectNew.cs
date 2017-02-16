@@ -15,6 +15,7 @@ namespace Aide
         HtmlAgilityPack.HtmlDocument doc;
         PictureBox PreviousSelected;
         PictureBox CurrentSelected;
+        TabPage PreviousPage;
         TabPage currentPage;
         string str_viewstate;
         string str_viewstategenerator;
@@ -30,7 +31,8 @@ namespace Aide
             InitializeComponent();
             this.yc = yc;
             this.csid = csid;
-            currentPage = lbtn1;
+            currentPage = PreviousPage = lbtn1;
+            doc = yc.InforManagerNews(photoUrl + csid);
             InitDll(0);
             InitImg();
             InitPage();
@@ -42,8 +44,6 @@ namespace Aide
         /// <param name="selectedIndex">当前选择的是哪一个下拉框1, 2, 3</param>
         private void InitDll(int selectedIndex)
         {
-            doc = yc.InforManagerNews(photoUrl + csid);
-
             var viewstate = doc.GetElementbyId("__VIEWSTATE");
             if (viewstate != null)
                 str_viewstate = viewstate.GetAttributeValue("value", "");
@@ -54,12 +54,13 @@ namespace Aide
 
             var eventvalidation = doc.GetElementbyId("__EVENTVALIDATION");
             if (eventvalidation != null)
-                str_eventvalidation = eventvalidation.GetAttributeValue("value", "");
+                str_eventvalidation = HttpHelper.URLEncode(eventvalidation.GetAttributeValue("value", ""));
 
-            if (ddlCarYear.Items.Count == 0)
+            if (ddCarYear.Items.Count == 0)
             {
-                var ddCarYear = doc.GetElementbyId("ddCarYear");
-                var option = ddCarYear.SelectNodes(".//option");
+                ddCarYear.SelectedIndexChanged -= ddl_SelectedIndexChanged;
+                var CarYear = doc.GetElementbyId("ddCarYear");
+                var option = CarYear.SelectNodes(".//option");
                 List<TextValue> yearList = new List<TextValue>();
 
                 yearList.Add(new TextValue { Text = "请选择年款", Value = "0" });
@@ -68,13 +69,15 @@ namespace Aide
                     var value = option[i].GetAttributeValue("value", "");
                     yearList.Add(new TextValue { Text = value + "款", Value = value });
                 }
-                ddlCarYear.DataSource = yearList;
-                ddlCarYear.DisplayMember = "Text";
-                ddlCarYear.ValueMember = "Value";
+                this.ddCarYear.DataSource = yearList;
+                this.ddCarYear.DisplayMember = "Text";
+                this.ddCarYear.ValueMember = "Value";
+                ddCarYear.SelectedIndexChanged += ddl_SelectedIndexChanged;
             }
 
             if (selectedIndex < 2)
             {
+                ddlCarStyle.SelectedIndexChanged -= ddl_SelectedIndexChanged;
                 var CarStyle = doc.GetElementbyId("ddlCarStyle");
                 var styleoption = CarStyle.SelectNodes(".//option");
                 List<TextValue> styleList = new List<TextValue>();
@@ -90,10 +93,12 @@ namespace Aide
                 ddlCarStyle.DataSource = styleList;
                 ddlCarStyle.DisplayMember = "Text";
                 ddlCarStyle.ValueMember = "Value";
+                ddlCarStyle.SelectedIndexChanged += ddl_SelectedIndexChanged;
             }
 
             if (selectedIndex < 3)
             {
+                ddlCarColors.SelectedIndexChanged -= ddl_SelectedIndexChanged;
                 var CarColors = doc.GetElementbyId("ddlCarColors");
                 var colorsoption = CarColors.SelectNodes(".//option");
                 List<TextValue> colorsList = new List<TextValue>();
@@ -109,48 +114,73 @@ namespace Aide
                 ddlCarColors.DataSource = colorsList;
                 ddlCarColors.DisplayMember = "Text";
                 ddlCarColors.ValueMember = "Value";
+                ddlCarColors.SelectedIndexChanged += ddl_SelectedIndexChanged;
             }
         }
 
         private void InitImg()
         {
-            var imgList = doc.GetElementbyId("imgList").SelectNodes(".//li/input[@type='hidden']");
-            int xstep = 126;
-            int ystep = 88;
-            int xstart = 6;
-            int ystart = 10;
             currentPage.Controls.Clear();
-            for (int i = 0; i < imgList.Count; i++)
+            if (doc.DocumentNode.OuterHtml.Contains("此分类下没有图片"))
             {
-                var value = imgList[i].GetAttributeValue("value", "");
-
-                int x = xstart;
-                int y = ystart;
-
-                if (i > 0)
+                var label = new Label();
+                label.AutoSize = true;
+                label.Location = new System.Drawing.Point(292, 121);
+                label.Name = "label1";
+                label.Size = new System.Drawing.Size(41, 12);
+                label.TabIndex = 0;
+                label.Text = "此分类下没有图片";
+                currentPage.Controls.Add(label);
+            }
+            else
+            {
+                var imgList = doc.GetElementbyId("imgList").SelectNodes(".//li/input[@type='hidden']");
+                int xstep = 126;
+                int ystep = 88;
+                int xstart = 6;
+                int ystart = 10;                
+                for (int i = 0; i < imgList.Count; i++)
                 {
-                    x = xstart + (xstep * (i % 5));
-                    y = ystart + (ystep * (i / 5));
+                    var value = imgList[i].GetAttributeValue("value", "");
+
+                    int x = xstart;
+                    int y = ystart;
+
+                    if (i > 0)
+                    {
+                        x = xstart + (xstep * (i % 5));
+                        y = ystart + (ystep * (i / 5));
+                    }
+
+                    var img = new PictureBox();
+                    img.Location = new System.Drawing.Point(x, y);
+                    img.SizeMode = PictureBoxSizeMode.StretchImage;//
+                    img.Name = string.Format("{0}_img{1}", currentPage.Name, i);
+                    img.Tag = string.Format("rptImgs%24ctl{0:00}%24hidImgUrl", i);
+                    img.Size = new System.Drawing.Size(120, 80);
+                    img.ImageLocation = value;
+                    img.Click += img_Click;
+
+                    currentPage.Controls.Add(img);
                 }
-
-                var img = new PictureBox();
-                img.Location = new System.Drawing.Point(x, y);
-                img.SizeMode = PictureBoxSizeMode.StretchImage;//
-                img.Name = string.Format("{0}_img{1}", currentPage.Name, i);
-                img.Tag = string.Format("rptImgs%24ctl{0:00}%24hidImgUrl", i);
-                img.Size = new System.Drawing.Size(120, 80);
-                img.ImageLocation = value;
-                img.Click += img_Click;
-
-                currentPage.Controls.Add(img);
             }
         }
 
         private void InitPage()
         {
-            var pagerLinks = doc.GetElementbyId("AspNetPager1").SelectNodes(".//a");
-            var recordCount = pagerLinks[pagerLinks.Count - 1].GetAttributeValue("href", "").Replace("javascript:__doPostBack('AspNetPager1','", "").Replace("'", "").Replace(")", "");
-            ucPager.RecordCount = Convert.ToInt32(recordCount);
+            int count = 0;
+            if (!doc.DocumentNode.OuterHtml.Contains("此分类下没有图片"))
+            {
+                var pager = doc.GetElementbyId("AspNetPager1");
+                if(pager != null)
+                {
+                    var pagerLinks = pager.SelectNodes(".//a");
+                    var recordCount = pagerLinks[pagerLinks.Count - 1].GetAttributeValue("href", "").Replace("javascript:__doPostBack('AspNetPager1','", "").Replace("'", "").Replace(")", "");
+                    count = Convert.ToInt32(recordCount) * 15;
+                }                
+            }
+            ucPager.RecordCount = count;
+            ucPager.PageIndex = 1;
             ucPager.InitPageInfo();
             ucPager.PageChanged -= UcPager_PageChanged;
             ucPager.PageChanged += UcPager_PageChanged;
@@ -171,34 +201,39 @@ namespace Aide
         /// 初始化Post数据
         /// </summary>
         /// <param name="ispager">是否是分页</param>
-        private string InitPostData(bool ispager)
+        private string InitPostData(string eventTarget, string eventArgument)
         {
             StringBuilder sb = new StringBuilder(5000);
-            sb.Append("ScriptManager1=UpdatePanel1%7Clbtn2&__LASTFOCUS=&");
-            sb.AppendFormat("__EVENTARGUMENT={0}&", ispager ? ucPager.PageIndex.ToString() : "");//  页码
-            sb.AppendFormat("__EVENTTARGET={0}&", ispager ? "" : currentPage.Name);    //分页还是更换标签
-            sb.AppendFormat("__VIEWSTATE={0}&", HttpHelper.URLEncode(str_viewstate));
-            sb.AppendFormat("__VIEWSTATEGENERATOR={0}&", str_viewstategenerator);
-            sb.AppendFormat("__EVENTVALIDATION={0}&", str_viewstategenerator);
-            sb.AppendFormat("ddCarYear={0}&", ddlCarYear.SelectedValue);
+            sb.AppendFormat("ScriptManager1=UpdatePanel3%7C{0}&", eventTarget);// ispager ? "AspNetPager1" : currentPage.Name);
+            sb.AppendFormat("ddCarYear={0}&", ddCarYear.SelectedValue);
             sb.AppendFormat("ddlCarStyle={0}&", ddlCarStyle.SelectedValue);
             sb.AppendFormat("ddlCarColors={0}&", ddlCarColors.SelectedValue);
-
-            foreach(Control con in currentPage.Controls)
+            TabPage page = eventTarget.Contains("lbtn") ? currentPage : PreviousPage;
+            foreach (Control con in page.Controls)
             {
                 var img = con as PictureBox;
-                if(img != null)
+                if (img != null)
                 {
                     sb.AppendFormat("{0}={1}&", img.Tag.ToString(), HttpHelper.URLEncode(img.ImageLocation));
                 }
             }
+            if (!string.IsNullOrWhiteSpace(eventArgument))
+            {
+                sb.AppendFormat("AspNetPager1_input={0}&", ucPager.PreviousPage);
+            }                
+            sb.AppendFormat("__EVENTTARGET={0}&", eventTarget);  //分页还是更换标签            
+            sb.AppendFormat("__EVENTARGUMENT={0}&", eventArgument);//  页码            
+            sb.Append("__LASTFOCUS=&");
+            sb.AppendFormat("__VIEWSTATE={0}&", HttpHelper.URLEncode(str_viewstate));
+            sb.AppendFormat("__VIEWSTATEGENERATOR={0}&", str_viewstategenerator);
+            sb.AppendFormat("__EVENTVALIDATION={0}&", str_eventvalidation);            
             sb.Append("__ASYNCPOST=true&");
             return sb.ToString();
         }
 
         private void UcPager_PageChanged(object sender, EventArgs e)
         {
-            var postdata = InitPostData(true);
+            var postdata = InitPostData("AspNetPager1", ucPager.PageIndex.ToString());
             doc = yc.Post_CheYiTong(photoUrl + csid, postdata);
             InitImg();
         }
@@ -236,7 +271,7 @@ namespace Aide
             else if (ddl.Name == ddlCarColors.Name)
                 index = 3;
 
-            var postdata = InitPostData(false);
+            var postdata = InitPostData(ddl.Name, "");
             doc = yc.Post_CheYiTong(photoUrl + csid, postdata);
             InitDll(index);
             InitImg();
@@ -245,8 +280,10 @@ namespace Aide
 
         private void tbcImg_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var postdata = InitPostData(false);
-            doc = yc.Post_CheYiTong(photoUrl + csid, postdata);            
+            PreviousPage = currentPage;
+            currentPage = tbcImg.SelectedTab;
+            var postdata = InitPostData(currentPage.Name, "");
+            doc = yc.Post_CheYiTong(photoUrl + csid, postdata);
             InitImg();
             InitPage();
         }

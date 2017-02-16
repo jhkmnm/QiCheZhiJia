@@ -44,6 +44,7 @@
             this.btnFirst.TabIndex = 0;
             this.btnFirst.Text = "|<";
             this.btnFirst.UseVisualStyleBackColor = true;
+            this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
             // 
             // btnPrevious
             // 
@@ -53,6 +54,7 @@
             this.btnPrevious.TabIndex = 1;
             this.btnPrevious.Text = "<";
             this.btnPrevious.UseVisualStyleBackColor = true;
+            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             // 
             // btnNext
             // 
@@ -62,6 +64,7 @@
             this.btnNext.TabIndex = 2;
             this.btnNext.Text = ">";
             this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
             // 
             // btnLast
             // 
@@ -71,6 +74,7 @@
             this.btnLast.TabIndex = 3;
             this.btnLast.Text = ">|";
             this.btnLast.UseVisualStyleBackColor = true;
+            this.btnLast.Click += new System.EventHandler(this.btnLast_Click);
             // 
             // txtPageIndex
             // 
@@ -79,6 +83,7 @@
             this.txtPageIndex.ReadOnly = true;
             this.txtPageIndex.Size = new System.Drawing.Size(42, 21);
             this.txtPageIndex.TabIndex = 4;
+            this.txtPageIndex.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPageIndex_KeyDown);
             // 
             // lblPageInfo
             // 
