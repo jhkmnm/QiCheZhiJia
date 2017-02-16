@@ -98,6 +98,7 @@
             this.ddlCarColors.Name = "ddlCarColors";
             this.ddlCarColors.Size = new System.Drawing.Size(121, 20);
             this.ddlCarColors.TabIndex = 2;
+            this.ddlCarColors.SelectedIndexChanged += new System.EventHandler(this.ddl_SelectedIndexChanged);
             // 
             // ddlCarStyle
             // 
@@ -107,6 +108,7 @@
             this.ddlCarStyle.Name = "ddlCarStyle";
             this.ddlCarStyle.Size = new System.Drawing.Size(121, 20);
             this.ddlCarStyle.TabIndex = 1;
+            this.ddlCarStyle.SelectedIndexChanged += new System.EventHandler(this.ddl_SelectedIndexChanged);
             // 
             // ddlCarYear
             // 
@@ -116,6 +118,7 @@
             this.ddlCarYear.Name = "ddlCarYear";
             this.ddlCarYear.Size = new System.Drawing.Size(121, 20);
             this.ddlCarYear.TabIndex = 0;
+            this.ddlCarYear.SelectedIndexChanged += new System.EventHandler(this.ddl_SelectedIndexChanged);
             // 
             // tbcImg
             // 
@@ -131,6 +134,7 @@
             this.tbcImg.SelectedIndex = 0;
             this.tbcImg.Size = new System.Drawing.Size(645, 303);
             this.tbcImg.TabIndex = 1;
+            this.tbcImg.SelectedIndexChanged += new System.EventHandler(this.tbcImg_SelectedIndexChanged);
             // 
             // lbtn1
             // 
