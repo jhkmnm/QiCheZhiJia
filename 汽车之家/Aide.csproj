@@ -133,6 +133,12 @@
     <Compile Include="UcPagerEx.Designer.cs">
       <DependentUpon>UcPagerEx.cs</DependentUpon>
     </Compile>
+    <Compile Include="UploadFile.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UploadFile.Designer.cs">
+      <DependentUpon>UploadFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Web References\Service\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -172,6 +178,9 @@
     </Compile>
     <EmbeddedResource Include="UcPagerEx.resx">
       <DependentUpon>UcPagerEx.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UploadFile.resx">
+      <DependentUpon>UploadFile.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="app.config" />
     <None Include="js.lyt">

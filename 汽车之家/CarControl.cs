@@ -74,6 +74,7 @@ namespace Aide
         public CarControl()
         {
             InitializeComponent();
+            splitContainer1.Panel2Collapsed = true;
 
             StoreStateList.AddRange(new[] {
                 new TextValue { Text = "库存状态", Value = "-1" },

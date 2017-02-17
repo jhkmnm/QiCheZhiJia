@@ -44,18 +44,6 @@ namespace Aide
         /// <param name="selectedIndex">当前选择的是哪一个下拉框1, 2, 3</param>
         private void InitDll(int selectedIndex)
         {
-            var viewstate = doc.GetElementbyId("__VIEWSTATE");
-            if (viewstate != null)
-                str_viewstate = viewstate.GetAttributeValue("value", "");
-
-            var viewstategenerator = doc.GetElementbyId("__VIEWSTATEGENERATOR");
-            if (viewstategenerator != null)
-                str_viewstategenerator = viewstategenerator.GetAttributeValue("value", "");
-
-            var eventvalidation = doc.GetElementbyId("__EVENTVALIDATION");
-            if (eventvalidation != null)
-                str_eventvalidation = HttpHelper.URLEncode(eventvalidation.GetAttributeValue("value", ""));
-
             if (ddCarYear.Items.Count == 0)
             {
                 ddCarYear.SelectedIndexChanged -= ddl_SelectedIndexChanged;
@@ -120,6 +108,43 @@ namespace Aide
 
         private void InitImg()
         {
+            var viewstate = doc.GetElementbyId("__VIEWSTATE");
+            string[] docvalue = null;
+            if (viewstate != null)
+                str_viewstate = HttpHelper.URLEncode(viewstate.GetAttributeValue("value", ""));
+            else
+            {
+                docvalue = doc.DocumentNode.OuterHtml.Trim().Split('|');
+                for(int i=0;i<docvalue.Length;i++)
+                {
+                    if (docvalue[i] == "__VIEWSTATE")
+                    {
+                        str_viewstate = HttpHelper.URLEncode(docvalue[i + 1]);
+                        break;
+                    }
+                }
+            }
+
+            var eventvalidation = doc.GetElementbyId("__EVENTVALIDATION");
+            if (eventvalidation != null)
+                str_eventvalidation = HttpHelper.URLEncode(eventvalidation.GetAttributeValue("value", ""));
+            else
+            {
+                docvalue = doc.DocumentNode.OuterHtml.Trim().Split('|');
+                for (int i = 0; i < docvalue.Length; i++)
+                {
+                    if (docvalue[i] == "__EVENTVALIDATION")
+                    {
+                        str_eventvalidation = HttpHelper.URLEncode(docvalue[i + 1]);
+                        break;
+                    }
+                }
+            }
+
+            var viewstategenerator = doc.GetElementbyId("__VIEWSTATEGENERATOR");
+            if (viewstategenerator != null)
+                str_viewstategenerator = viewstategenerator.GetAttributeValue("value", "");
+
             currentPage.Controls.Clear();
             if (doc.DocumentNode.OuterHtml.Contains("此分类下没有图片"))
             {
@@ -138,7 +163,7 @@ namespace Aide
                 int xstep = 126;
                 int ystep = 88;
                 int xstart = 6;
-                int ystart = 10;                
+                int ystart = 10;
                 for (int i = 0; i < imgList.Count; i++)
                 {
                     var value = imgList[i].GetAttributeValue("value", "");
@@ -204,7 +229,7 @@ namespace Aide
         private string InitPostData(string eventTarget, string eventArgument)
         {
             StringBuilder sb = new StringBuilder(5000);
-            sb.AppendFormat("ScriptManager1=UpdatePanel3%7C{0}&", eventTarget);// ispager ? "AspNetPager1" : currentPage.Name);
+            sb.AppendFormat("ScriptManager1={0}%7C{1}&", eventTarget.Contains("dd") ? "UpdatePanel3" : "UpdatePanel1", eventTarget);// ispager ? "AspNetPager1" : currentPage.Name);
             sb.AppendFormat("ddCarYear={0}&", ddCarYear.SelectedValue);
             sb.AppendFormat("ddlCarStyle={0}&", ddlCarStyle.SelectedValue);
             sb.AppendFormat("ddlCarColors={0}&", ddlCarColors.SelectedValue);
@@ -224,7 +249,7 @@ namespace Aide
             sb.AppendFormat("__EVENTTARGET={0}&", eventTarget);  //分页还是更换标签            
             sb.AppendFormat("__EVENTARGUMENT={0}&", eventArgument);//  页码            
             sb.Append("__LASTFOCUS=&");
-            sb.AppendFormat("__VIEWSTATE={0}&", HttpHelper.URLEncode(str_viewstate));
+            sb.AppendFormat("__VIEWSTATE={0}&", str_viewstate);
             sb.AppendFormat("__VIEWSTATEGENERATOR={0}&", str_viewstategenerator);
             sb.AppendFormat("__EVENTVALIDATION={0}&", str_eventvalidation);            
             sb.Append("__ASYNCPOST=true&");
@@ -252,6 +277,12 @@ namespace Aide
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            if (CurrentSelected == null)
+            {
+                MessageBox.Show("请选择图片");
+                return;
+            }
+
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

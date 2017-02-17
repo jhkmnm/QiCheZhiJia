@@ -26,7 +26,9 @@ namespace Aide
         PromotionCars cars;
         int NewsType = 1;
         List<TextValue> BusinessTax = new List<TextValue>();
-        List<TextValue> TrafficTax = new List<TextValue>();        
+        List<TextValue> TrafficTax = new List<TextValue>();
+        string ImageUpload = "";
+        string SelectExsitPic = "";
 
 
         List<TextValue> discountRate = new List<TextValue>();
@@ -416,6 +418,18 @@ namespace Aide
 
         private string PushData()
         {
+            var piclink = doc.DocumentNode.SelectSingleNode("//div[@class='hl_tabs mtm10']/ul/li/a");
+            if(piclink != null)
+            {
+                SelectExsitPic = piclink.GetAttributeValue("href", "");
+            }
+
+            var uploadfile = doc.GetElementbyId("imgUploadChangeifrUpLoadFile");
+            if(uploadfile != null)
+            {
+                ImageUpload = uploadfile.GetAttributeValue("src", "");
+            }
+
             StringBuilder sb = new StringBuilder(5000);
             sb.Append("scriptManager=UpdatePanel4%7CbtnPublish&");
 
