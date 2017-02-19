@@ -18,6 +18,8 @@ namespace Aide
 
         public string CSID { get; set; }
         public YiChe yiche { get; set; }
+        public string ImageUpload { get; set; }
+
 
         public string ImgSelectID { get; set; }
 
@@ -29,6 +31,11 @@ namespace Aide
         private void llbInclude_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             new PhotoSelectNew(yiche, CSID).ShowDialog();
+        }
+
+        private void llbUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new UploadFile(yiche, ImageUpload).ShowDialog();
         }
     }
 }

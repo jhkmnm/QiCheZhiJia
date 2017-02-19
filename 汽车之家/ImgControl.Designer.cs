@@ -57,6 +57,7 @@
             this.llbUp.TabIndex = 1;
             this.llbUp.TabStop = true;
             this.llbUp.Text = "上传";
+            this.llbUp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llbUp_LinkClicked);
             // 
             // llbInclude
             // 
@@ -89,7 +90,7 @@
         #endregion
 
         private System.Windows.Forms.PictureBox ptbImg;
-        private System.Windows.Forms.LinkLabel llbUp;
         private System.Windows.Forms.LinkLabel llbInclude;
+        private System.Windows.Forms.LinkLabel llbUp;
     }
 }

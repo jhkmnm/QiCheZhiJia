@@ -28,7 +28,6 @@ namespace Aide
         List<TextValue> BusinessTax = new List<TextValue>();
         List<TextValue> TrafficTax = new List<TextValue>();
         string ImageUpload = "";
-        string SelectExsitPic = "";
 
 
         List<TextValue> discountRate = new List<TextValue>();
@@ -179,7 +178,13 @@ namespace Aide
             //</div>
             #endregion
 
-            #endregion
+            #endregion            
+
+            var uploadfile = doc.GetElementbyId("imgUploadChangeifrUpLoadFile");
+            if (uploadfile != null)
+            {
+                ImageUpload = uploadfile.GetAttributeValue("src", "");
+            }
         }
 
         private void InitDetail()
@@ -294,23 +299,28 @@ namespace Aide
             imgLogo_hdf.ImgUrl = imgLogo.GetAttributeValue("src", "");
             imgLogo_hdf.CSID = carid;
             imgLogo_hdf.yiche = yc;
+            imgLogo_hdf.ImageUpload = ImageUpload;
             var imgPosition1 = doc.GetElementbyId("imgPosition1");
             imgPosition1_hdf.ImgUrl = imgPosition1.GetAttributeValue("src", "");
             imgPosition1_hdf.CSID = carid;
             imgPosition1_hdf.yiche = yc;
+            imgPosition1_hdf.ImageUpload = ImageUpload;
             var imgPosition2 = doc.GetElementbyId("imgPosition2");
             imgPosition2_hdf.ImgUrl = imgPosition2.GetAttributeValue("src", "");
             imgPosition2_hdf.CSID = carid;
             imgPosition2_hdf.yiche = yc;
+            imgPosition2_hdf.ImageUpload = ImageUpload;
             var imgPosition3 = doc.GetElementbyId("imgPosition3");
             imgPosition3_hdf.ImgUrl = imgPosition3.GetAttributeValue("src", "");
             imgPosition3_hdf.CSID = carid;
             imgPosition3_hdf.yiche = yc;
+            imgPosition3_hdf.ImageUpload = ImageUpload;
             var imgPosition4 = doc.GetElementbyId("imgPosition4");
             imgPosition4_hdf.ImgUrl = imgPosition4.GetAttributeValue("src", "");
             imgPosition4_hdf.CSID = carid;
             imgPosition4_hdf.yiche = yc;
-            #endregion
+            imgPosition4_hdf.ImageUpload = ImageUpload;
+            #endregion            
 
             carA.CarDataSource = cars;
             carA.ShowType(false);
@@ -418,18 +428,6 @@ namespace Aide
 
         private string PushData()
         {
-            var piclink = doc.DocumentNode.SelectSingleNode("//div[@class='hl_tabs mtm10']/ul/li/a");
-            if(piclink != null)
-            {
-                SelectExsitPic = piclink.GetAttributeValue("href", "");
-            }
-
-            var uploadfile = doc.GetElementbyId("imgUploadChangeifrUpLoadFile");
-            if(uploadfile != null)
-            {
-                ImageUpload = uploadfile.GetAttributeValue("src", "");
-            }
-
             StringBuilder sb = new StringBuilder(5000);
             sb.Append("scriptManager=UpdatePanel4%7CbtnPublish&");
 

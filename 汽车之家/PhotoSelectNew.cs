@@ -179,7 +179,7 @@ namespace Aide
 
                     var img = new PictureBox();
                     img.Location = new System.Drawing.Point(x, y);
-                    img.SizeMode = PictureBoxSizeMode.StretchImage;//
+                    img.SizeMode = PictureBoxSizeMode.StretchImage;
                     img.Name = string.Format("{0}_img{1}", currentPage.Name, i);
                     img.Tag = string.Format("rptImgs%24ctl{0:00}%24hidImgUrl", i);
                     img.Size = new System.Drawing.Size(120, 80);

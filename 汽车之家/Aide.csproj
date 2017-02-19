@@ -102,6 +102,12 @@
     <Compile Include="ImgControl.Designer.cs">
       <DependentUpon>ImgControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImgControl1.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ImgControl1.Designer.cs">
+      <DependentUpon>ImgControl1.cs</DependentUpon>
+    </Compile>
     <Compile Include="JobControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -159,6 +165,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ImgControl.resx">
       <DependentUpon>ImgControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImgControl1.resx">
+      <DependentUpon>ImgControl1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="JobControl.resx">
       <DependentUpon>JobControl.cs</DependentUpon>
