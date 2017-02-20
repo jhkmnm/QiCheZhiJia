@@ -105,7 +105,7 @@ namespace Aide
             return GetHtml(item);
         }
 
-        public HtmlDocument Post_CheYiTong(string url, byte[] postdata)
+        public HtmlDocument PostImg_CheYiTong(string url, string boundary, byte[] postdata)
         {
             HttpItem item = new HttpItem
             {
@@ -113,11 +113,12 @@ namespace Aide
                 PostDataType = PostDataType.Byte,
                 PostdataByte = postdata,
                 Cookie = app_CheYiTong_Cookie,
-                ContentType = "application/x-www-form-urlencoded",
-                Method = "POST",
+                ContentType = "multipart/form-data; boundary=" + boundary,
+                Method = "POST",                
                 Encoding = Encoding.UTF8,
                 UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
             };
+            
             return GetHtml(item);
         }
 

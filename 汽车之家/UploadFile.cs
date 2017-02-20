@@ -251,6 +251,7 @@ namespace Aide
                     }
                     lblImgPath.Text = file.FileName;
                     pbxImg.ImageLocation = file.FileName;
+                    pbxImg.Tag = file.SafeFileName;
                 }
             }
         }
@@ -258,11 +259,10 @@ namespace Aide
         private void btnUpload_Click(object sender, EventArgs e)
         {
             //1. 上传检查， 2. 上传， 3. 裁剪， 4. 上传
-            doc = yc.Post_CheYiTong(uploadcheck + currentargs, ""); //1
+            doc = yc.Post_CheYiTong(uploadcheck + currentargs, "1"); //1
             if(doc.DocumentNode.OuterHtml == "True")
             {
-                var postdata = ImageToBytes(pbxImg.Image);
-                doc = yc.Post_CheYiTong(ajaxupload + currentargs, postdata);    //2                
+                PostImage();    //2
                 var result = JsonConvert.DeserializeObject<UploadResult>(doc.DocumentNode.OuterHtml);
                 var post = string.Format("&bfile={0}&vid={1}&gfile={2}&length={3}&uclass={4}&aid={5}", result.thnmbFileName, result.vid, result.imageurl, result.length, result.uclass, result.aid);
                 doc = yc.Post_CheYiTong(savedata, post);
@@ -278,7 +278,52 @@ namespace Aide
             }
         }
 
-        public static byte[] ImageToBytes(Image image)
+        private void PostImage()
+        {
+            #region 变量
+            byte[] UploadBuffers = null;
+            string BoundStr = "----WebKitFormBoundaryMxO2oJmYsONSlZ0g";//根据抓包生成
+            StringBuilder UploadBuf = new StringBuilder();
+            #endregion
+
+            #region 头部数据
+            UploadBuf.AppendFormat("{0}{1}", BoundStr, Environment.NewLine);
+            UploadBuf.AppendFormat(@"Content-Disposition: form-data; name=""fuPhoto"";filename=""{0}""{1}", pbxImg.Tag.ToString(), Environment.NewLine);
+            UploadBuf.AppendFormat("Content-Type: image/jpeg{0}", Environment.NewLine);
+            byte[] HeadBytes = Encoding.ASCII.GetBytes(UploadBuf.ToString());
+            #endregion
+
+            #region 图片数据
+            byte[] PicBytes = ImageToBytes(pbxImg.Image);
+            #endregion
+
+            #region 尾部数据
+            UploadBuf.Clear();
+            UploadBuf.Append("\r\n" + BoundStr + "--\r\n");
+            byte[] TailBytes = Encoding.ASCII.GetBytes(UploadBuf.ToString());
+            #endregion
+
+            #region 数组拼接
+            UploadBuffers = ComposeArrays(HeadBytes, PicBytes);
+            UploadBuffers = ComposeArrays(UploadBuffers, TailBytes);
+            #endregion
+
+            #region 上传
+            doc = yc.PostImg_CheYiTong(ajaxupload + currentargs, BoundStr, UploadBuffers);
+            #endregion
+        }
+
+        #region 数组组合
+        public static byte[] ComposeArrays(byte[] Array1, byte[] Array2)
+        {
+            byte[] Temp = new byte[Array1.Length + Array2.Length];
+            Array1.CopyTo(Temp, 0);
+            Array2.CopyTo(Temp, Array1.Length);
+            return Temp;
+        }
+        #endregion
+
+        public byte[] ImageToBytes(Image image)
         {
             ImageFormat format = image.RawFormat;
             using (MemoryStream ms = new MemoryStream())
