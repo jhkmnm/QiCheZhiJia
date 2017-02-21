@@ -29,15 +29,14 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvCar = new System.Windows.Forms.DataGridView();
             this.label33 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
-            this.llbStoryState = new System.Windows.Forms.LinkLabel();
             this.llbColor = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
@@ -51,12 +50,12 @@
             this.colFavorablePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colColorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPushedCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.yearTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.YearType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCarReferPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSubsidies = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colPromotionPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStoreState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStoreState = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.carBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -76,17 +75,16 @@
             this.dgvCar.AllowUserToAddRows = false;
             this.dgvCar.AllowUserToDeleteRows = false;
             this.dgvCar.AutoGenerateColumns = false;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCar.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCar.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvCar.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCar.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.yearTypeDataGridViewTextBoxColumn,
             this.colIsCheck,
             this.colTypeName,
             this.colCarReferPrice,
@@ -95,16 +93,17 @@
             this.colPromotionPrice,
             this.colStoreState,
             this.colColorName,
-            this.colPushedCount});
+            this.colPushedCount,
+            this.YearType});
             this.dgvCar.DataSource = this.carBindingSource;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCar.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCar.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvCar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCar.Location = new System.Drawing.Point(0, 0);
             this.dgvCar.Name = "dgvCar";
@@ -113,6 +112,7 @@
             this.dgvCar.RowTemplate.Height = 23;
             this.dgvCar.Size = new System.Drawing.Size(600, 122);
             this.dgvCar.TabIndex = 70;
+            this.dgvCar.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCar_CellContentClick);
             // 
             // label33
             // 
@@ -140,22 +140,11 @@
             this.button1.Text = "选择增配车";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // llbStoryState
-            // 
-            this.llbStoryState.AutoSize = true;
-            this.llbStoryState.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llbStoryState.Location = new System.Drawing.Point(452, 7);
-            this.llbStoryState.Name = "llbStoryState";
-            this.llbStoryState.Size = new System.Drawing.Size(53, 12);
-            this.llbStoryState.TabIndex = 75;
-            this.llbStoryState.TabStop = true;
-            this.llbStoryState.Text = "库存状态";
-            // 
             // llbColor
             // 
             this.llbColor.AutoSize = true;
             this.llbColor.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llbColor.Location = new System.Drawing.Point(509, 7);
+            this.llbColor.Location = new System.Drawing.Point(509, 33);
             this.llbColor.Name = "llbColor";
             this.llbColor.Size = new System.Drawing.Size(53, 12);
             this.llbColor.TabIndex = 76;
@@ -178,7 +167,7 @@
             this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.linkLabel1.Location = new System.Drawing.Point(289, 306);
+            this.linkLabel1.Location = new System.Drawing.Point(369, 306);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(29, 12);
             this.linkLabel1.TabIndex = 78;
@@ -196,6 +185,7 @@
             this.txtFavorablePrice.Tag = "优惠金额";
             this.txtFavorablePrice.Text = "优惠金额";
             this.txtFavorablePrice.Enter += new System.EventHandler(this.textBox_Enter);
+            this.txtFavorablePrice.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtFavorablePrice_KeyDown);
             this.txtFavorablePrice.Leave += new System.EventHandler(this.textBox_Leave);
             // 
             // txtDiscount
@@ -208,13 +198,14 @@
             this.txtDiscount.Tag = "优惠折扣率";
             this.txtDiscount.Text = "优惠折扣率";
             this.txtDiscount.Enter += new System.EventHandler(this.textBox_Enter);
+            this.txtDiscount.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtDiscount_KeyDown);
             this.txtDiscount.Leave += new System.EventHandler(this.textBox_Leave);
             // 
             // ddlStoreState
             // 
             this.ddlStoreState.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddlStoreState.FormattingEnabled = true;
-            this.ddlStoreState.Location = new System.Drawing.Point(425, 30);
+            this.ddlStoreState.Location = new System.Drawing.Point(425, 29);
             this.ddlStoreState.Name = "ddlStoreState";
             this.ddlStoreState.Size = new System.Drawing.Size(80, 20);
             this.ddlStoreState.TabIndex = 81;
@@ -245,28 +236,28 @@
             this.dgvCar2.AllowUserToAddRows = false;
             this.dgvCar2.AllowUserToDeleteRows = false;
             this.dgvCar2.AutoGenerateColumns = false;
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvCar2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvCar2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCar2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCar2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn7});
             this.dgvCar2.DataSource = this.bindingSource1;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvCar2.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvCar2.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgvCar2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvCar2.Location = new System.Drawing.Point(0, 0);
             this.dgvCar2.Name = "dgvCar2";
@@ -309,24 +300,26 @@
             this.colPushedCount.HeaderText = "已发促销";
             this.colPushedCount.Name = "colPushedCount";
             // 
-            // yearTypeDataGridViewTextBoxColumn
+            // YearType
             // 
-            this.yearTypeDataGridViewTextBoxColumn.DataPropertyName = "YearType";
-            this.yearTypeDataGridViewTextBoxColumn.HeaderText = "YearType";
-            this.yearTypeDataGridViewTextBoxColumn.Name = "yearTypeDataGridViewTextBoxColumn";
-            this.yearTypeDataGridViewTextBoxColumn.Visible = false;
+            this.YearType.DataPropertyName = "YearType";
+            this.YearType.HeaderText = "YearType";
+            this.YearType.Name = "YearType";
+            this.YearType.Visible = false;
             // 
             // colTypeName
             // 
             this.colTypeName.DataPropertyName = "TypeName";
             this.colTypeName.HeaderText = "车款";
             this.colTypeName.Name = "colTypeName";
+            this.colTypeName.ReadOnly = true;
             // 
             // colCarReferPrice
             // 
             this.colCarReferPrice.DataPropertyName = "CarReferPrice";
             this.colCarReferPrice.HeaderText = "指导价(万)";
             this.colCarReferPrice.Name = "colCarReferPrice";
+            this.colCarReferPrice.ReadOnly = true;
             this.colCarReferPrice.Width = 90;
             // 
             // colSubsidies
@@ -334,6 +327,7 @@
             this.colSubsidies.DataPropertyName = "Subsidies";
             this.colSubsidies.HeaderText = "新能源车补贴(万)";
             this.colSubsidies.Name = "colSubsidies";
+            this.colSubsidies.ReadOnly = true;
             this.colSubsidies.Width = 130;
             // 
             // colPromotionPrice
@@ -350,6 +344,7 @@
             this.colStoreState.HeaderText = "库存状态";
             this.colStoreState.Name = "colStoreState";
             this.colStoreState.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colStoreState.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.colStoreState.Width = 90;
             // 
             // carBindingSource
@@ -388,7 +383,6 @@
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.llbColor);
-            this.Controls.Add(this.llbStoryState);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.panel1);
             this.Name = "CarControl";
@@ -412,7 +406,6 @@
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.LinkLabel llbStoryState;
         private System.Windows.Forms.LinkLabel llbColor;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel linkLabel1;
@@ -426,15 +419,15 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.BindingSource bindingSource1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn yearTypeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colIsCheck;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTypeName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCarReferPrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn colFavorablePrice;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSubsidies;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPromotionPrice;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colStoreState;
+        private System.Windows.Forms.DataGridViewComboBoxColumn colStoreState;
         private System.Windows.Forms.DataGridViewTextBoxColumn colColorName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPushedCount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn YearType;
     }
 }

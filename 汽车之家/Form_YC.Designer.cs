@@ -132,6 +132,7 @@
             this.equipClass3 = new System.Windows.Forms.RadioButton();
             this.equipClass2 = new System.Windows.Forms.RadioButton();
             this.equipClass1 = new System.Windows.Forms.RadioButton();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tpb_TP.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -253,6 +254,7 @@
             // tabPage1
             // 
             this.tabPage1.AutoScroll = true;
+            this.tabPage1.Controls.Add(this.linkLabel1);
             this.tabPage1.Controls.Add(this.btnSend_Ex);
             this.tabPage1.Controls.Add(this.carA);
             this.tabPage1.Controls.Add(this.label20);
@@ -730,51 +732,66 @@
             // imgPosition4_hdf
             // 
             this.imgPosition4_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition4_hdf.CSID = null;
+            this.imgPosition4_hdf.ImageUpload = null;
             this.imgPosition4_hdf.ImgSelectID = null;
             this.imgPosition4_hdf.ImgUrl = null;
             this.imgPosition4_hdf.Location = new System.Drawing.Point(533, 724);
             this.imgPosition4_hdf.Name = "imgPosition4_hdf";
             this.imgPosition4_hdf.Size = new System.Drawing.Size(139, 97);
             this.imgPosition4_hdf.TabIndex = 143;
+            this.imgPosition4_hdf.yiche = null;
             // 
             // imgPosition3_hdf
             // 
             this.imgPosition3_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition3_hdf.CSID = null;
+            this.imgPosition3_hdf.ImageUpload = null;
             this.imgPosition3_hdf.ImgSelectID = null;
             this.imgPosition3_hdf.ImgUrl = null;
             this.imgPosition3_hdf.Location = new System.Drawing.Point(388, 724);
             this.imgPosition3_hdf.Name = "imgPosition3_hdf";
             this.imgPosition3_hdf.Size = new System.Drawing.Size(139, 97);
             this.imgPosition3_hdf.TabIndex = 142;
+            this.imgPosition3_hdf.yiche = null;
             // 
             // imgPosition2_hdf
             // 
             this.imgPosition2_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition2_hdf.CSID = null;
+            this.imgPosition2_hdf.ImageUpload = null;
             this.imgPosition2_hdf.ImgSelectID = null;
             this.imgPosition2_hdf.ImgUrl = null;
             this.imgPosition2_hdf.Location = new System.Drawing.Point(243, 724);
             this.imgPosition2_hdf.Name = "imgPosition2_hdf";
             this.imgPosition2_hdf.Size = new System.Drawing.Size(139, 97);
             this.imgPosition2_hdf.TabIndex = 141;
+            this.imgPosition2_hdf.yiche = null;
             // 
             // imgPosition1_hdf
             // 
             this.imgPosition1_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition1_hdf.CSID = null;
+            this.imgPosition1_hdf.ImageUpload = null;
             this.imgPosition1_hdf.ImgSelectID = null;
             this.imgPosition1_hdf.ImgUrl = null;
             this.imgPosition1_hdf.Location = new System.Drawing.Point(98, 724);
             this.imgPosition1_hdf.Name = "imgPosition1_hdf";
             this.imgPosition1_hdf.Size = new System.Drawing.Size(139, 97);
             this.imgPosition1_hdf.TabIndex = 140;
+            this.imgPosition1_hdf.yiche = null;
             // 
             // imgLogo_hdf
             // 
+            this.imgLogo_hdf.CSID = null;
+            this.imgLogo_hdf.ImageUpload = null;
             this.imgLogo_hdf.ImgSelectID = null;
             this.imgLogo_hdf.ImgUrl = null;
             this.imgLogo_hdf.Location = new System.Drawing.Point(98, 497);
             this.imgLogo_hdf.Name = "imgLogo_hdf";
             this.imgLogo_hdf.Size = new System.Drawing.Size(300, 224);
             this.imgLogo_hdf.TabIndex = 139;
+            this.imgLogo_hdf.yiche = null;
             // 
             // carControl1
             // 
@@ -1303,6 +1320,17 @@
             this.equipClass1.Text = "新闻资讯";
             this.equipClass1.UseVisualStyleBackColor = true;
             // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(457, 409);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(65, 12);
+            this.linkLabel1.TabIndex = 113;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "linkLabel1";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
             // Form_YC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1443,5 +1471,6 @@
         private System.Windows.Forms.Label title_number;
         private System.Windows.Forms.CheckBox chkIsShowMaintenance;
         private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }

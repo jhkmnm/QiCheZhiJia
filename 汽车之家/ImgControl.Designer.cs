@@ -53,10 +53,10 @@
             this.llbUp.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.llbUp.Location = new System.Drawing.Point(3, 206);
             this.llbUp.Name = "llbUp";
-            this.llbUp.Size = new System.Drawing.Size(29, 12);
+            this.llbUp.Size = new System.Drawing.Size(41, 12);
             this.llbUp.TabIndex = 1;
             this.llbUp.TabStop = true;
-            this.llbUp.Text = "上传";
+            this.llbUp.Text = "已上传";
             this.llbUp.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llbUp_LinkClicked);
             // 
             // llbInclude
@@ -64,7 +64,7 @@
             this.llbInclude.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.llbInclude.AutoSize = true;
             this.llbInclude.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
-            this.llbInclude.Location = new System.Drawing.Point(36, 206);
+            this.llbInclude.Location = new System.Drawing.Point(53, 206);
             this.llbInclude.Name = "llbInclude";
             this.llbInclude.Size = new System.Drawing.Size(29, 12);
             this.llbInclude.TabIndex = 2;

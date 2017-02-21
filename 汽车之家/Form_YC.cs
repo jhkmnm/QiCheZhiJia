@@ -272,7 +272,7 @@ namespace Aide
                 }
             }
             var note = doc.GetElementbyId("LimitCarListNote");
-            cars.Note = note.InnerText.Trim();
+            cars.Note = note.InnerText.Trim().Split('\r')[0];
 
             var publistCarList = doc.DocumentNode.SelectNodes("//div[@id='LimitPublishCarList']/table/tbody/tr");
             foreach (HtmlNode node in publistCarList)
@@ -840,6 +840,11 @@ namespace Aide
             title_number.Text = title.Length.ToString();
             txtLead.Text = lead;
         }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            new FormGift(new GiftInfo()).ShowDialog();
+        }
     }
 
     public class PromotionCars
@@ -1113,6 +1118,7 @@ namespace Aide
         // 汽车用品
         public bool QCYPIsCheck { get; set; }
         public string QCYPValue { get; set; }
+        public List<Merchandise> Merchandises { get; set; }
 
         // 油卡
         public bool YKIsCheck { get; set; }
@@ -1137,6 +1143,13 @@ namespace Aide
         // 其他内容
         public bool OherInfoIsCheck { get; set; }
         public string OherInfoValue { get; set; }
+    }
+
+    public class Merchandise
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public decimal money { get; set; }
     }
 
     //this.SetGiftInfoJson = function () {

@@ -160,6 +160,45 @@ namespace Aide
                 linkLabel1.Text = "查看";
                 splitContainer1.Panel2Collapsed = true;
             }
+        }        
+
+        private void txtFavorablePrice_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                decimal price = 0;
+                decimal.TryParse(txtFavorablePrice.Text, out price);
+                _promotioncars.Cars.ForEach(f => f.FavorablePrice = price);
+                dgvCar.Refresh();
+            }
+        }
+
+        private void txtDiscount_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                int price = 0;
+                int.TryParse(txtDiscount.Text, out price);
+                if(price > 35)
+                {
+                    MessageBox.Show("请输入0-35之间的整数");
+                    return;
+                }
+                _promotioncars.Cars.ForEach(f => f.FavorablePrice = f.CarReferPrice * (price / 100));
+                dgvCar.Refresh();
+            }
+        }
+
+        private void dgvCar_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex < 0 || e.RowIndex < 0)
+                return;
+
+            if(e.ColumnIndex == colIsCheck.Index)
+            {
+                _promotioncars.Cars[e.RowIndex].IsCheck = !_promotioncars.Cars[e.RowIndex].IsCheck;
+                dgvCar.Rows[e.RowIndex].ReadOnly = _promotioncars.Cars[e.RowIndex].IsCheck;
+            }
         }
     }
 }

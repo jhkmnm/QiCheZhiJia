@@ -80,7 +80,6 @@
             // 
             this.txtPageIndex.Location = new System.Drawing.Point(304, 9);
             this.txtPageIndex.Name = "txtPageIndex";
-            this.txtPageIndex.ReadOnly = true;
             this.txtPageIndex.Size = new System.Drawing.Size(42, 21);
             this.txtPageIndex.TabIndex = 4;
             this.txtPageIndex.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtPageIndex_KeyDown);

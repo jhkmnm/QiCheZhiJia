@@ -67,6 +67,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Utilities">
+      <HintPath>..\..\Utilities\Utilities\bin\Release\Utilities.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CarControl.cs">
@@ -77,6 +80,12 @@
     </Compile>
     <Compile Include="Data\DAL.cs" />
     <Compile Include="Data\Db.cs" />
+    <Compile Include="FormGift.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormGift.Designer.cs">
+      <DependentUpon>FormGift.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormLogin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -153,6 +162,9 @@
     <Compile Include="YiChe.cs" />
     <EmbeddedResource Include="CarControl.resx">
       <DependentUpon>CarControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormGift.resx">
+      <DependentUpon>FormGift.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
