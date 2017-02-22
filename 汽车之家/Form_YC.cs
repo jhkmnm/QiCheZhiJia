@@ -15,6 +15,8 @@ namespace Aide
     public partial class Form_YC : Form
     {
         YiChe yc;
+        DAL dal = new DAL();
+        CarNews carnews;
         List<TextValue> promotionType = new List<TextValue>();
         HtmlAgilityPack.HtmlDocument doc;
         string url = "";
@@ -23,7 +25,7 @@ namespace Aide
         string cbid = "";
         string energytype = "";
         string csshowname = "";
-        PromotionCars cars;
+        //PromotionCars cars;
         int NewsType = 1;
         List<TextValue> BusinessTax = new List<TextValue>();
         List<TextValue> TrafficTax = new List<TextValue>();
@@ -37,7 +39,7 @@ namespace Aide
         string[] strCompulsory = { "不赠送交强险", "赠送1年交强险", "赠送2年交强险", "赠送3年交强险", "赠送4年交强险", "赠送5年交强险", "赠送6年交强险", "赠送7年交强险", "赠送8年交强险", "赠送9年交强险" };
 
         string[] strCommercial = { "不赠送商业险", "赠送1年商业险", "赠送2年商业险", "赠送3年商业险", "赠送4年商业险", "赠送5年商业险", "赠送6年商业险", "赠送7年商业险", "赠送8年商业险", "赠送9年商业险" };
-        public Form_YC(YiChe yc)
+        public Form_YC(YiChe yc, int newsid = 0)
         {
             InitializeComponent();
             this.yc = yc;
@@ -61,6 +63,14 @@ namespace Aide
             ddlTrafficTax.DisplayMember = "Text";
             ddlTrafficTax.ValueMember = "Value";
             ddlTrafficTax.SelectedIndex = 0;
+
+            if (newsid > 0)
+            {
+                var news = dal.GetNews(newsid);
+                carnews = JsonConvert.DeserializeObject<CarNews>(news.Content);
+            }
+            else
+                carnews = new CarNews();
 
 
             discountRate.AddRange(new[] { new TextValue { Text = "优惠金额", Value = "0" }, new TextValue { Text = "优惠折扣率", Value = "1" } });
@@ -231,9 +241,9 @@ namespace Aide
             #endregion
 
             #region 车型
-            cars = new PromotionCars();
+            carnews.promotionCars = new PromotionCars();
             var yeartype = doc.DocumentNode.SelectNodes("//input[@name='chklYearType']");
-            yeartype.ToList().ForEach(f => cars.YearType.Add(f.GetAttributeValue("value", "")));
+            yeartype.ToList().ForEach(f => carnews.promotionCars.YearType.Add(f.GetAttributeValue("value", "")));
 
             var cartrs = doc.DocumentNode.SelectNodes("//tbody[@id='listInfo']/tr");
             foreach (HtmlNode node in cartrs)
@@ -251,7 +261,7 @@ namespace Aide
                     var localsubsidies = node.GetAttributeValue("localsubsidies", "");
 
                     var colorcount = tds[7].SelectSingleNode(".//div/p/span");
-                    cars.Cars.Add(new Car
+                    carnews.promotionCars.Cars.Add(new Car
                     {
                         CarID = Convert.ToInt32(inputCarInfo.GetAttributeValue("carid", "")),
                         Discount = Convert.ToDecimal(inputrate.GetAttributeValue("value", "0")),
@@ -272,7 +282,7 @@ namespace Aide
                 }
             }
             var note = doc.GetElementbyId("LimitCarListNote");
-            cars.Note = note.InnerText.Trim().Split('\r')[0];
+            carnews.promotionCars.Note = note.InnerText.Trim().Split('\r')[0];
 
             var publistCarList = doc.DocumentNode.SelectNodes("//div[@id='LimitPublishCarList']/table/tbody/tr");
             foreach (HtmlNode node in publistCarList)
@@ -283,8 +293,9 @@ namespace Aide
                     var tds = node.SelectNodes(".//td");
                     var typeinput = tds[0].SelectSingleNode(".//input[@type='checkbox']");
                     var inputCarInfo = node.SelectSingleNode(".//input[@carinfo='carInfo']");
-                    
-                    cars.PublishCarList.Add(new Car { 
+
+                    carnews.promotionCars.PublishCarList.Add(new Car
+                    { 
                         CarID = Convert.ToInt32(typeinput.GetAttributeValue("value", "")),                        
                         CarReferPrice = Convert.ToDecimal(inputCarInfo.GetAttributeValue("carreferprice", "0")),
                         StoreState = 1,
@@ -322,10 +333,10 @@ namespace Aide
             imgPosition4_hdf.ImageUpload = ImageUpload;
             #endregion            
 
-            carA.CarDataSource = cars;
+            carA.CarDataSource = carnews.promotionCars;
             carA.ShowType(false);
 
-            carControl1.CarDataSource = cars;
+            carControl1.CarDataSource = carnews.promotionCars;
             carControl1.ShowType(true);
         }
 
@@ -488,16 +499,16 @@ namespace Aide
                 }
             }
 
-            for (int i = 0; i < cars.Cars.Count; i++)
+            for (int i = 0; i < carnews.promotionCars.Cars.Count; i++)
             {
-                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24checkbox", i), cars.Cars[i].CarID);
-                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24rate", i), cars.Cars[i].Discount);
-                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24Text1", i), cars.Cars[i].FavorablePrice);
+                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24checkbox", i), carnews.promotionCars.Cars[i].CarID);
+                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24rate", i), carnews.promotionCars.Cars[i].Discount);
+                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24Text1", i), carnews.promotionCars.Cars[i].FavorablePrice);
             }
 
-            for (int i = 0; i < cars.PublishCarList.Count; i++)
+            for (int i = 0; i < carnews.promotionCars.PublishCarList.Count; i++)
             {
-                sb.AppendFormat("{0}={1}&", string.Format("rtpNotPushCarList%24ctl{0:00}%24checkbox", i), cars.PublishCarList[i].CarID);
+                sb.AppendFormat("{0}={1}&", string.Format("rtpNotPushCarList%24ctl{0:00}%24checkbox", i), carnews.promotionCars.PublishCarList[i].CarID);
             }
             sb.Append("NewEnergyTitleTemplate=2&");
             sb.AppendFormat("title_article={0}&", HttpHelper.URLEncode(title_article.Text, Encoding.UTF8));
@@ -522,7 +533,7 @@ namespace Aide
 
             sb.AppendFormat("hdnType={0}&hdnCarMerchandiseID=&", ddlPromotionType.SelectedValue == "0" ? "money" : "rate");
             sb.AppendFormat("hdnPromotionType={0}&", ddlPromotionType.SelectedIndex);
-            sb.AppendFormat("hdfCarInfoJson={0}&hdfGiftInfo={1}&", HttpHelper.URLEncode(cars.CarInfoJson), HttpHelper.URLEncode(cars.GiftInofJson));
+            sb.AppendFormat("hdfCarInfoJson={0}&hdfGiftInfo={1}&", HttpHelper.URLEncode(carnews.promotionCars.CarInfoJson), HttpHelper.URLEncode(carnews.promotionCars.GiftInofJson));
             sb.Append("imgUploadChangehidethumburl=&imgUploadChangehideUrl=&txtStartPrice=&");
             sb.Append("txtEndPrice=&txtKeyword=&__EVENTTARGET=&__EVENTARGUMENT=&");
 
@@ -591,34 +602,20 @@ namespace Aide
 
             sb.AppendFormat("txtDateTimeBegin={0}&", dtpPromotionA.Value.ToString("yyyy-MM-dd"));
             sb.AppendFormat("txtDateTimeEnd={0}&", dtpPromotionB.Value.ToString("yyyy-MM-dd"));
-
-            //var chklyeartype = doc.DocumentNode.SelectNodes("//input[@name='chklYearType' and @checked='checked']");
-            //if (chklyeartype != null)
-            //{
-            //    foreach (HtmlNode node in chklyeartype)
-            //    {
-            //        sb.AppendFormat("chklYearType={0}&", node.GetAttributeValue("value", ""));
-            //    }
-            //}
+            
             carControl1.YearTypeList.ForEach(f => sb.AppendFormat("chklYearType={0}&", f));
 
             int i = 0;
             carControl1.CarDataSource.Cars.FindAll(w => w.IsCheck).ForEach(f => {
-                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24checkbox", i), cars.Cars[i].CarID);
-                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24rate", i), cars.Cars[i].Discount);
-                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24Text1", i), cars.Cars[i].FavorablePrice);
+                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24checkbox", i), carnews.promotionCars.Cars[i].CarID);
+                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24rate", i), carnews.promotionCars.Cars[i].Discount);
+                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24Text1", i), carnews.promotionCars.Cars[i].FavorablePrice);
                 i++;
             });
-            //for (int i = 0; i < carControl1.CarDataSource.Cars.FindAll(w => w.IsCheck).Count; i++)
-            //{
-            //    sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24checkbox", i), cars.Cars[i].CarID);
-            //    sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24rate", i), cars.Cars[i].Discount);
-            //    sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24Text1", i), cars.Cars[i].FavorablePrice);
-            //}
 
-            for (i = 0; i < cars.PublishCarList.Count; i++)
+            for (i = 0; i < carnews.promotionCars.PublishCarList.Count; i++)
             {
-                sb.AppendFormat("{0}={1}&", string.Format("rtpNotPushCarList%24ctl{0:00}%24checkbox", i), cars.PublishCarList[i].CarID);
+                sb.AppendFormat("{0}={1}&", string.Format("rtpNotPushCarList%24ctl{0:00}%24checkbox", i), carnews.promotionCars.PublishCarList[i].CarID);
             }
             sb.Append("NewEnergyTitleTemplate=2&");
             sb.AppendFormat("title_article={0}&", HttpHelper.URLEncode(title_article.Text, Encoding.UTF8));
@@ -643,7 +640,7 @@ namespace Aide
 
             sb.AppendFormat("hdnType={0}&hdnCarMerchandiseID=&", ddlPromotionType.SelectedValue == "0" ? "money" : "rate");
             sb.AppendFormat("hdnPromotionType={0}&", ddlPromotionType.SelectedIndex);
-            sb.AppendFormat("hdfCarInfoJson={0}&hdfGiftInfo={1}&", HttpHelper.URLEncode(cars.CarInfoJson), HttpHelper.URLEncode(cars.GiftInofJson));
+            sb.AppendFormat("hdfCarInfoJson={0}&hdfGiftInfo={1}&", HttpHelper.URLEncode(carnews.promotionCars.CarInfoJson), HttpHelper.URLEncode(carnews.promotionCars.GiftInofJson));
             sb.Append("imgUploadChangehidethumburl=&imgUploadChangehideUrl=&txtStartPrice=&");
             sb.Append("txtEndPrice=&txtKeyword=&__EVENTTARGET=&__EVENTARGUMENT=&");
 
@@ -686,9 +683,13 @@ namespace Aide
 
             var giftPrice = txtPrice.Text;
             GenerateTitleAndLead(maxMoney, maxMoney, giftPrice, csshowname);
-            cars.Cars.ForEach(f => f.FavorablePrice = maxMoney);
+            carnews.promotionCars.Cars.ForEach(f => f.FavorablePrice = maxMoney);
 
             var postdata = PushData();
+
+            var content = JsonConvert.SerializeObject(carnews);
+
+            dal.AddNews(content, carnews.Title, postdata);
 
             var result = yc.Post_CheYiTong(url, postdata);
             if(result.DocumentNode.OuterHtml.Contains("NewsSuccess.aspx"))
@@ -903,7 +904,7 @@ namespace Aide
                     GiftInofList.ForEach(f =>
                     {
                         sb.Append("{");
-                        sb.AppendFormat("\"IsCheck\":{0},\"Price\":{1},\"QCYPIsCheck\":\"{2}\",\"QCYPValue\":\"{3}\",\"YKIsCheck\":{4},\"YKValue\":{5},\"SYXIsCheck\":{6},\"SYXValue\":{7},\"JQXIsCheck\":{8},\"JQXValue\":{9},\"GZSIsCheck\":{10},\"GZSValue\":\"{11}\",\"BAOYANGIsCheck\":{12},\"BAOYANGValue\":\"{13}\",\"OherInfoIsCheck\":\"{14}\",\"OherInfoValue\":\"{15}\"", f.IsCheck.ToString().ToLower(), f.Price, f.QCYPIsCheck.ToString().ToLower(), f.IsCheck.ToString().ToLower(), f.QCYPValue, f.YKIsCheck, f.YKValue, f.SYXIsCheck.ToString().ToLower(), f.SYXValue, f.JQXIsCheck.ToString().ToLower(), f.JQXValue, f.GZSIsCheck.ToString().ToLower(), f.GZSValue, f.BAOYANGIsCheck.ToString().ToLower(), f.BAOYANGValue, f.OherInfoIsCheck.ToString().ToLower(), f.OherInfoValue);
+                        sb.AppendFormat("\"IsCheck\":{0},\"Price\":{1},\"QCYPIsCheck\":\"{2}\",\"QCYPValue\":\"{3}\",\"YKIsCheck\":{4},\"YKValue\":{5},\"SYXIsCheck\":{6},\"SYXValue\":{7},\"JQXIsCheck\":{8},\"JQXValue\":{9},\"GZSIsCheck\":{10},\"GZSValue\":\"{11}\",\"BAOYANGIsCheck\":{12},\"BAOYANGValue\":\"{13}\",\"OherInfoIsCheck\":\"{14}\",\"OherInfoValue\":\"{15}\"", f.IsCheck.ToString().ToLower(), f.Price, f.QCYPIsCheck.ToString().ToLower(), f.IsCheck.ToString().ToLower(), f.QCYPValue, f.YKIsCheck, f.YKValue, f.SYXIsCheck.ToString().ToLower(), f.SYXValue, f.JQXIsCheck.ToString().ToLower(), f.JQXValue, f.GZSIsCheck.ToString().ToLower(), f.GZSValue, f.BAOYANGIsCheck.ToString().ToLower(), f.BAOYANGValue, f.OtherInfoIsCheck.ToString().ToLower(), f.OtherInfoValue);
                         sb.Append("},");
                     });
                     sb.Append("]");
@@ -1141,8 +1142,8 @@ namespace Aide
         public string BAOYANGValue { get; set; }
 
         // 其他内容
-        public bool OherInfoIsCheck { get; set; }
-        public string OherInfoValue { get; set; }
+        public bool OtherInfoIsCheck { get; set; }
+        public string OtherInfoValue  { get; set; }
     }
 
     public class Merchandise
@@ -1283,6 +1284,16 @@ namespace Aide
 
     public class CarNews
     {
+        public string NewsType { get; set; }    //保存控件名称
+        public string CarType { get; set; }     //保存控件名称
+
+        public DateTime MinData { get; set; }
+        public DateTime StartData { get; set; }
+        public DateTime EndData { get; set; }
+        public int StoreState { get; set; }
+        public string PromotionType { get; set; }
+        public string PromotionValue { get; set; }
+
         public string Title { get; set; }
         public string Startdate { get; set; }
         public string Enddate { get; set; }
@@ -1291,5 +1302,8 @@ namespace Aide
         public int Carid { get; set; }
         public int Mark { get; set; }
         public int Extendcarid { get; set; }
+
+        public PromotionCars promotionCars { get; set; }
+        public GiftInfo giftInfo { get; set; }
     }    
 }

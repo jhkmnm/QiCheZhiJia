@@ -92,8 +92,8 @@ namespace Aide
                 info.GZSIsCheck = chkgift5.Checked;
                 info.BAOYANGIsCheck = chkgift6.Checked;
                 //info.BAOYANGValue = 
-                info.OherInfoIsCheck = chkgift7.Checked;
-                info.OherInfoValue = txtOtherInfo.Text;
+                info.OtherInfoIsCheck = chkgift7.Checked;
+                info.OtherInfoValue = txtOtherInfo.Text;
                 this.DialogResult = DialogResult.OK;
             }
         }

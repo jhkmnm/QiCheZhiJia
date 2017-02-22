@@ -138,4 +138,28 @@ public class DAL
             .ToFirst();
     }
     #endregion
+
+    #region News
+    public int AddNews(string title, string content, string sendcontent)
+    {
+        return DB.Context.Insert(new News { Title = title, Content = content, SendContent = sendcontent });
+    }
+
+    public List<News> GetNewsList()
+    {
+        return DB.Context.From<News>().ToList();
+    }
+
+    public News GetNews(int id)
+    {
+        return DB.Context.From<News>()
+            .Where(w => w.ID == id)
+            .ToFirstDefault();            
+    }
+
+    public int DelNews(int id)
+    {
+        return DB.Context.Delete<News>(s => s.ID == id);
+    }
+    #endregion
 }

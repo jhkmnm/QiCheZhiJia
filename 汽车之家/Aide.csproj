@@ -78,6 +78,7 @@
     <Compile Include="CarControl.Designer.cs">
       <DependentUpon>CarControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Dama2.cs" />
     <Compile Include="Data\DAL.cs" />
     <Compile Include="Data\Db.cs" />
     <Compile Include="FormGift.cs">
@@ -127,6 +128,7 @@
     <Compile Include="Model\Employee.cs" />
     <Compile Include="Model\Job.cs" />
     <Compile Include="Model\JobLog.cs" />
+    <Compile Include="Model\News.cs" />
     <Compile Include="Model\Nicks.cs" />
     <Compile Include="Model\OnSaleData.cs" />
     <Compile Include="Model\Orders.cs" />

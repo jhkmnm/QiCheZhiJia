@@ -30,6 +30,10 @@ namespace Aide
         Job job_yc_quote;
         Job job_yc_news;
 
+        const string key = "087a9b3cdec0c2597df237916ebfff9a";
+        const string username = "";
+        const string password = "";
+
         /*
          * 登录后,判断用户类型,如果是试用,抢单判断试用时间,新闻、报价判断已经报价过的次数
          * 如果是付费，判断付费模式(抢单、新闻、报价),在有效期内，购买的服务都可以使用
@@ -328,6 +332,22 @@ namespace Aide
             {
                 LogHelper.Error(ex.Message + ex.StackTrace);
             }
+        }
+
+        private string DaMa(byte[] image)
+        {
+
+            StringBuilder VCodeText = new StringBuilder(100);
+            int ret = Dama2.D2Buf(
+                key, //softawre key (software id)
+                username,    //user name
+                password,     //password
+                image,         //图片数据，图片数据不可大于4M
+                (uint)image.Length, //图片数据长度
+                60,         //超时时间，单位为秒，更换为实际需要的超时时间
+                101,        //验证码类型ID，参见 http://wiki.dama2.com/index.php?n=ApiDoc.GetSoftIDandKEY
+                VCodeText); //成功时返回验证码文本（答案）
+            return ret > 0 ? VCodeText.ToString() : "";
         }
         #endregion
 

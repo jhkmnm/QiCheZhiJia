@@ -76,16 +76,21 @@ namespace Aide
             InitializeComponent();
             splitContainer1.Panel2Collapsed = true;
 
+            var state = new TextValue[4];
+
             StoreStateList.AddRange(new[] {
                 new TextValue { Text = "库存状态", Value = "-1" },
                 new TextValue { Text = "现车充足", Value = "1" },
                 new TextValue { Text = "少量现车", Value = "2" },
                 new TextValue { Text = "需提前预定", Value = "3" }
             });
+            StoreStateList.CopyTo(state);
 
             ddlStoreState.DataSource = StoreStateList;
             ddlStoreState.DisplayMember = "Text";
             ddlStoreState.ValueMember = "Value";
+
+            StoreStateBindingSource.DataSource = state.ToList();
         }
 
         public void InitYearType()
