@@ -37,6 +37,7 @@
             this.tpb_TP = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.btnSend_Ex = new System.Windows.Forms.Button();
             this.carA = new Aide.CarControl();
             this.label20 = new System.Windows.Forms.Label();
@@ -132,7 +133,6 @@
             this.equipClass3 = new System.Windows.Forms.RadioButton();
             this.equipClass2 = new System.Windows.Forms.RadioButton();
             this.equipClass1 = new System.Windows.Forms.RadioButton();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tpb_TP.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -149,7 +149,7 @@
             // 
             // gpbCarList
             // 
-            this.gpbCarList.Location = new System.Drawing.Point(10, 84);
+            this.gpbCarList.Location = new System.Drawing.Point(10, 61);
             this.gpbCarList.Name = "gpbCarList";
             this.gpbCarList.Size = new System.Drawing.Size(720, 72);
             this.gpbCarList.TabIndex = 4;
@@ -215,7 +215,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1175, 884);
+            this.tabControl1.Size = new System.Drawing.Size(1175, 944);
             this.tabControl1.TabIndex = 5;
             // 
             // tpb_TP
@@ -236,7 +236,7 @@
             this.tpb_TP.Location = new System.Drawing.Point(4, 22);
             this.tpb_TP.Name = "tpb_TP";
             this.tpb_TP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpb_TP.Size = new System.Drawing.Size(1167, 858);
+            this.tpb_TP.Size = new System.Drawing.Size(1167, 918);
             this.tpb_TP.TabIndex = 0;
             this.tpb_TP.Text = "优惠促销";
             this.tpb_TP.UseVisualStyleBackColor = true;
@@ -245,10 +245,10 @@
             // 
             this.tabControl2.Controls.Add(this.tabPage1);
             this.tabControl2.Controls.Add(this.tabPage2);
-            this.tabControl2.Location = new System.Drawing.Point(10, 188);
+            this.tabControl2.Location = new System.Drawing.Point(10, 162);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(732, 670);
+            this.tabControl2.Size = new System.Drawing.Size(732, 740);
             this.tabControl2.TabIndex = 15;
             // 
             // tabPage1
@@ -272,10 +272,21 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(724, 644);
+            this.tabPage1.Size = new System.Drawing.Size(724, 714);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "快捷发布";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(457, 409);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(65, 12);
+            this.linkLabel1.TabIndex = 113;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "linkLabel1";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // btnSend_Ex
             // 
@@ -456,7 +467,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(724, 644);
+            this.tabPage2.Size = new System.Drawing.Size(724, 714);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "编辑明细";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -919,7 +930,7 @@
             // 
             this.label29.AutoSize = true;
             this.label29.ForeColor = System.Drawing.Color.Black;
-            this.label29.Location = new System.Drawing.Point(34, 164);
+            this.label29.Location = new System.Drawing.Point(34, 142);
             this.label29.Name = "label29";
             this.label29.Size = new System.Drawing.Size(59, 12);
             this.label29.TabIndex = 6;
@@ -929,7 +940,7 @@
             // 
             this.label28.AutoSize = true;
             this.label28.ForeColor = System.Drawing.Color.Red;
-            this.label28.Location = new System.Drawing.Point(15, 164);
+            this.label28.Location = new System.Drawing.Point(15, 142);
             this.label28.Name = "label28";
             this.label28.Size = new System.Drawing.Size(11, 12);
             this.label28.TabIndex = 5;
@@ -939,7 +950,7 @@
             // 
             this.dtpPromotionA.CustomFormat = "yyyy-MM-dd";
             this.dtpPromotionA.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpPromotionA.Location = new System.Drawing.Point(101, 160);
+            this.dtpPromotionA.Location = new System.Drawing.Point(101, 138);
             this.dtpPromotionA.Name = "dtpPromotionA";
             this.dtpPromotionA.Size = new System.Drawing.Size(107, 21);
             this.dtpPromotionA.TabIndex = 58;
@@ -953,7 +964,7 @@
             this.groupBox2.Controls.Add(this.rbtSource1);
             this.groupBox2.Location = new System.Drawing.Point(10, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(720, 74);
+            this.groupBox2.Size = new System.Drawing.Size(720, 55);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "新闻类型";
@@ -964,7 +975,7 @@
             this.groupBox4.Controls.Add(this.radioButton4);
             this.groupBox4.Location = new System.Drawing.Point(440, 11);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(200, 58);
+            this.groupBox4.Size = new System.Drawing.Size(200, 41);
             this.groupBox4.TabIndex = 11;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "新能源车促销";
@@ -972,7 +983,7 @@
             // radioButton5
             // 
             this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(122, 24);
+            this.radioButton5.Location = new System.Drawing.Point(122, 16);
             this.radioButton5.Name = "radioButton5";
             this.radioButton5.Size = new System.Drawing.Size(71, 16);
             this.radioButton5.TabIndex = 15;
@@ -985,7 +996,7 @@
             // radioButton4
             // 
             this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(15, 24);
+            this.radioButton4.Location = new System.Drawing.Point(15, 16);
             this.radioButton4.Name = "radioButton4";
             this.radioButton4.Size = new System.Drawing.Size(71, 16);
             this.radioButton4.TabIndex = 16;
@@ -998,7 +1009,7 @@
             // rbtSource2
             // 
             this.rbtSource2.AutoSize = true;
-            this.rbtSource2.Location = new System.Drawing.Point(139, 36);
+            this.rbtSource2.Location = new System.Drawing.Point(139, 28);
             this.rbtSource2.Name = "rbtSource2";
             this.rbtSource2.Size = new System.Drawing.Size(71, 16);
             this.rbtSource2.TabIndex = 19;
@@ -1009,7 +1020,7 @@
             // rbtSource3
             // 
             this.rbtSource3.AutoSize = true;
-            this.rbtSource3.Location = new System.Drawing.Point(251, 36);
+            this.rbtSource3.Location = new System.Drawing.Point(251, 28);
             this.rbtSource3.Name = "rbtSource3";
             this.rbtSource3.Size = new System.Drawing.Size(71, 16);
             this.rbtSource3.TabIndex = 18;
@@ -1020,7 +1031,7 @@
             // rbtSource0
             // 
             this.rbtSource0.AutoSize = true;
-            this.rbtSource0.Location = new System.Drawing.Point(351, 36);
+            this.rbtSource0.Location = new System.Drawing.Point(351, 28);
             this.rbtSource0.Name = "rbtSource0";
             this.rbtSource0.Size = new System.Drawing.Size(71, 16);
             this.rbtSource0.TabIndex = 17;
@@ -1032,7 +1043,7 @@
             // 
             this.rbtSource1.AutoSize = true;
             this.rbtSource1.Checked = true;
-            this.rbtSource1.Location = new System.Drawing.Point(26, 36);
+            this.rbtSource1.Location = new System.Drawing.Point(26, 28);
             this.rbtSource1.Name = "rbtSource1";
             this.rbtSource1.Size = new System.Drawing.Size(71, 16);
             this.rbtSource1.TabIndex = 14;
@@ -1045,7 +1056,7 @@
             // 
             this.dtpPromotionB.CustomFormat = "yyyy-MM-dd";
             this.dtpPromotionB.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpPromotionB.Location = new System.Drawing.Point(226, 160);
+            this.dtpPromotionB.Location = new System.Drawing.Point(226, 138);
             this.dtpPromotionB.Name = "dtpPromotionB";
             this.dtpPromotionB.Size = new System.Drawing.Size(107, 21);
             this.dtpPromotionB.TabIndex = 59;
@@ -1054,7 +1065,7 @@
             // 
             this.label30.AutoSize = true;
             this.label30.ForeColor = System.Drawing.Color.Black;
-            this.label30.Location = new System.Drawing.Point(209, 164);
+            this.label30.Location = new System.Drawing.Point(209, 142);
             this.label30.Name = "label30";
             this.label30.Size = new System.Drawing.Size(17, 12);
             this.label30.TabIndex = 60;
@@ -1320,22 +1331,11 @@
             this.equipClass1.Text = "新闻资讯";
             this.equipClass1.UseVisualStyleBackColor = true;
             // 
-            // linkLabel1
-            // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(457, 409);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(65, 12);
-            this.linkLabel1.TabIndex = 113;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "linkLabel1";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
             // Form_YC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1183, 888);
+            this.ClientSize = new System.Drawing.Size(1183, 948);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form_YC";
             this.Text = "Form_YC";

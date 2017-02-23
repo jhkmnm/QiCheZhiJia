@@ -1284,26 +1284,103 @@ namespace Aide
 
     public class CarNews
     {
+        /// <summary>
+        /// 新闻类型
+        /// </summary>
         public string NewsType { get; set; }    //保存控件名称
+        /// <summary>
+        /// 促销车型
+        /// </summary>
         public string CarType { get; set; }     //保存控件名称
-
+        
         public DateTime MinData { get; set; }
+        /// <summary>
+        /// 促销开始日期
+        /// </summary>
         public DateTime StartData { get; set; }
+        /// <summary>
+        /// 促销结束日期
+        /// </summary>
         public DateTime EndData { get; set; }
+        /// <summary>
+        /// 库存状态 
+        /// </summary>
         public int StoreState { get; set; }
+        /// <summary>
+        /// 优惠类型
+        /// </summary>
         public string PromotionType { get; set; }
+        /// <summary>
+        /// 优惠值
+        /// </summary>
         public string PromotionValue { get; set; }
-
+        /// <summary>
+        /// 颜色
+        /// </summary>
+        public List<string> Colors { get; set; }
+        /// <summary>
+        /// 标题
+        /// </summary>
         public string Title { get; set; }
+        /// <summary>
+        /// 导语
+        /// </summary>
+        public string Lead { get; set; }
+        /// <summary>
+        /// 礼包
+        /// </summary>
+        public GiftInfo giftInfo { get; set; }
+        /// <summary>
+        /// 未发车
+        /// </summary>
+        public Car Cars { get; set; }
+        /// <summary>
+        /// 已发车
+        /// </summary>
+        public PromotionCars promotionCars { get; set; }
+        /// <summary>
+        /// 大图
+        /// </summary>
+        public string ImageA { get; set; }
+        /// <summary>
+        /// 小图1
+        /// </summary>
+        public string ImageB { get; set; }
+        /// <summary>
+        /// 小图2
+        /// </summary>
+        public string ImageC { get; set; }
+        /// <summary>
+        /// 小图3
+        /// </summary>
+        public string ImageD { get; set; }
+        /// <summary>
+        /// 小图4
+        /// </summary>
+        public string ImageE { get; set; }
+        /// <summary>
+        /// 添加保养信息
+        /// </summary>
+        public bool IsShowMaintenance { get; set; }
+        /// <summary>
+        /// 添加公司信息
+        /// </summary>
+        public bool IsShowSaleAddr { get; set; }
+        /// <summary>
+        /// 添加地图名片
+        /// </summary>
+        public bool IsShowMap { get; set; }
+        /// <summary>
+        /// 添加400电话
+        /// </summary>
+        public bool IsShow400Number { get; set; }
+
         public string Startdate { get; set; }
         public string Enddate { get; set; }
         public string Status { get; set; }
         public int Statusvalue { get; set; }
         public int Carid { get; set; }
         public int Mark { get; set; }
-        public int Extendcarid { get; set; }
-
-        public PromotionCars promotionCars { get; set; }
-        public GiftInfo giftInfo { get; set; }
+        public int Extendcarid { get; set; }       
     }    
 }
