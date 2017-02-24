@@ -354,6 +354,7 @@
             this.chkAllColor.Tag = "2";
             this.chkAllColor.Text = "颜色齐全";
             this.chkAllColor.UseVisualStyleBackColor = true;
+            this.chkAllColor.CheckedChanged += new System.EventHandler(this.chkAllColor_CheckedChanged);
             // 
             // pStoreState
             // 
@@ -1076,7 +1077,7 @@
             this.tpb_NC.Location = new System.Drawing.Point(4, 22);
             this.tpb_NC.Name = "tpb_NC";
             this.tpb_NC.Padding = new System.Windows.Forms.Padding(3);
-            this.tpb_NC.Size = new System.Drawing.Size(1167, 858);
+            this.tpb_NC.Size = new System.Drawing.Size(1167, 918);
             this.tpb_NC.TabIndex = 1;
             this.tpb_NC.Text = "新车信息";
             this.tpb_NC.UseVisualStyleBackColor = true;
@@ -1090,7 +1091,7 @@
             this.tpb_NW.Location = new System.Drawing.Point(4, 22);
             this.tpb_NW.Name = "tpb_NW";
             this.tpb_NW.Padding = new System.Windows.Forms.Padding(3);
-            this.tpb_NW.Size = new System.Drawing.Size(1167, 858);
+            this.tpb_NW.Size = new System.Drawing.Size(1167, 918);
             this.tpb_NW.TabIndex = 2;
             this.tpb_NW.Text = "新闻资讯";
             this.tpb_NW.UseVisualStyleBackColor = true;

@@ -26,19 +26,17 @@ namespace Aide
         string energytype = "";
         string csshowname = "";
         //PromotionCars cars;
-        int NewsType = 1;
+        int TemplaceNewsType = 1;
+        string NewsType = "";
+        string CarType = "";
         List<TextValue> BusinessTax = new List<TextValue>();
         List<TextValue> TrafficTax = new List<TextValue>();
         string ImageUpload = "";
 
 
-        List<TextValue> discountRate = new List<TextValue>();
+        
         List<TextValue> PurchaseTax = new List<TextValue>();
-        List<TextValue> CompulsoryInsurance = new List<TextValue>();
-        List<TextValue> CommercialInsurance = new List<TextValue>();
-        string[] strCompulsory = { "不赠送交强险", "赠送1年交强险", "赠送2年交强险", "赠送3年交强险", "赠送4年交强险", "赠送5年交强险", "赠送6年交强险", "赠送7年交强险", "赠送8年交强险", "赠送9年交强险" };
-
-        string[] strCommercial = { "不赠送商业险", "赠送1年商业险", "赠送2年商业险", "赠送3年商业险", "赠送4年商业险", "赠送5年商业险", "赠送6年商业险", "赠送7年商业险", "赠送8年商业险", "赠送9年商业险" };
+        
         public Form_YC(YiChe yc, int newsid = 0)
         {
             InitializeComponent();
@@ -72,22 +70,34 @@ namespace Aide
             else
                 carnews = new CarNews();
 
-
-            discountRate.AddRange(new[] { new TextValue { Text = "优惠金额", Value = "0" }, new TextValue { Text = "优惠折扣率", Value = "1" } });
+            
 
             PurchaseTax.AddRange(new[] { new TextValue { Text = "不赠送购置税", Value = "0" }, new TextValue { Text = "赠送50%购置税", Value = "50" }, new TextValue { Text = "赠送100%购置税", Value = "100" } });
 
-            for (int i = 0; i < strCompulsory.Length; i++)
+            if(string.IsNullOrWhiteSpace(carnews.NewsType))
+                InitForm(rbtSource1.Tag.ToString());
+            else
             {
-                CompulsoryInsurance.Add(new TextValue { Text = strCompulsory[i], Value = i.ToString() });
+                var fieldinfo = this.GetType().GetField(carnews.NewsType, System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.IgnoreCase);
+                if(fieldinfo != null)
+                {
+                    var o = fieldinfo.GetValue(this);
+                    InitForm(((RadioButton)o).Tag.ToString());
+                }
             }
+        }
 
-            for (int i = 0; i < strCommercial.Length; i++)
-            {
-                CommercialInsurance.Add(new TextValue { Text = strCommercial[i], Value = i.ToString() });
-            }
-
-            InitForm(rbtSource1.Tag.ToString());
+        void Source_CheckedChanged(object sender, EventArgs e)
+        {
+            var rbt = ((RadioButton)sender);
+            NewsType = rbt.Name;
+            if (rbt.Text.Contains("降价"))
+                TemplaceNewsType = 1;
+            else if(rbt.Text.Contains("置换"))
+                TemplaceNewsType = 2;
+            else if (rbt.Text.Contains("加价"))
+                TemplaceNewsType = 3;
+            InitForm(rbt.Tag.ToString());
         }
 
         private void InitForm(string url)
@@ -100,6 +110,7 @@ namespace Aide
             int ystep = 22;
             int xstart = 16;
             int ystart = 22;
+            RadioButton rbtChk = null;
             for (int i = 0; i < carList.Count; i++)
             {
                 var value = carList[i].GetAttributeValue("for", "");
@@ -122,14 +133,17 @@ namespace Aide
                 rbt.Name = "rbt" + value;
                 rbt.Tag = value + ":" + cbid + ":" + energytype + ":" + csshowname;
                 rbt.Text = title;
-
                 rbt.CheckedChanged += Car_CheckedChanged;
                 rbt.AutoSize = true;
                 rbt.Size = new System.Drawing.Size(101, 16);
                 rbt.TabStop = true;
                 rbt.UseVisualStyleBackColor = true;
                 this.gpbCarList.Controls.Add(rbt);
+                if (carnews.CarType == rbt.Name)
+                    rbtChk = rbt;
             }
+            if (rbtChk != null) rbtChk.Checked = true;
+            
             #endregion
 
             dtpPromotionB.Value = DateTime.Now.AddMonths(1).AddDays(1);
@@ -144,6 +158,7 @@ namespace Aide
             xstep = 113;
             xstart = 4;
             ystart = 7;
+            rbtChk = null;
             for (int i = 0; i < stateInputs.Count; i++)
             {
                 var value = stateInputs[i].GetAttributeValue("value", "");
@@ -159,21 +174,24 @@ namespace Aide
                 rbt.Tag = value;
                 rbt.Text = title;
 
-                rbt.CheckedChanged += StoreState_CheckedChanged;
+                rbt.CheckedChanged += StoreState_CheckedChanged;                
                 rbt.Checked = vchecked == "checked";
                 rbt.AutoSize = true;
                 rbt.Size = new System.Drawing.Size(101, 16);
                 rbt.TabStop = true;
                 rbt.UseVisualStyleBackColor = true;
                 this.pStoreState.Controls.Add(rbt);
+
+                if (carnews.StoreState == value)
+                    rbtChk = rbt;
             }
+            if (rbtChk != null) rbtChk.Checked = true;
             #endregion
 
             #region 礼包
 
             var giftbox = doc.GetElementbyId("giftBox");
             var tiptextarea = giftbox.SelectSingleNode(".//p[@class='tip_textarea']");
-
 
             #region 礼包内容
             var giftdl = giftbox.SelectNodes(".//div[@class='jsTrigger']/input");
@@ -188,7 +206,7 @@ namespace Aide
             //</div>
             #endregion
 
-            #endregion            
+            #endregion
 
             var uploadfile = doc.GetElementbyId("imgUploadChangeifrUpLoadFile");
             if (uploadfile != null)
@@ -200,12 +218,27 @@ namespace Aide
         private void InitDetail()
         {
             var article = doc.GetElementbyId("title_article");
-            title_article.Text = article.GetAttributeValue("backvalue", "");
             var number = doc.GetElementbyId("title_number");
-            title_number.Text = number.InnerText;
+            if (!string.IsNullOrWhiteSpace(carnews.Title))
+            {
+                title_article.Text = carnews.Title;
+                title_number.Text = carnews.title_number;
+            }
+            else
+            {
+                title_article.Text = article.GetAttributeValue("backvalue", "");
+                title_number.Text = number.InnerText;
+            }
             var lead = doc.GetElementbyId("txtLead");
-            if (lead != null)
+            if (!string.IsNullOrWhiteSpace(carnews.Lead))
+            {
+                txtLead.Text = carnews.Lead;
+            }
+            else if (lead != null)
+            {
                 txtLead.Text = lead.GetAttributeValue("backvalue", "");
+            }
+            
             #region 颜色列表
             var colorList = doc.DocumentNode.SelectNodes("//div[@id='UpdatePanel7']/span/label");
             int xstep = 88;
@@ -231,11 +264,12 @@ namespace Aide
                 chk.Name = "chk" + value;
                 chk.Tag = value;
                 chk.Text = title;
-
                 chk.AutoSize = true;
                 chk.Size = new System.Drawing.Size(72, 16);
                 chk.TabStop = true;
                 chk.UseVisualStyleBackColor = true;
+                if (carnews.Colors.Contains(value))
+                    chk.Checked = true;
                 this.pColor.Controls.Add(chk);
             }
             #endregion
@@ -358,6 +392,7 @@ namespace Aide
         void Car_CheckedChanged(object sender, EventArgs e)
         {
             var rbt = (RadioButton)sender;
+            CarType = rbt.Name;
             var tags = rbt.Tag.ToString().Split(':');
             carid = tags[0];
             cbid = tags[1];
@@ -683,7 +718,10 @@ namespace Aide
 
             var giftPrice = txtPrice.Text;
             GenerateTitleAndLead(maxMoney, maxMoney, giftPrice, csshowname);
-            carnews.promotionCars.Cars.ForEach(f => f.FavorablePrice = maxMoney);
+            carnews.IsDetail = false;
+
+            InitCarNews();
+            carnews.CarList.ForEach(f => f.FavorablePrice = maxMoney);
 
             var postdata = PushData();
 
@@ -700,6 +738,29 @@ namespace Aide
             {
                 MessageBox.Show("发布失败");
             }
+        }
+
+        private void InitCarNews()
+        {
+            carnews.NewsType = NewsType;
+            carnews.CarType = CarType;
+            foreach(Control con in pColor.Controls)
+            {
+                var chk = con as CheckBox;
+                if(chk != null && chk.Checked)
+                {
+                    carnews.Colors.Add(chk.Tag.ToString());
+                }
+            }
+            carnews.Title = title_article.Text;
+            carnews.title_number = title_number.Text;
+            carnews.Lead = txtLead.Text;
+
+            if(!carnews.IsDetail)
+            {
+                carnews.CarList = carControl1.CarDataSource.Cars;
+            }
+            
         }
 
         /// <summary>
@@ -725,7 +786,7 @@ namespace Aide
 
             if (maxMoney == 0)
             {
-                if (NewsType == 1)
+                if (TemplaceNewsType == 1)
                 {
                     if (newstitleTemplate == 1)
                     {
@@ -759,7 +820,7 @@ namespace Aide
                         title = name + content;
                     }
                 }
-                else if (NewsType == 2)
+                else if (TemplaceNewsType == 2)
                 {
                     if (newstitleTemplate == 1)
                     {
@@ -790,16 +851,14 @@ namespace Aide
                         lead = dealerShortName + "置换" + name + content + "，" + "感兴趣的朋友可以到店咨询购买，具体优惠信息请见下表：";
                     }
                 }
-                else if (NewsType == 3)
+                else if (TemplaceNewsType == 3)
                 {
                     title = dealerShortName + name + "火热销售中";
                     lead = dealerShortName + name + "火热销售中，感兴趣的朋友可以到店咨询购买，具体优惠信息如下：";
                 }
-
             }
             else
             {
-
                 if (newstitleTemplate == 1)
                 {
                     content = "享受补贴还优惠" + maxMoney + "万元";
@@ -809,7 +868,7 @@ namespace Aide
                     content = "优惠高达" + maxMoneyWithSubsidies + "万元";
                 }
 
-                if (NewsType == 1)
+                if (TemplaceNewsType == 1)
                 {
                     title = dealerShortName + name + content;
                     if (title.Length > 18)
@@ -819,13 +878,13 @@ namespace Aide
 
                     lead = dealerShortName + name + content + "，感兴趣的朋友可以到店咨询购买，具体优惠信息如下：";
                 }
-                else if (NewsType == 2)
+                else if (TemplaceNewsType == 2)
                 {
                     title = "置换" + name + content;
 
                     lead = dealerShortName + "置换" + name + content + "，感兴趣的朋友可以到店咨询购买，具体优惠信息请见下表：";
                 }
-                else if (NewsType == 3)
+                else if (TemplaceNewsType == 3)
                 {
                     title = dealerShortName + name + "火热销售中";
                     if (title.Length > 18)
@@ -844,7 +903,24 @@ namespace Aide
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            new FormGift(new GiftInfo()).ShowDialog();
+            var form = new FormGift(carnews.giftInfo);
+            if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                carnews.giftInfo = form.info;
+            }
+        }
+
+        private void chkAllColor_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach(Control con in pColor.Controls)
+            {
+                var chk = con as CheckBox;
+                if(chk != null && chk.Name != chkAllColor.Name)
+                {
+                    chk.Checked = chkAllColor.Checked;
+                    chk.Enabled = !chkAllColor.Checked;
+                }
+            }
         }
     }
 
@@ -1285,6 +1361,12 @@ namespace Aide
     public class CarNews
     {
         /// <summary>
+        /// 是否是明细
+        /// </summary>
+        public bool IsDetail { get; set; }
+        public string CarID { get; set; }
+
+        /// <summary>
         /// 新闻类型
         /// </summary>
         public string NewsType { get; set; }    //保存控件名称
@@ -1305,7 +1387,7 @@ namespace Aide
         /// <summary>
         /// 库存状态 
         /// </summary>
-        public int StoreState { get; set; }
+        public string StoreState { get; set; }
         /// <summary>
         /// 优惠类型
         /// </summary>
@@ -1322,6 +1404,7 @@ namespace Aide
         /// 标题
         /// </summary>
         public string Title { get; set; }
+        public string title_number { get; set; }
         /// <summary>
         /// 导语
         /// </summary>
@@ -1333,11 +1416,11 @@ namespace Aide
         /// <summary>
         /// 未发车
         /// </summary>
-        public Car Cars { get; set; }
+        public List<Car> CarList { get; set; }
         /// <summary>
         /// 已发车
         /// </summary>
-        public PromotionCars promotionCars { get; set; }
+        public List<Car> promotionCars { get; set; }
         /// <summary>
         /// 大图
         /// </summary>

@@ -12,7 +12,7 @@ namespace Aide
 {
     public partial class FormGift : Form
     {
-        GiftInfo info;
+        public GiftInfo info { get; set; }
 
         public FormGift(GiftInfo info)
         {
@@ -80,6 +80,9 @@ namespace Aide
 
             if(!iserror)
             {
+                if (info == null)
+                    info = new GiftInfo();
+
                 info.Price = price;
                 info.QCYPIsCheck = chkgift1.Checked;
                 //汽车用户列表
