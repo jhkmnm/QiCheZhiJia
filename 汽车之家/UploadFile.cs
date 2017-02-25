@@ -18,7 +18,7 @@ namespace Aide
         string SelectExsitPic;
         HAP.HtmlDocument doc;
         ImgControl1 PreviousSelected;
-        ImgControl1 CurrentSelected;
+        public ImgControl1 CurrentSelected;
         string str_viewstate = "";
         string str_viewstategenerator = "";
         string str_eventvalidation = "";
@@ -52,6 +52,8 @@ namespace Aide
             {
                 SelectExsitPic = url + piclink.GetAttributeValue("href", "");
             }
+
+            InitImg(0);
         }
 
         private void InitImg(int type)

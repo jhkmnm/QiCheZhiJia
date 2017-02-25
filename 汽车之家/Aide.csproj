@@ -81,6 +81,12 @@
     <Compile Include="Dama2.cs" />
     <Compile Include="Data\DAL.cs" />
     <Compile Include="Data\Db.cs" />
+    <Compile Include="FormColor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormColor.Designer.cs">
+      <DependentUpon>FormColor.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormGift.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,12 @@
     </Compile>
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormQCYP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormQCYP.Designer.cs">
+      <DependentUpon>FormQCYP.cs</DependentUpon>
     </Compile>
     <Compile Include="Form_YC.cs">
       <SubType>Form</SubType>
@@ -165,6 +177,9 @@
     <EmbeddedResource Include="CarControl.resx">
       <DependentUpon>CarControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormColor.resx">
+      <DependentUpon>FormColor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormGift.resx">
       <DependentUpon>FormGift.cs</DependentUpon>
     </EmbeddedResource>
@@ -173,6 +188,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormQCYP.resx">
+      <DependentUpon>FormQCYP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_YC.resx">
       <DependentUpon>Form_YC.cs</DependentUpon>
@@ -211,6 +229,7 @@
     </None>
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Car.datasource" />
+    <None Include="Properties\DataSources\Merchandise.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

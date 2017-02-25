@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.txtPrice = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -46,31 +47,37 @@
             this.ddlBusinessTax = new System.Windows.Forms.ComboBox();
             this.ddlTrafficTax = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.rbtnPurchaseTax1 = new System.Windows.Forms.RadioButton();
             this.rbtnPurchaseTax2 = new System.Windows.Forms.RadioButton();
+            this.rbtnPurchaseTax1 = new System.Windows.Forms.RadioButton();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.txtMMile = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txtMYear = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtMTimes = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.rbtnMaintenanceInfo3 = new System.Windows.Forms.RadioButton();
+            this.txtMMoney = new System.Windows.Forms.TextBox();
             this.rbtnMaintenanceInfo2 = new System.Windows.Forms.RadioButton();
             this.rbtnMaintenanceInfo1 = new System.Windows.Forms.RadioButton();
             this.txtOtherInfo = new System.Windows.Forms.TextBox();
-            this.rbtnMaintenanceInfo3 = new System.Windows.Forms.RadioButton();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtMMoney = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.txtMTimes = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
-            this.txtMYear = new System.Windows.Forms.TextBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.txtMMile = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
-            this.pqiche = new System.Windows.Forms.Panel();
             this.lblPrice = new System.Windows.Forms.Label();
             this.lblqiche = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.merchandiseBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.merchandiseBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -131,7 +138,7 @@
             // chkgift2
             // 
             this.chkgift2.AutoSize = true;
-            this.chkgift2.Location = new System.Drawing.Point(83, 157);
+            this.chkgift2.Location = new System.Drawing.Point(83, 227);
             this.chkgift2.Name = "chkgift2";
             this.chkgift2.Size = new System.Drawing.Size(48, 16);
             this.chkgift2.TabIndex = 6;
@@ -141,7 +148,7 @@
             // chkgift4
             // 
             this.chkgift4.AutoSize = true;
-            this.chkgift4.Location = new System.Drawing.Point(83, 219);
+            this.chkgift4.Location = new System.Drawing.Point(83, 289);
             this.chkgift4.Name = "chkgift4";
             this.chkgift4.Size = new System.Drawing.Size(60, 16);
             this.chkgift4.TabIndex = 8;
@@ -151,7 +158,7 @@
             // chkgift3
             // 
             this.chkgift3.AutoSize = true;
-            this.chkgift3.Location = new System.Drawing.Point(83, 188);
+            this.chkgift3.Location = new System.Drawing.Point(83, 258);
             this.chkgift3.Name = "chkgift3";
             this.chkgift3.Size = new System.Drawing.Size(60, 16);
             this.chkgift3.TabIndex = 7;
@@ -161,7 +168,7 @@
             // chkgift7
             // 
             this.chkgift7.AutoSize = true;
-            this.chkgift7.Location = new System.Drawing.Point(83, 424);
+            this.chkgift7.Location = new System.Drawing.Point(83, 494);
             this.chkgift7.Name = "chkgift7";
             this.chkgift7.Size = new System.Drawing.Size(48, 16);
             this.chkgift7.TabIndex = 11;
@@ -171,7 +178,7 @@
             // chkgift6
             // 
             this.chkgift6.AutoSize = true;
-            this.chkgift6.Location = new System.Drawing.Point(83, 302);
+            this.chkgift6.Location = new System.Drawing.Point(83, 372);
             this.chkgift6.Name = "chkgift6";
             this.chkgift6.Size = new System.Drawing.Size(48, 16);
             this.chkgift6.TabIndex = 10;
@@ -181,7 +188,7 @@
             // chkgift5
             // 
             this.chkgift5.AutoSize = true;
-            this.chkgift5.Location = new System.Drawing.Point(83, 258);
+            this.chkgift5.Location = new System.Drawing.Point(83, 328);
             this.chkgift5.Name = "chkgift5";
             this.chkgift5.Size = new System.Drawing.Size(60, 16);
             this.chkgift5.TabIndex = 9;
@@ -197,11 +204,12 @@
             this.lbladdMerChandise.TabIndex = 13;
             this.lbladdMerChandise.TabStop = true;
             this.lbladdMerChandise.Text = "添加汽车用品";
+            this.lbladdMerChandise.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lbladdMerChandise_LinkClicked);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(225, 159);
+            this.label6.Location = new System.Drawing.Point(225, 229);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(17, 12);
             this.label6.TabIndex = 16;
@@ -209,7 +217,7 @@
             // 
             // txtOilCar
             // 
-            this.txtOilCar.Location = new System.Drawing.Point(159, 155);
+            this.txtOilCar.Location = new System.Drawing.Point(159, 225);
             this.txtOilCar.Name = "txtOilCar";
             this.txtOilCar.Size = new System.Drawing.Size(64, 21);
             this.txtOilCar.TabIndex = 15;
@@ -218,7 +226,7 @@
             // ddlBusinessTax
             // 
             this.ddlBusinessTax.FormattingEnabled = true;
-            this.ddlBusinessTax.Location = new System.Drawing.Point(159, 186);
+            this.ddlBusinessTax.Location = new System.Drawing.Point(159, 256);
             this.ddlBusinessTax.Name = "ddlBusinessTax";
             this.ddlBusinessTax.Size = new System.Drawing.Size(64, 20);
             this.ddlBusinessTax.TabIndex = 17;
@@ -226,7 +234,7 @@
             // ddlTrafficTax
             // 
             this.ddlTrafficTax.FormattingEnabled = true;
-            this.ddlTrafficTax.Location = new System.Drawing.Point(159, 215);
+            this.ddlTrafficTax.Location = new System.Drawing.Point(159, 285);
             this.ddlTrafficTax.Name = "ddlTrafficTax";
             this.ddlTrafficTax.Size = new System.Drawing.Size(64, 20);
             this.ddlTrafficTax.TabIndex = 18;
@@ -235,10 +243,21 @@
             // 
             this.panel1.Controls.Add(this.rbtnPurchaseTax2);
             this.panel1.Controls.Add(this.rbtnPurchaseTax1);
-            this.panel1.Location = new System.Drawing.Point(159, 247);
+            this.panel1.Location = new System.Drawing.Point(159, 317);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(149, 33);
             this.panel1.TabIndex = 19;
+            // 
+            // rbtnPurchaseTax2
+            // 
+            this.rbtnPurchaseTax2.AutoSize = true;
+            this.rbtnPurchaseTax2.Location = new System.Drawing.Point(81, 10);
+            this.rbtnPurchaseTax2.Name = "rbtnPurchaseTax2";
+            this.rbtnPurchaseTax2.Size = new System.Drawing.Size(65, 16);
+            this.rbtnPurchaseTax2.TabIndex = 1;
+            this.rbtnPurchaseTax2.TabStop = true;
+            this.rbtnPurchaseTax2.Text = "赠送50%";
+            this.rbtnPurchaseTax2.UseVisualStyleBackColor = true;
             // 
             // rbtnPurchaseTax1
             // 
@@ -251,17 +270,6 @@
             this.rbtnPurchaseTax1.TabStop = true;
             this.rbtnPurchaseTax1.Text = "赠送";
             this.rbtnPurchaseTax1.UseVisualStyleBackColor = true;
-            // 
-            // rbtnPurchaseTax2
-            // 
-            this.rbtnPurchaseTax2.AutoSize = true;
-            this.rbtnPurchaseTax2.Location = new System.Drawing.Point(81, 10);
-            this.rbtnPurchaseTax2.Name = "rbtnPurchaseTax2";
-            this.rbtnPurchaseTax2.Size = new System.Drawing.Size(65, 16);
-            this.rbtnPurchaseTax2.TabIndex = 1;
-            this.rbtnPurchaseTax2.TabStop = true;
-            this.rbtnPurchaseTax2.Text = "赠送50%";
-            this.rbtnPurchaseTax2.UseVisualStyleBackColor = true;
             // 
             // panel2
             // 
@@ -279,10 +287,119 @@
             this.panel2.Controls.Add(this.txtMMoney);
             this.panel2.Controls.Add(this.rbtnMaintenanceInfo2);
             this.panel2.Controls.Add(this.rbtnMaintenanceInfo1);
-            this.panel2.Location = new System.Drawing.Point(159, 290);
+            this.panel2.Location = new System.Drawing.Point(159, 360);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(416, 101);
             this.panel2.TabIndex = 20;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.ForeColor = System.Drawing.Color.Red;
+            this.label13.Location = new System.Drawing.Point(276, 80);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(137, 12);
+            this.label13.TabIndex = 31;
+            this.label13.Text = "不能为空，请您重新填写";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.ForeColor = System.Drawing.Color.Red;
+            this.label12.Location = new System.Drawing.Point(153, 47);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(209, 12);
+            this.label12.TabIndex = 30;
+            this.label12.Text = "请填写1-50之间的整数，请您重新填写";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.Color.Red;
+            this.label11.Location = new System.Drawing.Point(151, 12);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(227, 12);
+            this.label11.TabIndex = 27;
+            this.label11.Text = "请填写不小于100元的整数，请您重新填写";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(217, 79);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(53, 12);
+            this.label9.TabIndex = 29;
+            this.label9.Text = "(万)公里";
+            // 
+            // txtMMile
+            // 
+            this.txtMMile.Location = new System.Drawing.Point(151, 75);
+            this.txtMMile.Name = "txtMMile";
+            this.txtMMile.Size = new System.Drawing.Size(64, 21);
+            this.txtMMile.TabIndex = 28;
+            this.txtMMile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_KeyPress);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(128, 79);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(23, 12);
+            this.label8.TabIndex = 27;
+            this.label8.Text = "年/";
+            // 
+            // txtMYear
+            // 
+            this.txtMYear.Location = new System.Drawing.Point(62, 75);
+            this.txtMYear.Name = "txtMYear";
+            this.txtMYear.Size = new System.Drawing.Size(64, 21);
+            this.txtMYear.TabIndex = 26;
+            this.txtMYear.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_KeyPress);
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(128, 46);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(17, 12);
+            this.label7.TabIndex = 25;
+            this.label7.Text = "次";
+            // 
+            // txtMTimes
+            // 
+            this.txtMTimes.Location = new System.Drawing.Point(62, 42);
+            this.txtMTimes.Name = "txtMTimes";
+            this.txtMTimes.Size = new System.Drawing.Size(64, 21);
+            this.txtMTimes.TabIndex = 24;
+            this.txtMTimes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_KeyPress);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(128, 13);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(17, 12);
+            this.label5.TabIndex = 23;
+            this.label5.Text = "元";
+            // 
+            // rbtnMaintenanceInfo3
+            // 
+            this.rbtnMaintenanceInfo3.AutoSize = true;
+            this.rbtnMaintenanceInfo3.Location = new System.Drawing.Point(9, 76);
+            this.rbtnMaintenanceInfo3.Name = "rbtnMaintenanceInfo3";
+            this.rbtnMaintenanceInfo3.Size = new System.Drawing.Size(47, 16);
+            this.rbtnMaintenanceInfo3.TabIndex = 2;
+            this.rbtnMaintenanceInfo3.TabStop = true;
+            this.rbtnMaintenanceInfo3.Text = "赠送";
+            this.rbtnMaintenanceInfo3.UseVisualStyleBackColor = true;
+            // 
+            // txtMMoney
+            // 
+            this.txtMMoney.Location = new System.Drawing.Point(62, 9);
+            this.txtMMoney.Name = "txtMMoney";
+            this.txtMMoney.Size = new System.Drawing.Size(64, 21);
+            this.txtMMoney.TabIndex = 22;
+            this.txtMMoney.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_KeyPress);
             // 
             // rbtnMaintenanceInfo2
             // 
@@ -309,107 +426,21 @@
             // 
             // txtOtherInfo
             // 
-            this.txtOtherInfo.Location = new System.Drawing.Point(159, 402);
+            this.txtOtherInfo.Location = new System.Drawing.Point(159, 472);
             this.txtOtherInfo.Multiline = true;
             this.txtOtherInfo.Name = "txtOtherInfo";
-            this.txtOtherInfo.Size = new System.Drawing.Size(374, 93);
+            this.txtOtherInfo.Size = new System.Drawing.Size(416, 93);
             this.txtOtherInfo.TabIndex = 21;
-            // 
-            // rbtnMaintenanceInfo3
-            // 
-            this.rbtnMaintenanceInfo3.AutoSize = true;
-            this.rbtnMaintenanceInfo3.Location = new System.Drawing.Point(9, 76);
-            this.rbtnMaintenanceInfo3.Name = "rbtnMaintenanceInfo3";
-            this.rbtnMaintenanceInfo3.Size = new System.Drawing.Size(47, 16);
-            this.rbtnMaintenanceInfo3.TabIndex = 2;
-            this.rbtnMaintenanceInfo3.TabStop = true;
-            this.rbtnMaintenanceInfo3.Text = "赠送";
-            this.rbtnMaintenanceInfo3.UseVisualStyleBackColor = true;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(128, 13);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(17, 12);
-            this.label5.TabIndex = 23;
-            this.label5.Text = "元";
-            // 
-            // txtMMoney
-            // 
-            this.txtMMoney.Location = new System.Drawing.Point(62, 9);
-            this.txtMMoney.Name = "txtMMoney";
-            this.txtMMoney.Size = new System.Drawing.Size(64, 21);
-            this.txtMMoney.TabIndex = 22;
-            this.txtMMoney.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_KeyPress);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(128, 46);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(17, 12);
-            this.label7.TabIndex = 25;
-            this.label7.Text = "次";
-            // 
-            // txtMTimes
-            // 
-            this.txtMTimes.Location = new System.Drawing.Point(62, 42);
-            this.txtMTimes.Name = "txtMTimes";
-            this.txtMTimes.Size = new System.Drawing.Size(64, 21);
-            this.txtMTimes.TabIndex = 24;
-            this.txtMTimes.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_KeyPress);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(128, 79);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(23, 12);
-            this.label8.TabIndex = 27;
-            this.label8.Text = "年/";
-            // 
-            // txtMYear
-            // 
-            this.txtMYear.Location = new System.Drawing.Point(62, 75);
-            this.txtMYear.Name = "txtMYear";
-            this.txtMYear.Size = new System.Drawing.Size(64, 21);
-            this.txtMYear.TabIndex = 26;
-            this.txtMYear.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_KeyPress);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(217, 79);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(53, 12);
-            this.label9.TabIndex = 29;
-            this.label9.Text = "(万)公里";
-            // 
-            // txtMMile
-            // 
-            this.txtMMile.Location = new System.Drawing.Point(151, 75);
-            this.txtMMile.Name = "txtMMile";
-            this.txtMMile.Size = new System.Drawing.Size(64, 21);
-            this.txtMMile.TabIndex = 28;
-            this.txtMMile.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_KeyPress);
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(191, 504);
+            this.btnOK.Location = new System.Drawing.Point(191, 574);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 22;
             this.btnOK.Text = "确定";
             this.btnOK.UseVisualStyleBackColor = true;
             this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
-            // 
-            // pqiche
-            // 
-            this.pqiche.Location = new System.Drawing.Point(83, 84);
-            this.pqiche.Name = "pqiche";
-            this.pqiche.Size = new System.Drawing.Size(480, 65);
-            this.pqiche.TabIndex = 23;
             // 
             // lblPrice
             // 
@@ -435,51 +466,64 @@
             // 
             this.label10.AutoSize = true;
             this.label10.ForeColor = System.Drawing.Color.Red;
-            this.label10.Location = new System.Drawing.Point(260, 159);
+            this.label10.Location = new System.Drawing.Point(260, 229);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(227, 12);
             this.label10.TabIndex = 26;
             this.label10.Text = "请填写不小于100元的整数，请您重新填写";
             // 
-            // label11
+            // dataGridView1
             // 
-            this.label11.AutoSize = true;
-            this.label11.ForeColor = System.Drawing.Color.Red;
-            this.label11.Location = new System.Drawing.Point(151, 12);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(227, 12);
-            this.label11.TabIndex = 27;
-            this.label11.Text = "请填写不小于100元的整数，请您重新填写";
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.nameDataGridViewTextBoxColumn,
+            this.priceDataGridViewTextBoxColumn,
+            this.Column1});
+            this.dataGridView1.DataSource = this.merchandiseBindingSource;
+            this.dataGridView1.Location = new System.Drawing.Point(83, 81);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(354, 138);
+            this.dataGridView1.TabIndex = 27;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // label12
+            // nameDataGridViewTextBoxColumn
             // 
-            this.label12.AutoSize = true;
-            this.label12.ForeColor = System.Drawing.Color.Red;
-            this.label12.Location = new System.Drawing.Point(153, 47);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(209, 12);
-            this.label12.TabIndex = 30;
-            this.label12.Text = "请填写1-50之间的整数，请您重新填写";
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "汽车用品名称";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // label13
+            // priceDataGridViewTextBoxColumn
             // 
-            this.label13.AutoSize = true;
-            this.label13.ForeColor = System.Drawing.Color.Red;
-            this.label13.Location = new System.Drawing.Point(276, 80);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(137, 12);
-            this.label13.TabIndex = 31;
-            this.label13.Text = "不能为空，请您重新填写";
+            this.priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
+            this.priceDataGridViewTextBoxColumn.HeaderText = "价格";
+            this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
+            this.priceDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // Column1
+            // 
+            this.Column1.DataPropertyName = "Del";
+            this.Column1.HeaderText = "删除";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            // 
+            // merchandiseBindingSource
+            // 
+            this.merchandiseBindingSource.DataSource = typeof(Aide.Merchandise);
             // 
             // FormGift
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(593, 529);
+            this.ClientSize = new System.Drawing.Size(593, 601);
+            this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.lblqiche);
             this.Controls.Add(this.lblPrice);
-            this.Controls.Add(this.pqiche);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.txtOtherInfo);
             this.Controls.Add(this.panel2);
@@ -507,6 +551,8 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.merchandiseBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -548,12 +594,16 @@
         private System.Windows.Forms.RadioButton rbtnMaintenanceInfo1;
         private System.Windows.Forms.TextBox txtOtherInfo;
         private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Panel pqiche;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label lblPrice;
         private System.Windows.Forms.Label lblqiche;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.BindingSource merchandiseBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewLinkColumn Column1;
     }
 }

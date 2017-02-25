@@ -30,12 +30,20 @@ namespace Aide
 
         private void llbInclude_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            new PhotoSelectNew(yiche, CSID).ShowDialog();
+            var form = new PhotoSelectNew(yiche, CSID);
+            if(form.ShowDialog() == DialogResult.OK)
+            {
+                ptbImg.ImageLocation = form.SelectedImgPath;
+            }
         }
 
         private void llbUp_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            new UploadFile(yiche, ImageUpload).ShowDialog();
+            var form = new UploadFile(yiche, ImageUpload);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                ptbImg.ImageLocation = form.CurrentSelected.pbxImg.ImageLocation;
+            }
         }
     }
 }

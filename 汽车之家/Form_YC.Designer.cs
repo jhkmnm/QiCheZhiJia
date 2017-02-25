@@ -54,15 +54,12 @@
             this.ddlPromotionType = new System.Windows.Forms.ComboBox();
             this.txtMoney = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.txtOtherInfo = new System.Windows.Forms.TextBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.label35 = new System.Windows.Forms.Label();
-            this.txtPurchaseTax = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.ddlTrafficTax = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.ddlBusinessTax = new System.Windows.Forms.ComboBox();
             this.label36 = new System.Windows.Forms.Label();
-            this.txtPrice = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.title_article = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
@@ -75,7 +72,6 @@
             this.chkIsShow400Number = new System.Windows.Forms.CheckBox();
             this.label37 = new System.Windows.Forms.Label();
             this.chkIsShowSaleAddr = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.title_number = new System.Windows.Forms.Label();
             this.chkIsShowMaintenance = new System.Windows.Forms.CheckBox();
             this.label40 = new System.Windows.Forms.Label();
@@ -133,6 +129,7 @@
             this.equipClass3 = new System.Windows.Forms.RadioButton();
             this.equipClass2 = new System.Windows.Forms.RadioButton();
             this.equipClass1 = new System.Windows.Forms.RadioButton();
+            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tpb_TP.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -151,7 +148,7 @@
             // 
             this.gpbCarList.Location = new System.Drawing.Point(10, 61);
             this.gpbCarList.Name = "gpbCarList";
-            this.gpbCarList.Size = new System.Drawing.Size(720, 72);
+            this.gpbCarList.Size = new System.Drawing.Size(732, 72);
             this.gpbCarList.TabIndex = 4;
             this.gpbCarList.TabStop = false;
             this.gpbCarList.Text = "车型";
@@ -215,7 +212,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1175, 944);
+            this.tabControl1.Size = new System.Drawing.Size(1175, 931);
             this.tabControl1.TabIndex = 5;
             // 
             // tpb_TP
@@ -236,7 +233,7 @@
             this.tpb_TP.Location = new System.Drawing.Point(4, 22);
             this.tpb_TP.Name = "tpb_TP";
             this.tpb_TP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpb_TP.Size = new System.Drawing.Size(1167, 918);
+            this.tpb_TP.Size = new System.Drawing.Size(1167, 905);
             this.tpb_TP.TabIndex = 0;
             this.tpb_TP.Text = "优惠促销";
             this.tpb_TP.UseVisualStyleBackColor = true;
@@ -280,17 +277,17 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(457, 409);
+            this.linkLabel1.Location = new System.Drawing.Point(413, 409);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(65, 12);
+            this.linkLabel1.Size = new System.Drawing.Size(29, 12);
             this.linkLabel1.TabIndex = 113;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "linkLabel1";
+            this.linkLabel1.Text = "礼包";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // btnSend_Ex
             // 
-            this.btnSend_Ex.Location = new System.Drawing.Point(535, 515);
+            this.btnSend_Ex.Location = new System.Drawing.Point(589, 388);
             this.btnSend_Ex.Name = "btnSend_Ex";
             this.btnSend_Ex.Size = new System.Drawing.Size(101, 33);
             this.btnSend_Ex.TabIndex = 112;
@@ -330,7 +327,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.ForeColor = System.Drawing.Color.Black;
-            this.label16.Location = new System.Drawing.Point(355, 409);
+            this.label16.Location = new System.Drawing.Point(334, 409);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(41, 12);
             this.label16.TabIndex = 90;
@@ -341,7 +338,7 @@
             this.pColor.Controls.Add(this.chkAllColor);
             this.pColor.Location = new System.Drawing.Point(107, 431);
             this.pColor.Name = "pColor";
-            this.pColor.Size = new System.Drawing.Size(372, 277);
+            this.pColor.Size = new System.Drawing.Size(583, 277);
             this.pColor.TabIndex = 108;
             // 
             // chkAllColor
@@ -419,12 +416,12 @@
             this.ddlPromotionType.FormattingEnabled = true;
             this.ddlPromotionType.Location = new System.Drawing.Point(113, 404);
             this.ddlPromotionType.Name = "ddlPromotionType";
-            this.ddlPromotionType.Size = new System.Drawing.Size(109, 20);
+            this.ddlPromotionType.Size = new System.Drawing.Size(99, 20);
             this.ddlPromotionType.TabIndex = 88;
             // 
             // txtMoney
             // 
-            this.txtMoney.Location = new System.Drawing.Point(239, 404);
+            this.txtMoney.Location = new System.Drawing.Point(218, 404);
             this.txtMoney.Name = "txtMoney";
             this.txtMoney.Size = new System.Drawing.Size(110, 21);
             this.txtMoney.TabIndex = 89;
@@ -432,15 +429,13 @@
             // tabPage2
             // 
             this.tabPage2.AutoScroll = true;
-            this.tabPage2.Controls.Add(this.txtOtherInfo);
+            this.tabPage2.Controls.Add(this.linkLabel3);
+            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Controls.Add(this.linkLabel2);
             this.tabPage2.Controls.Add(this.label35);
-            this.tabPage2.Controls.Add(this.txtPurchaseTax);
             this.tabPage2.Controls.Add(this.label2);
-            this.tabPage2.Controls.Add(this.ddlTrafficTax);
             this.tabPage2.Controls.Add(this.label1);
-            this.tabPage2.Controls.Add(this.ddlBusinessTax);
             this.tabPage2.Controls.Add(this.label36);
-            this.tabPage2.Controls.Add(this.txtPrice);
             this.tabPage2.Controls.Add(this.label4);
             this.tabPage2.Controls.Add(this.title_article);
             this.tabPage2.Controls.Add(this.label3);
@@ -453,7 +448,6 @@
             this.tabPage2.Controls.Add(this.chkIsShow400Number);
             this.tabPage2.Controls.Add(this.label37);
             this.tabPage2.Controls.Add(this.chkIsShowSaleAddr);
-            this.tabPage2.Controls.Add(this.checkBox4);
             this.tabPage2.Controls.Add(this.title_number);
             this.tabPage2.Controls.Add(this.chkIsShowMaintenance);
             this.tabPage2.Controls.Add(this.label40);
@@ -473,13 +467,26 @@
             this.tabPage2.Text = "编辑明细";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
-            // txtOtherInfo
+            // button1
             // 
-            this.txtOtherInfo.Location = new System.Drawing.Point(366, 471);
-            this.txtOtherInfo.Name = "txtOtherInfo";
-            this.txtOtherInfo.Size = new System.Drawing.Size(32, 21);
-            this.txtOtherInfo.TabIndex = 148;
-            this.txtOtherInfo.Text = "如礼包规则或礼包内容";
+            this.button1.Location = new System.Drawing.Point(535, 502);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(101, 33);
+            this.button1.TabIndex = 150;
+            this.button1.Text = "发布";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // linkLabel2
+            // 
+            this.linkLabel2.AutoSize = true;
+            this.linkLabel2.Location = new System.Drawing.Point(96, 471);
+            this.linkLabel2.Name = "linkLabel2";
+            this.linkLabel2.Size = new System.Drawing.Size(29, 12);
+            this.linkLabel2.TabIndex = 149;
+            this.linkLabel2.TabStop = true;
+            this.linkLabel2.Text = "礼包";
+            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // label35
             // 
@@ -491,14 +498,6 @@
             this.label35.TabIndex = 128;
             this.label35.Text = "*";
             // 
-            // txtPurchaseTax
-            // 
-            this.txtPurchaseTax.Location = new System.Drawing.Point(327, 470);
-            this.txtPurchaseTax.Name = "txtPurchaseTax";
-            this.txtPurchaseTax.Size = new System.Drawing.Size(32, 21);
-            this.txtPurchaseTax.TabIndex = 147;
-            this.txtPurchaseTax.Text = "单选";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -508,15 +507,6 @@
             this.label2.Size = new System.Drawing.Size(11, 12);
             this.label2.TabIndex = 119;
             this.label2.Text = "*";
-            // 
-            // ddlTrafficTax
-            // 
-            this.ddlTrafficTax.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ddlTrafficTax.FormattingEnabled = true;
-            this.ddlTrafficTax.Location = new System.Drawing.Point(271, 470);
-            this.ddlTrafficTax.Name = "ddlTrafficTax";
-            this.ddlTrafficTax.Size = new System.Drawing.Size(50, 20);
-            this.ddlTrafficTax.TabIndex = 146;
             // 
             // label1
             // 
@@ -528,14 +518,6 @@
             this.label1.TabIndex = 120;
             this.label1.Text = "车型大图:";
             // 
-            // ddlBusinessTax
-            // 
-            this.ddlBusinessTax.FormattingEnabled = true;
-            this.ddlBusinessTax.Location = new System.Drawing.Point(239, 468);
-            this.ddlBusinessTax.Name = "ddlBusinessTax";
-            this.ddlBusinessTax.Size = new System.Drawing.Size(26, 20);
-            this.ddlBusinessTax.TabIndex = 145;
-            // 
             // label36
             // 
             this.label36.AutoSize = true;
@@ -545,13 +527,6 @@
             this.label36.Size = new System.Drawing.Size(137, 12);
             this.label36.TabIndex = 131;
             this.label36.Text = "标题最小6个字,最多18字";
-            // 
-            // txtPrice
-            // 
-            this.txtPrice.Location = new System.Drawing.Point(189, 468);
-            this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(32, 21);
-            this.txtPrice.TabIndex = 144;
             // 
             // label4
             // 
@@ -676,17 +651,6 @@
             this.chkIsShowSaleAddr.Tag = "2";
             this.chkIsShowSaleAddr.Text = "设置参考总价";
             this.chkIsShowSaleAddr.UseVisualStyleBackColor = true;
-            // 
-            // checkBox4
-            // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Location = new System.Drawing.Point(98, 470);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(72, 16);
-            this.checkBox4.TabIndex = 137;
-            this.checkBox4.Tag = "2";
-            this.checkBox4.Text = "赠送礼包";
-            this.checkBox4.UseVisualStyleBackColor = true;
             // 
             // title_number
             // 
@@ -965,7 +929,7 @@
             this.groupBox2.Controls.Add(this.rbtSource1);
             this.groupBox2.Location = new System.Drawing.Point(10, 6);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(720, 55);
+            this.groupBox2.Size = new System.Drawing.Size(732, 55);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "新闻类型";
@@ -1332,11 +1296,22 @@
             this.equipClass1.Text = "新闻资讯";
             this.equipClass1.UseVisualStyleBackColor = true;
             // 
+            // linkLabel3
+            // 
+            this.linkLabel3.AutoSize = true;
+            this.linkLabel3.Location = new System.Drawing.Point(434, 340);
+            this.linkLabel3.Name = "linkLabel3";
+            this.linkLabel3.Size = new System.Drawing.Size(89, 12);
+            this.linkLabel3.TabIndex = 151;
+            this.linkLabel3.TabStop = true;
+            this.linkLabel3.Text = "生成标题和导语";
+            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
+            // 
             // Form_YC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1183, 948);
+            this.ClientSize = new System.Drawing.Size(1183, 935);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form_YC";
             this.Text = "Form_YC";
@@ -1442,15 +1417,10 @@
         private System.Windows.Forms.Label label20;
         private System.Windows.Forms.Label label21;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TextBox txtOtherInfo;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.TextBox txtPurchaseTax;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.ComboBox ddlTrafficTax;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox ddlBusinessTax;
         private System.Windows.Forms.Label label36;
-        private System.Windows.Forms.TextBox txtPrice;
         private System.Windows.Forms.Label label4;
         private ImgControl imgPosition4_hdf;
         private System.Windows.Forms.TextBox title_article;
@@ -1468,10 +1438,12 @@
         private System.Windows.Forms.CheckBox chkIsShow400Number;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.CheckBox chkIsShowSaleAddr;
-        private System.Windows.Forms.CheckBox checkBox4;
         private System.Windows.Forms.Label title_number;
         private System.Windows.Forms.CheckBox chkIsShowMaintenance;
         private System.Windows.Forms.Label label40;
         private System.Windows.Forms.LinkLabel linkLabel1;
+        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.LinkLabel linkLabel3;
     }
 }

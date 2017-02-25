@@ -34,17 +34,6 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvCar = new System.Windows.Forms.DataGridView();
-            this.colIsCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colCarReferPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colFavorablePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSubsidies = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPromotionPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colStoreState = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.colColorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colPushedCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.YearType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.carBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label33 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.button1 = new System.Windows.Forms.Button();
@@ -56,20 +45,31 @@
             this.ddlStoreState = new System.Windows.Forms.ComboBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.dgvCar2 = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StoreStateBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.carBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
+            this.colIsCheck = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCarReferPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colFavorablePrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSubsidies = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPromotionPrice = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStoreState = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.colColorName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPushedCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colAction = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.YearType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.StoreStateBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCar)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvCar2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.StoreStateBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.carBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvCar
@@ -96,6 +96,7 @@
             this.colStoreState,
             this.colColorName,
             this.colPushedCount,
+            this.colAction,
             this.YearType});
             this.dgvCar.DataSource = this.carBindingSource;
             dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
@@ -113,92 +114,8 @@
             this.dgvCar.RowHeadersWidth = 21;
             this.dgvCar.RowTemplate.Height = 23;
             this.dgvCar.Size = new System.Drawing.Size(600, 122);
-            this.dgvCar.TabIndex = 70;
+            this.dgvCar.TabIndex = 70;            
             this.dgvCar.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvCar_CellContentClick);
-            // 
-            // colIsCheck
-            // 
-            this.colIsCheck.DataPropertyName = "IsCheck";
-            this.colIsCheck.HeaderText = "";
-            this.colIsCheck.Name = "colIsCheck";
-            this.colIsCheck.Width = 21;
-            // 
-            // colTypeName
-            // 
-            this.colTypeName.DataPropertyName = "TypeName";
-            this.colTypeName.HeaderText = "车款";
-            this.colTypeName.Name = "colTypeName";
-            this.colTypeName.ReadOnly = true;
-            // 
-            // colCarReferPrice
-            // 
-            this.colCarReferPrice.DataPropertyName = "CarReferPrice";
-            this.colCarReferPrice.HeaderText = "指导价(万)";
-            this.colCarReferPrice.Name = "colCarReferPrice";
-            this.colCarReferPrice.ReadOnly = true;
-            this.colCarReferPrice.Width = 90;
-            // 
-            // colFavorablePrice
-            // 
-            this.colFavorablePrice.DataPropertyName = "FavorablePrice";
-            this.colFavorablePrice.HeaderText = "优惠金额(万)";
-            this.colFavorablePrice.Name = "colFavorablePrice";
-            // 
-            // colSubsidies
-            // 
-            this.colSubsidies.DataPropertyName = "Subsidies";
-            this.colSubsidies.HeaderText = "新能源车补贴(万)";
-            this.colSubsidies.Name = "colSubsidies";
-            this.colSubsidies.ReadOnly = true;
-            this.colSubsidies.Width = 130;
-            // 
-            // colPromotionPrice
-            // 
-            this.colPromotionPrice.DataPropertyName = "PromotionPrice";
-            this.colPromotionPrice.HeaderText = "优惠价(万)";
-            this.colPromotionPrice.Name = "colPromotionPrice";
-            this.colPromotionPrice.ReadOnly = true;
-            this.colPromotionPrice.Width = 90;
-            // 
-            // colStoreState
-            // 
-            this.colStoreState.DataPropertyName = "StoreState";
-            this.colStoreState.DataSource = this.StoreStateBindingSource;
-            this.colStoreState.DisplayMember = "Text";
-            this.colStoreState.ValueMember = "Value";
-            this.colStoreState.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
-            this.colStoreState.HeaderText = "库存状态";
-            this.colStoreState.Name = "colStoreState";
-            this.colStoreState.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colStoreState.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colStoreState.Width = 90;            
-            // 
-            // StoreStateBindingSource
-            // 
-            this.StoreStateBindingSource.DataSource = typeof(TextValue);
-            // 
-            // colColorName
-            // 
-            this.colColorName.DataPropertyName = "ColorName";
-            this.colColorName.HeaderText = "车身颜色";
-            this.colColorName.Name = "colColorName";
-            // 
-            // colPushedCount
-            // 
-            this.colPushedCount.DataPropertyName = "PushedCount";
-            this.colPushedCount.HeaderText = "已发促销";
-            this.colPushedCount.Name = "colPushedCount";
-            // 
-            // YearType
-            // 
-            this.YearType.DataPropertyName = "YearType";
-            this.YearType.HeaderText = "YearType";
-            this.YearType.Name = "YearType";
-            this.YearType.Visible = false;
-            // 
-            // carBindingSource
-            // 
-            this.carBindingSource.DataSource = typeof(Aide.Car);
             // 
             // label33
             // 
@@ -225,6 +142,7 @@
             this.button1.TabIndex = 72;
             this.button1.Text = "选择增配车";
             this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
             // 
             // llbColor
             // 
@@ -236,6 +154,7 @@
             this.llbColor.TabIndex = 76;
             this.llbColor.TabStop = true;
             this.llbColor.Text = "车身颜色";
+            this.llbColor.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llbColor_LinkClicked);
             // 
             // label1
             // 
@@ -332,7 +251,6 @@
             this.dgvCar2.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvCar2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvCar2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn7});
             this.dgvCar2.DataSource = this.bindingSource1;
@@ -352,15 +270,102 @@
             this.dgvCar2.RowHeadersWidth = 21;
             this.dgvCar2.RowTemplate.Height = 23;
             this.dgvCar2.Size = new System.Drawing.Size(600, 119);
-            this.dgvCar2.TabIndex = 71;
+            this.dgvCar2.TabIndex = 71;            
             // 
-            // dataGridViewTextBoxColumn1
+            // StoreStateBindingSource
             // 
-            this.dataGridViewTextBoxColumn1.DataPropertyName = "YearType";
-            this.dataGridViewTextBoxColumn1.HeaderText = "YearType";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.ReadOnly = true;
-            this.dataGridViewTextBoxColumn1.Visible = false;
+            this.StoreStateBindingSource.DataSource = typeof(Aide.TextValue);
+            // 
+            // carBindingSource
+            // 
+            this.carBindingSource.DataSource = typeof(Aide.Car);
+            // 
+            // bindingSource1
+            // 
+            this.bindingSource1.DataSource = typeof(Aide.Car);
+            // 
+            // colIsCheck
+            // 
+            this.colIsCheck.DataPropertyName = "IsCheck";
+            this.colIsCheck.HeaderText = "";
+            this.colIsCheck.Name = "colIsCheck";
+            this.colIsCheck.Width = 21;
+            // 
+            // colTypeName
+            // 
+            this.colTypeName.DataPropertyName = "TypeName";
+            this.colTypeName.HeaderText = "车款";
+            this.colTypeName.Name = "colTypeName";
+            this.colTypeName.ReadOnly = true;
+            // 
+            // colCarReferPrice
+            // 
+            this.colCarReferPrice.DataPropertyName = "CarReferPrice";
+            this.colCarReferPrice.HeaderText = "指导价(万)";
+            this.colCarReferPrice.Name = "colCarReferPrice";
+            this.colCarReferPrice.ReadOnly = true;
+            this.colCarReferPrice.Width = 90;
+            // 
+            // colFavorablePrice
+            // 
+            this.colFavorablePrice.DataPropertyName = "FavorablePrice";
+            this.colFavorablePrice.HeaderText = "优惠金额(万)";
+            this.colFavorablePrice.Name = "colFavorablePrice";
+            // 
+            // colSubsidies
+            // 
+            this.colSubsidies.DataPropertyName = "Subsidies";
+            this.colSubsidies.HeaderText = "新能源车补贴(万)";
+            this.colSubsidies.Name = "colSubsidies";
+            this.colSubsidies.ReadOnly = true;
+            this.colSubsidies.Width = 130;
+            // 
+            // colPromotionPrice
+            // 
+            this.colPromotionPrice.DataPropertyName = "PromotionPrice";
+            this.colPromotionPrice.HeaderText = "优惠价(万)";
+            this.colPromotionPrice.Name = "colPromotionPrice";
+            this.colPromotionPrice.ReadOnly = true;
+            this.colPromotionPrice.Width = 90;
+            // 
+            // colStoreState
+            // 
+            this.colStoreState.DataPropertyName = "StoreState";
+            this.colStoreState.DataSource = this.StoreStateBindingSource;
+            this.colStoreState.DisplayMember = "Text";
+            this.colStoreState.DisplayStyle = System.Windows.Forms.DataGridViewComboBoxDisplayStyle.Nothing;
+            this.colStoreState.HeaderText = "库存状态";
+            this.colStoreState.Name = "colStoreState";
+            this.colStoreState.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colStoreState.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colStoreState.ValueMember = "Value";
+            this.colStoreState.Width = 90;
+            // 
+            // colColorName
+            // 
+            this.colColorName.DataPropertyName = "ColorName";
+            this.colColorName.HeaderText = "车身颜色";
+            this.colColorName.Name = "colColorName";
+            // 
+            // colPushedCount
+            // 
+            this.colPushedCount.DataPropertyName = "PushedCount";
+            this.colPushedCount.HeaderText = "已发促销";
+            this.colPushedCount.Name = "colPushedCount";
+            // 
+            // colAction
+            // 
+            this.colAction.DataPropertyName = "Action";
+            this.colAction.HeaderText = "操作";
+            this.colAction.Name = "colAction";
+            this.colAction.ReadOnly = true;
+            // 
+            // YearType
+            // 
+            this.YearType.DataPropertyName = "YearType";
+            this.YearType.HeaderText = "YearType";
+            this.YearType.Name = "YearType";
+            this.YearType.Visible = false;
             // 
             // dataGridViewTextBoxColumn2
             // 
@@ -376,10 +381,6 @@
             this.dataGridViewTextBoxColumn7.HeaderText = "已发促销";
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
             this.dataGridViewTextBoxColumn7.ReadOnly = true;
-            // 
-            // bindingSource1
-            // 
-            this.bindingSource1.DataSource = typeof(Aide.Car);            
             // 
             // CarControl
             // 
@@ -398,14 +399,14 @@
             this.Name = "CarControl";
             this.Size = new System.Drawing.Size(606, 323);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCar)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carBindingSource)).EndInit();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvCar2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.StoreStateBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.carBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -426,10 +427,8 @@
         private System.Windows.Forms.ComboBox ddlStoreState;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.DataGridView dgvCar2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
         private System.Windows.Forms.BindingSource bindingSource1;
+        private System.Windows.Forms.BindingSource StoreStateBindingSource;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colIsCheck;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTypeName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colCarReferPrice;
@@ -439,7 +438,9 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn colStoreState;
         private System.Windows.Forms.DataGridViewTextBoxColumn colColorName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colPushedCount;
+        private System.Windows.Forms.DataGridViewLinkColumn colAction;
         private System.Windows.Forms.DataGridViewTextBoxColumn YearType;
-        private System.Windows.Forms.BindingSource StoreStateBindingSource;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
     }
 }

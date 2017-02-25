@@ -55,12 +55,15 @@ namespace Aide
             }
         }
 
+        public List<TextValue> Colors { get; set; }
+
         /// <summary>
         /// 是否显示明细
         /// </summary>
         /// <param name="isDetail"></param>
         public void ShowType(bool isDetail)
         {
+            colIsCheck.Visible = isDetail;
             colPushedCount.Visible = !isDetail;
             colCarReferPrice.Visible = isDetail;
             colPromotionPrice.Visible = isDetail;
@@ -69,6 +72,12 @@ namespace Aide
             colFavorablePrice.Visible = isDetail;
             colColorName.Visible = isDetail;
             colTypeName.Width = isDetail ? 100 : 300;
+
+            txtDiscount.Visible = isDetail;
+            txtFavorablePrice.Visible = isDetail;
+            ddlStoreState.Visible = isDetail;
+            llbColor.Visible = isDetail;
+            colAction.Visible = isDetail;
         }
 
         public CarControl()
@@ -203,6 +212,26 @@ namespace Aide
             {
                 _promotioncars.Cars[e.RowIndex].IsCheck = !_promotioncars.Cars[e.RowIndex].IsCheck;
                 dgvCar.Rows[e.RowIndex].ReadOnly = _promotioncars.Cars[e.RowIndex].IsCheck;
+            }
+        }
+
+        private void llbColor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            var form = new FormColor(Colors);
+            if(form.ShowDialog() == DialogResult.OK)
+            {
+                var allcolor = form.SelectedColros.FirstOrDefault(w => w.Text == "颜色齐全");
+                string colorname = "";
+                if (allcolor != null)
+                    colorname = "颜色齐全";
+                else
+                {
+                    colorname = string.Join(",", form.SelectedColros.Select(s => s.Text));
+                }
+                _promotioncars.Radlst = form.SelectedColros.Select(s => s.Value).ToList();
+
+                _promotioncars.Cars.ForEach(f => f.ColorName = colorname);
+                dgvCar.Refresh();
             }
         }
     }
