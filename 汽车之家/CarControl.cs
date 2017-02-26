@@ -213,6 +213,25 @@ namespace Aide
                 _promotioncars.Cars[e.RowIndex].IsCheck = !_promotioncars.Cars[e.RowIndex].IsCheck;
                 dgvCar.Rows[e.RowIndex].ReadOnly = _promotioncars.Cars[e.RowIndex].IsCheck;
             }
+            else if(e.ColumnIndex == colAction.Index)
+            {
+                var form = new FormColor(Colors);
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    var allcolor = form.SelectedColros.FirstOrDefault(w => w.Text == "颜色齐全");
+                    string colorname = "";
+                    if (allcolor != null)
+                        colorname = "颜色齐全";
+                    else
+                    {
+                        colorname = string.Join(",", form.SelectedColros.Select(s => s.Text));
+                    }
+                    _promotioncars.Radlst = form.SelectedColros.Select(s => s.Value).ToList();
+
+                    ((Car)carBindingSource.Current).ColorName = colorname;
+                    dgvCar.Refresh();
+                }
+            }
         }
 
         private void llbColor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

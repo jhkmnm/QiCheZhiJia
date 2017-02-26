@@ -29,10 +29,6 @@
         private void InitializeComponent()
         {
             this.gpbCarList = new System.Windows.Forms.GroupBox();
-            this.rbtES = new System.Windows.Forms.RadioButton();
-            this.rbtGS = new System.Windows.Forms.RadioButton();
-            this.rbtLX = new System.Windows.Forms.RadioButton();
-            this.rbtCT = new System.Windows.Forms.RadioButton();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tpb_TP = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
@@ -54,6 +50,7 @@
             this.ddlPromotionType = new System.Windows.Forms.ComboBox();
             this.txtMoney = new System.Windows.Forms.TextBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.button1 = new System.Windows.Forms.Button();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.label35 = new System.Windows.Forms.Label();
@@ -107,29 +104,6 @@
             this.rbtSource1 = new System.Windows.Forms.RadioButton();
             this.dtpPromotionB = new System.Windows.Forms.DateTimePicker();
             this.label30 = new System.Windows.Forms.Label();
-            this.tpb_NC = new System.Windows.Forms.TabPage();
-            this.tpb_NW = new System.Windows.Forms.TabPage();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.label27 = new System.Windows.Forms.Label();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.ckSeriesIdGX = new System.Windows.Forms.CheckBox();
-            this.ckSeriesIdES = new System.Windows.Forms.CheckBox();
-            this.ckSeriesIdGS = new System.Windows.Forms.CheckBox();
-            this.ckSeriesIdIS = new System.Windows.Forms.CheckBox();
-            this.ckSeriesIdLS = new System.Windows.Forms.CheckBox();
-            this.ckSeriesIdLX = new System.Windows.Forms.CheckBox();
-            this.ckSeriesIdRX = new System.Windows.Forms.CheckBox();
-            this.ckSeriesIdRC = new System.Windows.Forms.CheckBox();
-            this.ckSeriesIdNX = new System.Windows.Forms.CheckBox();
-            this.ckSeriesIdCT = new System.Windows.Forms.CheckBox();
-            this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.equipClass7 = new System.Windows.Forms.RadioButton();
-            this.equipClass5 = new System.Windows.Forms.RadioButton();
-            this.equipClass4 = new System.Windows.Forms.RadioButton();
-            this.equipClass3 = new System.Windows.Forms.RadioButton();
-            this.equipClass2 = new System.Windows.Forms.RadioButton();
-            this.equipClass1 = new System.Windows.Forms.RadioButton();
-            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.tabControl1.SuspendLayout();
             this.tpb_TP.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -139,13 +113,12 @@
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.tpb_NW.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // gpbCarList
             // 
+            this.gpbCarList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gpbCarList.Location = new System.Drawing.Point(10, 61);
             this.gpbCarList.Name = "gpbCarList";
             this.gpbCarList.Size = new System.Drawing.Size(732, 72);
@@ -153,93 +126,42 @@
             this.gpbCarList.TabStop = false;
             this.gpbCarList.Text = "车型";
             // 
-            // rbtES
-            // 
-            this.rbtES.AutoSize = true;
-            this.rbtES.Location = new System.Drawing.Point(861, 17);
-            this.rbtES.Name = "rbtES";
-            this.rbtES.Size = new System.Drawing.Size(101, 16);
-            this.rbtES.TabIndex = 13;
-            this.rbtES.TabStop = true;
-            this.rbtES.Tag = "403;根据行情，全车系当前优惠不能大于4.19 万元";
-            this.rbtES.Text = "雷克萨斯ES(2)";
-            this.rbtES.UseVisualStyleBackColor = true;
-            // 
-            // rbtGS
-            // 
-            this.rbtGS.AutoSize = true;
-            this.rbtGS.Location = new System.Drawing.Point(973, 17);
-            this.rbtGS.Name = "rbtGS";
-            this.rbtGS.Size = new System.Drawing.Size(101, 16);
-            this.rbtGS.TabIndex = 12;
-            this.rbtGS.TabStop = true;
-            this.rbtGS.Tag = "261;根据行情，全车系当前优惠不能大于6.52 万元";
-            this.rbtGS.Text = "雷克萨斯GS(2)";
-            this.rbtGS.UseVisualStyleBackColor = true;
-            // 
-            // rbtLX
-            // 
-            this.rbtLX.AutoSize = true;
-            this.rbtLX.Location = new System.Drawing.Point(748, 39);
-            this.rbtLX.Name = "rbtLX";
-            this.rbtLX.Size = new System.Drawing.Size(101, 16);
-            this.rbtLX.TabIndex = 9;
-            this.rbtLX.TabStop = true;
-            this.rbtLX.Tag = "352;根据行情，全车系当前优惠不能大于0.00 万元";
-            this.rbtLX.Text = "雷克萨斯LX(2)";
-            this.rbtLX.UseVisualStyleBackColor = true;
-            // 
-            // rbtCT
-            // 
-            this.rbtCT.AutoSize = true;
-            this.rbtCT.Location = new System.Drawing.Point(748, 17);
-            this.rbtCT.Name = "rbtCT";
-            this.rbtCT.Size = new System.Drawing.Size(101, 16);
-            this.rbtCT.TabIndex = 5;
-            this.rbtCT.TabStop = true;
-            this.rbtCT.Tag = "2063;根据行情，全车系当前优惠不能大于6.00 万元";
-            this.rbtCT.Text = "雷克萨斯CT(2)";
-            this.rbtCT.UseVisualStyleBackColor = true;
-            // 
             // tabControl1
             // 
             this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tpb_TP);
-            this.tabControl1.Controls.Add(this.tpb_NC);
-            this.tabControl1.Controls.Add(this.tpb_NW);
             this.tabControl1.Location = new System.Drawing.Point(3, 2);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1175, 931);
+            this.tabControl1.Size = new System.Drawing.Size(758, 931);
             this.tabControl1.TabIndex = 5;
             // 
             // tpb_TP
             // 
             this.tpb_TP.Controls.Add(this.tabControl2);
-            this.tpb_TP.Controls.Add(this.rbtES);
             this.tpb_TP.Controls.Add(this.groupBox3);
             this.tpb_TP.Controls.Add(this.label29);
             this.tpb_TP.Controls.Add(this.label28);
             this.tpb_TP.Controls.Add(this.gpbCarList);
-            this.tpb_TP.Controls.Add(this.rbtGS);
             this.tpb_TP.Controls.Add(this.dtpPromotionA);
-            this.tpb_TP.Controls.Add(this.rbtLX);
             this.tpb_TP.Controls.Add(this.groupBox2);
             this.tpb_TP.Controls.Add(this.dtpPromotionB);
-            this.tpb_TP.Controls.Add(this.rbtCT);
             this.tpb_TP.Controls.Add(this.label30);
             this.tpb_TP.Location = new System.Drawing.Point(4, 22);
             this.tpb_TP.Name = "tpb_TP";
             this.tpb_TP.Padding = new System.Windows.Forms.Padding(3);
-            this.tpb_TP.Size = new System.Drawing.Size(1167, 905);
+            this.tpb_TP.Size = new System.Drawing.Size(750, 905);
             this.tpb_TP.TabIndex = 0;
             this.tpb_TP.Text = "优惠促销";
             this.tpb_TP.UseVisualStyleBackColor = true;
             // 
             // tabControl2
             // 
+            this.tabControl2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl2.Controls.Add(this.tabPage1);
             this.tabControl2.Controls.Add(this.tabPage2);
             this.tabControl2.Location = new System.Drawing.Point(10, 162);
@@ -298,6 +220,7 @@
             // carA
             // 
             this.carA.CarDataSource = null;
+            this.carA.Colors = null;
             this.carA.Location = new System.Drawing.Point(87, 6);
             this.carA.Name = "carA";
             this.carA.Size = new System.Drawing.Size(603, 353);
@@ -466,6 +389,17 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "编辑明细";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // linkLabel3
+            // 
+            this.linkLabel3.AutoSize = true;
+            this.linkLabel3.Location = new System.Drawing.Point(434, 340);
+            this.linkLabel3.Name = "linkLabel3";
+            this.linkLabel3.Size = new System.Drawing.Size(89, 12);
+            this.linkLabel3.TabIndex = 151;
+            this.linkLabel3.TabStop = true;
+            this.linkLabel3.Text = "生成标题和导语";
+            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
             // 
             // button1
             // 
@@ -772,6 +706,7 @@
             // carControl1
             // 
             this.carControl1.CarDataSource = null;
+            this.carControl1.Colors = null;
             this.carControl1.Location = new System.Drawing.Point(98, 13);
             this.carControl1.Name = "carControl1";
             this.carControl1.Size = new System.Drawing.Size(603, 312);
@@ -794,6 +729,7 @@
             this.groupBox3.Size = new System.Drawing.Size(402, 165);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
+            this.groupBox3.Visible = false;
             // 
             // label13
             // 
@@ -922,6 +858,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.Controls.Add(this.groupBox4);
             this.groupBox2.Controls.Add(this.rbtSource2);
             this.groupBox2.Controls.Add(this.rbtSource3);
@@ -957,6 +895,7 @@
     "source=100";
             this.radioButton5.Text = "置换促销";
             this.radioButton5.UseVisualStyleBackColor = true;
+            this.radioButton5.CheckedChanged += new System.EventHandler(this.Source_CheckedChanged);
             // 
             // radioButton4
             // 
@@ -970,6 +909,7 @@
     "00";
             this.radioButton4.Text = "降价促销";
             this.radioButton4.UseVisualStyleBackColor = true;
+            this.radioButton4.CheckedChanged += new System.EventHandler(this.Source_CheckedChanged);
             // 
             // rbtSource2
             // 
@@ -981,6 +921,7 @@
             this.rbtSource2.Tag = "http://das.app.easypass.cn/InforManage/News/ReplaceTemplateNews2.aspx?source=2";
             this.rbtSource2.Text = "置换促销";
             this.rbtSource2.UseVisualStyleBackColor = true;
+            this.rbtSource2.CheckedChanged += new System.EventHandler(this.Source_CheckedChanged);
             // 
             // rbtSource3
             // 
@@ -992,6 +933,7 @@
             this.rbtSource3.Tag = "http://das.app.easypass.cn/InforManage/News/MarkUpTemplateNews.aspx?source=3";
             this.rbtSource3.Text = "加价促销";
             this.rbtSource3.UseVisualStyleBackColor = true;
+            this.rbtSource3.CheckedChanged += new System.EventHandler(this.Source_CheckedChanged);
             // 
             // rbtSource0
             // 
@@ -1016,6 +958,7 @@
             this.rbtSource1.Tag = "http://das.app.easypass.cn/InforManage/News/TemplateNews.aspx?source=1";
             this.rbtSource1.Text = "降价促销";
             this.rbtSource1.UseVisualStyleBackColor = true;
+            this.rbtSource1.CheckedChanged += new System.EventHandler(this.Source_CheckedChanged);
             // 
             // dtpPromotionB
             // 
@@ -1036,282 +979,11 @@
             this.label30.TabIndex = 60;
             this.label30.Text = "到";
             // 
-            // tpb_NC
-            // 
-            this.tpb_NC.Location = new System.Drawing.Point(4, 22);
-            this.tpb_NC.Name = "tpb_NC";
-            this.tpb_NC.Padding = new System.Windows.Forms.Padding(3);
-            this.tpb_NC.Size = new System.Drawing.Size(1167, 918);
-            this.tpb_NC.TabIndex = 1;
-            this.tpb_NC.Text = "新车信息";
-            this.tpb_NC.UseVisualStyleBackColor = true;
-            // 
-            // tpb_NW
-            // 
-            this.tpb_NW.Controls.Add(this.checkBox1);
-            this.tpb_NW.Controls.Add(this.label27);
-            this.tpb_NW.Controls.Add(this.groupBox7);
-            this.tpb_NW.Controls.Add(this.groupBox6);
-            this.tpb_NW.Location = new System.Drawing.Point(4, 22);
-            this.tpb_NW.Name = "tpb_NW";
-            this.tpb_NW.Padding = new System.Windows.Forms.Padding(3);
-            this.tpb_NW.Size = new System.Drawing.Size(1167, 918);
-            this.tpb_NW.TabIndex = 2;
-            this.tpb_NW.Text = "新闻资讯";
-            this.tpb_NW.UseVisualStyleBackColor = true;
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(81, 203);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(72, 16);
-            this.checkBox1.TabIndex = 59;
-            this.checkBox1.Tag = "";
-            this.checkBox1.Text = "企业名称";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
-            // label27
-            // 
-            this.label27.AutoSize = true;
-            this.label27.Location = new System.Drawing.Point(10, 205);
-            this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(65, 12);
-            this.label27.TabIndex = 60;
-            this.label27.Text = "关联店铺：";
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.ckSeriesIdGX);
-            this.groupBox7.Controls.Add(this.ckSeriesIdES);
-            this.groupBox7.Controls.Add(this.ckSeriesIdGS);
-            this.groupBox7.Controls.Add(this.ckSeriesIdIS);
-            this.groupBox7.Controls.Add(this.ckSeriesIdLS);
-            this.groupBox7.Controls.Add(this.ckSeriesIdLX);
-            this.groupBox7.Controls.Add(this.ckSeriesIdRX);
-            this.groupBox7.Controls.Add(this.ckSeriesIdRC);
-            this.groupBox7.Controls.Add(this.ckSeriesIdNX);
-            this.groupBox7.Controls.Add(this.ckSeriesIdCT);
-            this.groupBox7.Location = new System.Drawing.Point(6, 99);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(706, 87);
-            this.groupBox7.TabIndex = 7;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "车系";
-            // 
-            // ckSeriesIdGX
-            // 
-            this.ckSeriesIdGX.AutoSize = true;
-            this.ckSeriesIdGX.Location = new System.Drawing.Point(358, 22);
-            this.ckSeriesIdGX.Name = "ckSeriesIdGX";
-            this.ckSeriesIdGX.Size = new System.Drawing.Size(84, 16);
-            this.ckSeriesIdGX.TabIndex = 14;
-            this.ckSeriesIdGX.Tag = "112;根据行情，全车系当前优惠不能大于0.00 万元";
-            this.ckSeriesIdGX.Text = "雷克萨斯GX";
-            this.ckSeriesIdGX.UseVisualStyleBackColor = true;
-            // 
-            // ckSeriesIdES
-            // 
-            this.ckSeriesIdES.AutoSize = true;
-            this.ckSeriesIdES.Location = new System.Drawing.Point(119, 22);
-            this.ckSeriesIdES.Name = "ckSeriesIdES";
-            this.ckSeriesIdES.Size = new System.Drawing.Size(84, 16);
-            this.ckSeriesIdES.TabIndex = 13;
-            this.ckSeriesIdES.Tag = "403;根据行情，全车系当前优惠不能大于4.19 万元";
-            this.ckSeriesIdES.Text = "雷克萨斯ES";
-            this.ckSeriesIdES.UseVisualStyleBackColor = true;
-            // 
-            // ckSeriesIdGS
-            // 
-            this.ckSeriesIdGS.AutoSize = true;
-            this.ckSeriesIdGS.Location = new System.Drawing.Point(231, 22);
-            this.ckSeriesIdGS.Name = "ckSeriesIdGS";
-            this.ckSeriesIdGS.Size = new System.Drawing.Size(84, 16);
-            this.ckSeriesIdGS.TabIndex = 12;
-            this.ckSeriesIdGS.Tag = "261;根据行情，全车系当前优惠不能大于6.52 万元";
-            this.ckSeriesIdGS.Text = "雷克萨斯GS";
-            this.ckSeriesIdGS.UseVisualStyleBackColor = true;
-            // 
-            // ckSeriesIdIS
-            // 
-            this.ckSeriesIdIS.AutoSize = true;
-            this.ckSeriesIdIS.Location = new System.Drawing.Point(465, 22);
-            this.ckSeriesIdIS.Name = "ckSeriesIdIS";
-            this.ckSeriesIdIS.Size = new System.Drawing.Size(84, 16);
-            this.ckSeriesIdIS.TabIndex = 11;
-            this.ckSeriesIdIS.Tag = "201;根据行情，全车系当前优惠不能大于0.00 万元";
-            this.ckSeriesIdIS.Text = "雷克萨斯IS";
-            this.ckSeriesIdIS.UseVisualStyleBackColor = true;
-            // 
-            // ckSeriesIdLS
-            // 
-            this.ckSeriesIdLS.AutoSize = true;
-            this.ckSeriesIdLS.Location = new System.Drawing.Point(6, 51);
-            this.ckSeriesIdLS.Name = "ckSeriesIdLS";
-            this.ckSeriesIdLS.Size = new System.Drawing.Size(84, 16);
-            this.ckSeriesIdLS.TabIndex = 10;
-            this.ckSeriesIdLS.Tag = "341;根据行情，全车系当前优惠不能大于0.00 万元";
-            this.ckSeriesIdLS.Text = "雷克萨斯LS";
-            this.ckSeriesIdLS.UseVisualStyleBackColor = true;
-            // 
-            // ckSeriesIdLX
-            // 
-            this.ckSeriesIdLX.AutoSize = true;
-            this.ckSeriesIdLX.Location = new System.Drawing.Point(119, 51);
-            this.ckSeriesIdLX.Name = "ckSeriesIdLX";
-            this.ckSeriesIdLX.Size = new System.Drawing.Size(84, 16);
-            this.ckSeriesIdLX.TabIndex = 9;
-            this.ckSeriesIdLX.Tag = "352;根据行情，全车系当前优惠不能大于0.00 万元";
-            this.ckSeriesIdLX.Text = "雷克萨斯LX";
-            this.ckSeriesIdLX.UseVisualStyleBackColor = true;
-            // 
-            // ckSeriesIdRX
-            // 
-            this.ckSeriesIdRX.AutoSize = true;
-            this.ckSeriesIdRX.Location = new System.Drawing.Point(465, 51);
-            this.ckSeriesIdRX.Name = "ckSeriesIdRX";
-            this.ckSeriesIdRX.Size = new System.Drawing.Size(84, 16);
-            this.ckSeriesIdRX.TabIndex = 8;
-            this.ckSeriesIdRX.Tag = "3934;根据行情，全车系当前优惠不能大于0.00 万元";
-            this.ckSeriesIdRX.Text = "雷克萨斯RX";
-            this.ckSeriesIdRX.UseVisualStyleBackColor = true;
-            // 
-            // ckSeriesIdRC
-            // 
-            this.ckSeriesIdRC.AutoSize = true;
-            this.ckSeriesIdRC.Location = new System.Drawing.Point(358, 51);
-            this.ckSeriesIdRC.Name = "ckSeriesIdRC";
-            this.ckSeriesIdRC.Size = new System.Drawing.Size(84, 16);
-            this.ckSeriesIdRC.TabIndex = 7;
-            this.ckSeriesIdRC.Tag = "3758;根据行情，全车系当前优惠不能大于0.00 万元";
-            this.ckSeriesIdRC.Text = "雷克萨斯RC";
-            this.ckSeriesIdRC.UseVisualStyleBackColor = true;
-            // 
-            // ckSeriesIdNX
-            // 
-            this.ckSeriesIdNX.AutoSize = true;
-            this.ckSeriesIdNX.Location = new System.Drawing.Point(231, 51);
-            this.ckSeriesIdNX.Name = "ckSeriesIdNX";
-            this.ckSeriesIdNX.Size = new System.Drawing.Size(84, 16);
-            this.ckSeriesIdNX.TabIndex = 6;
-            this.ckSeriesIdNX.Tag = "3442;根据行情，全车系当前优惠不能大于0.50 万元";
-            this.ckSeriesIdNX.Text = "雷克萨斯NX";
-            this.ckSeriesIdNX.UseVisualStyleBackColor = true;
-            // 
-            // ckSeriesIdCT
-            // 
-            this.ckSeriesIdCT.AutoSize = true;
-            this.ckSeriesIdCT.Location = new System.Drawing.Point(6, 22);
-            this.ckSeriesIdCT.Name = "ckSeriesIdCT";
-            this.ckSeriesIdCT.Size = new System.Drawing.Size(84, 16);
-            this.ckSeriesIdCT.TabIndex = 5;
-            this.ckSeriesIdCT.Tag = "2063;根据行情，全车系当前优惠不能大于6.00 万元";
-            this.ckSeriesIdCT.Text = "雷克萨斯CT";
-            this.ckSeriesIdCT.UseVisualStyleBackColor = true;
-            // 
-            // groupBox6
-            // 
-            this.groupBox6.Controls.Add(this.equipClass7);
-            this.groupBox6.Controls.Add(this.equipClass5);
-            this.groupBox6.Controls.Add(this.equipClass4);
-            this.groupBox6.Controls.Add(this.equipClass3);
-            this.groupBox6.Controls.Add(this.equipClass2);
-            this.groupBox6.Controls.Add(this.equipClass1);
-            this.groupBox6.Location = new System.Drawing.Point(6, 6);
-            this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(553, 87);
-            this.groupBox6.TabIndex = 6;
-            this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "车系";
-            // 
-            // equipClass7
-            // 
-            this.equipClass7.AutoSize = true;
-            this.equipClass7.Location = new System.Drawing.Point(247, 53);
-            this.equipClass7.Name = "equipClass7";
-            this.equipClass7.Size = new System.Drawing.Size(71, 16);
-            this.equipClass7.TabIndex = 5;
-            this.equipClass7.TabStop = true;
-            this.equipClass7.Tag = "7";
-            this.equipClass7.Text = "店内活动";
-            this.equipClass7.UseVisualStyleBackColor = true;
-            // 
-            // equipClass5
-            // 
-            this.equipClass5.AutoSize = true;
-            this.equipClass5.Location = new System.Drawing.Point(458, 20);
-            this.equipClass5.Name = "equipClass5";
-            this.equipClass5.Size = new System.Drawing.Size(71, 16);
-            this.equipClass5.TabIndex = 4;
-            this.equipClass5.TabStop = true;
-            this.equipClass5.Tag = "5";
-            this.equipClass5.Text = "招聘公告";
-            this.equipClass5.UseVisualStyleBackColor = true;
-            // 
-            // equipClass4
-            // 
-            this.equipClass4.AutoSize = true;
-            this.equipClass4.Location = new System.Drawing.Point(361, 20);
-            this.equipClass4.Name = "equipClass4";
-            this.equipClass4.Size = new System.Drawing.Size(71, 16);
-            this.equipClass4.TabIndex = 3;
-            this.equipClass4.TabStop = true;
-            this.equipClass4.Tag = "4";
-            this.equipClass4.Text = "维修保养";
-            this.equipClass4.UseVisualStyleBackColor = true;
-            // 
-            // equipClass3
-            // 
-            this.equipClass3.AutoSize = true;
-            this.equipClass3.Location = new System.Drawing.Point(260, 20);
-            this.equipClass3.Name = "equipClass3";
-            this.equipClass3.Size = new System.Drawing.Size(71, 16);
-            this.equipClass3.TabIndex = 2;
-            this.equipClass3.TabStop = true;
-            this.equipClass3.Tag = "3";
-            this.equipClass3.Text = "新车信息";
-            this.equipClass3.UseVisualStyleBackColor = true;
-            // 
-            // equipClass2
-            // 
-            this.equipClass2.AutoSize = true;
-            this.equipClass2.Location = new System.Drawing.Point(144, 20);
-            this.equipClass2.Name = "equipClass2";
-            this.equipClass2.Size = new System.Drawing.Size(71, 16);
-            this.equipClass2.TabIndex = 1;
-            this.equipClass2.TabStop = true;
-            this.equipClass2.Tag = "2";
-            this.equipClass2.Text = "优惠促销";
-            this.equipClass2.UseVisualStyleBackColor = true;
-            // 
-            // equipClass1
-            // 
-            this.equipClass1.AutoSize = true;
-            this.equipClass1.Location = new System.Drawing.Point(31, 20);
-            this.equipClass1.Name = "equipClass1";
-            this.equipClass1.Size = new System.Drawing.Size(71, 16);
-            this.equipClass1.TabIndex = 0;
-            this.equipClass1.TabStop = true;
-            this.equipClass1.Tag = "1";
-            this.equipClass1.Text = "新闻资讯";
-            this.equipClass1.UseVisualStyleBackColor = true;
-            // 
-            // linkLabel3
-            // 
-            this.linkLabel3.AutoSize = true;
-            this.linkLabel3.Location = new System.Drawing.Point(434, 340);
-            this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(89, 12);
-            this.linkLabel3.TabIndex = 151;
-            this.linkLabel3.TabStop = true;
-            this.linkLabel3.Text = "生成标题和导语";
-            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel3_LinkClicked);
-            // 
             // Form_YC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1183, 935);
+            this.ClientSize = new System.Drawing.Size(766, 935);
             this.Controls.Add(this.tabControl1);
             this.Name = "Form_YC";
             this.Text = "Form_YC";
@@ -1331,12 +1003,6 @@
             this.groupBox2.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.tpb_NW.ResumeLayout(false);
-            this.tpb_NW.PerformLayout();
-            this.groupBox7.ResumeLayout(false);
-            this.groupBox7.PerformLayout();
-            this.groupBox6.ResumeLayout(false);
-            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1344,34 +1010,8 @@
         #endregion
 
         private System.Windows.Forms.GroupBox gpbCarList;
-        private System.Windows.Forms.RadioButton rbtES;
-        private System.Windows.Forms.RadioButton rbtGS;
-        private System.Windows.Forms.RadioButton rbtLX;
-        private System.Windows.Forms.RadioButton rbtCT;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tpb_TP;
-        private System.Windows.Forms.TabPage tpb_NC;
-        private System.Windows.Forms.TabPage tpb_NW;
-        private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.CheckBox ckSeriesIdGX;
-        private System.Windows.Forms.CheckBox ckSeriesIdES;
-        private System.Windows.Forms.CheckBox ckSeriesIdGS;
-        private System.Windows.Forms.CheckBox ckSeriesIdIS;
-        private System.Windows.Forms.CheckBox ckSeriesIdLS;
-        private System.Windows.Forms.CheckBox ckSeriesIdLX;
-        private System.Windows.Forms.CheckBox ckSeriesIdRX;
-        private System.Windows.Forms.CheckBox ckSeriesIdRC;
-        private System.Windows.Forms.CheckBox ckSeriesIdNX;
-        private System.Windows.Forms.CheckBox ckSeriesIdCT;
-        private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.RadioButton equipClass7;
-        private System.Windows.Forms.RadioButton equipClass5;
-        private System.Windows.Forms.RadioButton equipClass4;
-        private System.Windows.Forms.RadioButton equipClass3;
-        private System.Windows.Forms.RadioButton equipClass2;
-        private System.Windows.Forms.RadioButton equipClass1;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.Label label27;
         private System.Windows.Forms.Label label29;
         private System.Windows.Forms.Label label28;
         private System.Windows.Forms.GroupBox groupBox2;

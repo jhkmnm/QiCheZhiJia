@@ -99,12 +99,6 @@
     <Compile Include="FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormMain.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormMain.Designer.cs">
-      <DependentUpon>FormMain.cs</DependentUpon>
-    </Compile>
     <Compile Include="FormQCYP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -117,7 +111,7 @@
     <Compile Include="Form_YC.Designer.cs">
       <DependentUpon>Form_YC.cs</DependentUpon>
     </Compile>
-    <Compile Include="Html.cs" />
+    <Compile Include="IniFile.cs" />
     <Compile Include="ImgControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -186,9 +180,6 @@
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormMain.resx">
-      <DependentUpon>FormMain.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormQCYP.resx">
       <DependentUpon>FormQCYP.cs</DependentUpon>
     </EmbeddedResource>
@@ -230,6 +221,7 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Car.datasource" />
     <None Include="Properties\DataSources\Merchandise.datasource" />
+    <None Include="Properties\DataSources\Model.News.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -47,7 +47,6 @@ namespace Aide
         string news_draft = "http://ics.autohome.com.cn/Price/News/GetDraft?random=0.47937742094599356&take=200";
         #endregion
 
-        Html html = new Html();
         private static string StrJS = "";
         string token = "";
         string redisKey = "";

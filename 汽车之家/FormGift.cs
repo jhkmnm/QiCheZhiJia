@@ -17,6 +17,7 @@ namespace Aide
 
         public FormGift(GiftInfo info, List<Merchandise> merchandise)
         {
+            this.StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
             this.info = info;
             this.merchandise = merchandise;
@@ -35,16 +36,16 @@ namespace Aide
                 chkgift2.Checked = info.YKIsCheck;
                 txtOilCar.Text = info.YKValue;
                 chkgift3.Checked = info.SYXIsCheck;
-                ddlBusinessTax.SelectedValue = string.IsNullOrWhiteSpace(info.SYXValue) ? "" : info.SYXValue;
+                ddlBusinessTax.SelectedValue = string.IsNullOrWhiteSpace(info.SYXValue) ? "1" : info.SYXValue;
                 chkgift4.Checked = info.JQXIsCheck;
-                ddlTrafficTax.SelectedValue = string.IsNullOrWhiteSpace(info.JQXValue) ? "" : info.JQXValue;
+                ddlTrafficTax.SelectedValue = string.IsNullOrWhiteSpace(info.JQXValue) ? "1" : info.JQXValue;
                 chkgift5.Checked = info.GZSIsCheck;
-                if (info.GZSValue == "1")
+                if (info.GZSValue == "1" || info.GZSValue == null)
                     rbtnPurchaseTax1.Checked = true;
                 else
                     rbtnPurchaseTax2.Checked = true;
                 chkgift6.Checked = info.BaoYangIsCheck;
-                if (info.BaoYangType == "1")
+                if (info.BaoYangType == "1" || info.BaoYangType == null)
                 {
                     rbtnMaintenanceInfo1.Checked = true;
                     txtMMoney.Text = string.IsNullOrWhiteSpace(info.BaoYangValue) ? "" : info.BaoYangValue;
@@ -87,10 +88,12 @@ namespace Aide
             ddlBusinessTax.DataSource = data;
             ddlBusinessTax.DisplayMember = "Text";
             ddlBusinessTax.ValueMember = "Value";
+            ddlBusinessTax.SelectedIndex = 0;
 
             ddlTrafficTax.DataSource = data2;
             ddlTrafficTax.DisplayMember = "Text";
             ddlTrafficTax.ValueMember = "Value";
+            ddlTrafficTax.SelectedIndex = 0;
         }
 
         private void txt_KeyPress(object sender, KeyPressEventArgs e)

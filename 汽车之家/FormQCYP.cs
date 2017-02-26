@@ -25,6 +25,7 @@ namespace Aide
 
         public FormQCYP(List<Merchandise> Source)
         {
+            StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
             this.Source = Source;
 

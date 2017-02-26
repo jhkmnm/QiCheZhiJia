@@ -28,6 +28,7 @@ namespace Aide
 
         public PhotoSelectNew(YiChe yc, string csid)
         {
+            StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
             this.yc = yc;
             this.csid = csid;

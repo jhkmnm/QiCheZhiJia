@@ -294,6 +294,11 @@ namespace Aide
                             lblQC_QC.Text = "非常抱歉，今天报价次数已使用完";
                             jct_QC_Query.Enabled = false;
                         }
+                        else
+                        {
+                            lblYC_YC.Text = "非常抱歉，今天报价次数已使用完";
+                            jct_YC_Query.Enabled = false;
+                        }
                     }
                     else
                     {
@@ -315,6 +320,11 @@ namespace Aide
                         {
                             lbl_NS_QC.Text = "非常抱歉，今天发布资讯次数已使用完";
                             jct_QC_News.Enabled = false;
+                        }
+                        else
+                        {
+                            lbl_NS_YC.Text = "非常抱歉，今天发布资讯次数已使用完";
+                            jct_YC_News.Enabled = false;
                         }
                     }
                     else
@@ -611,7 +621,7 @@ namespace Aide
             {
                 job_yc_news = dal.GetJob("易车网新闻");
                 jct_YC_News.SetJobEvent += jct_YC_News_SetJobEvent;
-                jct_YC_News.SetJob(job_yc_news);                
+                jct_YC_News.SetJob(job_yc_news);
             }
         }
 
@@ -737,7 +747,7 @@ namespace Aide
                 Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_qc.Id, JobType = "资讯", JobTime = DateTime.Now });
                 Tool.userInfo_qc.NewsNum--;
             }
-        }
+        }       
 
         private void tm_qc_news_Tick(object sender, EventArgs e)
         {
@@ -749,6 +759,7 @@ namespace Aide
         }
         #endregion
 
+        #region 易车
         void jct_YC_News_SetJobEvent(Job job)
         {
             job_yc_news = job;
@@ -756,12 +767,57 @@ namespace Aide
             dal.AddJob(job_yc_news);
             tm_yc_news.Enabled = true;
         }
-        #endregion
+
+        private void SaveNews_YC()
+        {
+            //判断列表是否有数据，无数据提示
+            //判断app cookie是否存在，不存在先刷cookie
+            //按列表将新闻发布，显示发布结果
+        }
+
+        private void tm_yc_news_Tick(object sender, EventArgs e)
+        {
+            tm_yc_news.Enabled = false;
+            ExecJob(job_yc_news, SaveNews_YC);
+            tm_yc_news.Interval = job_yc_news.Space.Value;
+            LoadUser(Tool.userInfo_yc);
+            tm_yc_news.Enabled = job_yc_news.JobType != 1 && jct_YC_News.Enabled;
+        }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            new Form_YC(yiche).Show();
+            var form = new Form_YC(yiche);
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                newsBindingSource.DataSource = dal.GetNewsList();
+                dataGridView1.Refresh();
+            }
         }
+
+        private void btnLoadNews_Click(object sender, EventArgs e)
+        {
+            newsBindingSource.DataSource = dal.GetNewsList();
+            dataGridView1.Refresh();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex < 0 || e.RowIndex < 0)
+                return;
+
+            if (e.ColumnIndex == titleDataGridViewTextBoxColumn.Index)
+            {
+
+            }
+            else
+            {
+                dal.DelNews(((News)newsBindingSource.Current).ID);
+                newsBindingSource.DataSource = dal.GetNewsList();
+                dataGridView1.Refresh();
+            }
+        }
+        #endregion
+        #endregion
     }
 
     public class TextValue

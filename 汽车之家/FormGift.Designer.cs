@@ -225,6 +225,7 @@
             // 
             // ddlBusinessTax
             // 
+            this.ddlBusinessTax.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddlBusinessTax.FormattingEnabled = true;
             this.ddlBusinessTax.Location = new System.Drawing.Point(159, 256);
             this.ddlBusinessTax.Name = "ddlBusinessTax";
@@ -233,6 +234,7 @@
             // 
             // ddlTrafficTax
             // 
+            this.ddlTrafficTax.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddlTrafficTax.FormattingEnabled = true;
             this.ddlTrafficTax.Location = new System.Drawing.Point(159, 285);
             this.ddlTrafficTax.Name = "ddlTrafficTax";

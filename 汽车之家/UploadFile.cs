@@ -31,6 +31,7 @@ namespace Aide
 
         public UploadFile(YiChe yc, string ImageUpload)
         {
+            StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
             this.yc = yc;
             this.ImageUpload = ImageUpload;

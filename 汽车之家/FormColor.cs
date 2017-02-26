@@ -16,6 +16,7 @@ namespace Aide
         
         public FormColor(List<TextValue> color)
         {
+            StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
             Colors = color;
             LoadCoror();
