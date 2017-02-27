@@ -660,6 +660,30 @@ namespace Aide
 
             return htmlDoc;
         }
+
+        public string PostNews(int newsID)
+        {
+            var news = dal.GetNews(newsID);
+            var postdata = OperateIniFile.ReadIniData("PostData", news.ID.ToString());
+
+            if (string.IsNullOrEmpty(app_CheYiTong_Cookie))
+            {
+                app_CheYiTong_Cookie = OsLogin(app_CheYiTong);
+            }
+
+            var result = Post_CheYiTong(news.SendContent, postdata);
+            if (result.DocumentNode.OuterHtml.Contains("NewsSuccess.aspx"))
+            {
+                return "发布成功";
+            }
+            else
+            {
+                Regex reg = new Regex(@"(?is)(?<=\()[^\)]+(?=\))");
+                var match = reg.Match(result.DocumentNode.OuterHtml);
+                //_M.Alert('非大礼包新闻中不能有单独促销价格为0的车款！')
+                return match.Value;
+            }
+        }
         #endregion
     }
 }

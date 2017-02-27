@@ -140,9 +140,9 @@ public class DAL
     #endregion
 
     #region News
-    public int AddNews(string title, string content)
+    public int AddNews(string title, string content, string url)
     {
-        return DB.Context.Insert(new News { Title = title, Content = content});
+        return DB.Context.Insert(new News { Title = title, Content = content, SendContent = url});
     }
 
     public List<News> GetNewsList()

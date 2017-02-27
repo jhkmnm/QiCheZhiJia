@@ -55,10 +55,12 @@
             this.lbxSendOrder = new System.Windows.Forms.ListBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.lblQC_QC = new System.Windows.Forms.Label();
+            this.jct_QC_Query = new Aide.JobControl();
             this.lbxQuer = new System.Windows.Forms.ListBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.lbl_NS_QC = new System.Windows.Forms.Label();
             this.lblNews = new System.Windows.Forms.ListBox();
+            this.jct_QC_News = new Aide.JobControl();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
@@ -73,10 +75,17 @@
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.lbxQuer_YC = new System.Windows.Forms.ListBox();
             this.lblYC_YC = new System.Windows.Forms.Label();
+            this.jct_YC_Query = new Aide.JobControl();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.lbl_NS_YC = new System.Windows.Forms.Label();
             this.btnLoadNews = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.contentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.newsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.button2 = new System.Windows.Forms.Button();
+            this.jct_YC_News = new Aide.JobControl();
             this.listBox3 = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lbl_QC_NewsNum = new System.Windows.Forms.Label();
@@ -101,15 +110,6 @@
             this.tm_qcjob_news = new System.Windows.Forms.Timer(this.components);
             this.tm_yc_news = new System.Windows.Forms.Timer(this.components);
             this.tm_qc_news = new System.Windows.Forms.Timer(this.components);
-            this.jct_QC_Query = new Aide.JobControl();
-            this.jct_QC_News = new Aide.JobControl();
-            this.jct_YC_Query = new Aide.JobControl();
-            this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.contentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.newsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.jct_YC_News = new Aide.JobControl();
-            this.lbl_NS_YC = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pbCode)).BeginInit();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -124,10 +124,10 @@
             this.tabPage7.SuspendLayout();
             this.tabPage8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newsBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.newsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // pbCode
@@ -407,6 +407,13 @@
             this.lblQC_QC.Size = new System.Drawing.Size(0, 12);
             this.lblQC_QC.TabIndex = 22;
             // 
+            // jct_QC_Query
+            // 
+            this.jct_QC_Query.Location = new System.Drawing.Point(3, 3);
+            this.jct_QC_Query.Name = "jct_QC_Query";
+            this.jct_QC_Query.Size = new System.Drawing.Size(399, 215);
+            this.jct_QC_Query.TabIndex = 21;
+            // 
             // lbxQuer
             // 
             this.lbxQuer.FormattingEnabled = true;
@@ -445,6 +452,13 @@
             this.lblNews.Name = "lblNews";
             this.lblNews.Size = new System.Drawing.Size(479, 496);
             this.lblNews.TabIndex = 23;
+            // 
+            // jct_QC_News
+            // 
+            this.jct_QC_News.Location = new System.Drawing.Point(3, 3);
+            this.jct_QC_News.Name = "jct_QC_News";
+            this.jct_QC_News.Size = new System.Drawing.Size(399, 215);
+            this.jct_QC_News.TabIndex = 22;
             // 
             // label1
             // 
@@ -593,6 +607,13 @@
             this.lblYC_YC.Size = new System.Drawing.Size(0, 12);
             this.lblYC_YC.TabIndex = 22;
             // 
+            // jct_YC_Query
+            // 
+            this.jct_YC_Query.Location = new System.Drawing.Point(3, 3);
+            this.jct_YC_Query.Name = "jct_YC_Query";
+            this.jct_YC_Query.Size = new System.Drawing.Size(399, 215);
+            this.jct_YC_Query.TabIndex = 23;
+            // 
             // tabPage8
             // 
             this.tabPage8.Controls.Add(this.lbl_NS_YC);
@@ -607,6 +628,15 @@
             this.tabPage8.TabIndex = 2;
             this.tabPage8.Text = "新闻";
             this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // lbl_NS_YC
+            // 
+            this.lbl_NS_YC.AutoSize = true;
+            this.lbl_NS_YC.ForeColor = System.Drawing.Color.Red;
+            this.lbl_NS_YC.Location = new System.Drawing.Point(47, 232);
+            this.lbl_NS_YC.Name = "lbl_NS_YC";
+            this.lbl_NS_YC.Size = new System.Drawing.Size(0, 12);
+            this.lbl_NS_YC.TabIndex = 28;
             // 
             // btnLoadNews
             // 
@@ -637,6 +667,32 @@
             this.dataGridView1.TabIndex = 26;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
+            // iDDataGridViewTextBoxColumn
+            // 
+            this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
+            this.iDDataGridViewTextBoxColumn.HeaderText = "ID";
+            this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
+            this.iDDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // titleDataGridViewTextBoxColumn
+            // 
+            this.titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
+            this.titleDataGridViewTextBoxColumn.HeaderText = "标题";
+            this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
+            this.titleDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.titleDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.titleDataGridViewTextBoxColumn.Width = 300;
+            // 
+            // contentDataGridViewTextBoxColumn
+            // 
+            this.contentDataGridViewTextBoxColumn.DataPropertyName = "Content";
+            this.contentDataGridViewTextBoxColumn.HeaderText = "操作";
+            this.contentDataGridViewTextBoxColumn.Name = "contentDataGridViewTextBoxColumn";
+            // 
+            // newsBindingSource
+            // 
+            this.newsBindingSource.DataSource = typeof(Model.News);
+            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(557, 11);
@@ -647,9 +703,17 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // jct_YC_News
+            // 
+            this.jct_YC_News.Location = new System.Drawing.Point(3, 3);
+            this.jct_YC_News.Name = "jct_YC_News";
+            this.jct_YC_News.Size = new System.Drawing.Size(399, 215);
+            this.jct_YC_News.TabIndex = 24;
+            // 
             // listBox3
             // 
             this.listBox3.FormattingEnabled = true;
+            this.listBox3.HorizontalScrollbar = true;
             this.listBox3.ItemHeight = 12;
             this.listBox3.Location = new System.Drawing.Point(3, 251);
             this.listBox3.Name = "listBox3";
@@ -882,69 +946,6 @@
             this.tm_qc_news.Interval = 3000;
             this.tm_qc_news.Tick += new System.EventHandler(this.tm_qc_news_Tick);
             // 
-            // jct_QC_Query
-            // 
-            this.jct_QC_Query.Location = new System.Drawing.Point(3, 3);
-            this.jct_QC_Query.Name = "jct_QC_Query";
-            this.jct_QC_Query.Size = new System.Drawing.Size(399, 215);
-            this.jct_QC_Query.TabIndex = 21;
-            // 
-            // jct_QC_News
-            // 
-            this.jct_QC_News.Location = new System.Drawing.Point(3, 3);
-            this.jct_QC_News.Name = "jct_QC_News";
-            this.jct_QC_News.Size = new System.Drawing.Size(399, 215);
-            this.jct_QC_News.TabIndex = 22;
-            // 
-            // jct_YC_Query
-            // 
-            this.jct_YC_Query.Location = new System.Drawing.Point(3, 3);
-            this.jct_YC_Query.Name = "jct_YC_Query";
-            this.jct_YC_Query.Size = new System.Drawing.Size(399, 215);
-            this.jct_YC_Query.TabIndex = 23;
-            // 
-            // iDDataGridViewTextBoxColumn
-            // 
-            this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
-            this.iDDataGridViewTextBoxColumn.HeaderText = "ID";
-            this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
-            this.iDDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // titleDataGridViewTextBoxColumn
-            // 
-            this.titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
-            this.titleDataGridViewTextBoxColumn.HeaderText = "标题";
-            this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
-            this.titleDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.titleDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.titleDataGridViewTextBoxColumn.Width = 300;
-            // 
-            // contentDataGridViewTextBoxColumn
-            // 
-            this.contentDataGridViewTextBoxColumn.DataPropertyName = "Content";
-            this.contentDataGridViewTextBoxColumn.HeaderText = "操作";
-            this.contentDataGridViewTextBoxColumn.Name = "contentDataGridViewTextBoxColumn";
-            // 
-            // newsBindingSource
-            // 
-            this.newsBindingSource.DataSource = typeof(Model.News);
-            // 
-            // jct_YC_News
-            // 
-            this.jct_YC_News.Location = new System.Drawing.Point(3, 3);
-            this.jct_YC_News.Name = "jct_YC_News";
-            this.jct_YC_News.Size = new System.Drawing.Size(399, 215);
-            this.jct_YC_News.TabIndex = 24;
-            // 
-            // lbl_NS_YC
-            // 
-            this.lbl_NS_YC.AutoSize = true;
-            this.lbl_NS_YC.ForeColor = System.Drawing.Color.Red;
-            this.lbl_NS_YC.Location = new System.Drawing.Point(47, 232);
-            this.lbl_NS_YC.Name = "lbl_NS_YC";
-            this.lbl_NS_YC.Size = new System.Drawing.Size(0, 12);
-            this.lbl_NS_YC.TabIndex = 28;
-            // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -979,12 +980,12 @@
             this.tabPage8.ResumeLayout(false);
             this.tabPage8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newsBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.newsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -16,7 +16,7 @@ namespace AideAdmin
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
 
-            //Tool.service.Url = System.Configuration.ConfigurationManager.AppSettings["dataSrvUrl"];
+            Tool.service.Url = System.Configuration.ConfigurationManager.AppSettings["dataSrvUrl"];
         }
     }
 

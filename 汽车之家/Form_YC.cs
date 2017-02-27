@@ -682,8 +682,6 @@ namespace Aide
                 str_viewstategenerator = viewstategenerator.GetAttributeValue("value", "");
             sb.AppendFormat("__VIEWSTATEGENERATOR={0}&__ASYNCPOST=true&btnPublish=%E5%8F%91%E5%B8%83", str_viewstategenerator);
 
-            //radlst=2093&radlst=9572&radlst=2095&
-
             return sb.ToString();
         }
 
@@ -706,6 +704,12 @@ namespace Aide
             if (maxMoney == 0 && !cars.GGiftInof.IsCheck)
             {
                 MessageBox.Show("优惠金额为0，请选择礼包");
+                return;
+            }
+
+            if (cars.Cars == null || cars.Cars.Count == 0 || !cars.Cars.Any(w => w.IsCheck))
+            {
+                MessageBox.Show("请至少选择一个车型");
                 return;
             }
 
@@ -740,21 +744,21 @@ namespace Aide
             InitCarNews();
             var postdata = PushData();
             var content = JsonConvert.SerializeObject(carnews);
-            var newsid = dal.AddNews(carnews.Title, "删除");
+            var newsid = dal.AddNews(carnews.Title, "删除", url);
             var r = OperateIniFile.WriteIniData(content, postdata, newsid.ToString());
 
-            var result = yc.Post_CheYiTong(url, postdata);
-            if (result.DocumentNode.OuterHtml.Contains("NewsSuccess.aspx"))
-            {
-                MessageBox.Show("发布成功");
-            }
-            else
-            {
-                Regex reg = new Regex(@"(?is)(?<=\()[^\)]+(?=\))");
-                var match = reg.Match(result.DocumentNode.OuterHtml);
-                //_M.Alert('非大礼包新闻中不能有单独促销价格为0的车款！')
-                MessageBox.Show(match.Value);
-            }
+            //var result = yc.Post_CheYiTong(url, postdata);
+            //if (result.DocumentNode.OuterHtml.Contains("NewsSuccess.aspx"))
+            //{
+            //    MessageBox.Show("发布成功");
+            //}
+            //else
+            //{
+            //    Regex reg = new Regex(@"(?is)(?<=\()[^\)]+(?=\))");
+            //    var match = reg.Match(result.DocumentNode.OuterHtml);
+            //    //_M.Alert('非大礼包新闻中不能有单独促销价格为0的车款！')
+            //    MessageBox.Show(match.Value);
+            //}
         }
 
         private void InitCarNews()
@@ -776,8 +780,7 @@ namespace Aide
             if(!carnews.IsDetail)
             {
                 carnews.CarList = carControl1.CarDataSource.Cars;
-            }
-            
+            }            
         }
 
         /// <summary>
@@ -953,11 +956,17 @@ namespace Aide
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var maxMoney = cars.Cars.Max(f => f.FavorablePrice);            
+            var maxMoney = cars.Cars.Max(f => f.FavorablePrice);
 
             if (maxMoney == 0 && !cars.GGiftInof.IsCheck)
             {
                 MessageBox.Show("优惠金额为0，请选择礼包");
+                return;
+            }
+
+            if (cars.Cars == null || cars.Cars.Count == 0 || !cars.Cars.Any(w => w.IsCheck))
+            {
+                MessageBox.Show("请至少选择一个车型");
                 return;
             }
 

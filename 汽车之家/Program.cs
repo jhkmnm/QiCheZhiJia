@@ -25,7 +25,7 @@ namespace Aide
             //    fm.ShowDialog();
             //}
 
-            //Tool.service.Url = System.Configuration.ConfigurationManager.AppSettings["dataSrvUrl"];
+            Tool.service.Url = System.Configuration.ConfigurationManager.AppSettings["dataSrvUrl"];
         }
     }
 

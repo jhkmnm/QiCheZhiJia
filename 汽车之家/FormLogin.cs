@@ -770,9 +770,27 @@ namespace Aide
 
         private void SaveNews_YC()
         {
-            //判断列表是否有数据，无数据提示
-            //判断app cookie是否存在，不存在先刷cookie
-            //按列表将新闻发布，显示发布结果
+            if(dataGridView1.Rows.Count == 0)
+            {
+                listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":目前没有可以发布的新闻，请添加");
+                return;
+            }
+
+            foreach(News news in newsBindingSource.DataSource as List<News>)
+            {
+                var result = yiche.PostNews(news.ID);
+                if(result == "发布成功")
+                {
+                    listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + news.Title + " 发布成功");
+                    dal.AddJobLog(new JobLog { JobID = job_yc_news.ID, Time = DateTime.Now.ToString("yyyy-MM-dd") });
+                    Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_yc.Id, JobType = "资讯", JobTime = DateTime.Now });
+                    Tool.userInfo_yc.NewsNum--;
+                }
+                else
+                {
+                    listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + news.Title + " 发布失败," + result);
+                }
+            }
         }
 
         private void tm_yc_news_Tick(object sender, EventArgs e)
