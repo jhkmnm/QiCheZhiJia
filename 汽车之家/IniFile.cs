@@ -38,17 +38,12 @@ namespace Aide
 
             string iniFilePath = FilePath + "\\" + newsID + ".ini";
 
-            if (File.Exists(iniFilePath))
-            {
+
                 var r = INIOperationClass.INIWriteValue(iniFilePath, "Desktop", "Content", content);
                 if(r)
                     return INIOperationClass.INIWriteValue(iniFilePath, "Desktop", "PostData", subcontent);
                 return r;
-            }
-            else
-            {
-                return false;
-            }
+
         }
 
         #endregion

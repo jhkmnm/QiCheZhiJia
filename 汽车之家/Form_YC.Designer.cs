@@ -213,7 +213,7 @@
             this.btnSend_Ex.Name = "btnSend_Ex";
             this.btnSend_Ex.Size = new System.Drawing.Size(101, 33);
             this.btnSend_Ex.TabIndex = 112;
-            this.btnSend_Ex.Text = "发布";
+            this.btnSend_Ex.Text = "保存";
             this.btnSend_Ex.UseVisualStyleBackColor = true;
             this.btnSend_Ex.Click += new System.EventHandler(this.btnSend_Ex_Click);
             // 
@@ -407,7 +407,7 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(101, 33);
             this.button1.TabIndex = 150;
-            this.button1.Text = "发布";
+            this.button1.Text = "保存";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 

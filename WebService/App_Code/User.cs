@@ -19,16 +19,16 @@ namespace Model
         private string _CompanyID;
         private string _LinkInfo;
         private int _UserType;
-        private bool? _SendOrder;
-        private bool? _Query;
-        private bool? _News;
+        private bool _SendOrder;
+        private bool _Query;
+        private bool _News;
         private DateTime? _DueTime;
         private int _Status;
         private DateTime? _LastAllotTime;
         private DateTime? _LastQuoteTime;
         private DateTime? _LastNewsTime;
-        private int? _QueryNum;
-        private int? _NewsNum;
+        private int _QueryNum;
+        private int _NewsNum;
 
         /// <summary>
         /// 
@@ -138,7 +138,7 @@ namespace Model
         /// 付费标记, true已付费
         /// </summary>
         [Field("SendOrder")]
-        public bool? SendOrder
+        public bool SendOrder
         {
             get { return _SendOrder; }
             set
@@ -151,7 +151,7 @@ namespace Model
         /// 付费标记, true已付费
         /// </summary>
         [Field("Query")]
-        public bool? Query
+        public bool Query
         {
             get { return _Query; }
             set
@@ -164,7 +164,7 @@ namespace Model
         /// 付费标记, true已付费
         /// </summary>
         [Field("News")]
-        public bool? News
+        public bool News
         {
             get { return _News; }
             set
@@ -242,7 +242,7 @@ namespace Model
         /// 报价剩余次数
         /// </summary>
         [Field("QueryNum")]
-        public int? QueryNum
+        public int QueryNum
         {
             get { return _QueryNum; }
             set
@@ -255,7 +255,7 @@ namespace Model
         /// 发布新闻剩余次数
         /// </summary>
         [Field("NewsNum")]
-        public int? NewsNum
+        public int NewsNum
         {
             get { return _NewsNum; }
             set

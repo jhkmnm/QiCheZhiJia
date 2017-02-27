@@ -113,6 +113,10 @@ namespace Aide
             };
             HttpHelper http = new HttpHelper();
             HttpResult result = http.GetHtml(item);
+
+            if(result.Cookie == null)
+                return;
+
             cookie = HttpHelper.GetSmallCookie(result.Cookie);
 
             HAP.HtmlDocument htmlDoc = new HAP.HtmlDocument();

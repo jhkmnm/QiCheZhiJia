@@ -23,7 +23,7 @@ namespace Aide.Service {
     
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Web.Services.WebServiceBindingAttribute(Name="ServiceSoap", Namespace="http://tempuri.org/")]
@@ -273,24 +273,30 @@ namespace Aide.Service {
         
         /// <remarks/>
         [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UpdateUserType", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public int UpdateUserType(int Id) {
+        public int UpdateUserType(int Id, bool sendOrder, bool query, bool news) {
             object[] results = this.Invoke("UpdateUserType", new object[] {
-                        Id});
+                        Id,
+                        sendOrder,
+                        query,
+                        news});
             return ((int)(results[0]));
         }
         
         /// <remarks/>
-        public void UpdateUserTypeAsync(int Id) {
-            this.UpdateUserTypeAsync(Id, null);
+        public void UpdateUserTypeAsync(int Id, bool sendOrder, bool query, bool news) {
+            this.UpdateUserTypeAsync(Id, sendOrder, query, news, null);
         }
         
         /// <remarks/>
-        public void UpdateUserTypeAsync(int Id, object userState) {
+        public void UpdateUserTypeAsync(int Id, bool sendOrder, bool query, bool news, object userState) {
             if ((this.UpdateUserTypeOperationCompleted == null)) {
                 this.UpdateUserTypeOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateUserTypeOperationCompleted);
             }
             this.InvokeAsync("UpdateUserType", new object[] {
-                        Id}, this.UpdateUserTypeOperationCompleted, userState);
+                        Id,
+                        sendOrder,
+                        query,
+                        news}, this.UpdateUserTypeOperationCompleted, userState);
         }
         
         private void OnUpdateUserTypeOperationCompleted(object arg) {
@@ -670,7 +676,7 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -693,11 +699,11 @@ namespace Aide.Service {
         
         private int userTypeField;
         
-        private System.Nullable<bool> sendOrderField;
+        private bool sendOrderField;
         
-        private System.Nullable<bool> queryField;
+        private bool queryField;
         
-        private System.Nullable<bool> newsField;
+        private bool newsField;
         
         private System.Nullable<System.DateTime> dueTimeField;
         
@@ -709,9 +715,9 @@ namespace Aide.Service {
         
         private System.Nullable<System.DateTime> lastNewsTimeField;
         
-        private System.Nullable<int> queryNumField;
+        private int queryNumField;
         
-        private System.Nullable<int> newsNumField;
+        private int newsNumField;
         
         /// <remarks/>
         public int Id {
@@ -794,8 +800,7 @@ namespace Aide.Service {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<bool> SendOrder {
+        public bool SendOrder {
             get {
                 return this.sendOrderField;
             }
@@ -805,8 +810,7 @@ namespace Aide.Service {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<bool> Query {
+        public bool Query {
             get {
                 return this.queryField;
             }
@@ -816,8 +820,7 @@ namespace Aide.Service {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<bool> News {
+        public bool News {
             get {
                 return this.newsField;
             }
@@ -881,8 +884,7 @@ namespace Aide.Service {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> QueryNum {
+        public int QueryNum {
             get {
                 return this.queryNumField;
             }
@@ -892,8 +894,7 @@ namespace Aide.Service {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(IsNullable=true)]
-        public System.Nullable<int> NewsNum {
+        public int NewsNum {
             get {
                 return this.newsNumField;
             }
@@ -907,7 +908,7 @@ namespace Aide.Service {
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(JobLog))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(Dictionaries))]
     [System.Xml.Serialization.XmlIncludeAttribute(typeof(User))]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -916,7 +917,7 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -961,7 +962,7 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1020,7 +1021,7 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Xml", "4.6.1064.2")]
     [System.SerializableAttribute()]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
@@ -1053,11 +1054,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void HelloWorldCompletedEventHandler(object sender, HelloWorldCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class HelloWorldCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1079,11 +1080,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void UserLoginCompletedEventHandler(object sender, UserLoginCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class UserLoginCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1105,11 +1106,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void GetUserListCompletedEventHandler(object sender, GetUserListCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetUserListCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1131,11 +1132,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void UpdateLastAllotTimeCompletedEventHandler(object sender, UpdateLastAllotTimeCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class UpdateLastAllotTimeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1157,11 +1158,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void UpdateUserTypeCompletedEventHandler(object sender, UpdateUserTypeCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class UpdateUserTypeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1183,11 +1184,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void DelUserCompletedEventHandler(object sender, DelUserCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class DelUserCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1209,11 +1210,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void GetDicCompletedEventHandler(object sender, GetDicCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetDicCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1235,11 +1236,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void UpdateDicCompletedEventHandler(object sender, UpdateDicCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class UpdateDicCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1261,11 +1262,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void UpdateLoginLogByLoginCompletedEventHandler(object sender, UpdateLoginLogByLoginCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class UpdateLoginLogByLoginCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1287,11 +1288,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void UpdateLoginLogByLogOutCompletedEventHandler(object sender, UpdateLoginLogByLogOutCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class UpdateLoginLogByLogOutCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1313,11 +1314,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void CheckTasteTimeCompletedEventHandler(object sender, CheckTasteTimeCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class CheckTasteTimeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1339,11 +1340,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void UpdUserDueTimeCompletedEventHandler(object sender, UpdUserDueTimeCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class UpdUserDueTimeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1365,11 +1366,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void UpdateLastQuoteTimeCompletedEventHandler(object sender, UpdateLastQuoteTimeCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class UpdateLastQuoteTimeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1391,11 +1392,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void UpdateLastNewsTimeCompletedEventHandler(object sender, UpdateLastNewsTimeCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class UpdateLastNewsTimeCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1417,11 +1418,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void AddJobLogCompletedEventHandler(object sender, AddJobLogCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class AddJobLogCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1443,11 +1444,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void DelJobLogCompletedEventHandler(object sender, DelJobLogCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class DelJobLogCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
@@ -1469,11 +1470,11 @@ namespace Aide.Service {
     }
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     public delegate void GetJobLogByUserCompletedEventHandler(object sender, GetJobLogByUserCompletedEventArgs e);
     
     /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1055.0")]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     public partial class GetJobLogByUserCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {

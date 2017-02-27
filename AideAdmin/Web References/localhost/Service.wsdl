@@ -31,16 +31,16 @@
               <s:element minOccurs="0" maxOccurs="1" name="CompanyID" type="s:string" />
               <s:element minOccurs="0" maxOccurs="1" name="LinkInfo" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="UserType" type="s:int" />
-              <s:element minOccurs="1" maxOccurs="1" name="SendOrder" nillable="true" type="s:boolean" />
-              <s:element minOccurs="1" maxOccurs="1" name="Query" nillable="true" type="s:boolean" />
-              <s:element minOccurs="1" maxOccurs="1" name="News" nillable="true" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="SendOrder" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="Query" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="News" type="s:boolean" />
               <s:element minOccurs="1" maxOccurs="1" name="DueTime" nillable="true" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="Status" type="s:int" />
               <s:element minOccurs="1" maxOccurs="1" name="LastAllotTime" nillable="true" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="LastQuoteTime" nillable="true" type="s:dateTime" />
               <s:element minOccurs="1" maxOccurs="1" name="LastNewsTime" nillable="true" type="s:dateTime" />
-              <s:element minOccurs="1" maxOccurs="1" name="QueryNum" nillable="true" type="s:int" />
-              <s:element minOccurs="1" maxOccurs="1" name="NewsNum" nillable="true" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="QueryNum" type="s:int" />
+              <s:element minOccurs="1" maxOccurs="1" name="NewsNum" type="s:int" />
             </s:sequence>
           </s:extension>
         </s:complexContent>

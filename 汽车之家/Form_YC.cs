@@ -56,12 +56,11 @@ namespace Aide
             {
                 var news = dal.GetNews(newsid);
                 carnews = JsonConvert.DeserializeObject<CarNews>(news.Content);
+                groupBox2.Enabled = false;
+                gpbCarList.Enabled = false;
             }
-            else
-                carnews = new CarNews();
 
-
-            if(string.IsNullOrWhiteSpace(carnews.NewsType))
+            if(carnews == null)
                 InitForm(rbtSource1.Tag.ToString());
             else
             {
@@ -127,7 +126,7 @@ namespace Aide
                 rbt.TabStop = true;
                 rbt.UseVisualStyleBackColor = true;
                 this.gpbCarList.Controls.Add(rbt);
-                if (carnews.CarType == rbt.Name)
+                if (carnews != null && carnews.CarType == rbt.Name)
                     rbtChk = rbt;
             }
             if (rbtChk != null) rbtChk.Checked = true;
@@ -138,7 +137,13 @@ namespace Aide
             ddlPromotionType.DataSource = promotionType;
             ddlPromotionType.DisplayMember = "Text";
             ddlPromotionType.ValueMember = "Value";
-            ddlPromotionType.SelectedIndex = 0;
+            if (carnews != null && !string.IsNullOrEmpty(carnews.PromotionType))
+            {
+                ddlPromotionType.SelectedValue = carnews.PromotionType;
+                txtMoney.Text = carnews.PromotionValue;
+            }
+            else
+                ddlPromotionType.SelectedIndex = 0;
 
             #region 库存状态
             var stateList = doc.GetElementbyId("rdoStoreState");
@@ -170,7 +175,7 @@ namespace Aide
                 rbt.UseVisualStyleBackColor = true;
                 this.pStoreState.Controls.Add(rbt);
 
-                if (carnews.StoreState == value)
+                if (carnews != null && carnews.StoreState == value)
                     rbtChk = rbt;
             }
             if (rbtChk != null) rbtChk.Checked = true;
@@ -203,7 +208,7 @@ namespace Aide
         {
             var article = doc.GetElementbyId("title_article");
             var number = doc.GetElementbyId("title_number");
-            if (!string.IsNullOrWhiteSpace(carnews.Title))
+            if (carnews != null && !string.IsNullOrWhiteSpace(carnews.Title))
             {
                 title_article.Text = carnews.Title;
                 title_number.Text = carnews.title_number;
@@ -214,7 +219,7 @@ namespace Aide
                 title_number.Text = number.InnerText;
             }
             var lead = doc.GetElementbyId("txtLead");
-            if (!string.IsNullOrWhiteSpace(carnews.Lead))
+            if (carnews != null && !string.IsNullOrWhiteSpace(carnews.Lead))
             {
                 txtLead.Text = carnews.Lead;
             }
@@ -222,7 +227,7 @@ namespace Aide
             {
                 txtLead.Text = lead.GetAttributeValue("backvalue", "");
             }
-            
+
             #region 颜色列表
             var colorList = doc.DocumentNode.SelectNodes("//div[@id='UpdatePanel7']/span/label");
             int xstep = 152;
@@ -255,7 +260,7 @@ namespace Aide
                 chk.Size = new System.Drawing.Size(72, 16);
                 chk.TabStop = true;
                 chk.UseVisualStyleBackColor = true;
-                if (carnews.Colors != null && carnews.Colors.Contains(value))
+                if (carnews != null && carnews.Colors.Contains(value))
                     chk.Checked = true;
                 this.pColor.Controls.Add(chk);
             }
@@ -296,7 +301,7 @@ namespace Aide
                         CarReferPrice = Convert.ToDecimal(inputCarInfo.GetAttributeValue("carreferprice", "0")),
                         FavorablePrice = Convert.ToDecimal(inputprice.GetAttributeValue("value", "0")),
                         ColorName = colorcount.InnerText,
-                        PushedCount = tds[8].InnerText.Trim(), 
+                        PushedCount = tds[8].InnerText.Trim(),
                         StateSubsidies = statesubsidies != "--" ? string.Format("{0:0.00}", Convert.ToDecimal(statesubsidies)) : "0",
                         LocalSubsidies = localsubsidies != "--" ? string.Format("{0:0.00}", Convert.ToDecimal(localsubsidies)) : "0",
                     });
@@ -330,32 +335,52 @@ namespace Aide
             #endregion
 
             #region 图片
-            var imgLogo = doc.GetElementbyId("imgLogo");
-            imgLogo_hdf.ImgUrl = imgLogo.GetAttributeValue("src", "");
-            imgLogo_hdf.CSID = carid;
+            if (carnews == null)
+            {
+                var imgLogo = doc.GetElementbyId("imgLogo");
+                imgLogo_hdf.ImgUrl = imgLogo.GetAttributeValue("src", "");
+                imgLogo_hdf.CSID = carid;
+                var imgPosition1 = doc.GetElementbyId("imgPosition1");
+                imgPosition1_hdf.ImgUrl = imgPosition1.GetAttributeValue("src", "");
+                imgPosition1_hdf.CSID = carid;
+                var imgPosition2 = doc.GetElementbyId("imgPosition2");
+                imgPosition2_hdf.ImgUrl = imgPosition2.GetAttributeValue("src", "");
+                imgPosition2_hdf.CSID = carid;
+                var imgPosition3 = doc.GetElementbyId("imgPosition3");
+                imgPosition3_hdf.ImgUrl = imgPosition3.GetAttributeValue("src", "");
+                imgPosition3_hdf.CSID = carid;
+                var imgPosition4 = doc.GetElementbyId("imgPosition4");
+                imgPosition4_hdf.ImgUrl = imgPosition4.GetAttributeValue("src", "");
+                imgPosition4_hdf.CSID = carid;
+            }
+            else
+            {
+                imgLogo_hdf.ImgUrl = carnews.ImageA;
+                imgLogo_hdf.CSID = carnews.CarID;
+                imgPosition1_hdf.ImgUrl = carnews.ImageB;
+                imgPosition1_hdf.CSID = carnews.CarID;
+                imgPosition2_hdf.ImgUrl = carnews.ImageC;
+                imgPosition2_hdf.CSID = carnews.CarID;
+                imgPosition3_hdf.ImgUrl = carnews.ImageD;
+                imgPosition3_hdf.CSID = carnews.CarID;
+                imgPosition4_hdf.ImgUrl = carnews.ImageE;
+                imgPosition4_hdf.CSID = carnews.CarID;
+            }
+
             imgLogo_hdf.yiche = yc;
             imgLogo_hdf.ImageUpload = ImageUpload;
-            var imgPosition1 = doc.GetElementbyId("imgPosition1");
-            imgPosition1_hdf.ImgUrl = imgPosition1.GetAttributeValue("src", "");
-            imgPosition1_hdf.CSID = carid;
-            imgPosition1_hdf.yiche = yc;
-            imgPosition1_hdf.ImageUpload = ImageUpload;
-            var imgPosition2 = doc.GetElementbyId("imgPosition2");
-            imgPosition2_hdf.ImgUrl = imgPosition2.GetAttributeValue("src", "");
-            imgPosition2_hdf.CSID = carid;
-            imgPosition2_hdf.yiche = yc;
-            imgPosition2_hdf.ImageUpload = ImageUpload;
-            var imgPosition3 = doc.GetElementbyId("imgPosition3");
-            imgPosition3_hdf.ImgUrl = imgPosition3.GetAttributeValue("src", "");
-            imgPosition3_hdf.CSID = carid;
-            imgPosition3_hdf.yiche = yc;
-            imgPosition3_hdf.ImageUpload = ImageUpload;
-            var imgPosition4 = doc.GetElementbyId("imgPosition4");
-            imgPosition4_hdf.ImgUrl = imgPosition4.GetAttributeValue("src", "");
-            imgPosition4_hdf.CSID = carid;
             imgPosition4_hdf.yiche = yc;
             imgPosition4_hdf.ImageUpload = ImageUpload;
             #endregion            
+
+            if (carnews != null && carnews.CarList != null && carnews.CarList.Count > 0)
+            {
+                cars.Cars.ForEach(f => {
+                    var v = carnews.CarList.FirstOrDefault(ff => ff.CarID == f.CarID);
+                    if (v != null) f.IsCheck = v.IsCheck;
+                });
+                carnews.promotionCars = cars.PublishCarList;
+            }
 
             carA.CarDataSource = cars;
             carA.Colors = Colors;
@@ -688,7 +713,8 @@ namespace Aide
         private void rbtSource_CheckedChanged(object sender, EventArgs e)
         {
             var rbt = (RadioButton)sender;
-            InitForm(rbt.Tag.ToString());
+            if(rbt.Checked)
+                InitForm(rbt.Tag.ToString());
         }
 
         private void btnSend_Ex_Click(object sender, EventArgs e)
@@ -712,6 +738,7 @@ namespace Aide
                 MessageBox.Show("请至少选择一个车型");
                 return;
             }
+            InitCarNews();
 
             var giftPrice = cars.GGiftInof.Price;
             GenerateTitleAndLead(maxMoney, maxMoney, giftPrice, csshowname);
@@ -740,13 +767,13 @@ namespace Aide
         private void SendNews(bool isDetail)
         {
             carnews.IsDetail = false;
-
-            InitCarNews();
+            
             var postdata = PushData();
             var content = JsonConvert.SerializeObject(carnews);
             var newsid = dal.AddNews(carnews.Title, "删除", url);
             var r = OperateIniFile.WriteIniData(content, postdata, newsid.ToString());
-
+            if (r)
+                DialogResult = DialogResult.OK;
             //var result = yc.Post_CheYiTong(url, postdata);
             //if (result.DocumentNode.OuterHtml.Contains("NewsSuccess.aspx"))
             //{
@@ -763,8 +790,10 @@ namespace Aide
 
         private void InitCarNews()
         {
+            if (carnews == null) carnews = new CarNews();
+
             carnews.NewsType = NewsType;
-            carnews.CarType = CarType;
+            carnews.CarType = CarType;            
             foreach(Control con in pColor.Controls)
             {
                 var chk = con as CheckBox;
@@ -780,7 +809,11 @@ namespace Aide
             if(!carnews.IsDetail)
             {
                 carnews.CarList = carControl1.CarDataSource.Cars;
-            }            
+            }
+            else
+            {
+                carnews.CarList = carA.CarDataSource.Cars;
+            }
         }
 
         /// <summary>
@@ -969,6 +1002,7 @@ namespace Aide
                 MessageBox.Show("请至少选择一个车型");
                 return;
             }
+            InitCarNews();
 
             GenerateTitleAndLead(maxMoney, maxMoney, cars.GGiftInof.Price, csshowname);
 
@@ -1294,6 +1328,14 @@ namespace Aide
 
     public class CarNews
     {
+        public CarNews()
+        {
+            Colors = new List<string>();
+            giftInfo = new GiftInfo();
+            CarList = new List<Car>();
+            promotionCars = new List<Car>();
+        }
+
         /// <summary>
         /// 是否是明细
         /// </summary>
@@ -1396,7 +1438,6 @@ namespace Aide
         public string Enddate { get; set; }
         public string Status { get; set; }
         public int Statusvalue { get; set; }
-        public int Carid { get; set; }
         public int Mark { get; set; }
         public int Extendcarid { get; set; }       
     }        

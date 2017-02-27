@@ -175,9 +175,9 @@ namespace AideAdmin
             txtLastAllTime.Text = SelectedUser.LastAllotTime == null ? "" : SelectedUser.LastAllotTime.Value.ToString();
             txtLastQuote.Text = SelectedUser.LastQuoteTime == null ? "" : SelectedUser.LastQuoteTime.Value.ToString();
             txtLastNews.Text = SelectedUser.LastNewsTime == null ? "" : SelectedUser.LastNewsTime.Value.ToString();
-            chkSendOrder.Checked = SelectedUser.SendOrder.HasValue ? SelectedUser.SendOrder.Value : false;
-            chkQuery.Checked = SelectedUser.Query.HasValue ? SelectedUser.Query.Value : false;
-            chkNews.Checked = SelectedUser.News.HasValue ? SelectedUser.News.Value : false;
+            chkSendOrder.Checked = SelectedUser.SendOrder;
+            chkQuery.Checked = SelectedUser.Query;
+            chkNews.Checked = SelectedUser.News;
         }
 
         /// <summary>

@@ -52,46 +52,29 @@ public class Service : System.Web.Services.WebService
         }
         else
         {
-            var result = dal.GetUser(user.UserName, user.Company, user.SiteName);
-            if (result == null)
+            userResult.Data = dal.GetUser(user.UserName, user.Company, user.SiteName);
+            if (userResult.Data == null)
             {
                 user.UserType = 0;
                 dal.AddUser(user);
                 userResult.Data = dal.GetUser(user.UserName, user.Company, user.SiteName);
-                dal.UpdateLoginLogByLogin(userResult.Data.Id);
+            }
+
+            dal.UpdateLoginLogByLogin(userResult.Data.Id);
+
+            if (userResult.Data.UserType == 0)
+            {
+                //如果是试用用户获取剩余的报价和新闻次数
+                var num = dal.GetQueryAndNewsNum(userResult.Data.Id);
+                userResult.Data.QueryNum = num[0];
+                userResult.Data.NewsNum = num[1];
             }
             else
             {
-                dal.UpdateLoginLogByLogin(result.Id);
-
-                if (result.UserType == 0)
+                if (!dal.CheckDueTime(user.UserName, user.Company, user.SiteName))
                 {
-                    //如果是试用用户获取剩余的报价和新闻次数
-                    var num = dal.GetQueryAndNewsNum(result.Id);
-                    result.QueryNum = num[0];
-                    result.NewsNum = num[1];
-                    userResult.Data = result;
-                    //if (!dal.CheckTasteTime(result.Id))
-                    //{
-                    //    userResult.Result = false;
-                    //    userResult.Message = "非常抱歉，该用户今天体验时间已到，暂时无法登陆。详询QQ：278815541。";
-                    //}
-                    //else
-                    //{
-                    //    userResult.Data = result;
-                    //}
-                }
-                else
-                {
-                    if (!dal.CheckDueTime(user.UserName, user.Company, user.SiteName))
-                    {
-                        userResult.Result = false;
-                        userResult.Message = "非常抱歉，该用户使用时间已到，暂时无法登陆。详询QQ：278815541。";
-                    }
-                    else
-                    {
-                        userResult.Data = result;
-                    }
+                    userResult.Result = false;
+                    userResult.Message = "非常抱歉，该用户使用时间已到，暂时无法登陆。详询QQ：278815541。";
                 }
             }
         }

@@ -232,11 +232,11 @@ namespace Aide
                 lblEnd.Text = user.DueTime.HasValue ? user.DueTime.ToString() : "";
                 lblUserName.Text = user.UserName;
                 lblUserType.Text = user.UserType == 0 ? "试用" : "付费";
-                lbl_QC_QueryNum.Text = user.Query.Value ? "按到期时间计算" : user.QueryNum.Value.ToString();
-                lbl_QC_NewsNum.Text = user.News.Value ? "按到期时间计算" : user.NewsNum.Value.ToString();
+                lbl_QC_QueryNum.Text = user.Query ? "按到期时间计算" : user.QueryNum.ToString();
+                lbl_QC_NewsNum.Text = user.News ? "按到期时间计算" : user.NewsNum.ToString();
 
                 #region 抢单判断
-                if (user.UserType == 0 || !user.SendOrder.Value)
+                if (user.UserType == 0 || !user.SendOrder)
                 {
                     if (!Tool.service.CheckTasteTime(user.Id))
                     {
@@ -285,7 +285,7 @@ namespace Aide
                 #endregion
 
                 #region 报价判断
-                if (user.UserType == 0 || !user.Query.Value)
+                if (user.UserType == 0 || !user.Query)
                 {
                     if (user.QueryNum == 0)
                     {
@@ -312,7 +312,7 @@ namespace Aide
                 #endregion
 
                 #region 资讯判断
-                if (user.UserType == 0 || !user.News.Value)
+                if (user.UserType == 0 || !user.News)
                 {
                     if (user.NewsNum == 0)
                     {
@@ -753,7 +753,8 @@ namespace Aide
         {
             tm_qc_news.Enabled = false;
             ExecJob(job_qc_news, SaveNews_QC);
-            tm_qc_news.Interval = job_qc_news.Space.Value;
+            if (job_qc_news.JobType != 1)
+                tm_qc_news.Interval = job_qc_news.Space.Value;
             LoadUser(Tool.userInfo_qc);
             tm_qc_news.Enabled = job_qc_news.JobType != 1 && jct_QC_News.Enabled;
         }
@@ -797,7 +798,8 @@ namespace Aide
         {
             tm_yc_news.Enabled = false;
             ExecJob(job_yc_news, SaveNews_YC);
-            tm_yc_news.Interval = job_yc_news.Space.Value;
+            if(job_yc_news.JobType != 1)
+                tm_yc_news.Interval = job_yc_news.Space.Value;
             LoadUser(Tool.userInfo_yc);
             tm_yc_news.Enabled = job_yc_news.JobType != 1 && jct_YC_News.Enabled;
         }
