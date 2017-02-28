@@ -103,7 +103,7 @@ namespace Aide
             return Image.FromStream(ms, true);
         }
 
-        public void GotoLoginPage()
+        public string GotoLoginPage()
         {
             var item = new HttpItem()
             {
@@ -115,21 +115,29 @@ namespace Aide
             HttpResult result = http.GetHtml(item);
 
             if(result.Cookie == null)
-                return;
+                return "网络异常，请关掉程序重试";
 
             cookie = HttpHelper.GetSmallCookie(result.Cookie);
 
-            HAP.HtmlDocument htmlDoc = new HAP.HtmlDocument();
-            htmlDoc.LoadHtml(result.Html);
+            try
+            {
+                HAP.HtmlDocument htmlDoc = new HAP.HtmlDocument();
+                htmlDoc.LoadHtml(result.Html);
 
-            token = htmlDoc.DocumentNode.SelectNodes("//input[@name='__RequestVerificationToken']")[0].GetAttributeValue("value", "");
-            redisKey = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='rkey']").GetAttributeValue("value", "");
-            exponment = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='hidPublicKeyExponent']").GetAttributeValue("value", "");
-            modulus = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"hidPublicKeyModulus\"]").GetAttributeValue("value", "");
+                token = htmlDoc.DocumentNode.SelectNodes("//input[@name='__RequestVerificationToken']")[0].GetAttributeValue("value", "");
+                redisKey = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='rkey']").GetAttributeValue("value", "");
+                exponment = htmlDoc.DocumentNode.SelectSingleNode("//*[@id='hidPublicKeyExponent']").GetAttributeValue("value", "");
+                modulus = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"hidPublicKeyModulus\"]").GetAttributeValue("value", "");
 
-            item.URL = entervalidateCode;
-            result = http.GetHtml(item);
-            cookie += HttpHelper.GetSmallCookie(result.Cookie);            
+                item.URL = entervalidateCode;
+                result = http.GetHtml(item);
+                cookie += HttpHelper.GetSmallCookie(result.Cookie);
+                return "";
+            }
+            catch(Exception ex)
+            {
+                return "网络异常，请关掉程序重试";
+            }            
         }
 
         /// <summary>

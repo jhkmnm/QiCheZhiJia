@@ -157,8 +157,11 @@ namespace Aide
         {
             if (site == "汽车")
             {
-                qiche.GotoLoginPage();
-                pbCode.Image = qiche.LoadValidateCode();
+                var str = qiche.GotoLoginPage();
+                if (string.IsNullOrWhiteSpace(str))
+                    pbCode.Image = qiche.LoadValidateCode();
+                else
+                    MessageBox.Show(str);
             }
             else
             {
@@ -827,13 +830,21 @@ namespace Aide
 
             if (e.ColumnIndex == titleDataGridViewTextBoxColumn.Index)
             {
-
+                //var form = new Form_YC(yiche, ((News)newsBindingSource.Current).ID);
+                //if (form.ShowDialog() == DialogResult.OK)
+                //{
+                //    newsBindingSource.DataSource = dal.GetNewsList();
+                //    dataGridView1.Refresh();
+                //}
             }
             else
             {
-                dal.DelNews(((News)newsBindingSource.Current).ID);
-                newsBindingSource.DataSource = dal.GetNewsList();
-                dataGridView1.Refresh();
+                if(MessageBox.Show("确认删除这条新闻吗?", "删除提示", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    dal.DelNews(((News)newsBindingSource.Current).ID);
+                    newsBindingSource.DataSource = dal.GetNewsList();
+                    dataGridView1.Refresh();
+                }                
             }
         }
         #endregion

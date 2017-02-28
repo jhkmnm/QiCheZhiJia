@@ -55,12 +55,14 @@ namespace Aide
             if (newsid > 0)
             {
                 var news = dal.GetNews(newsid);
-                carnews = JsonConvert.DeserializeObject<CarNews>(news.Content);
+                var content = OperateIniFile.ReadIniData("Content", news.ID.ToString());
+                carnews = JsonConvert.DeserializeObject<CarNews>(content);
                 groupBox2.Enabled = false;
                 gpbCarList.Enabled = false;
             }
 
-            if(carnews == null)
+            NewsType = rbtSource1.Name;
+            if (carnews == null)
                 InitForm(rbtSource1.Tag.ToString());
             else
             {
@@ -68,6 +70,7 @@ namespace Aide
                 if(fieldinfo != null)
                 {
                     var o = fieldinfo.GetValue(this);
+                    NewsType = ((RadioButton)o).Name;
                     InitForm(((RadioButton)o).Tag.ToString());
                 }
             }
@@ -88,7 +91,7 @@ namespace Aide
         }
 
         private void InitForm(string url)
-        {
+        {            
             this.url = url;
             doc = yc.InforManagerNews(url);
             #region 车型列表
@@ -129,8 +132,6 @@ namespace Aide
                 if (carnews != null && carnews.CarType == rbt.Name)
                     rbtChk = rbt;
             }
-            if (rbtChk != null) rbtChk.Checked = true;
-            
             #endregion
 
             dtpPromotionB.Value = DateTime.Now.AddMonths(1).AddDays(1);
@@ -151,7 +152,7 @@ namespace Aide
             xstep = 113;
             xstart = 4;
             ystart = 7;
-            rbtChk = null;
+            RadioButton rbtStoreChk = null;
             for (int i = 0; i < stateInputs.Count; i++)
             {
                 var value = stateInputs[i].GetAttributeValue("value", "");
@@ -176,9 +177,8 @@ namespace Aide
                 this.pStoreState.Controls.Add(rbt);
 
                 if (carnews != null && carnews.StoreState == value)
-                    rbtChk = rbt;
-            }
-            if (rbtChk != null) rbtChk.Checked = true;
+                    rbtStoreChk = rbt;
+            }            
             #endregion
 
             var uploadfile = doc.GetElementbyId("imgUploadChangeifrUpLoadFile");
@@ -202,6 +202,9 @@ namespace Aide
                 merchandise.Add(new Merchandise { id = id, name = name, Class = Class, Price = price });
             }
             #endregion
+
+            if (rbtStoreChk != null) rbtStoreChk.Checked = true;
+            if (rbtChk != null) rbtChk.Checked = true;
         }
 
         private void InitDetail()
@@ -737,11 +740,12 @@ namespace Aide
             {
                 MessageBox.Show("请至少选择一个车型");
                 return;
-            }
-            InitCarNews();
+            }           
 
             var giftPrice = cars.GGiftInof.Price;
-            GenerateTitleAndLead(maxMoney, maxMoney, giftPrice, csshowname);
+            GenerateTitleAndLead(maxMoney, maxMoney, giftPrice, csshowname);           
+
+            InitCarNews();
             carnews.CarList.ForEach(f => f.FavorablePrice = maxMoney);
 
             string selected = "";

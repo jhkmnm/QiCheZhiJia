@@ -236,7 +236,7 @@ namespace Aide
         public static string INIGetStringValue(string iniFile, string section, string key, string defaultValue)
         {
             string value = defaultValue;
-            const int SIZE = 1024 * 10;
+            const int SIZE = 1024 * 60;
 
             if (string.IsNullOrEmpty(section))
             {
