@@ -16,16 +16,10 @@ namespace Aide
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormLogin());
-
-            //FormLogin f = new FormLogin();
-            //if (f.ShowDialog() == DialogResult.OK)
-            //{
-            //    FormMain fm = new FormMain();
-            //    fm.ShowDialog();
-            //}
 
             Tool.service.Url = System.Configuration.ConfigurationManager.AppSettings["dataSrvUrl"];
+
+            Application.Run(new FormLogin());
         }
     }
 

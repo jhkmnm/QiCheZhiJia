@@ -59,18 +59,18 @@ namespace Aide
             qiche = new QiCheZhiJia(File.ReadAllText(path));
             yiche = new YiChe(File.ReadAllText(path));
             InitUser();
-#if DEBUG
-            if (site == "汽车")
-            {
-                txtUserName.Text = "晋江嘉华雷克萨斯";
-                txtPassword.Text = "qzzs8888.";
-            }
-            else
-            {
-                txtUserName.Text = "100005907";
-                txtPassword.Text = "a2343567";
-            }
-#endif
+//#if DEBUG
+//            if (site == "汽车")
+//            {
+//                txtUserName.Text = "晋江嘉华雷克萨斯";
+//                txtPassword.Text = "qzzs8888.";
+//            }
+//            else
+//            {
+//                txtUserName.Text = "100005907";
+//                txtPassword.Text = "a2343567";
+//            }
+//#endif
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -125,9 +125,9 @@ namespace Aide
             else
             {
                 site = "易车";
-#if DEBUG
-                txtUserName.Text = "344801178@qq.com";
-#endif
+//#if DEBUG
+//                txtUserName.Text = "344801178@qq.com";
+//#endif
             }
             InitUser();
         }
