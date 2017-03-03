@@ -16,6 +16,9 @@ namespace Model
 
 
         public string IntentionCityName { get; set; }
+        public string CityName { get; set; }
+        public int OrderType { get; set; }
+        public string SpecName { get; set; }
     }
 
     public class Result

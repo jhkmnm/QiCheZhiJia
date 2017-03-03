@@ -213,8 +213,14 @@ public class DAL
         var log = DB.Context.From<LoginLog>()
             .Where(where).ToFirst();
 
+        var user = GetUser(userId);
+        user.Status = 1;
+        
+        int result = 0;
         if (log == null)
         {
+            var duetime = GetDic("体验时间");
+            user.DueTime = DateTime.Now.AddHours(Convert.ToDouble(duetime.Value));
             log = new LoginLog
             {
                 UserId = userId,
@@ -222,13 +228,15 @@ public class DAL
                 LastLoginTime = DateTime.Now
             };
 
-            return DB.Context.Insert(log);
+            result = DB.Context.Insert(log);
         }
         else
         {
             log.LastLoginTime = DateTime.Now;
-            return DB.Context.Update(log);
+            result = DB.Context.Update(log);
         }
+        DB.Context.Update(user);
+        return result;
     }
 
     public int UpdateLoginLogByLogOut(int userId)
@@ -268,6 +276,14 @@ public class DAL
     //    log.LoginTime += (float)(DateTime.Now - log.LastLoginTime).TotalHours;
     //    return DB.Context.Update(log);
     //}
+    public float GetLoginTime(int userId)
+    {
+        var today = DateTime.Today.ToShortDateString();
+        var user = DB.Context.From<LoginLog>()
+            .Where(w => w.UserId == userId && w.ToDay == today)
+            .Select(s => s.LoginTime).First();
+        return user.LoginTime.Value;
+    }
 
     /// <summary>
     /// 检查体验时间        /// 

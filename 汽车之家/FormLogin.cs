@@ -761,6 +761,11 @@ namespace Aide
             LoadUser(Tool.userInfo_qc);
             tm_qc_news.Enabled = job_qc_news.JobType != 1 && jct_QC_News.Enabled;
         }
+
+        private void LoadNews()
+        {
+            //GetNewsDraft(); //草稿列表
+        }
         #endregion
 
         #region 易车

@@ -56,7 +56,10 @@ public class Service : System.Web.Services.WebService
             if (userResult.Data == null)
             {
                 user.UserType = 0;
+                var duetime = dal.GetDic("体验时间");
+                user.DueTime = DateTime.Now.AddHours(Convert.ToDouble(duetime.Value));
                 dal.AddUser(user);
+                
                 userResult.Data = dal.GetUser(user.UserName, user.Company, user.SiteName);
             }
 

@@ -329,66 +329,122 @@ namespace Aide
                 result.Result = false;
                 if (orders.Count > 0)
                 {
-                    orders.ForEach(a => dal.AddOrders(new Orders { CustomerName = a.CustomerName, Id = a.Id }));
-
-                    var sendlogs = dal.GetTodaySendLog();
-
-                    var total = orders.Count + sendlogs.Sum(s => s.OrderCount);
-                    var count = nicks.Count;
-
-                    //更新发送数量
-                    nicks.ForEach(f => f.Send = sendlogs.Where(w => w.NickID == f.Id).Sum(s => s.OrderCount));
-                    //按发送数量排序，较少优先
-                    nicks.Sort((a, b) => a.Send.Value.CompareTo(b.Send.Value));
-
-                    for (int i = 0; i < nicks.Count; i++)
-                    {
-                        var sendcount = GetAvg(total, count);
-                        if (sendcount <= 0)
-                            break;
-
-                        int send = sendcount;
-                        total -= sendcount;
-                        count--;
-
-                        if (sendlogs.Count > 0)
+                    orders.ForEach(f => { 
+                        if(!dal.IsHaveOrder(f.Id))
                         {
-                            var sendlog = sendlogs.FirstOrDefault(f => f.NickID == nicks[i].Id);
-                            if (sendlog != null && sendlog.OrderCount < sendcount)
+                            dal.AddOrders(new Orders { CustomerName = f.CustomerName, Id = f.Id });
+                            if (CheckOrder(f))
                             {
-                                send = sendcount - sendlog.OrderCount;
+                                var nick = dal.GetNick();
+
+                                if (SendOrder(nick, f))
+                                {
+                                    dal.UpdateOrderSend(f.Id, nick.Id);
+                                    result.Message = string.Format("系统事件{0}将客户分配给销售顾问{1}{2}", DateTime.Now.ToString(), nick.Nick, Environment.NewLine);
+                                    result.Result = true;
+                                    SendResult(result);
+                                }
                             }
-                            else
-                                send = 0;
                         }
+                    });
 
-                        var sendorders = orders.Take(send).ToList();
-                        orders.RemoveRange(0, send);
+                    #region
+                    //orders.ForEach(a => dal.AddOrders(new Orders { CustomerName = a.CustomerName, Id = a.Id }));
 
-                        sendorders.ForEach(a =>
-                        {
-                            if (SendOrder(nicks[i], a))
-                            {
-                                dal.UpdateOrderSend(a.Id, nicks[i].Id);
-                                dal.UpdateSendCount(nicks[i].Id);
-                                dal.AddSendLog(nicks[i].Id, 1);
-                                result.Message = string.Format("系统事件{0}将客户分配给销售顾问{1}{2}", DateTime.Now.ToString(), nicks[i].Nick, Environment.NewLine);
-                                result.Result = true;
-                                SendResult(result);
-                            }
-                        });
-                    }
+                    //var sendlogs = dal.GetTodaySendLog();
+
+                    //var total = orders.Count + sendlogs.Sum(s => s.OrderCount);
+                    //var count = nicks.Count;
+
+                    ////更新发送数量
+                    //nicks.ForEach(f => f.Send = sendlogs.Where(w => w.NickID == f.Id).Sum(s => s.OrderCount));
+                    ////按发送数量排序，较少优先
+                    //nicks.Sort((a, b) => a.Send.Value.CompareTo(b.Send.Value));
+
+                    //for (int i = 0; i < nicks.Count; i++)
+                    //{
+                    //    var sendcount = GetAvg(total, count);
+                    //    if (sendcount <= 0)
+                    //        break;
+
+                    //    int send = sendcount;
+                    //    total -= sendcount;
+                    //    count--;
+
+                    //    if (sendlogs.Count > 0)
+                    //    {
+                    //        var sendlog = sendlogs.FirstOrDefault(f => f.NickID == nicks[i].Id);
+                    //        if (sendlog != null && sendlog.OrderCount < sendcount)
+                    //        {
+                    //            send = sendcount - sendlog.OrderCount;
+                    //        }
+                    //        else
+                    //            send = 0;
+                    //    }
+
+                    //    var sendorders = orders.Take(send).ToList();
+                    //    orders.RemoveRange(0, send);
+
+                    //    sendorders.ForEach(a =>
+                    //    {
+                    //        if (SendOrder(nicks[i], a))
+                    //        {
+                    //            dal.UpdateOrderSend(a.Id, nicks[i].Id);
+                    //            dal.UpdateSendCount(nicks[i].Id);
+                    //            dal.AddSendLog(nicks[i].Id, 1);
+                    //            result.Message = string.Format("系统事件{0}将客户分配给销售顾问{1}{2}", DateTime.Now.ToString(), nicks[i].Nick, Environment.NewLine);
+                    //            result.Result = true;
+                    //            SendResult(result);
+                    //        }
+                    //    });
+                    //}
+                    #endregion
                 }
                 else
                 {
-                    result.Message = "程序运行中，暂时未发现新线索";
+                    result.Message = "暂时未发现新线索";
                     result.Result = true;
                     SendResult(result);
                 }
                 
                 //间隔2分钟
-                Thread.Sleep(1000 * 60 * 2);
+                Thread.Sleep(1000 * 60 * 1);
             }
+        }
+
+        /// <summary>
+        /// 判断意向和上牌，订单类型，意向车型
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
+        private bool CheckOrder(PublicOrder order)
+        {
+            var result = false;
+
+            if (dal.CityIsChecked(order.IntentionCityName, order.CityName))
+            {
+                result = true;
+                var ordertype = dal.GetOrderTypes();
+                var spec = dal.GetSpecs();
+
+                if(ordertype.Any(w => !w.IsCheck))
+                {
+                    if(order.OrderType == 4)
+                        result = ordertype.Any(w => (w.ID == 2 && w.IsCheck));
+                    else
+                        result = ordertype.Any(w => (w.ID == 1 && w.IsCheck));
+                }
+
+                if(result)
+                {
+                    if (spec.Any(w => !w.IsCheck))
+                    {
+                        result = spec.Any(w => order.SpecName.Contains(w.SPecName));
+                    }
+                }
+            }
+
+            return result;
         }
 
         private bool SendOrder(Nicks nick, PublicOrder order)
@@ -418,10 +474,10 @@ namespace Aide
             return true;
         }
 
-        private int GetAvg(int total, int count)
-        {
-            return (int)Math.Ceiling(total / (count * 1.0));
-        }
+        //private int GetAvg(int total, int count)
+        //{
+        //    return (int)Math.Ceiling(total / (count * 1.0));
+        //}
 
         public delegate void delsendorder(ViewResult vr);
         public event delsendorder SendOrderEvent;
@@ -523,12 +579,12 @@ namespace Aide
         #endregion
 
         #region 资讯
-        public int PostNews()
+        public int PostNews(List<NewListDTP> NewsList)
         {
-            var doc = GetHtml(news_draft);
-            var draft = JsonConvert.DeserializeObject<NewDraft>(doc.DocumentNode.OuterHtml);
+            //var doc = GetHtml(news_draft);
+            //var draft = JsonConvert.DeserializeObject<NewDraft>(doc.DocumentNode.OuterHtml);
             int count = 0;
-            foreach(var data in draft.Data)
+            foreach (var data in NewsList)//draft.Data
             {
                 var newsinfo = GetNewsInfo(model_TS + data.NewsId.ToString());
                 var json = JsonConvert.SerializeObject(newsinfo);
@@ -786,6 +842,12 @@ namespace Aide
                 }
             }
             return postdata;
+        }
+
+        public List<NewListDTP> GetNewsDraft()
+        {
+            var doc = GetHtml(news_draft);
+            return JsonConvert.DeserializeObject<NewDraft>(doc.DocumentNode.OuterHtml).Data;
         }
         #endregion
     }
@@ -1080,6 +1142,7 @@ namespace Aide
 
     public class NewListDTP
     {
+        public bool IsSelected { get; set; }
         public int NewsId { get; set; }
         public int RecommendedState { get; set; }
         public int IsBullet { get; set; }
