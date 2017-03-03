@@ -138,9 +138,11 @@
     <Compile Include="Model\Nicks.cs" />
     <Compile Include="Model\OnSaleData.cs" />
     <Compile Include="Model\Orders.cs" />
+    <Compile Include="Model\OrderType.cs" />
     <Compile Include="Model\PublicOrder.cs" />
     <Compile Include="Model\Result.cs" />
     <Compile Include="Model\SendLog.cs" />
+    <Compile Include="Model\Spec.cs" />
     <Compile Include="PhotoSelectNew.cs">
       <SubType>Form</SubType>
     </Compile>
