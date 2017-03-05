@@ -63,7 +63,7 @@ public class Service : System.Web.Services.WebService
                 userResult.Data = dal.GetUser(user.UserName, user.Company, user.SiteName);
             }
 
-            dal.UpdateLoginLogByLogin(userResult.Data.Id);
+            userResult.Data.DueTime = dal.UpdateLoginLogByLogin(userResult.Data.Id);
 
             if (userResult.Data.UserType == 0)
             {
@@ -143,12 +143,6 @@ public class Service : System.Web.Services.WebService
     public int UpdateDic(string key, string value)
     {
         return dal.UpdateDic(key, value);
-    }
-
-    [WebMethod]
-    public int UpdateLoginLogByLogin(int userId)
-    {
-        return dal.UpdateLoginLogByLogin(userId);
     }
 
     [WebMethod]

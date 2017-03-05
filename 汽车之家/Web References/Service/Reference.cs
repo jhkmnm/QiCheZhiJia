@@ -46,8 +46,6 @@ namespace Aide.Service {
         
         private System.Threading.SendOrPostCallback UpdateDicOperationCompleted;
         
-        private System.Threading.SendOrPostCallback UpdateLoginLogByLoginOperationCompleted;
-        
         private System.Threading.SendOrPostCallback UpdateLoginLogByLogOutOperationCompleted;
         
         private System.Threading.SendOrPostCallback CheckTasteTimeOperationCompleted;
@@ -125,9 +123,6 @@ namespace Aide.Service {
         
         /// <remarks/>
         public event UpdateDicCompletedEventHandler UpdateDicCompleted;
-        
-        /// <remarks/>
-        public event UpdateLoginLogByLoginCompletedEventHandler UpdateLoginLogByLoginCompleted;
         
         /// <remarks/>
         public event UpdateLoginLogByLogOutCompletedEventHandler UpdateLoginLogByLogOutCompleted;
@@ -390,35 +385,6 @@ namespace Aide.Service {
             if ((this.UpdateDicCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.UpdateDicCompleted(this, new UpdateDicCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
-            }
-        }
-        
-        /// <remarks/>
-        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/UpdateLoginLogByLogin", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
-        public int UpdateLoginLogByLogin(int userId) {
-            object[] results = this.Invoke("UpdateLoginLogByLogin", new object[] {
-                        userId});
-            return ((int)(results[0]));
-        }
-        
-        /// <remarks/>
-        public void UpdateLoginLogByLoginAsync(int userId) {
-            this.UpdateLoginLogByLoginAsync(userId, null);
-        }
-        
-        /// <remarks/>
-        public void UpdateLoginLogByLoginAsync(int userId, object userState) {
-            if ((this.UpdateLoginLogByLoginOperationCompleted == null)) {
-                this.UpdateLoginLogByLoginOperationCompleted = new System.Threading.SendOrPostCallback(this.OnUpdateLoginLogByLoginOperationCompleted);
-            }
-            this.InvokeAsync("UpdateLoginLogByLogin", new object[] {
-                        userId}, this.UpdateLoginLogByLoginOperationCompleted, userState);
-        }
-        
-        private void OnUpdateLoginLogByLoginOperationCompleted(object arg) {
-            if ((this.UpdateLoginLogByLoginCompleted != null)) {
-                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
-                this.UpdateLoginLogByLoginCompleted(this, new UpdateLoginLogByLoginCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -1248,32 +1214,6 @@ namespace Aide.Service {
         private object[] results;
         
         internal UpdateDicCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
-                base(exception, cancelled, userState) {
-            this.results = results;
-        }
-        
-        /// <remarks/>
-        public int Result {
-            get {
-                this.RaiseExceptionIfNecessary();
-                return ((int)(this.results[0]));
-            }
-        }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
-    public delegate void UpdateLoginLogByLoginCompletedEventHandler(object sender, UpdateLoginLogByLoginCompletedEventArgs e);
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.ComponentModel.DesignerCategoryAttribute("code")]
-    public partial class UpdateLoginLogByLoginCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
-        
-        private object[] results;
-        
-        internal UpdateLoginLogByLoginCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }

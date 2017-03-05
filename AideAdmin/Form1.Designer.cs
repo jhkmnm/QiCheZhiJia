@@ -61,6 +61,9 @@
             this.rbtType_b = new System.Windows.Forms.RadioButton();
             this.rbtType_a = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.chkNews = new System.Windows.Forms.CheckBox();
+            this.chkQuery = new System.Windows.Forms.CheckBox();
+            this.chkSendOrder = new System.Windows.Forms.CheckBox();
             this.txtLastNews = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.txtLastQuote = new System.Windows.Forms.TextBox();
@@ -88,9 +91,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.chkNews = new System.Windows.Forms.CheckBox();
-            this.chkQuery = new System.Windows.Forms.CheckBox();
-            this.chkSendOrder = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textValueBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textValueBindingSource1)).BeginInit();
@@ -130,7 +130,7 @@
             this.dgvData.ReadOnly = true;
             this.dgvData.RowHeadersWidth = 21;
             this.dgvData.RowTemplate.Height = 23;
-            this.dgvData.Size = new System.Drawing.Size(614, 738);
+            this.dgvData.Size = new System.Drawing.Size(614, 669);
             this.dgvData.TabIndex = 0;
             this.dgvData.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellClick);
             // 
@@ -252,16 +252,16 @@
             this.groupBox1.Controls.Add(this.groupBox3);
             this.groupBox1.Location = new System.Drawing.Point(624, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(301, 196);
+            this.groupBox1.Size = new System.Drawing.Size(301, 169);
             this.groupBox1.TabIndex = 1;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "筛选";
             // 
             // btnDic
             // 
-            this.btnDic.Location = new System.Drawing.Point(112, 149);
+            this.btnDic.Location = new System.Drawing.Point(114, 135);
             this.btnDic.Name = "btnDic";
-            this.btnDic.Size = new System.Drawing.Size(75, 40);
+            this.btnDic.Size = new System.Drawing.Size(75, 29);
             this.btnDic.TabIndex = 10;
             this.btnDic.Text = "参数设置";
             this.btnDic.UseVisualStyleBackColor = true;
@@ -269,9 +269,9 @@
             // 
             // btnSearch
             // 
-            this.btnSearch.Location = new System.Drawing.Point(10, 149);
+            this.btnSearch.Location = new System.Drawing.Point(10, 135);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(75, 40);
+            this.btnSearch.Size = new System.Drawing.Size(75, 29);
             this.btnSearch.TabIndex = 9;
             this.btnSearch.Text = "获取用户";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -279,21 +279,22 @@
             // 
             // btnExprot
             // 
-            this.btnExprot.Location = new System.Drawing.Point(217, 149);
+            this.btnExprot.Location = new System.Drawing.Point(217, 135);
             this.btnExprot.Name = "btnExprot";
-            this.btnExprot.Size = new System.Drawing.Size(75, 40);
+            this.btnExprot.Size = new System.Drawing.Size(75, 29);
             this.btnExprot.TabIndex = 8;
             this.btnExprot.Text = "导出";
             this.btnExprot.UseVisualStyleBackColor = true;
+            this.btnExprot.Click += new System.EventHandler(this.btnExprot_Click);
             // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.rbtDue_c);
             this.groupBox5.Controls.Add(this.rbtDue_b);
             this.groupBox5.Controls.Add(this.rbtDue_a);
-            this.groupBox5.Location = new System.Drawing.Point(6, 103);
+            this.groupBox5.Location = new System.Drawing.Point(8, 92);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(288, 43);
+            this.groupBox5.Size = new System.Drawing.Size(286, 40);
             this.groupBox5.TabIndex = 7;
             this.groupBox5.TabStop = false;
             // 
@@ -337,9 +338,9 @@
             this.groupBox4.Controls.Add(this.rbtStatus_c);
             this.groupBox4.Controls.Add(this.rbtStatus_b);
             this.groupBox4.Controls.Add(this.rbtStatus_a);
-            this.groupBox4.Location = new System.Drawing.Point(8, 58);
+            this.groupBox4.Location = new System.Drawing.Point(8, 52);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(286, 43);
+            this.groupBox4.Size = new System.Drawing.Size(286, 40);
             this.groupBox4.TabIndex = 6;
             this.groupBox4.TabStop = false;
             // 
@@ -383,9 +384,9 @@
             this.groupBox3.Controls.Add(this.rbtType_c);
             this.groupBox3.Controls.Add(this.rbtType_b);
             this.groupBox3.Controls.Add(this.rbtType_a);
-            this.groupBox3.Location = new System.Drawing.Point(8, 13);
+            this.groupBox3.Location = new System.Drawing.Point(8, 12);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(286, 43);
+            this.groupBox3.Size = new System.Drawing.Size(286, 40);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
             // 
@@ -458,16 +459,46 @@
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.txtUserName);
             this.groupBox2.Controls.Add(this.label1);
-            this.groupBox2.Location = new System.Drawing.Point(624, 205);
+            this.groupBox2.Location = new System.Drawing.Point(624, 176);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(301, 536);
+            this.groupBox2.Size = new System.Drawing.Size(301, 501);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "用户信息";
             // 
+            // chkNews
+            // 
+            this.chkNews.AutoSize = true;
+            this.chkNews.Location = new System.Drawing.Point(128, 367);
+            this.chkNews.Name = "chkNews";
+            this.chkNews.Size = new System.Drawing.Size(48, 16);
+            this.chkNews.TabIndex = 33;
+            this.chkNews.Text = "资讯";
+            this.chkNews.UseVisualStyleBackColor = true;
+            // 
+            // chkQuery
+            // 
+            this.chkQuery.AutoSize = true;
+            this.chkQuery.Location = new System.Drawing.Point(72, 367);
+            this.chkQuery.Name = "chkQuery";
+            this.chkQuery.Size = new System.Drawing.Size(48, 16);
+            this.chkQuery.TabIndex = 32;
+            this.chkQuery.Text = "报价";
+            this.chkQuery.UseVisualStyleBackColor = true;
+            // 
+            // chkSendOrder
+            // 
+            this.chkSendOrder.AutoSize = true;
+            this.chkSendOrder.Location = new System.Drawing.Point(16, 367);
+            this.chkSendOrder.Name = "chkSendOrder";
+            this.chkSendOrder.Size = new System.Drawing.Size(48, 16);
+            this.chkSendOrder.TabIndex = 31;
+            this.chkSendOrder.Text = "抢单";
+            this.chkSendOrder.UseVisualStyleBackColor = true;
+            // 
             // txtLastNews
             // 
-            this.txtLastNews.Location = new System.Drawing.Point(95, 471);
+            this.txtLastNews.Location = new System.Drawing.Point(95, 443);
             this.txtLastNews.Name = "txtLastNews";
             this.txtLastNews.ReadOnly = true;
             this.txtLastNews.Size = new System.Drawing.Size(197, 21);
@@ -476,7 +507,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(12, 475);
+            this.label12.Location = new System.Drawing.Point(12, 447);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(77, 12);
             this.label12.TabIndex = 29;
@@ -484,7 +515,7 @@
             // 
             // txtLastQuote
             // 
-            this.txtLastQuote.Location = new System.Drawing.Point(95, 445);
+            this.txtLastQuote.Location = new System.Drawing.Point(95, 418);
             this.txtLastQuote.Name = "txtLastQuote";
             this.txtLastQuote.ReadOnly = true;
             this.txtLastQuote.Size = new System.Drawing.Size(197, 21);
@@ -493,7 +524,7 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 449);
+            this.label11.Location = new System.Drawing.Point(12, 422);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(77, 12);
             this.label11.TabIndex = 27;
@@ -535,7 +566,7 @@
             // 
             // btnDelUser
             // 
-            this.btnDelUser.Location = new System.Drawing.Point(95, 500);
+            this.btnDelUser.Location = new System.Drawing.Point(95, 469);
             this.btnDelUser.Name = "btnDelUser";
             this.btnDelUser.Size = new System.Drawing.Size(197, 29);
             this.btnDelUser.TabIndex = 22;
@@ -545,7 +576,7 @@
             // 
             // btnUpdType
             // 
-            this.btnUpdType.Location = new System.Drawing.Point(193, 385);
+            this.btnUpdType.Location = new System.Drawing.Point(193, 360);
             this.btnUpdType.Name = "btnUpdType";
             this.btnUpdType.Size = new System.Drawing.Size(99, 29);
             this.btnUpdType.TabIndex = 21;
@@ -555,7 +586,7 @@
             // 
             // btnUpDuetime
             // 
-            this.btnUpDuetime.Location = new System.Drawing.Point(69, 327);
+            this.btnUpDuetime.Location = new System.Drawing.Point(69, 303);
             this.btnUpDuetime.Name = "btnUpDuetime";
             this.btnUpDuetime.Size = new System.Drawing.Size(225, 29);
             this.btnUpDuetime.TabIndex = 11;
@@ -567,7 +598,7 @@
             // 
             this.dtpDueTime.CustomFormat = "yyyy-MM-dd HH:mm:ss";
             this.dtpDueTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtpDueTime.Location = new System.Drawing.Point(69, 303);
+            this.dtpDueTime.Location = new System.Drawing.Point(69, 279);
             this.dtpDueTime.Name = "dtpDueTime";
             this.dtpDueTime.ShowUpDown = true;
             this.dtpDueTime.Size = new System.Drawing.Size(225, 21);
@@ -575,7 +606,7 @@
             // 
             // txtLastAllTime
             // 
-            this.txtLastAllTime.Location = new System.Drawing.Point(95, 419);
+            this.txtLastAllTime.Location = new System.Drawing.Point(95, 393);
             this.txtLastAllTime.Name = "txtLastAllTime";
             this.txtLastAllTime.ReadOnly = true;
             this.txtLastAllTime.Size = new System.Drawing.Size(197, 21);
@@ -584,7 +615,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 422);
+            this.label8.Location = new System.Drawing.Point(12, 396);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(77, 12);
             this.label8.TabIndex = 14;
@@ -592,7 +623,7 @@
             // 
             // txtStatus
             // 
-            this.txtStatus.Location = new System.Drawing.Point(220, 361);
+            this.txtStatus.Location = new System.Drawing.Point(220, 335);
             this.txtStatus.Name = "txtStatus";
             this.txtStatus.ReadOnly = true;
             this.txtStatus.Size = new System.Drawing.Size(74, 21);
@@ -601,7 +632,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(160, 364);
+            this.label7.Location = new System.Drawing.Point(160, 338);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(53, 12);
             this.label7.TabIndex = 12;
@@ -609,7 +640,7 @@
             // 
             // txtType
             // 
-            this.txtType.Location = new System.Drawing.Point(69, 361);
+            this.txtType.Location = new System.Drawing.Point(69, 335);
             this.txtType.Name = "txtType";
             this.txtType.ReadOnly = true;
             this.txtType.Size = new System.Drawing.Size(81, 21);
@@ -618,7 +649,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(8, 364);
+            this.label6.Location = new System.Drawing.Point(8, 338);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(53, 12);
             this.label6.TabIndex = 10;
@@ -627,7 +658,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(10, 309);
+            this.label5.Location = new System.Drawing.Point(10, 285);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 12);
             this.label5.TabIndex = 8;
@@ -635,18 +666,18 @@
             // 
             // txtLinkman
             // 
-            this.txtLinkman.Location = new System.Drawing.Point(10, 138);
+            this.txtLinkman.Location = new System.Drawing.Point(10, 136);
             this.txtLinkman.Multiline = true;
             this.txtLinkman.Name = "txtLinkman";
             this.txtLinkman.ReadOnly = true;
             this.txtLinkman.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtLinkman.Size = new System.Drawing.Size(284, 160);
+            this.txtLinkman.Size = new System.Drawing.Size(284, 139);
             this.txtLinkman.TabIndex = 7;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 122);
+            this.label4.Location = new System.Drawing.Point(13, 120);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(41, 12);
             this.label4.TabIndex = 6;
@@ -654,7 +685,7 @@
             // 
             // txtCompany
             // 
-            this.txtCompany.Location = new System.Drawing.Point(69, 94);
+            this.txtCompany.Location = new System.Drawing.Point(69, 93);
             this.txtCompany.Name = "txtCompany";
             this.txtCompany.ReadOnly = true;
             this.txtCompany.Size = new System.Drawing.Size(225, 21);
@@ -663,7 +694,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(10, 97);
+            this.label3.Location = new System.Drawing.Point(10, 96);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(41, 12);
             this.label3.TabIndex = 4;
@@ -703,41 +734,11 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "用户名";
             // 
-            // chkNews
-            // 
-            this.chkNews.AutoSize = true;
-            this.chkNews.Location = new System.Drawing.Point(128, 392);
-            this.chkNews.Name = "chkNews";
-            this.chkNews.Size = new System.Drawing.Size(48, 16);
-            this.chkNews.TabIndex = 33;
-            this.chkNews.Text = "资讯";
-            this.chkNews.UseVisualStyleBackColor = true;
-            // 
-            // chkQuery
-            // 
-            this.chkQuery.AutoSize = true;
-            this.chkQuery.Location = new System.Drawing.Point(72, 392);
-            this.chkQuery.Name = "chkQuery";
-            this.chkQuery.Size = new System.Drawing.Size(48, 16);
-            this.chkQuery.TabIndex = 32;
-            this.chkQuery.Text = "报价";
-            this.chkQuery.UseVisualStyleBackColor = true;
-            // 
-            // chkSendOrder
-            // 
-            this.chkSendOrder.AutoSize = true;
-            this.chkSendOrder.Location = new System.Drawing.Point(16, 392);
-            this.chkSendOrder.Name = "chkSendOrder";
-            this.chkSendOrder.Size = new System.Drawing.Size(48, 16);
-            this.chkSendOrder.TabIndex = 31;
-            this.chkSendOrder.Text = "抢单";
-            this.chkSendOrder.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(930, 746);
+            this.ClientSize = new System.Drawing.Size(930, 678);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgvData);

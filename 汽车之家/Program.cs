@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
@@ -16,15 +14,18 @@ namespace Aide
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-
-            Tool.service.Url = System.Configuration.ConfigurationManager.AppSettings["dataSrvUrl"];
-
-            Application.Run(new FormLogin());
+            //Tool.service.Url = System.Configuration.ConfigurationManager.AppSettings["dataSrvUrl"];
+            var form = new FormLogin(Site.Qiche);
+            if(form.ShowDialog() == DialogResult.OK)
+            {
+                Application.Run(new FormMain(form.qiche, form.yiche));
+            }
         }
     }
 
     public class Tool
     {
+        public static Site site;
         public static Service.Service service = new Service.Service();
 
         public static Service.User userInfo_qc;

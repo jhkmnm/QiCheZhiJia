@@ -7,28 +7,10 @@ using System.Linq;
 public class DAL
 {
     #region Area
-    public List<Area> GetProvince()
+    public List<Area> GetArea(string site)
     {
         return DB.Context.From<Area>()
-            .Select(Area._.ProId, Area._.Pro)
-            .Distinct()
-            .ToList();
-    }
-
-    public List<Area> GetCity(string proId)
-    {
-        var where = new Where<Area>();
-        where.And(w => w.ProId == proId);
-
-        return DB.Context.From<Area>()
-            .Where(where)
-            .ToList();
-    }
-
-    public List<Area> GetArea()
-    {
-        return DB.Context.From<Area>()
-            .Where(w => w.IsChecked)
+            .Where(w => w.Site == site)
             .ToList();
     }
 
@@ -37,9 +19,9 @@ public class DAL
         return DB.Context.Update(area);
     }
 
-    public bool CityIsChecked(string city, string city2)
+    public bool CityIsChecked(string site, string city, string city2)
     {
-        var v = DB.Context.From<Area>().Where(w => (w.City == city || w.City == city2));
+        var v = DB.Context.From<Area>().Where(w => w.Site == site && (w.City == city || w.City == city2));
         return v.Count() > 0;
     }
     #endregion
@@ -228,21 +210,24 @@ public class DAL
     #endregion
 
     #region OrderType
-    public List<OrderType> GetOrderTypes()
+    public List<OrderType> GetOrderTypes(string site)
     {
-        return DB.Context.From<OrderType>().ToList();
+        return DB.Context.From<OrderType>()
+            .Where(w => w.Site == site)
+            .ToList();
     }
 
     public int AddOrderTypes(List<OrderType> data)
     {
-        return DB.Context.Insert<OrderType>(data);
+        return DB.Context.Insert(data);
     }
 
-    public int UpdateOrderTypeChecked(int id)
+    public int UpdateOrderTypeChecked(List<OrderType> order)
     {
-        var model = DB.Context.From<OrderType>().Where(w => w.ID == id).First();
-        model.IsCheck = !model.IsCheck;
-        return DB.Context.Update<OrderType>(model);
+        return DB.Context.Update(order);
+        //var model = DB.Context.From<OrderType>().Where(w => w.ID == id).First();
+        //model.IsCheck = !model.IsCheck;
+        //return DB.Context.Update(model);
     }
     #endregion
 
@@ -254,14 +239,15 @@ public class DAL
 
     public int AddSpecs(List<Spec> data)
     {
-        return DB.Context.Insert<Spec>(data);
+        return DB.Context.Insert(data);
     }
 
-    public int UpdateSpecsChecked(int id)
+    public int UpdateSpecsChecked(List<Spec> spec)
     {
-        var model = DB.Context.From<Spec>().Where(w => w.ID == id).First();
-        model.IsCheck = !model.IsCheck;
-        return DB.Context.Update<Spec>(model);
+        return DB.Context.Update(spec);
+        //var model = DB.Context.From<Spec>().Where(w => w.ID == id).First();
+        //model.IsCheck = !model.IsCheck;
+        //return DB.Context.Update(model);
     }
     #endregion
 }

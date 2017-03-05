@@ -15,6 +15,7 @@ namespace Model
     {
         #region Model
         private int _ID;
+        private string _Site;
         private string _TypeName;
         private bool _IsCheck;
 
@@ -29,6 +30,19 @@ namespace Model
             {
                 this.OnPropertyValueChange("ID");
                 this._ID = value;
+            }
+        }
+        /// <summary>
+        /// 
+        /// </summary>
+        [Field("Site")]
+        public string Site
+        {
+            get { return _Site; }
+            set
+            {
+                this.OnPropertyValueChange("Site");
+                this._Site = value;
             }
         }
         /// <summary>
@@ -76,7 +90,8 @@ namespace Model
         {
             return new Field[] {
 				_.ID,
-				_.TypeName,
+                _.Site,
+                _.TypeName,
 				_.IsCheck,
 			};
         }
@@ -87,6 +102,7 @@ namespace Model
         {
             return new object[] {
 				this._ID,
+                this._Site,
 				this._TypeName,
 				this._IsCheck,
 			};
@@ -115,6 +131,7 @@ namespace Model
             /// 
             /// </summary>
             public readonly static Field ID = new Field("ID", "OrderType", "");
+            public readonly static Field Site = new Field("Site", "OrderType", "");
             /// <summary>
             /// 
             /// </summary>

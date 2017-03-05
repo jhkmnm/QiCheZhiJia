@@ -47,6 +47,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>DLL\HttpHelper.dll</HintPath>
     </Reference>
+    <Reference Include="McDull.Windows.Forms">
+      <HintPath>DLL\McDull.Windows.Forms.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -72,10 +75,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CarControl.cs">
+    <Compile Include="Control\CarControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CarControl.Designer.cs">
+    <Compile Include="Control\CarControl.Designer.cs">
       <DependentUpon>CarControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Dama2.cs" />
@@ -99,6 +102,18 @@
     <Compile Include="FormLogin.Designer.cs">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormOrderCondition.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormOrderCondition.Designer.cs">
+      <DependentUpon>FormOrderCondition.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormQCYP.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,22 +127,22 @@
       <DependentUpon>Form_YC.cs</DependentUpon>
     </Compile>
     <Compile Include="IniFile.cs" />
-    <Compile Include="ImgControl.cs">
+    <Compile Include="Control\ImgControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ImgControl.Designer.cs">
+    <Compile Include="Control\ImgControl.Designer.cs">
       <DependentUpon>ImgControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="ImgControl1.cs">
+    <Compile Include="Control\ImgControl1.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ImgControl1.Designer.cs">
+    <Compile Include="Control\ImgControl1.Designer.cs">
       <DependentUpon>ImgControl1.cs</DependentUpon>
     </Compile>
-    <Compile Include="JobControl.cs">
+    <Compile Include="Control\JobControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="JobControl.Designer.cs">
+    <Compile Include="Control\JobControl.Designer.cs">
       <DependentUpon>JobControl.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\Area.cs" />
@@ -152,10 +167,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QiCheZhiJia.cs" />
-    <Compile Include="UcPagerEx.cs">
+    <Compile Include="Control\UcPagerEx.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="UcPagerEx.Designer.cs">
+    <Compile Include="Control\UcPagerEx.Designer.cs">
       <DependentUpon>UcPagerEx.cs</DependentUpon>
     </Compile>
     <Compile Include="UploadFile.cs">
@@ -170,7 +185,7 @@
       <DependentUpon>Reference.map</DependentUpon>
     </Compile>
     <Compile Include="YiChe.cs" />
-    <EmbeddedResource Include="CarControl.resx">
+    <EmbeddedResource Include="Control\CarControl.resx">
       <DependentUpon>CarControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormColor.resx">
@@ -182,19 +197,25 @@
     <EmbeddedResource Include="FormLogin.resx">
       <DependentUpon>FormLogin.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormOrderCondition.resx">
+      <DependentUpon>FormOrderCondition.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormQCYP.resx">
       <DependentUpon>FormQCYP.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_YC.resx">
       <DependentUpon>Form_YC.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ImgControl.resx">
+    <EmbeddedResource Include="Control\ImgControl.resx">
       <DependentUpon>ImgControl.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ImgControl1.resx">
+    <EmbeddedResource Include="Control\ImgControl1.resx">
       <DependentUpon>ImgControl1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="JobControl.resx">
+    <EmbeddedResource Include="Control\JobControl.resx">
       <DependentUpon>JobControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PhotoSelectNew.resx">
@@ -210,7 +231,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="UcPagerEx.resx">
+    <EmbeddedResource Include="Control\UcPagerEx.resx">
       <DependentUpon>UcPagerEx.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UploadFile.resx">
@@ -223,7 +244,11 @@
     <None Include="packages.config" />
     <None Include="Properties\DataSources\Car.datasource" />
     <None Include="Properties\DataSources\Merchandise.datasource" />
+    <None Include="Properties\DataSources\Model.Area.datasource" />
     <None Include="Properties\DataSources\Model.News.datasource" />
+    <None Include="Properties\DataSources\Model.OrderType.datasource" />
+    <None Include="Properties\DataSources\Model.Spec.datasource" />
+    <None Include="Properties\DataSources\NewListDTP.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

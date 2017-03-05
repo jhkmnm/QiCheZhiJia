@@ -202,7 +202,7 @@ public class DAL
     #endregion
 
     #region LoginLog
-    public int UpdateLoginLogByLogin(int userId)
+    public DateTime? UpdateLoginLogByLogin(int userId)
     {
         var today = DateTime.Today.ToShortDateString();
 
@@ -236,7 +236,7 @@ public class DAL
             result = DB.Context.Update(log);
         }
         DB.Context.Update(user);
-        return result;
+        return user.DueTime;
     }
 
     public int UpdateLoginLogByLogOut(int userId)

@@ -55,12 +55,12 @@ namespace Aide
         public string cookie = "";
         DAL dal = new DAL();
 
-        public string pid{get;set;}
-        public string cid{get;set;}
-        public string sid{get;set;}
-        public string fid { get; set; }
-        public string oid{get;set;}
-        public List<Nicks> nicks { get; set; }
+        //public string pid{get;set;}
+        //public string cid{get;set;}
+        //public string sid{get;set;}
+        //public string fid { get; set; }
+        //public string oid{get;set;}
+        //public List<Nicks> nicks { get; set; }
 
         public QiCheZhiJia(string js)
         {
@@ -299,18 +299,18 @@ namespace Aide
             return GetHtml(dmsOrder);
         }
 
-        public List<Rows> GetNicks()
+        public List<Nicks> GetNicks()
         {
             HAP.HtmlDocument htmlDoc = GetHtml("http://ics.autohome.com.cn/dms/Order/GetDealerSales");
-
             var result = JsonConvert.DeserializeObject<NicksResult>(htmlDoc.DocumentNode.OuterHtml);
-
-            return result.rows;
+            List<Nicks> nicks = new List<Nicks>();
+            result.rows.ForEach(f => nicks.Add(new Nicks { Check = true, Id = f.saleID.ToString(), Nick = f.saleName }));
+            return nicks;
         }
 
-        private List<PublicOrder> GetNewOrder(string pid, string cid, string sid, string fid, string oid)
+        private List<PublicOrder> GetNewOrder()
         {
-            HAP.HtmlDocument htmlDoc = GetHtml(string.Format(publicOrder, pid, cid, fid, sid, oid));
+            HAP.HtmlDocument htmlDoc = GetHtml(string.Format(publicOrder, "", "", "", "", ""));
 
             var result = JsonConvert.DeserializeObject<ReturnResult>(htmlDoc.DocumentNode.OuterHtml);
 
@@ -325,7 +325,7 @@ namespace Aide
             ViewResult result = new ViewResult();
             while (true)
             {
-                var orders = GetNewOrder(pid, cid, fid, sid, oid);
+                var orders = GetNewOrder();
                 result.Result = false;
                 if (orders.Count > 0)
                 {
@@ -421,10 +421,10 @@ namespace Aide
         {
             var result = false;
 
-            if (dal.CityIsChecked(order.IntentionCityName, order.CityName))
+            if (dal.CityIsChecked("汽车", order.IntentionCityName, order.CityName))
             {
                 result = true;
-                var ordertype = dal.GetOrderTypes();
+                var ordertype = dal.GetOrderTypes("汽车");
                 var spec = dal.GetSpecs();
 
                 if(ordertype.Any(w => !w.IsCheck))
@@ -549,11 +549,11 @@ namespace Aide
             }
             foreach (int i in prices)
             {
-                sb.AppendFormat("&prices%5B%5D=" + i);
+                sb.AppendFormat("&prices%5B%5D=" + (i / 10000.0));
             }
             foreach (int i in minPrices)
             {
-                sb.AppendFormat("&minPrices%5B%5D=" + i);
+                sb.AppendFormat("&minPrices%5B%5D=" + (i / 10000.0));
             }
 
             var item = new HttpItem
@@ -579,11 +579,11 @@ namespace Aide
         #endregion
 
         #region 资讯
-        public int PostNews(List<NewListDTP> NewsList)
+        public string[] PostNews(List<NewListDTP> NewsList)
         {
-            //var doc = GetHtml(news_draft);
-            //var draft = JsonConvert.DeserializeObject<NewDraft>(doc.DocumentNode.OuterHtml);
             int count = 0;
+            int fail = 0;
+            string str = "";
             foreach (var data in NewsList)//draft.Data
             {
                 var newsinfo = GetNewsInfo(model_TS + data.NewsId.ToString());
@@ -608,13 +608,18 @@ namespace Aide
                     var result = JsonConvert.DeserializeObject<NewsResult>(htmlr.Html);
                     if (result.NewsId > 0)
                         count++;
+                    else
+                    {
+                        fail++;
+                        str += data.NewsId + ":" + result.ErrorMessage +";";
+                    }
                 }
                 catch(Exception)
                 {
 
                 }
             }
-            return count;
+            return new string[] { count.ToString(), "失败" + fail + "条, " + str };
         }        
         
         private QiCheNewsPostData GetNewsInfo(string newurl)

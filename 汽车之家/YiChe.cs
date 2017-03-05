@@ -46,21 +46,16 @@ namespace Aide
 
         DAL dal = new DAL();
 
-        string cookie = "";        
-        private static string StrJS = "";
+        string cookie = "";
         string company = "";
         string viewstate = "";
         string viewrator = "";
         string dccid = "";
         string dsid = "";
         string hacdsid = "";
-        public string Type { get; set; }
-        public string Pro { get; set; }
-        public string City { get; set; }
 
-        public YiChe(string js)
+        public YiChe()
         {
-            StrJS = js;
         }
 
         #region Html
@@ -450,14 +445,14 @@ namespace Aide
             
         }
 
-        private HtmlDocument LoadOrder(string type, string pro, string city)
+        private HtmlDocument LoadOrder()
         {
-            var postdata = "ScriptManager1=" + HttpHelper.URLEncode("UpdatePanel1|btnSearch") + "&__EVENTTARGET=&__EVENTARGUMENT=&HADRDCCID=&HACBCIDSID=grvNewCarOpportunity_AllCheckBox&HCBCIDSID=grvNewCarOpportunity_CheckBox_0&__VIEWSTATE=" + HttpHelper.URLEncode(viewstate) + "&__VIEWSTATEGENERATOR=" + viewrator + "&__VIEWSTATEENCRYPTED=&hf_OrderType=" + type + "&hf_Province=" + pro + "&hf_Location=" + city + "&__ASYNCPOST=true&btnSearch=" + HttpHelper.URLEncode("查询");
+            var postdata = "ScriptManager1=" + HttpHelper.URLEncode("UpdatePanel1|btnSearch") + "&__EVENTTARGET=&__EVENTARGUMENT=&HADRDCCID=&HACBCIDSID=grvNewCarOpportunity_AllCheckBox&HCBCIDSID=grvNewCarOpportunity_CheckBox_0&__VIEWSTATE=" + HttpHelper.URLEncode(viewstate) + "&__VIEWSTATEGENERATOR=" + viewrator + "&__VIEWSTATEENCRYPTED=&hf_OrderType=0&hf_Province=0&hf_Location=0&__ASYNCPOST=true&btnSearch=" + HttpHelper.URLEncode("查询");
 
             var item = new HttpItem
             {
                 URL = commonorder,
-                Postdata = string.Format(postdata, type, pro, city, viewstate, viewrator),
+                Postdata = postdata,
                 Cookie = app_Shangji_Cookie,
                 ContentType = "application/x-www-form-urlencoded",
                 Method = "POST",
@@ -471,13 +466,13 @@ namespace Aide
             ViewResult result = new ViewResult();
             while (true)
             {
-                var htmlDoc = LoadOrder(Type, Pro, City);
+                var htmlDoc = LoadOrder();
                 var strcount = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"commonarea\"]/ul/li[2]/strong").InnerText.Trim();
                 int ordercount = 0;
                 int.TryParse(strcount, out ordercount);
                 StringBuilder sb = new StringBuilder();
 
-                var staticstr = "ScriptManager1=" + HttpHelper.URLEncode("UpdatePanel1|btnFetchAll") + "&hf_OrderType=" + Type + "&hf_Province=" + Pro + " &hf_Location=" + City + "&HACBCIDSID=" + hacdsid + "&HADRDCCID=" + HttpHelper.URLEncode(dccid) + "&HCBCIDSID=" + HttpHelper.URLEncode(dsid) + "&__VIEWSTATEGENERATOR=" + viewrator + "&__VIEWSTATEENCRYPTED=&__VIEWSTATE=" + HttpHelper.URLEncode(viewstate) + "&__EVENTTARGET={0}&__EVENTARGUMENT={1}&__ASYNCPOST=true&";
+                var staticstr = "ScriptManager1=" + HttpHelper.URLEncode("UpdatePanel1|btnFetchAll") + "&hf_OrderType=0&hf_Province=0&hf_Location=0&HACBCIDSID=" + hacdsid + "&HADRDCCID=" + HttpHelper.URLEncode(dccid) + "&HCBCIDSID=" + HttpHelper.URLEncode(dsid) + "&__VIEWSTATEGENERATOR=" + viewrator + "&__VIEWSTATEENCRYPTED=&__VIEWSTATE=" + HttpHelper.URLEncode(viewstate) + "&__EVENTTARGET={0}&__EVENTARGUMENT={1}&__ASYNCPOST=true&";
                 int page = 1;
                 result.Result = false;
 

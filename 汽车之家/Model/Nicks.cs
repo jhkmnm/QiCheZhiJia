@@ -155,8 +155,6 @@ namespace Model
 
     public class Rows
     {
-        private bool selected = true;
-        public bool IsSelected { get { return selected; } set { selected = value; } }
         public int saleID{get;set;}
         public string saleName{get;set;}
     }
