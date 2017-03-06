@@ -33,6 +33,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.btnSend_Ex = new System.Windows.Forms.Button();
+            this.carA = new Aide.CarControl();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -71,7 +72,15 @@
             this.label40 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
+            this.imgPosition4_hdf = new Aide.ImgControl();
+            this.imgPosition3_hdf = new Aide.ImgControl();
+            this.imgPosition2_hdf = new Aide.ImgControl();
+            this.imgPosition1_hdf = new Aide.ImgControl();
+            this.imgLogo_hdf = new Aide.ImgControl();
+            this.carControl1 = new Aide.CarControl();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.htmlTextBox1 = new McDull.Windows.Forms.HTMLTextBox();
+            this.label22 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -95,15 +104,6 @@
             this.rbtSource1 = new System.Windows.Forms.RadioButton();
             this.dtpPromotionB = new System.Windows.Forms.DateTimePicker();
             this.label30 = new System.Windows.Forms.Label();
-            this.label22 = new System.Windows.Forms.Label();
-            this.carA = new Aide.CarControl();
-            this.imgPosition4_hdf = new Aide.ImgControl();
-            this.imgPosition3_hdf = new Aide.ImgControl();
-            this.imgPosition2_hdf = new Aide.ImgControl();
-            this.imgPosition1_hdf = new Aide.ImgControl();
-            this.imgLogo_hdf = new Aide.ImgControl();
-            this.carControl1 = new Aide.CarControl();
-            this.htmlTextBox1 = new McDull.Windows.Forms.HTMLTextBox();
             this.tabControl2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.pColor.SuspendLayout();
@@ -119,7 +119,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gpbCarList.Location = new System.Drawing.Point(2, 56);
             this.gpbCarList.Name = "gpbCarList";
-            this.gpbCarList.Size = new System.Drawing.Size(702, 72);
+            this.gpbCarList.Size = new System.Drawing.Size(719, 72);
             this.gpbCarList.TabIndex = 4;
             this.gpbCarList.TabStop = false;
             this.gpbCarList.Text = "车型";
@@ -134,7 +134,7 @@
             this.tabControl2.Location = new System.Drawing.Point(2, 153);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(52, 617);
+            this.tabControl2.Size = new System.Drawing.Size(719, 617);
             this.tabControl2.TabIndex = 15;
             // 
             // tabPage1
@@ -158,7 +158,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(44, 591);
+            this.tabPage1.Size = new System.Drawing.Size(711, 591);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "快捷发布";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -183,6 +183,15 @@
             this.btnSend_Ex.Text = "保存";
             this.btnSend_Ex.UseVisualStyleBackColor = true;
             this.btnSend_Ex.Click += new System.EventHandler(this.btnSend_Ex_Click);
+            // 
+            // carA
+            // 
+            this.carA.CarDataSource = null;
+            this.carA.Colors = null;
+            this.carA.Location = new System.Drawing.Point(87, 6);
+            this.carA.Name = "carA";
+            this.carA.Size = new System.Drawing.Size(603, 353);
+            this.carA.TabIndex = 111;
             // 
             // label20
             // 
@@ -597,6 +606,80 @@
             this.label32.TabIndex = 61;
             this.label32.Text = "*";
             // 
+            // imgPosition4_hdf
+            // 
+            this.imgPosition4_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition4_hdf.CSID = null;
+            this.imgPosition4_hdf.ImageUpload = null;
+            this.imgPosition4_hdf.ImgSelectID = null;
+            this.imgPosition4_hdf.ImgUrl = null;
+            this.imgPosition4_hdf.Location = new System.Drawing.Point(530, 703);
+            this.imgPosition4_hdf.Name = "imgPosition4_hdf";
+            this.imgPosition4_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition4_hdf.TabIndex = 143;
+            this.imgPosition4_hdf.yiche = null;
+            // 
+            // imgPosition3_hdf
+            // 
+            this.imgPosition3_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition3_hdf.CSID = null;
+            this.imgPosition3_hdf.ImageUpload = null;
+            this.imgPosition3_hdf.ImgSelectID = null;
+            this.imgPosition3_hdf.ImgUrl = null;
+            this.imgPosition3_hdf.Location = new System.Drawing.Point(384, 703);
+            this.imgPosition3_hdf.Name = "imgPosition3_hdf";
+            this.imgPosition3_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition3_hdf.TabIndex = 142;
+            this.imgPosition3_hdf.yiche = null;
+            // 
+            // imgPosition2_hdf
+            // 
+            this.imgPosition2_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition2_hdf.CSID = null;
+            this.imgPosition2_hdf.ImageUpload = null;
+            this.imgPosition2_hdf.ImgSelectID = null;
+            this.imgPosition2_hdf.ImgUrl = null;
+            this.imgPosition2_hdf.Location = new System.Drawing.Point(236, 703);
+            this.imgPosition2_hdf.Name = "imgPosition2_hdf";
+            this.imgPosition2_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition2_hdf.TabIndex = 141;
+            this.imgPosition2_hdf.yiche = null;
+            // 
+            // imgPosition1_hdf
+            // 
+            this.imgPosition1_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition1_hdf.CSID = null;
+            this.imgPosition1_hdf.ImageUpload = null;
+            this.imgPosition1_hdf.ImgSelectID = null;
+            this.imgPosition1_hdf.ImgUrl = null;
+            this.imgPosition1_hdf.Location = new System.Drawing.Point(90, 703);
+            this.imgPosition1_hdf.Name = "imgPosition1_hdf";
+            this.imgPosition1_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition1_hdf.TabIndex = 140;
+            this.imgPosition1_hdf.yiche = null;
+            // 
+            // imgLogo_hdf
+            // 
+            this.imgLogo_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgLogo_hdf.CSID = null;
+            this.imgLogo_hdf.ImageUpload = null;
+            this.imgLogo_hdf.ImgSelectID = null;
+            this.imgLogo_hdf.ImgUrl = null;
+            this.imgLogo_hdf.Location = new System.Drawing.Point(90, 471);
+            this.imgLogo_hdf.Name = "imgLogo_hdf";
+            this.imgLogo_hdf.Size = new System.Drawing.Size(300, 224);
+            this.imgLogo_hdf.TabIndex = 139;
+            this.imgLogo_hdf.yiche = null;
+            // 
+            // carControl1
+            // 
+            this.carControl1.CarDataSource = null;
+            this.carControl1.Colors = null;
+            this.carControl1.Location = new System.Drawing.Point(90, 4);
+            this.carControl1.Name = "carControl1";
+            this.carControl1.Size = new System.Drawing.Size(574, 312);
+            this.carControl1.TabIndex = 96;
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.htmlTextBox1);
@@ -611,12 +694,29 @@
             this.groupBox3.Controls.Add(this.textBox3);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.label8);
-            this.groupBox3.Location = new System.Drawing.Point(46, 158);
+            this.groupBox3.Location = new System.Drawing.Point(166, 283);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(658, 608);
+            this.groupBox3.Size = new System.Drawing.Size(476, 453);
             this.groupBox3.TabIndex = 10;
             this.groupBox3.TabStop = false;
             this.groupBox3.Visible = false;
+            // 
+            // htmlTextBox1
+            // 
+            this.htmlTextBox1.Location = new System.Drawing.Point(25, 122);
+            this.htmlTextBox1.Name = "htmlTextBox1";
+            this.htmlTextBox1.Size = new System.Drawing.Size(421, 290);
+            this.htmlTextBox1.TabIndex = 82;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.ForeColor = System.Drawing.Color.Red;
+            this.label22.Location = new System.Drawing.Point(456, 23);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(11, 12);
+            this.label22.TabIndex = 81;
+            this.label22.Text = "*";
             // 
             // label13
             // 
@@ -754,7 +854,7 @@
             this.groupBox2.Controls.Add(this.rbtSource1);
             this.groupBox2.Location = new System.Drawing.Point(2, 1);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(702, 55);
+            this.groupBox2.Size = new System.Drawing.Size(719, 55);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "新闻类型";
@@ -866,112 +966,11 @@
             this.label30.TabIndex = 60;
             this.label30.Text = "到";
             // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.ForeColor = System.Drawing.Color.Red;
-            this.label22.Location = new System.Drawing.Point(456, 23);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(11, 12);
-            this.label22.TabIndex = 81;
-            this.label22.Text = "*";
-            // 
-            // carA
-            // 
-            this.carA.CarDataSource = null;
-            this.carA.Colors = null;
-            this.carA.Location = new System.Drawing.Point(87, 6);
-            this.carA.Name = "carA";
-            this.carA.Size = new System.Drawing.Size(603, 353);
-            this.carA.TabIndex = 111;
-            // 
-            // imgPosition4_hdf
-            // 
-            this.imgPosition4_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition4_hdf.CSID = null;
-            this.imgPosition4_hdf.ImageUpload = null;
-            this.imgPosition4_hdf.ImgSelectID = null;
-            this.imgPosition4_hdf.ImgUrl = null;
-            this.imgPosition4_hdf.Location = new System.Drawing.Point(530, 703);
-            this.imgPosition4_hdf.Name = "imgPosition4_hdf";
-            this.imgPosition4_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition4_hdf.TabIndex = 143;
-            this.imgPosition4_hdf.yiche = null;
-            // 
-            // imgPosition3_hdf
-            // 
-            this.imgPosition3_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition3_hdf.CSID = null;
-            this.imgPosition3_hdf.ImageUpload = null;
-            this.imgPosition3_hdf.ImgSelectID = null;
-            this.imgPosition3_hdf.ImgUrl = null;
-            this.imgPosition3_hdf.Location = new System.Drawing.Point(384, 703);
-            this.imgPosition3_hdf.Name = "imgPosition3_hdf";
-            this.imgPosition3_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition3_hdf.TabIndex = 142;
-            this.imgPosition3_hdf.yiche = null;
-            // 
-            // imgPosition2_hdf
-            // 
-            this.imgPosition2_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition2_hdf.CSID = null;
-            this.imgPosition2_hdf.ImageUpload = null;
-            this.imgPosition2_hdf.ImgSelectID = null;
-            this.imgPosition2_hdf.ImgUrl = null;
-            this.imgPosition2_hdf.Location = new System.Drawing.Point(236, 703);
-            this.imgPosition2_hdf.Name = "imgPosition2_hdf";
-            this.imgPosition2_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition2_hdf.TabIndex = 141;
-            this.imgPosition2_hdf.yiche = null;
-            // 
-            // imgPosition1_hdf
-            // 
-            this.imgPosition1_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition1_hdf.CSID = null;
-            this.imgPosition1_hdf.ImageUpload = null;
-            this.imgPosition1_hdf.ImgSelectID = null;
-            this.imgPosition1_hdf.ImgUrl = null;
-            this.imgPosition1_hdf.Location = new System.Drawing.Point(90, 703);
-            this.imgPosition1_hdf.Name = "imgPosition1_hdf";
-            this.imgPosition1_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition1_hdf.TabIndex = 140;
-            this.imgPosition1_hdf.yiche = null;
-            // 
-            // imgLogo_hdf
-            // 
-            this.imgLogo_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgLogo_hdf.CSID = null;
-            this.imgLogo_hdf.ImageUpload = null;
-            this.imgLogo_hdf.ImgSelectID = null;
-            this.imgLogo_hdf.ImgUrl = null;
-            this.imgLogo_hdf.Location = new System.Drawing.Point(90, 471);
-            this.imgLogo_hdf.Name = "imgLogo_hdf";
-            this.imgLogo_hdf.Size = new System.Drawing.Size(300, 224);
-            this.imgLogo_hdf.TabIndex = 139;
-            this.imgLogo_hdf.yiche = null;
-            // 
-            // carControl1
-            // 
-            this.carControl1.CarDataSource = null;
-            this.carControl1.Colors = null;
-            this.carControl1.Location = new System.Drawing.Point(90, 4);
-            this.carControl1.Name = "carControl1";
-            this.carControl1.Size = new System.Drawing.Size(574, 312);
-            this.carControl1.TabIndex = 96;
-            // 
-            // htmlTextBox1
-            // 
-            this.htmlTextBox1.Location = new System.Drawing.Point(80, 103);
-            this.htmlTextBox1.Name = "htmlTextBox1";
-            this.htmlTextBox1.Size = new System.Drawing.Size(570, 290);
-            this.htmlTextBox1.TabIndex = 82;
-            // 
             // Form_YC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(713, 776);
-            this.Controls.Add(this.groupBox3);
+            this.ClientSize = new System.Drawing.Size(730, 776);
             this.Controls.Add(this.tabControl2);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label29);
@@ -980,6 +979,7 @@
             this.Controls.Add(this.dtpPromotionA);
             this.Controls.Add(this.label30);
             this.Controls.Add(this.dtpPromotionB);
+            this.Controls.Add(this.groupBox3);
             this.Name = "Form_YC";
             this.Text = "易车新闻";
             this.tabControl2.ResumeLayout(false);
