@@ -51,6 +51,8 @@ namespace Aide
                 tabControl1.SelectedTab = tabPage2;
             }
 
+            tabControl2.TabPages.Remove(tabPage8);
+
             dgvOrder.AutoGenerateColumns = false;
         }
 

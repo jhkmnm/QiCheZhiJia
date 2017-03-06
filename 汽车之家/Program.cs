@@ -14,7 +14,7 @@ namespace Aide
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Tool.service.Url = System.Configuration.ConfigurationManager.AppSettings["dataSrvUrl"];
+            Tool.service.Url = System.Configuration.ConfigurationManager.AppSettings["dataSrvUrl"];
             var form = new FormLogin(Site.Qiche);
             if(form.ShowDialog() == DialogResult.OK)
             {
