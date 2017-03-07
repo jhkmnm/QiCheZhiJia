@@ -158,7 +158,7 @@ public class DAL
         }
         else
         {
-            uptModel.Time = job.Time;
+            uptModel = job;
             return DB.Context.Update(uptModel);
         }
     }

@@ -45,10 +45,12 @@ namespace Aide
             if(Tool.site == Aide.Site.Qiche)
             {
                 tabControl1.SelectedTab = tabPage1;
+                linkLabel2.Text = "打开汽车之家后台";
             }
             else
             {
                 tabControl1.SelectedTab = tabPage2;
+                linkLabel2.Text = "打开易车网后台";
             }
 
             tabControl2.TabPages.Remove(tabPage8);
@@ -59,58 +61,7 @@ namespace Aide
         #region 窗体事件
         private void FormLogin_Load(object sender, EventArgs e)
         {
-            //string path = AppDomain.CurrentDomain.BaseDirectory + "js.lyt";
-            //if (!File.Exists(path))
-            //{
-            //    MessageBox.Show("js.lyt文件缺失，建议重新解压软件解决！");
-            //    base.Close();
-            //}
-            //qiche = new QiCheZhiJia(File.ReadAllText(path));
-            //yiche = new YiChe();
             InitUser();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //ViewResult result = new ViewResult();
-            //if (site == "汽车")
-            //    result = qiche.Login(txtUserName.Text, txtPassword.Text, txtCode.Text);
-            //else
-            //    result = yiche.Login(txtUserName.Text, txtPassword.Text, txtCode.Text);
-
-            //if (!result.Result)
-            //{
-            //    MessageBox.Show(result.Message);
-            //    if(result.Message.Contains("验证码输入有误"))
-            //    {
-            //        LoadValidateCode();
-            //    }
-            //}
-            //else
-            //{
-            //    panel1.Visible = false;
-            //    if (site == "汽车")
-            //    {
-            //        if (chkSavePass.Checked)
-            //        {
-            //            qiche.SavePw();
-            //        }
-            //        LoadUser(Tool.userInfo_qc);
-            //    }
-            //    else
-            //    {
-            //        if (chkSavePass.Checked)
-            //        {
-            //            yiche.SavePw();
-            //        }
-            //        LoadUser(Tool.userInfo_yc);
-            //    }
-            //}
-        }
-
-        private void btnRefImg_Click(object sender, EventArgs e)
-        {
-            LoadValidateCode();
         }
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
@@ -118,10 +69,12 @@ namespace Aide
             if (tabControl1.SelectedTab == tabPage1)
             {
                 Tool.site = Aide.Site.Qiche;
+                linkLabel2.Text = "打开汽车之家后台";
             }
             else
             {
                 Tool.site = Aide.Site.Yiche;
+                linkLabel2.Text = "打开易车网后台";
             }
             InitUser();
         }
@@ -490,13 +443,28 @@ namespace Aide
             foreach (DataGridViewRow row in dgvOrder.Rows)
             {
                 row.Cells[colSelected.Name].Value = chkAll.Checked;
+                dal.UpdateNickChecked(row.Cells[colSaleID.Name].Value.ToString());
+            }
+        }
+
+        private void dgvOrder_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if(e.ColumnIndex < 0 || e.RowIndex < 0)
+                return;
+
+            if(e.ColumnIndex == colSelected.Index)
+            {
+                dal.UpdateNickChecked(dgvOrder.Rows[e.RowIndex].Cells[colSaleID.Name].Value.ToString());
             }
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            th_qc.Abort();
-            btnSendOrder.Enabled = true;
+            if(th_qc != null)
+            {
+                th_qc.Abort();
+                btnSendOrder.Enabled = true;
+            }            
         }
         #endregion
 
@@ -545,7 +513,7 @@ namespace Aide
         private void Yiche_SendOrderEvent(ViewResult vr)
         {
             this.Invoke(new Action(() =>
-            {                
+            {
                 if (vr.Result)
                     lbxSendOrder_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + vr.Message);
 
@@ -555,8 +523,11 @@ namespace Aide
 
         private void btnStop_YC_Click(object sender, EventArgs e)
         {
-            th_yc.Abort();
-            btnStart_YC.Enabled = true;
+            if (th_yc != null)
+            {
+                th_yc.Abort();
+                btnStart_YC.Enabled = true;
+            }
         }
         #endregion
 
@@ -720,7 +691,7 @@ namespace Aide
                 Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_qc.Id, JobType = "资讯", JobTime = DateTime.Now });
                 Tool.userInfo_qc.NewsNum--;
             }
-        }       
+        }
 
         private void tm_qc_news_Tick(object sender, EventArgs e)
         {
@@ -736,6 +707,14 @@ namespace Aide
         {
             newListDTPBindingSource.DataSource = qiche.GetNewsDraft();
             dgvQCNews.Refresh();
+        }
+
+        private void chkNewsAll_CheckedChanged(object sender, EventArgs e)
+        {
+            foreach(DataGridViewRow row in dgvQCNews.Rows)
+            {
+
+            }
         }
         #endregion
 
@@ -845,7 +824,7 @@ namespace Aide
             }
 
             Process.Start(url);
-        }
+        }        
     }
 
     public class TextValue

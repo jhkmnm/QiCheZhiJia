@@ -20,6 +20,13 @@ namespace Aide
         {
             StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
+
+            if (Tool.userInfo_qc != null)
+                rbtQC.Enabled = false;
+
+            if (Tool.userInfo_yc != null)
+                rbtYC.Enabled = false;
+
             Tool.site = site;
             LoadLogin();
         }

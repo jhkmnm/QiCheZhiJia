@@ -406,9 +406,7 @@ namespace Aide
                     result.Result = true;
                     SendResult(result);
                 }
-                
-                //间隔2分钟
-                Thread.Sleep(1000 * 60 * 1);
+                Thread.Sleep(1000 * 3);
             }
         }
 
@@ -473,11 +471,6 @@ namespace Aide
             }
             return true;
         }
-
-        //private int GetAvg(int total, int count)
-        //{
-        //    return (int)Math.Ceiling(total / (count * 1.0));
-        //}
 
         public delegate void delsendorder(ViewResult vr);
         public event delsendorder SendOrderEvent;

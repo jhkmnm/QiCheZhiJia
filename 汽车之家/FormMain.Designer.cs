@@ -83,6 +83,7 @@
             this.jct_YC_News = new Aide.JobControl();
             this.listBox3 = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label11 = new System.Windows.Forms.Label();
@@ -264,6 +265,7 @@
             this.dgvOrder.RowTemplate.Height = 23;
             this.dgvOrder.Size = new System.Drawing.Size(185, 168);
             this.dgvOrder.TabIndex = 15;
+            this.dgvOrder.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrder_CellContentClick);
             // 
             // colSelected
             // 
@@ -300,7 +302,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(238, 430);
+            this.tabPage4.Size = new System.Drawing.Size(893, 430);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "报价";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -340,7 +342,7 @@
             this.tabPage5.Controls.Add(this.jct_QC_News);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(238, 430);
+            this.tabPage5.Size = new System.Drawing.Size(893, 430);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "新闻";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -353,6 +355,7 @@
             this.chkNewsAll.Size = new System.Drawing.Size(15, 14);
             this.chkNewsAll.TabIndex = 26;
             this.chkNewsAll.UseVisualStyleBackColor = true;
+            this.chkNewsAll.CheckedChanged += new System.EventHandler(this.chkNewsAll_CheckedChanged);
             // 
             // dgvQCNews
             // 
@@ -669,6 +672,7 @@
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.linkLabel2);
             this.groupBox1.Controls.Add(this.linkLabel1);
             this.groupBox1.Controls.Add(this.label11);
@@ -692,26 +696,36 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "用户信息";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 12F);
+            this.label2.Location = new System.Drawing.Point(24, 115);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(80, 16);
+            this.label2.TabIndex = 16;
+            this.label2.Text = "淘宝店铺:";
+            // 
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
             this.linkLabel2.Location = new System.Drawing.Point(617, 93);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(53, 12);
+            this.linkLabel2.Size = new System.Drawing.Size(101, 12);
             this.linkLabel2.TabIndex = 15;
             this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "进入网站";
+            this.linkLabel2.Text = "打开汽车之家后台";
             this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(28, 118);
+            this.linkLabel1.Location = new System.Drawing.Point(104, 119);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(251, 12);
+            this.linkLabel1.Size = new System.Drawing.Size(197, 12);
             this.linkLabel1.TabIndex = 14;
             this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "淘宝店铺:http://shop113012593.taobao.com/";
+            this.linkLabel1.Text = "http://shop113012593.taobao.com/";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // label11
@@ -995,6 +1009,7 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn colSelected;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSaleName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSaleID;
+        private System.Windows.Forms.Label label2;
     }
 }
 
