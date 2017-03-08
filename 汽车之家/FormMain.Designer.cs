@@ -30,6 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tbcJob_Query_QC = new System.Windows.Forms.TabControl();
@@ -46,19 +48,9 @@
             this.colSaleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSaleID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.lblQC_QC = new System.Windows.Forms.Label();
-            this.jct_QC_Query = new Aide.JobControl();
             this.lbxQuer = new System.Windows.Forms.ListBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
-            this.chkNewsAll = new System.Windows.Forms.CheckBox();
-            this.dgvQCNews = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.newsIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.titleDataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.newListDTPBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.lbl_NS_QC = new System.Windows.Forms.Label();
             this.lblNews = new System.Windows.Forms.ListBox();
-            this.jct_QC_News = new Aide.JobControl();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
@@ -71,17 +63,11 @@
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.lbxQuer_YC = new System.Windows.Forms.ListBox();
             this.lblYC_YC = new System.Windows.Forms.Label();
-            this.jct_YC_Query = new Aide.JobControl();
             this.tabPage8 = new System.Windows.Forms.TabPage();
             this.lbl_NS_YC = new System.Windows.Forms.Label();
             this.btnLoadNews = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.contentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.newsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.button2 = new System.Windows.Forms.Button();
-            this.jct_YC_News = new Aide.JobControl();
             this.listBox3 = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -106,12 +92,38 @@
             this.tm_qcjob_news = new System.Windows.Forms.Timer(this.components);
             this.tm_yc_news = new System.Windows.Forms.Timer(this.components);
             this.tm_qc_news = new System.Windows.Forms.Timer(this.components);
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel4 = new System.Windows.Forms.LinkLabel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label20 = new System.Windows.Forms.Label();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label22 = new System.Windows.Forms.Label();
+            this.label23 = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
+            this.jct_QC_Query = new Aide.JobControl();
             this.rowMergeView1 = new RowMergeView();
             this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSitting = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colDel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSitting = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.colDel = new System.Windows.Forms.DataGridViewLinkColumn();
             this.colNewsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.newListDTPBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.jct_YC_Query = new Aide.JobControl();
+            this.iDDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.titleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.contentDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.newsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.jct_YC_News = new Aide.JobControl();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tbcJob_Query_QC.SuspendLayout();
@@ -119,17 +131,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvQCNews)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.newListDTPBindingSource)).BeginInit();
             this.tabPage2.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tabPage8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.newsBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rowMergeView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newListDTPBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -142,18 +154,19 @@
             this.tabControl1.Location = new System.Drawing.Point(4, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(915, 488);
+            this.tabControl1.Size = new System.Drawing.Size(933, 635);
             this.tabControl1.TabIndex = 8;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.tbcJob_Query_QC);
+            this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.label1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(907, 462);
+            this.tabPage1.Size = new System.Drawing.Size(925, 609);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "汽车之家";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -163,12 +176,11 @@
             this.tbcJob_Query_QC.Controls.Add(this.tabPage3);
             this.tbcJob_Query_QC.Controls.Add(this.tabPage4);
             this.tbcJob_Query_QC.Controls.Add(this.tabPage5);
-            this.tbcJob_Query_QC.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbcJob_Query_QC.Location = new System.Drawing.Point(3, 3);
             this.tbcJob_Query_QC.Name = "tbcJob_Query_QC";
             this.tbcJob_Query_QC.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tbcJob_Query_QC.SelectedIndex = 0;
-            this.tbcJob_Query_QC.Size = new System.Drawing.Size(901, 456);
+            this.tbcJob_Query_QC.Size = new System.Drawing.Size(916, 456);
             this.tbcJob_Query_QC.TabIndex = 22;
             // 
             // tabPage3
@@ -184,7 +196,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(893, 430);
+            this.tabPage3.Size = new System.Drawing.Size(908, 430);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "抢单";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -213,14 +225,14 @@
             // 
             this.lblQD_QC.AutoSize = true;
             this.lblQD_QC.ForeColor = System.Drawing.Color.Red;
-            this.lblQD_QC.Location = new System.Drawing.Point(43, 330);
+            this.lblQD_QC.Location = new System.Drawing.Point(72, 403);
             this.lblQD_QC.Name = "lblQD_QC";
             this.lblQD_QC.Size = new System.Drawing.Size(0, 12);
             this.lblQD_QC.TabIndex = 20;
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(114, 257);
+            this.btnStop.Location = new System.Drawing.Point(107, 368);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(74, 28);
             this.btnStop.TabIndex = 19;
@@ -230,7 +242,7 @@
             // 
             // btnSendOrder
             // 
-            this.btnSendOrder.Location = new System.Drawing.Point(19, 259);
+            this.btnSendOrder.Location = new System.Drawing.Point(20, 368);
             this.btnSendOrder.Name = "btnSendOrder";
             this.btnSendOrder.Size = new System.Drawing.Size(74, 28);
             this.btnSendOrder.TabIndex = 18;
@@ -254,7 +266,7 @@
             this.lbxSendOrder.ItemHeight = 12;
             this.lbxSendOrder.Location = new System.Drawing.Point(201, 15);
             this.lbxSendOrder.Name = "lbxSendOrder";
-            this.lbxSendOrder.Size = new System.Drawing.Size(686, 268);
+            this.lbxSendOrder.Size = new System.Drawing.Size(701, 412);
             this.lbxSendOrder.TabIndex = 17;
             // 
             // dgvOrder
@@ -271,7 +283,7 @@
             this.dgvOrder.Name = "dgvOrder";
             this.dgvOrder.RowHeadersWidth = 21;
             this.dgvOrder.RowTemplate.Height = 23;
-            this.dgvOrder.Size = new System.Drawing.Size(185, 168);
+            this.dgvOrder.Size = new System.Drawing.Size(185, 279);
             this.dgvOrder.TabIndex = 15;
             this.dgvOrder.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvOrder_CellContentClick);
             // 
@@ -304,136 +316,48 @@
             // 
             // tabPage4
             // 
-            this.tabPage4.Controls.Add(this.lblQC_QC);
             this.tabPage4.Controls.Add(this.jct_QC_Query);
             this.tabPage4.Controls.Add(this.lbxQuer);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(893, 430);
+            this.tabPage4.Size = new System.Drawing.Size(908, 430);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "报价";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // lblQC_QC
-            // 
-            this.lblQC_QC.AutoSize = true;
-            this.lblQC_QC.ForeColor = System.Drawing.Color.Red;
-            this.lblQC_QC.Location = new System.Drawing.Point(46, 196);
-            this.lblQC_QC.Name = "lblQC_QC";
-            this.lblQC_QC.Size = new System.Drawing.Size(11, 12);
-            this.lblQC_QC.TabIndex = 22;
-            this.lblQC_QC.Text = "1";
-            // 
-            // jct_QC_Query
-            // 
-            this.jct_QC_Query.Location = new System.Drawing.Point(3, 3);
-            this.jct_QC_Query.Name = "jct_QC_Query";
-            this.jct_QC_Query.Size = new System.Drawing.Size(399, 186);
-            this.jct_QC_Query.TabIndex = 21;
-            // 
             // lbxQuer
             // 
+            this.lbxQuer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lbxQuer.FormattingEnabled = true;
             this.lbxQuer.ItemHeight = 12;
-            this.lbxQuer.Location = new System.Drawing.Point(408, 6);
+            this.lbxQuer.Location = new System.Drawing.Point(408, 3);
             this.lbxQuer.Name = "lbxQuer";
-            this.lbxQuer.Size = new System.Drawing.Size(479, 268);
+            this.lbxQuer.Size = new System.Drawing.Size(494, 424);
             this.lbxQuer.TabIndex = 20;
             // 
             // tabPage5
             // 
             this.tabPage5.Controls.Add(this.rowMergeView1);
-            this.tabPage5.Controls.Add(this.chkNewsAll);
-            this.tabPage5.Controls.Add(this.dgvQCNews);
-            this.tabPage5.Controls.Add(this.lbl_NS_QC);
             this.tabPage5.Controls.Add(this.lblNews);
-            this.tabPage5.Controls.Add(this.jct_QC_News);
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Size = new System.Drawing.Size(893, 430);
+            this.tabPage5.Size = new System.Drawing.Size(908, 430);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "新闻";
             this.tabPage5.UseVisualStyleBackColor = true;
-            // 
-            // chkNewsAll
-            // 
-            this.chkNewsAll.AutoSize = true;
-            this.chkNewsAll.Location = new System.Drawing.Point(7, 55);
-            this.chkNewsAll.Name = "chkNewsAll";
-            this.chkNewsAll.Size = new System.Drawing.Size(15, 14);
-            this.chkNewsAll.TabIndex = 26;
-            this.chkNewsAll.UseVisualStyleBackColor = true;
-            this.chkNewsAll.CheckedChanged += new System.EventHandler(this.chkNewsAll_CheckedChanged);
-            // 
-            // dgvQCNews
-            // 
-            this.dgvQCNews.AllowUserToAddRows = false;
-            this.dgvQCNews.AllowUserToDeleteRows = false;
-            this.dgvQCNews.AutoGenerateColumns = false;
-            this.dgvQCNews.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvQCNews.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
-            this.newsIdDataGridViewTextBoxColumn,
-            this.titleDataGridViewTextBoxColumn1});
-            this.dgvQCNews.DataSource = this.newListDTPBindingSource;
-            this.dgvQCNews.Location = new System.Drawing.Point(3, 307);
-            this.dgvQCNews.Name = "dgvQCNews";
-            this.dgvQCNews.RowHeadersWidth = 21;
-            this.dgvQCNews.RowTemplate.Height = 23;
-            this.dgvQCNews.Size = new System.Drawing.Size(399, 111);
-            this.dgvQCNews.TabIndex = 25;
-            // 
-            // Column1
-            // 
-            this.Column1.DataPropertyName = "IsSelected";
-            this.Column1.HeaderText = "";
-            this.Column1.Name = "Column1";
-            this.Column1.Width = 25;
-            // 
-            // newsIdDataGridViewTextBoxColumn
-            // 
-            this.newsIdDataGridViewTextBoxColumn.DataPropertyName = "NewsId";
-            this.newsIdDataGridViewTextBoxColumn.HeaderText = "新闻ID";
-            this.newsIdDataGridViewTextBoxColumn.Name = "newsIdDataGridViewTextBoxColumn";
-            this.newsIdDataGridViewTextBoxColumn.Width = 70;
-            // 
-            // titleDataGridViewTextBoxColumn1
-            // 
-            this.titleDataGridViewTextBoxColumn1.DataPropertyName = "Title";
-            this.titleDataGridViewTextBoxColumn1.HeaderText = "标题";
-            this.titleDataGridViewTextBoxColumn1.Name = "titleDataGridViewTextBoxColumn1";
-            this.titleDataGridViewTextBoxColumn1.Width = 280;
-            // 
-            // newListDTPBindingSource
-            // 
-            this.newListDTPBindingSource.DataSource = typeof(Aide.NewListDTP);
-            // 
-            // lbl_NS_QC
-            // 
-            this.lbl_NS_QC.AutoSize = true;
-            this.lbl_NS_QC.ForeColor = System.Drawing.Color.Red;
-            this.lbl_NS_QC.Location = new System.Drawing.Point(77, 193);
-            this.lbl_NS_QC.Name = "lbl_NS_QC";
-            this.lbl_NS_QC.Size = new System.Drawing.Size(0, 12);
-            this.lbl_NS_QC.TabIndex = 24;
             // 
             // lblNews
             // 
             this.lblNews.FormattingEnabled = true;
             this.lblNews.HorizontalScrollbar = true;
             this.lblNews.ItemHeight = 12;
-            this.lblNews.Location = new System.Drawing.Point(408, 6);
+            this.lblNews.Location = new System.Drawing.Point(533, 6);
             this.lblNews.Name = "lblNews";
-            this.lblNews.Size = new System.Drawing.Size(479, 412);
+            this.lblNews.Size = new System.Drawing.Size(354, 412);
             this.lblNews.TabIndex = 23;
-            // 
-            // jct_QC_News
-            // 
-            this.jct_QC_News.Location = new System.Drawing.Point(3, 3);
-            this.jct_QC_News.Name = "jct_QC_News";
-            this.jct_QC_News.Size = new System.Drawing.Size(399, 31);
-            this.jct_QC_News.TabIndex = 22;
             // 
             // label1
             // 
@@ -446,11 +370,12 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.groupBox2);
             this.tabPage2.Controls.Add(this.tabControl2);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(907, 462);
+            this.tabPage2.Size = new System.Drawing.Size(925, 609);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "易车网";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -460,12 +385,11 @@
             this.tabControl2.Controls.Add(this.tabPage6);
             this.tabControl2.Controls.Add(this.tabPage7);
             this.tabControl2.Controls.Add(this.tabPage8);
-            this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.Location = new System.Drawing.Point(3, 3);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(901, 456);
+            this.tabControl2.Size = new System.Drawing.Size(918, 456);
             this.tabControl2.TabIndex = 26;
             // 
             // tabPage6
@@ -478,7 +402,7 @@
             this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(893, 430);
+            this.tabPage6.Size = new System.Drawing.Size(910, 430);
             this.tabPage6.TabIndex = 0;
             this.tabPage6.Text = "抢单";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -499,9 +423,8 @@
             this.lblQD_YC.ForeColor = System.Drawing.Color.Red;
             this.lblQD_YC.Location = new System.Drawing.Point(83, 153);
             this.lblQD_YC.Name = "lblQD_YC";
-            this.lblQD_YC.Size = new System.Drawing.Size(41, 12);
+            this.lblQD_YC.Size = new System.Drawing.Size(0, 12);
             this.lblQD_YC.TabIndex = 25;
-            this.lblQD_YC.Text = "label9";
             // 
             // btnStop_YC
             // 
@@ -540,7 +463,7 @@
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(893, 430);
+            this.tabPage7.Size = new System.Drawing.Size(910, 430);
             this.tabPage7.TabIndex = 1;
             this.tabPage7.Text = "报价";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -563,13 +486,6 @@
             this.lblYC_YC.Size = new System.Drawing.Size(0, 12);
             this.lblYC_YC.TabIndex = 22;
             // 
-            // jct_YC_Query
-            // 
-            this.jct_YC_Query.Location = new System.Drawing.Point(3, 3);
-            this.jct_YC_Query.Name = "jct_YC_Query";
-            this.jct_YC_Query.Size = new System.Drawing.Size(399, 215);
-            this.jct_YC_Query.TabIndex = 23;
-            // 
             // tabPage8
             // 
             this.tabPage8.Controls.Add(this.lbl_NS_YC);
@@ -580,7 +496,7 @@
             this.tabPage8.Controls.Add(this.listBox3);
             this.tabPage8.Location = new System.Drawing.Point(4, 22);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(893, 430);
+            this.tabPage8.Size = new System.Drawing.Size(910, 430);
             this.tabPage8.TabIndex = 2;
             this.tabPage8.Text = "新闻";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -624,32 +540,6 @@
             this.dataGridView1.TabIndex = 26;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
-            // iDDataGridViewTextBoxColumn
-            // 
-            this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
-            this.iDDataGridViewTextBoxColumn.HeaderText = "ID";
-            this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
-            this.iDDataGridViewTextBoxColumn.Visible = false;
-            // 
-            // titleDataGridViewTextBoxColumn
-            // 
-            this.titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
-            this.titleDataGridViewTextBoxColumn.HeaderText = "标题";
-            this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
-            this.titleDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.titleDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.titleDataGridViewTextBoxColumn.Width = 300;
-            // 
-            // contentDataGridViewTextBoxColumn
-            // 
-            this.contentDataGridViewTextBoxColumn.DataPropertyName = "Content";
-            this.contentDataGridViewTextBoxColumn.HeaderText = "操作";
-            this.contentDataGridViewTextBoxColumn.Name = "contentDataGridViewTextBoxColumn";
-            // 
-            // newsBindingSource
-            // 
-            this.newsBindingSource.DataSource = typeof(Model.News);
-            // 
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(557, 11);
@@ -659,13 +549,6 @@
             this.button2.Text = "添加新闻";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // jct_YC_News
-            // 
-            this.jct_YC_News.Location = new System.Drawing.Point(3, 3);
-            this.jct_YC_News.Name = "jct_YC_News";
-            this.jct_YC_News.Size = new System.Drawing.Size(399, 182);
-            this.jct_YC_News.TabIndex = 24;
             // 
             // listBox3
             // 
@@ -698,9 +581,9 @@
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
-            this.groupBox1.Location = new System.Drawing.Point(4, 500);
+            this.groupBox1.Location = new System.Drawing.Point(3, 465);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(915, 138);
+            this.groupBox1.Size = new System.Drawing.Size(919, 138);
             this.groupBox1.TabIndex = 8;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "用户信息";
@@ -708,19 +591,20 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 12F);
-            this.label2.Location = new System.Drawing.Point(24, 115);
+            this.label2.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label2.Location = new System.Drawing.Point(11, 115);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(80, 16);
+            this.label2.Size = new System.Drawing.Size(70, 14);
             this.label2.TabIndex = 16;
             this.label2.Text = "淘宝店铺:";
             // 
             // linkLabel2
             // 
             this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(617, 93);
+            this.linkLabel2.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.linkLabel2.Location = new System.Drawing.Point(597, 88);
             this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(101, 12);
+            this.linkLabel2.Size = new System.Drawing.Size(119, 14);
             this.linkLabel2.TabIndex = 15;
             this.linkLabel2.TabStop = true;
             this.linkLabel2.Text = "打开汽车之家后台";
@@ -729,9 +613,10 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(104, 119);
+            this.linkLabel1.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.linkLabel1.Location = new System.Drawing.Point(87, 115);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(197, 12);
+            this.linkLabel1.Size = new System.Drawing.Size(231, 14);
             this.linkLabel1.TabIndex = 14;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "http://shop113012593.taobao.com/";
@@ -740,152 +625,142 @@
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("宋体", 12F);
-            this.label11.Location = new System.Drawing.Point(310, 88);
+            this.label11.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label11.Location = new System.Drawing.Point(254, 88);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(104, 16);
+            this.label11.Size = new System.Drawing.Size(91, 14);
             this.label11.TabIndex = 13;
             this.label11.Text = "QQ:278815541";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("宋体", 12F);
-            this.label9.Location = new System.Drawing.Point(26, 88);
+            this.label9.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label9.Location = new System.Drawing.Point(13, 88);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(168, 16);
+            this.label9.Size = new System.Drawing.Size(147, 14);
             this.label9.TabIndex = 12;
             this.label9.Text = "联系电话:18319384011";
             // 
             // lbl_QC_NewsNum
             // 
             this.lbl_QC_NewsNum.AutoSize = true;
-            this.lbl_QC_NewsNum.Font = new System.Drawing.Font("宋体", 12F);
-            this.lbl_QC_NewsNum.Location = new System.Drawing.Point(733, 57);
+            this.lbl_QC_NewsNum.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.lbl_QC_NewsNum.Location = new System.Drawing.Point(663, 57);
             this.lbl_QC_NewsNum.Name = "lbl_QC_NewsNum";
-            this.lbl_QC_NewsNum.Size = new System.Drawing.Size(80, 16);
+            this.lbl_QC_NewsNum.Size = new System.Drawing.Size(245, 14);
             this.lbl_QC_NewsNum.TabIndex = 11;
-            this.lbl_QC_NewsNum.Text = "到期时间:";
+            this.lbl_QC_NewsNum.Text = "非常抱歉，今天发布资讯次数已使用完";
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("宋体", 12F);
-            this.label12.Location = new System.Drawing.Point(615, 57);
+            this.label12.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label12.Location = new System.Drawing.Point(569, 57);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(112, 16);
+            this.label12.Size = new System.Drawing.Size(98, 14);
             this.label12.TabIndex = 10;
             this.label12.Text = "剩余资讯次数:";
             // 
             // lbl_QC_QueryNum
             // 
             this.lbl_QC_QueryNum.AutoSize = true;
-            this.lbl_QC_QueryNum.Font = new System.Drawing.Font("宋体", 12F);
-            this.lbl_QC_QueryNum.Location = new System.Drawing.Point(423, 57);
+            this.lbl_QC_QueryNum.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.lbl_QC_QueryNum.Location = new System.Drawing.Point(340, 57);
             this.lbl_QC_QueryNum.Name = "lbl_QC_QueryNum";
-            this.lbl_QC_QueryNum.Size = new System.Drawing.Size(80, 16);
+            this.lbl_QC_QueryNum.Size = new System.Drawing.Size(217, 14);
             this.lbl_QC_QueryNum.TabIndex = 9;
-            this.lbl_QC_QueryNum.Text = "到期时间:";
+            this.lbl_QC_QueryNum.Text = "非常抱歉，今天的报价次数已用完";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("宋体", 12F);
-            this.label10.Location = new System.Drawing.Point(311, 57);
+            this.label10.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label10.Location = new System.Drawing.Point(245, 57);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(112, 16);
+            this.label10.Size = new System.Drawing.Size(98, 14);
             this.label10.TabIndex = 8;
             this.label10.Text = "剩余报价次数:";
             // 
             // lblEnd
             // 
             this.lblEnd.AutoSize = true;
-            this.lblEnd.Font = new System.Drawing.Font("宋体", 12F);
-            this.lblEnd.Location = new System.Drawing.Point(111, 57);
+            this.lblEnd.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.lblEnd.Location = new System.Drawing.Point(88, 57);
             this.lblEnd.Name = "lblEnd";
-            this.lblEnd.Size = new System.Drawing.Size(80, 16);
+            this.lblEnd.Size = new System.Drawing.Size(140, 14);
             this.lblEnd.TabIndex = 7;
-            this.lblEnd.Text = "到期时间:";
+            this.lblEnd.Text = "2017-09-19 22:22:22";
             // 
             // lblUserName
             // 
             this.lblUserName.AutoSize = true;
-            this.lblUserName.Font = new System.Drawing.Font("宋体", 12F);
-            this.lblUserName.Location = new System.Drawing.Point(702, 28);
+            this.lblUserName.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.lblUserName.Location = new System.Drawing.Point(663, 28);
             this.lblUserName.Name = "lblUserName";
-            this.lblUserName.Size = new System.Drawing.Size(80, 16);
+            this.lblUserName.Size = new System.Drawing.Size(70, 14);
             this.lblUserName.TabIndex = 6;
             this.lblUserName.Text = "登录账号:";
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("宋体", 12F);
-            this.label8.Location = new System.Drawing.Point(312, 28);
+            this.label8.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label8.Location = new System.Drawing.Point(273, 28);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(80, 16);
+            this.label8.Size = new System.Drawing.Size(70, 14);
             this.label8.TabIndex = 5;
             this.label8.Text = "用户类型:";
             // 
             // lblCode
             // 
             this.lblCode.AutoSize = true;
-            this.lblCode.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lblCode.Location = new System.Drawing.Point(112, 28);
+            this.lblCode.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.lblCode.Location = new System.Drawing.Point(89, 28);
             this.lblCode.Name = "lblCode";
-            this.lblCode.Size = new System.Drawing.Size(80, 16);
+            this.lblCode.Size = new System.Drawing.Size(70, 14);
             this.lblCode.TabIndex = 4;
             this.lblCode.Text = "软件编号:";
             // 
             // lblUserType
             // 
             this.lblUserType.AutoSize = true;
-            this.lblUserType.Font = new System.Drawing.Font("宋体", 12F);
-            this.lblUserType.Location = new System.Drawing.Point(398, 28);
+            this.lblUserType.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.lblUserType.Location = new System.Drawing.Point(339, 28);
             this.lblUserType.Name = "lblUserType";
-            this.lblUserType.Size = new System.Drawing.Size(80, 16);
+            this.lblUserType.Size = new System.Drawing.Size(70, 14);
             this.lblUserType.TabIndex = 3;
             this.lblUserType.Text = "用户类型:";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("宋体", 12F);
-            this.label7.Location = new System.Drawing.Point(25, 57);
+            this.label7.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(12, 57);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(80, 16);
+            this.label7.Size = new System.Drawing.Size(70, 14);
             this.label7.TabIndex = 2;
             this.label7.Text = "到期时间:";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("宋体", 12F);
-            this.label6.Location = new System.Drawing.Point(616, 28);
+            this.label6.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label6.Location = new System.Drawing.Point(597, 28);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(80, 16);
+            this.label6.Size = new System.Drawing.Size(70, 14);
             this.label6.TabIndex = 1;
             this.label6.Text = "登录账号:";
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(26, 28);
+            this.label5.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(13, 28);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(80, 16);
+            this.label5.Size = new System.Drawing.Size(70, 14);
             this.label5.TabIndex = 0;
             this.label5.Text = "软件编号:";
-            // 
-            // tm_qc_quer
-            // 
-            //this.tm_qc_quer.Interval = 30000;
-            //this.tm_qc_quer.Tick += new System.EventHandler(this.tm_qc_quer_Tick);
-            // 
-            // tm_yc_query
-            // 
-            //this.tm_yc_query.Interval = 30000;
-            //this.tm_yc_query.Tick += new System.EventHandler(this.tm_yc_query_Tick);
             // 
             // tm_qcjob_news
             // 
@@ -896,10 +771,214 @@
             this.tm_yc_news.Interval = 30000;
             this.tm_yc_news.Tick += new System.EventHandler(this.tm_yc_news_Tick);
             // 
-            // tm_qc_news
+            // groupBox2
             // 
-            //this.tm_qc_news.Interval = 3000;
-            //this.tm_qc_news.Tick += new System.EventHandler(this.tm_qc_news_Tick);
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.linkLabel3);
+            this.groupBox2.Controls.Add(this.linkLabel4);
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this.label13);
+            this.groupBox2.Controls.Add(this.label14);
+            this.groupBox2.Controls.Add(this.label15);
+            this.groupBox2.Controls.Add(this.label16);
+            this.groupBox2.Controls.Add(this.label17);
+            this.groupBox2.Controls.Add(this.label18);
+            this.groupBox2.Controls.Add(this.label19);
+            this.groupBox2.Controls.Add(this.label20);
+            this.groupBox2.Controls.Add(this.label21);
+            this.groupBox2.Controls.Add(this.label22);
+            this.groupBox2.Controls.Add(this.label23);
+            this.groupBox2.Controls.Add(this.label24);
+            this.groupBox2.Controls.Add(this.label25);
+            this.groupBox2.Location = new System.Drawing.Point(3, 465);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(915, 138);
+            this.groupBox2.TabIndex = 27;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "用户信息";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label3.Location = new System.Drawing.Point(11, 115);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(70, 14);
+            this.label3.TabIndex = 16;
+            this.label3.Text = "淘宝店铺:";
+            // 
+            // linkLabel3
+            // 
+            this.linkLabel3.AutoSize = true;
+            this.linkLabel3.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.linkLabel3.Location = new System.Drawing.Point(597, 88);
+            this.linkLabel3.Name = "linkLabel3";
+            this.linkLabel3.Size = new System.Drawing.Size(105, 14);
+            this.linkLabel3.TabIndex = 15;
+            this.linkLabel3.TabStop = true;
+            this.linkLabel3.Text = "打开易车网后台";
+            this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            // 
+            // linkLabel4
+            // 
+            this.linkLabel4.AutoSize = true;
+            this.linkLabel4.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.linkLabel4.Location = new System.Drawing.Point(87, 115);
+            this.linkLabel4.Name = "linkLabel4";
+            this.linkLabel4.Size = new System.Drawing.Size(231, 14);
+            this.linkLabel4.TabIndex = 14;
+            this.linkLabel4.TabStop = true;
+            this.linkLabel4.Text = "http://shop113012593.taobao.com/";
+            this.linkLabel4.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label4.Location = new System.Drawing.Point(254, 88);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(91, 14);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "QQ:278815541";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label13.Location = new System.Drawing.Point(13, 88);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(147, 14);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "联系电话:18319384011";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label14.Location = new System.Drawing.Point(663, 57);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(245, 14);
+            this.label14.TabIndex = 11;
+            this.label14.Text = "非常抱歉，今天发布资讯次数已使用完";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label15.Location = new System.Drawing.Point(569, 57);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(98, 14);
+            this.label15.TabIndex = 10;
+            this.label15.Text = "剩余资讯次数:";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label16.Location = new System.Drawing.Point(340, 57);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(217, 14);
+            this.label16.TabIndex = 9;
+            this.label16.Text = "非常抱歉，今天的报价次数已用完";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label17.Location = new System.Drawing.Point(245, 57);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(98, 14);
+            this.label17.TabIndex = 8;
+            this.label17.Text = "剩余报价次数:";
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label18.Location = new System.Drawing.Point(88, 57);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(140, 14);
+            this.label18.TabIndex = 7;
+            this.label18.Text = "2017-09-19 22:22:22";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label19.Location = new System.Drawing.Point(663, 28);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(70, 14);
+            this.label19.TabIndex = 6;
+            this.label19.Text = "登录账号:";
+            // 
+            // label20
+            // 
+            this.label20.AutoSize = true;
+            this.label20.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label20.Location = new System.Drawing.Point(273, 28);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(70, 14);
+            this.label20.TabIndex = 5;
+            this.label20.Text = "用户类型:";
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label21.Location = new System.Drawing.Point(89, 28);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(70, 14);
+            this.label21.TabIndex = 4;
+            this.label21.Text = "软件编号:";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label22.Location = new System.Drawing.Point(339, 28);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(70, 14);
+            this.label22.TabIndex = 3;
+            this.label22.Text = "用户类型:";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label23.Location = new System.Drawing.Point(12, 57);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(70, 14);
+            this.label23.TabIndex = 2;
+            this.label23.Text = "到期时间:";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label24.Location = new System.Drawing.Point(597, 28);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(70, 14);
+            this.label24.TabIndex = 1;
+            this.label24.Text = "登录账号:";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label25.Location = new System.Drawing.Point(13, 28);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(70, 14);
+            this.label25.TabIndex = 0;
+            this.label25.Text = "软件编号:";
+            // 
+            // jct_QC_Query
+            // 
+            this.jct_QC_Query.Location = new System.Drawing.Point(3, 3);
+            this.jct_QC_Query.Name = "jct_QC_Query";
+            this.jct_QC_Query.Size = new System.Drawing.Size(399, 186);
+            this.jct_QC_Query.TabIndex = 21;
             // 
             // rowMergeView1
             // 
@@ -914,13 +993,13 @@
             this.colDel,
             this.colNewsId});
             this.rowMergeView1.DataSource = this.newListDTPBindingSource;
-            this.rowMergeView1.Location = new System.Drawing.Point(3, 88);
+            this.rowMergeView1.Location = new System.Drawing.Point(3, 6);
             this.rowMergeView1.MergeColumnHeaderBackColor = System.Drawing.SystemColors.Control;
             this.rowMergeView1.MergeColumnNames = ((System.Collections.Generic.List<string>)(resources.GetObject("rowMergeView1.MergeColumnNames")));
             this.rowMergeView1.Name = "rowMergeView1";
-            this.rowMergeView1.RowHeadersWidth = 21;
+            this.rowMergeView1.RowHeadersWidth = 11;
             this.rowMergeView1.RowTemplate.Height = 23;
-            this.rowMergeView1.Size = new System.Drawing.Size(400, 150);
+            this.rowMergeView1.Size = new System.Drawing.Size(524, 412);
             this.rowMergeView1.TabIndex = 27;
             this.rowMergeView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.rowMergeView1_CellContentClick);
             this.rowMergeView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.rowMergeView1_CellPainting);
@@ -930,27 +1009,37 @@
             this.colTitle.DataPropertyName = "Title";
             this.colTitle.HeaderText = "标题";
             this.colTitle.Name = "colTitle";
+            this.colTitle.Width = 210;
             // 
             // colMessage
             // 
             this.colMessage.DataPropertyName = "Message";
             this.colMessage.HeaderText = "发布时间";
             this.colMessage.Name = "colMessage";
+            this.colMessage.Width = 190;
             // 
             // colSitting
             // 
             this.colSitting.DataPropertyName = "Sitting";
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colSitting.DefaultCellStyle = dataGridViewCellStyle5;
             this.colSitting.HeaderText = "操作";
             this.colSitting.Name = "colSitting";
             this.colSitting.ReadOnly = true;
-            this.colSitting.Width = 60;
+            this.colSitting.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSitting.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colSitting.Width = 55;
             // 
             // colDel
             // 
             this.colDel.DataPropertyName = "Del";
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colDel.DefaultCellStyle = dataGridViewCellStyle6;
             this.colDel.HeaderText = "操作";
             this.colDel.Name = "colDel";
-            this.colDel.Width = 60;
+            this.colDel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colDel.Width = 55;
             // 
             // colNewsId
             // 
@@ -959,13 +1048,57 @@
             this.colNewsId.Name = "colNewsId";
             this.colNewsId.Visible = false;
             // 
+            // newListDTPBindingSource
+            // 
+            this.newListDTPBindingSource.DataSource = typeof(Aide.NewListDTP);
+            // 
+            // jct_YC_Query
+            // 
+            this.jct_YC_Query.Location = new System.Drawing.Point(3, 3);
+            this.jct_YC_Query.Name = "jct_YC_Query";
+            this.jct_YC_Query.Size = new System.Drawing.Size(399, 215);
+            this.jct_YC_Query.TabIndex = 23;
+            // 
+            // iDDataGridViewTextBoxColumn
+            // 
+            this.iDDataGridViewTextBoxColumn.DataPropertyName = "ID";
+            this.iDDataGridViewTextBoxColumn.HeaderText = "ID";
+            this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
+            this.iDDataGridViewTextBoxColumn.Visible = false;
+            // 
+            // titleDataGridViewTextBoxColumn
+            // 
+            this.titleDataGridViewTextBoxColumn.DataPropertyName = "Title";
+            this.titleDataGridViewTextBoxColumn.HeaderText = "标题";
+            this.titleDataGridViewTextBoxColumn.Name = "titleDataGridViewTextBoxColumn";
+            this.titleDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.titleDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.titleDataGridViewTextBoxColumn.Width = 300;
+            // 
+            // contentDataGridViewTextBoxColumn
+            // 
+            this.contentDataGridViewTextBoxColumn.DataPropertyName = "Content";
+            this.contentDataGridViewTextBoxColumn.HeaderText = "操作";
+            this.contentDataGridViewTextBoxColumn.Name = "contentDataGridViewTextBoxColumn";
+            // 
+            // newsBindingSource
+            // 
+            this.newsBindingSource.DataSource = typeof(Model.News);
+            // 
+            // jct_YC_News
+            // 
+            this.jct_YC_News.Location = new System.Drawing.Point(3, 3);
+            this.jct_YC_News.Name = "jct_YC_News";
+            this.jct_YC_News.Size = new System.Drawing.Size(399, 182);
+            this.jct_YC_News.TabIndex = 24;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(924, 644);
+            this.ClientSize = new System.Drawing.Size(942, 641);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.groupBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "登录";
@@ -979,11 +1112,7 @@
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).EndInit();
             this.tabPage4.ResumeLayout(false);
-            this.tabPage4.PerformLayout();
             this.tabPage5.ResumeLayout(false);
-            this.tabPage5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvQCNews)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.newListDTPBindingSource)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.tabPage6.ResumeLayout(false);
@@ -993,10 +1122,13 @@
             this.tabPage8.ResumeLayout(false);
             this.tabPage8.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.newsBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.rowMergeView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newListDTPBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newsBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1032,7 +1164,6 @@
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.TabPage tabPage5;
         private JobControl jct_QC_Query;
-        private JobControl jct_QC_News;
         private JobControl jct_YC_Query;
         private JobControl jct_YC_News;
         private System.Windows.Forms.Timer tm_qcjob_news;
@@ -1040,8 +1171,6 @@
         private System.Windows.Forms.Timer tm_qc_news;
         private System.Windows.Forms.ListBox lblNews;
         private System.Windows.Forms.Label lblQD_QC;
-        private System.Windows.Forms.Label lblQC_QC;
-        private System.Windows.Forms.Label lbl_NS_QC;
         private System.Windows.Forms.Label lblQD_YC;
         private System.Windows.Forms.Label lbl_QC_NewsNum;
         private System.Windows.Forms.Label label12;
@@ -1061,19 +1190,14 @@
         private System.Windows.Forms.DataGridViewLinkColumn titleDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn contentDataGridViewTextBoxColumn;
         private System.Windows.Forms.Label lbl_NS_YC;
-        private System.Windows.Forms.DataGridView dgvQCNews;
         private System.Windows.Forms.BindingSource newListDTPBindingSource;
         private System.Windows.Forms.Button btnCondition;
         private System.Windows.Forms.Button btnRef;
-        private System.Windows.Forms.CheckBox chkNewsAll;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.LinkLabel linkLabel2;
         private System.Windows.Forms.Button btnOrderYC;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn Column1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn newsIdDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn titleDataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn colSelected;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSaleName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSaleID;
@@ -1081,9 +1205,27 @@
         private RowMergeView rowMergeView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMessage;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colSitting;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDel;
+        private System.Windows.Forms.DataGridViewLinkColumn colSitting;
+        private System.Windows.Forms.DataGridViewLinkColumn colDel;
         private System.Windows.Forms.DataGridViewTextBoxColumn colNewsId;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.LinkLabel linkLabel3;
+        private System.Windows.Forms.LinkLabel linkLabel4;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Label label20;
+        private System.Windows.Forms.Label label21;
+        private System.Windows.Forms.Label label22;
+        private System.Windows.Forms.Label label23;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label label25;
     }
 }
 

@@ -1,10 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using Model;
 
@@ -47,9 +41,13 @@ namespace Aide
             job.JobType = 1;
             job.JobDate = dtpJobDate_Quote.Value.ToString("yyyy-MM-dd");
             job.Time = dtpQuoteTime_QC.Value.ToString("HH:mm:ss");
-            //lblState.Text = "只执行一次，时间是：" + job.JobDate + " " + job.Time;
             dal.AddJob(job);
-            DialogResult = System.Windows.Forms.DialogResult.OK;
+            DialogResult = DialogResult.OK;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.No;
         }
     }
 }

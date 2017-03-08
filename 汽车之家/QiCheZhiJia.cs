@@ -804,21 +804,6 @@ namespace Aide
             postdata.BigImageTitle = "";
             postdata.PackAgeIds = "";
             postdata.EquipCarIds = "";
-            //item = new HttpItem
-            //{
-            //    URL = "http://ics.autohome.com.cn/Price/EquipmentCar/GetEquipCar_Packgae_PackageDetails",
-            //    Method = "post",
-            //    Cookie = cookie,
-            //    Postdata = vpostdata,
-            //    ContentType = "application/x-www-form-urlencoded; charset=UTF-8",
-            //    Referer = "http://ics.autohome.com.cn/dms/Order/Index",
-            //    UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"
-            //};
-            //item.Header.Add("X-Requested-With", "XMLHttpRequest");
-            //item.Allowautoredirect = false;
-            //http = new HttpHelper();
-            //htmlr = http.GetHtml(item);
-            //postdata.EquipCars = JsonConvert.DeserializeObject<List<EquipCar>>(htmlr.Html);
             postdata.EquipCars = new List<EquipCar>();
             postdata.Gifts = new List<Gift>();
             postdata.DealerList = new List<string>() { postdata.DealerIds };

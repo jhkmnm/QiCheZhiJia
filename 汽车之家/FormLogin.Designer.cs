@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormLogin));
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
@@ -40,24 +41,26 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.rbtQC = new System.Windows.Forms.RadioButton();
             this.rbtYC = new System.Windows.Forms.RadioButton();
+            this.rbtQC = new System.Windows.Forms.RadioButton();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pbCode)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // txtUserName
             // 
             this.txtUserName.Font = new System.Drawing.Font("宋体", 12F);
-            this.txtUserName.Location = new System.Drawing.Point(90, 104);
+            this.txtUserName.Location = new System.Drawing.Point(90, 227);
             this.txtUserName.Name = "txtUserName";
-            this.txtUserName.Size = new System.Drawing.Size(211, 26);
+            this.txtUserName.Size = new System.Drawing.Size(194, 26);
             this.txtUserName.TabIndex = 13;
             // 
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.button1.Location = new System.Drawing.Point(118, 211);
+            this.button1.Location = new System.Drawing.Point(118, 322);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(75, 26);
             this.button1.TabIndex = 9;
@@ -69,7 +72,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("宋体", 12F);
-            this.label4.Location = new System.Drawing.Point(20, 179);
+            this.label4.Location = new System.Drawing.Point(20, 294);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(64, 16);
             this.label4.TabIndex = 15;
@@ -79,7 +82,7 @@
             // 
             this.chkSavePass.AutoSize = true;
             this.chkSavePass.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.chkSavePass.Location = new System.Drawing.Point(211, 214);
+            this.chkSavePass.Location = new System.Drawing.Point(211, 325);
             this.chkSavePass.Name = "chkSavePass";
             this.chkSavePass.Size = new System.Drawing.Size(155, 20);
             this.chkSavePass.TabIndex = 12;
@@ -89,14 +92,14 @@
             // txtCode
             // 
             this.txtCode.Font = new System.Drawing.Font("宋体", 12F);
-            this.txtCode.Location = new System.Drawing.Point(90, 176);
+            this.txtCode.Location = new System.Drawing.Point(90, 291);
             this.txtCode.Name = "txtCode";
             this.txtCode.Size = new System.Drawing.Size(100, 26);
             this.txtCode.TabIndex = 11;
             // 
             // pbCode
             // 
-            this.pbCode.Location = new System.Drawing.Point(196, 176);
+            this.pbCode.Location = new System.Drawing.Point(196, 291);
             this.pbCode.Name = "pbCode";
             this.pbCode.Size = new System.Drawing.Size(88, 25);
             this.pbCode.TabIndex = 7;
@@ -106,7 +109,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 12F);
-            this.label3.Location = new System.Drawing.Point(20, 145);
+            this.label3.Location = new System.Drawing.Point(20, 264);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(64, 16);
             this.label3.TabIndex = 10;
@@ -115,7 +118,7 @@
             // btnRefImg
             // 
             this.btnRefImg.Font = new System.Drawing.Font("宋体", 12F);
-            this.btnRefImg.Location = new System.Drawing.Point(290, 176);
+            this.btnRefImg.Location = new System.Drawing.Point(290, 291);
             this.btnRefImg.Name = "btnRefImg";
             this.btnRefImg.Size = new System.Drawing.Size(104, 26);
             this.btnRefImg.TabIndex = 16;
@@ -126,9 +129,9 @@
             // txtPassword
             // 
             this.txtPassword.Font = new System.Drawing.Font("宋体", 12F);
-            this.txtPassword.Location = new System.Drawing.Point(90, 140);
+            this.txtPassword.Location = new System.Drawing.Point(90, 259);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(211, 26);
+            this.txtPassword.Size = new System.Drawing.Size(194, 26);
             this.txtPassword.TabIndex = 14;
             this.txtPassword.UseSystemPasswordChar = true;
             // 
@@ -136,7 +139,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("宋体", 12F);
-            this.label2.Location = new System.Drawing.Point(20, 108);
+            this.label2.Location = new System.Drawing.Point(20, 231);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(64, 16);
             this.label2.TabIndex = 8;
@@ -146,7 +149,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("宋体", 12F);
-            this.label1.Location = new System.Drawing.Point(4, 68);
+            this.label1.Location = new System.Drawing.Point(4, 198);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(80, 16);
             this.label1.TabIndex = 17;
@@ -156,16 +159,27 @@
             // 
             this.panel1.Controls.Add(this.rbtYC);
             this.panel1.Controls.Add(this.rbtQC);
-            this.panel1.Location = new System.Drawing.Point(90, 60);
+            this.panel1.Location = new System.Drawing.Point(90, 191);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(211, 38);
+            this.panel1.Size = new System.Drawing.Size(194, 30);
             this.panel1.TabIndex = 18;
+            // 
+            // rbtYC
+            // 
+            this.rbtYC.AutoSize = true;
+            this.rbtYC.Location = new System.Drawing.Point(121, 7);
+            this.rbtYC.Name = "rbtYC";
+            this.rbtYC.Size = new System.Drawing.Size(59, 16);
+            this.rbtYC.TabIndex = 1;
+            this.rbtYC.Text = "易车网";
+            this.rbtYC.UseVisualStyleBackColor = true;
+            this.rbtYC.CheckedChanged += new System.EventHandler(this.rbtQC_CheckedChanged);
             // 
             // rbtQC
             // 
             this.rbtQC.AutoSize = true;
             this.rbtQC.Checked = true;
-            this.rbtQC.Location = new System.Drawing.Point(8, 10);
+            this.rbtQC.Location = new System.Drawing.Point(8, 7);
             this.rbtQC.Name = "rbtQC";
             this.rbtQC.Size = new System.Drawing.Size(71, 16);
             this.rbtQC.TabIndex = 0;
@@ -174,22 +188,22 @@
             this.rbtQC.UseVisualStyleBackColor = true;
             this.rbtQC.CheckedChanged += new System.EventHandler(this.rbtQC_CheckedChanged);
             // 
-            // rbtYC
+            // pictureBox1
             // 
-            this.rbtYC.AutoSize = true;
-            this.rbtYC.Location = new System.Drawing.Point(121, 10);
-            this.rbtYC.Name = "rbtYC";
-            this.rbtYC.Size = new System.Drawing.Size(59, 16);
-            this.rbtYC.TabIndex = 1;
-            this.rbtYC.Text = "易车网";
-            this.rbtYC.UseVisualStyleBackColor = true;
-            this.rbtYC.CheckedChanged += new System.EventHandler(this.rbtQC_CheckedChanged);
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(1, 1);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(403, 184);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 19;
+            this.pictureBox1.TabStop = false;
             // 
             // FormLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(405, 275);
+            this.ClientSize = new System.Drawing.Size(405, 352);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtUserName);
@@ -202,11 +216,13 @@
             this.Controls.Add(this.btnRefImg);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.label2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormLogin";
             this.Text = "登录";
             ((System.ComponentModel.ISupportInitialize)(this.pbCode)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -228,5 +244,6 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.RadioButton rbtYC;
         private System.Windows.Forms.RadioButton rbtQC;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

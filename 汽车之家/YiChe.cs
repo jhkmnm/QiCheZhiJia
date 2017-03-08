@@ -551,7 +551,7 @@ namespace Aide
                 }
 
                 //间隔2分钟
-                Thread.Sleep(1000 * 60 * 2);
+                Thread.Sleep(1000 * 3);
             }
         }
 
