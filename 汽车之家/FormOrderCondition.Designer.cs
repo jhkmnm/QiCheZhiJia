@@ -31,6 +31,10 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.isCheckedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.colPro = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cityIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.areaBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.isCheckDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -46,10 +50,6 @@
             this.btnYes = new System.Windows.Forms.Button();
             this.chkTypeAll = new System.Windows.Forms.CheckBox();
             this.chkSpceAll = new System.Windows.Forms.CheckBox();
-            this.isCheckedDataGridViewCheckBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.colPro = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cityDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cityIdDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.areaBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
@@ -76,6 +76,38 @@
             this.dataGridView1.RowTemplate.Height = 23;
             this.dataGridView1.Size = new System.Drawing.Size(223, 423);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // isCheckedDataGridViewCheckBoxColumn
+            // 
+            this.isCheckedDataGridViewCheckBoxColumn.DataPropertyName = "IsChecked";
+            this.isCheckedDataGridViewCheckBoxColumn.HeaderText = "选择";
+            this.isCheckedDataGridViewCheckBoxColumn.Name = "isCheckedDataGridViewCheckBoxColumn";
+            this.isCheckedDataGridViewCheckBoxColumn.Width = 40;
+            // 
+            // colPro
+            // 
+            this.colPro.DataPropertyName = "Pro";
+            this.colPro.HeaderText = "省";
+            this.colPro.Name = "colPro";
+            this.colPro.Width = 75;
+            // 
+            // cityDataGridViewTextBoxColumn
+            // 
+            this.cityDataGridViewTextBoxColumn.DataPropertyName = "City";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.cityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            this.cityDataGridViewTextBoxColumn.HeaderText = "城市";
+            this.cityDataGridViewTextBoxColumn.Name = "cityDataGridViewTextBoxColumn";
+            this.cityDataGridViewTextBoxColumn.ReadOnly = true;
+            this.cityDataGridViewTextBoxColumn.Width = 80;
+            // 
+            // cityIdDataGridViewTextBoxColumn
+            // 
+            this.cityIdDataGridViewTextBoxColumn.DataPropertyName = "CityId";
+            this.cityIdDataGridViewTextBoxColumn.HeaderText = "cityid";
+            this.cityIdDataGridViewTextBoxColumn.Name = "cityIdDataGridViewTextBoxColumn";
+            this.cityIdDataGridViewTextBoxColumn.ReadOnly = true;
+            this.cityIdDataGridViewTextBoxColumn.Visible = false;
             // 
             // areaBindingSource
             // 
@@ -206,39 +238,8 @@
             this.chkSpceAll.Size = new System.Drawing.Size(15, 14);
             this.chkSpceAll.TabIndex = 6;
             this.chkSpceAll.UseVisualStyleBackColor = true;
+            this.chkSpceAll.Visible = false;
             this.chkSpceAll.CheckedChanged += new System.EventHandler(this.chkSpceAll_CheckedChanged);
-            // 
-            // isCheckedDataGridViewCheckBoxColumn
-            // 
-            this.isCheckedDataGridViewCheckBoxColumn.DataPropertyName = "IsChecked";
-            this.isCheckedDataGridViewCheckBoxColumn.HeaderText = "选择";
-            this.isCheckedDataGridViewCheckBoxColumn.Name = "isCheckedDataGridViewCheckBoxColumn";
-            this.isCheckedDataGridViewCheckBoxColumn.Width = 40;
-            // 
-            // colPro
-            // 
-            this.colPro.DataPropertyName = "Pro";
-            this.colPro.HeaderText = "省";
-            this.colPro.Name = "colPro";
-            this.colPro.Width = 75;
-            // 
-            // cityDataGridViewTextBoxColumn
-            // 
-            this.cityDataGridViewTextBoxColumn.DataPropertyName = "City";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.cityDataGridViewTextBoxColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.cityDataGridViewTextBoxColumn.HeaderText = "城市";
-            this.cityDataGridViewTextBoxColumn.Name = "cityDataGridViewTextBoxColumn";
-            this.cityDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cityDataGridViewTextBoxColumn.Width = 80;
-            // 
-            // cityIdDataGridViewTextBoxColumn
-            // 
-            this.cityIdDataGridViewTextBoxColumn.DataPropertyName = "CityId";
-            this.cityIdDataGridViewTextBoxColumn.HeaderText = "cityid";
-            this.cityIdDataGridViewTextBoxColumn.Name = "cityIdDataGridViewTextBoxColumn";
-            this.cityIdDataGridViewTextBoxColumn.ReadOnly = true;
-            this.cityIdDataGridViewTextBoxColumn.Visible = false;
             // 
             // FormOrderCondition
             // 

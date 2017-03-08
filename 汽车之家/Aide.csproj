@@ -84,6 +84,12 @@
     <Compile Include="Control\CarControl.Designer.cs">
       <DependentUpon>CarControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Control\RowMergeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Control\RowMergeView.designer.cs">
+      <DependentUpon>RowMergeView.cs</DependentUpon>
+    </Compile>
     <Compile Include="Dama2.cs" />
     <Compile Include="Data\DAL.cs" />
     <Compile Include="Data\Db.cs" />
@@ -110,6 +116,12 @@
     </Compile>
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormNewsJob.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormNewsJob.Designer.cs">
+      <DependentUpon>FormNewsJob.cs</DependentUpon>
     </Compile>
     <Compile Include="FormOrderCondition.cs">
       <SubType>Form</SubType>
@@ -191,6 +203,9 @@
     <EmbeddedResource Include="Control\CarControl.resx">
       <DependentUpon>CarControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Control\RowMergeView.resx">
+      <DependentUpon>RowMergeView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FormColor.resx">
       <DependentUpon>FormColor.cs</DependentUpon>
     </EmbeddedResource>
@@ -202,6 +217,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormNewsJob.resx">
+      <DependentUpon>FormNewsJob.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormOrderCondition.resx">
       <DependentUpon>FormOrderCondition.cs</DependentUpon>

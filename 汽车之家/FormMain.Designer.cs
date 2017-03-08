@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tbcJob_Query_QC = new System.Windows.Forms.TabControl();
@@ -105,6 +106,12 @@
             this.tm_qcjob_news = new System.Windows.Forms.Timer(this.components);
             this.tm_yc_news = new System.Windows.Forms.Timer(this.components);
             this.tm_qc_news = new System.Windows.Forms.Timer(this.components);
+            this.rowMergeView1 = new RowMergeView();
+            this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSitting = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDel = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colNewsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tbcJob_Query_QC.SuspendLayout();
@@ -122,6 +129,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.newsBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rowMergeView1)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -335,6 +343,7 @@
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.rowMergeView1);
             this.tabPage5.Controls.Add(this.chkNewsAll);
             this.tabPage5.Controls.Add(this.dgvQCNews);
             this.tabPage5.Controls.Add(this.lbl_NS_QC);
@@ -350,7 +359,7 @@
             // chkNewsAll
             // 
             this.chkNewsAll.AutoSize = true;
-            this.chkNewsAll.Location = new System.Drawing.Point(7, 212);
+            this.chkNewsAll.Location = new System.Drawing.Point(7, 55);
             this.chkNewsAll.Name = "chkNewsAll";
             this.chkNewsAll.Size = new System.Drawing.Size(15, 14);
             this.chkNewsAll.TabIndex = 26;
@@ -368,11 +377,11 @@
             this.newsIdDataGridViewTextBoxColumn,
             this.titleDataGridViewTextBoxColumn1});
             this.dgvQCNews.DataSource = this.newListDTPBindingSource;
-            this.dgvQCNews.Location = new System.Drawing.Point(3, 208);
+            this.dgvQCNews.Location = new System.Drawing.Point(3, 307);
             this.dgvQCNews.Name = "dgvQCNews";
             this.dgvQCNews.RowHeadersWidth = 21;
             this.dgvQCNews.RowTemplate.Height = 23;
-            this.dgvQCNews.Size = new System.Drawing.Size(399, 210);
+            this.dgvQCNews.Size = new System.Drawing.Size(399, 111);
             this.dgvQCNews.TabIndex = 25;
             // 
             // Column1
@@ -423,7 +432,7 @@
             // 
             this.jct_QC_News.Location = new System.Drawing.Point(3, 3);
             this.jct_QC_News.Name = "jct_QC_News";
-            this.jct_QC_News.Size = new System.Drawing.Size(399, 186);
+            this.jct_QC_News.Size = new System.Drawing.Size(399, 31);
             this.jct_QC_News.TabIndex = 22;
             // 
             // label1
@@ -870,13 +879,13 @@
             // 
             // tm_qc_quer
             // 
-            this.tm_qc_quer.Interval = 30000;
-            this.tm_qc_quer.Tick += new System.EventHandler(this.tm_qc_quer_Tick);
+            //this.tm_qc_quer.Interval = 30000;
+            //this.tm_qc_quer.Tick += new System.EventHandler(this.tm_qc_quer_Tick);
             // 
             // tm_yc_query
             // 
-            this.tm_yc_query.Interval = 30000;
-            this.tm_yc_query.Tick += new System.EventHandler(this.tm_yc_query_Tick);
+            //this.tm_yc_query.Interval = 30000;
+            //this.tm_yc_query.Tick += new System.EventHandler(this.tm_yc_query_Tick);
             // 
             // tm_qcjob_news
             // 
@@ -889,8 +898,66 @@
             // 
             // tm_qc_news
             // 
-            this.tm_qc_news.Interval = 3000;
-            this.tm_qc_news.Tick += new System.EventHandler(this.tm_qc_news_Tick);
+            //this.tm_qc_news.Interval = 3000;
+            //this.tm_qc_news.Tick += new System.EventHandler(this.tm_qc_news_Tick);
+            // 
+            // rowMergeView1
+            // 
+            this.rowMergeView1.AllowUserToAddRows = false;
+            this.rowMergeView1.AllowUserToDeleteRows = false;
+            this.rowMergeView1.AutoGenerateColumns = false;
+            this.rowMergeView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.rowMergeView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colTitle,
+            this.colMessage,
+            this.colSitting,
+            this.colDel,
+            this.colNewsId});
+            this.rowMergeView1.DataSource = this.newListDTPBindingSource;
+            this.rowMergeView1.Location = new System.Drawing.Point(3, 88);
+            this.rowMergeView1.MergeColumnHeaderBackColor = System.Drawing.SystemColors.Control;
+            this.rowMergeView1.MergeColumnNames = ((System.Collections.Generic.List<string>)(resources.GetObject("rowMergeView1.MergeColumnNames")));
+            this.rowMergeView1.Name = "rowMergeView1";
+            this.rowMergeView1.RowHeadersWidth = 21;
+            this.rowMergeView1.RowTemplate.Height = 23;
+            this.rowMergeView1.Size = new System.Drawing.Size(400, 150);
+            this.rowMergeView1.TabIndex = 27;
+            this.rowMergeView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.rowMergeView1_CellContentClick);
+            this.rowMergeView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.rowMergeView1_CellPainting);
+            // 
+            // colTitle
+            // 
+            this.colTitle.DataPropertyName = "Title";
+            this.colTitle.HeaderText = "标题";
+            this.colTitle.Name = "colTitle";
+            // 
+            // colMessage
+            // 
+            this.colMessage.DataPropertyName = "Message";
+            this.colMessage.HeaderText = "发布时间";
+            this.colMessage.Name = "colMessage";
+            // 
+            // colSitting
+            // 
+            this.colSitting.DataPropertyName = "Sitting";
+            this.colSitting.HeaderText = "操作";
+            this.colSitting.Name = "colSitting";
+            this.colSitting.ReadOnly = true;
+            this.colSitting.Width = 60;
+            // 
+            // colDel
+            // 
+            this.colDel.DataPropertyName = "Del";
+            this.colDel.HeaderText = "操作";
+            this.colDel.Name = "colDel";
+            this.colDel.Width = 60;
+            // 
+            // colNewsId
+            // 
+            this.colNewsId.DataPropertyName = "NewsId";
+            this.colNewsId.HeaderText = "NewsId";
+            this.colNewsId.Name = "colNewsId";
+            this.colNewsId.Visible = false;
             // 
             // FormMain
             // 
@@ -929,6 +996,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.newsBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rowMergeView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1010,6 +1078,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colSaleName;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSaleID;
         private System.Windows.Forms.Label label2;
+        private RowMergeView rowMergeView1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMessage;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSitting;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNewsId;
     }
 }
 

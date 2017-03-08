@@ -21,6 +21,7 @@ namespace Aide
             
             if(Tool.site == Aide.Site.Qiche)
             {
+                chkSpceAll.Visible = true;
                 dataGridView2.Visible = true;
                 specBindingSource.DataSource = dal.GetSpecs();
                 dataGridView2.Refresh();
@@ -30,8 +31,7 @@ namespace Aide
         private void btnYes_Click(object sender, System.EventArgs e)
         {
             var area = areaBindingSource.DataSource as List<Area>;
-            var order = orderTypeBindingSource.DataSource as List<OrderType>;            
-
+            var order = orderTypeBindingSource.DataSource as List<OrderType>;
             dal.UpdateAreaChecked(area);
             dal.UpdateOrderTypeChecked(order);
 
@@ -40,7 +40,6 @@ namespace Aide
                 var spec = specBindingSource.DataSource as List<Spec>;
                 dal.UpdateSpecsChecked(spec);
             }
-
             this.DialogResult = DialogResult.OK;
         }
 

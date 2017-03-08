@@ -37,5 +37,7 @@ namespace Aide
             var buffer = Encoding.UTF8.GetBytes(str);
             return Encoding.GetEncoding("GBK").GetString(buffer);
         }
+
+        public static AideTimer aideTimer = new AideTimer();
     }
 }

@@ -19,6 +19,7 @@ namespace Model
         private int? _Space;
         private string _StartTime;
         private string _EndTime;
+        private string _ExecTime;
 
         /// <summary>
         /// 
@@ -124,6 +125,17 @@ namespace Model
                 this._EndTime = value;
             }
         }
+
+        [Field("ExecTime")]
+        public string ExecTime
+        {
+            get { return _ExecTime; }
+            set
+            {
+                this.OnPropertyValueChange("ExecTime");
+                this._ExecTime = value;
+            }
+        }        
         #endregion
 
         #region Method
@@ -157,6 +169,7 @@ namespace Model
 				_.Space,
 				_.StartTime,
 				_.EndTime,
+                _.ExecTime,
 			};
         }
         /// <summary>
@@ -173,6 +186,7 @@ namespace Model
 				this._Space,
 				this._StartTime,
 				this._EndTime,
+                this._ExecTime,
 			};
         }
         /// <summary>
@@ -227,6 +241,8 @@ namespace Model
             /// 
             /// </summary>
             public readonly static Field EndTime = new Field("EndTime", "Job", "");
+
+            public readonly static Field ExecTime = new Field("ExecTime", "Job", "");
         }
         #endregion
     }

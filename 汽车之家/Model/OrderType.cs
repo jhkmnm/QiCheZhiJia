@@ -14,11 +14,25 @@ namespace Model
     public partial class OrderType : Entity
     {
         #region Model
+        private int _PKID;
         private int _ID;
         private string _Site;
         private string _TypeName;
         private bool _IsCheck;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        [Field("PKID")]
+        public int PKID
+        {
+            get { return _PKID; }
+            set
+            {
+                this.OnPropertyValueChange("PKID");
+                this._PKID = value;
+            }
+        }
         /// <summary>
         /// 
         /// </summary>
@@ -80,7 +94,7 @@ namespace Model
         public override Field[] GetPrimaryKeyFields()
         {
             return new Field[] {
-				_.ID,
+				_.PKID,
 			};
         }
         /// <summary>
@@ -89,6 +103,7 @@ namespace Model
         public override Field[] GetFields()
         {
             return new Field[] {
+                _.PKID,
 				_.ID,
                 _.Site,
                 _.TypeName,
@@ -101,6 +116,7 @@ namespace Model
         public override object[] GetValues()
         {
             return new object[] {
+                this._PKID,
 				this._ID,
                 this._Site,
 				this._TypeName,
@@ -127,6 +143,7 @@ namespace Model
             /// * 
             /// </summary>
             public readonly static Field All = new Field("*", "OrderType");
+            public readonly static Field PKID = new Field("PKID", "OrderType", "");
             /// <summary>
             /// 
             /// </summary>

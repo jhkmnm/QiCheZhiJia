@@ -12,7 +12,7 @@ namespace Model
 	{
 		#region Model
 		private int _ID;
-		private int _JobID;
+		private string _JobName;
 		private string _Time;
 
 		/// <summary>
@@ -31,14 +31,14 @@ namespace Model
 		/// <summary>
 		/// 
 		/// </summary>
-		[Field("JobID")]
-		public int JobID
+        [Field("JobName")]
+        public string JobName
 		{
-			get { return _JobID; }
+            get { return _JobName; }
 			set
 			{
-				this.OnPropertyValueChange("JobID");
-				this._JobID = value;
+                this.OnPropertyValueChange("JobName");
+                this._JobName = value;
 			}
 		}
 		/// <summary>
@@ -80,7 +80,7 @@ namespace Model
 		{
 			return new Field[] {
 				_.ID,
-				_.JobID,
+				_.JobName,
 				_.Time,
 			};
 		}
@@ -91,7 +91,7 @@ namespace Model
 		{
 			return new object[] {
 				this._ID,
-				this._JobID,
+				this._JobName,
 				this._Time,
 			};
 		}
@@ -122,7 +122,7 @@ namespace Model
 			/// <summary>
 			/// 
 			/// </summary>
-			public readonly static Field JobID = new Field("JobID", "JobLog", "");
+			public readonly static Field JobName = new Field("JobName", "JobLog", "");
 			/// <summary>
 			/// 
 			/// </summary>

@@ -167,6 +167,11 @@ public class DAL
     {
         return DB.Context.From<Job>().Where(a => a.JobName == jobName).ToFirst();
     }
+
+    public int DelJob(string jobName)
+    {
+        return DB.Context.Delete<Job>(w => w.JobName == jobName);
+    }
     #endregion
 
     #region JobLog
@@ -179,7 +184,7 @@ public class DAL
     {
         return DB.Context.From<JobLog>()
             .Select(JobLog._.All, Job._.JobName)
-            .InnerJoin<Job>((a, b) => a.JobID == b.ID)
+            .InnerJoin<Job>((a, b) => a.JobName == b.JobName)
             .Where<Job>((a, b) => b.JobName == jobName && a.Time.PadLeft(10) == DateTime.Today.ToString("yyyy-MM-dd"))
             .ToFirst();
     }
@@ -225,9 +230,6 @@ public class DAL
     public int UpdateOrderTypeChecked(List<OrderType> order)
     {
         return DB.Context.Update(order);
-        //var model = DB.Context.From<OrderType>().Where(w => w.ID == id).First();
-        //model.IsCheck = !model.IsCheck;
-        //return DB.Context.Update(model);
     }
     #endregion
 

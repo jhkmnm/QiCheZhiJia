@@ -572,48 +572,44 @@ namespace Aide
         #endregion
 
         #region 资讯
-        public string[] PostNews(List<NewListDTP> NewsList)
+        public string PostNews(NewListDTP data)
         {
-            int count = 0;
-            int fail = 0;
             string str = "";
-            foreach (var data in NewsList)//draft.Data
-            {
-                var newsinfo = GetNewsInfo(model_TS + data.NewsId.ToString());
-                var json = JsonConvert.SerializeObject(newsinfo);
-                var postdatas = "promotion=" + HttpHelper.URLEncode(HttpHelper.URLEncode(json)) + "&token=" + token;
-                var item = new HttpItem
-                {
-                    URL = "http://ics.autohome.com.cn/Price/NewsTemplate/SaveNewsTemplateData",
-                    Method = "post",
-                    Cookie = cookie,
-                    Postdata = postdatas,
-                    ContentType = "application/x-www-form-urlencoded; charset=UTF-8",
-                    Referer = "http://ics.autohome.com.cn/dms/Order/Index",
-                    UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"
-                };
-                item.Header.Add("X-Requested-With", "XMLHttpRequest");
-                item.Allowautoredirect = false;
-                var http = new HttpHelper();
-                var htmlr = http.GetHtml(item);
-                try
-                {
-                    var result = JsonConvert.DeserializeObject<NewsResult>(htmlr.Html);
-                    if (result.NewsId > 0)
-                        count++;
-                    else
-                    {
-                        fail++;
-                        str += data.NewsId + ":" + result.ErrorMessage +";";
-                    }
-                }
-                catch(Exception)
-                {
 
+            var newsinfo = GetNewsInfo(model_TS + data.NewsId);
+            var json = JsonConvert.SerializeObject(newsinfo);
+            var postdatas = "promotion=" + HttpHelper.URLEncode(HttpHelper.URLEncode(json)) + "&token=" + token;
+            var item = new HttpItem
+            {
+                URL = "http://ics.autohome.com.cn/Price/NewsTemplate/SaveNewsTemplateData",
+                Method = "post",
+                Cookie = cookie,
+                Postdata = postdatas,
+                ContentType = "application/x-www-form-urlencoded; charset=UTF-8",
+                Referer = "http://ics.autohome.com.cn/dms/Order/Index",
+                UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"
+            };
+            item.Header.Add("X-Requested-With", "XMLHttpRequest");
+            item.Allowautoredirect = false;
+            var http = new HttpHelper();
+            var htmlr = http.GetHtml(item);
+            try
+            {
+                var result = JsonConvert.DeserializeObject<NewsResult>(htmlr.Html);
+                if (result.NewsId > 0)
+                    str = data.Title + " 发布成功";
+                else
+                {
+                    str += data.Title + ":" + result.ErrorMessage + ";";
                 }
             }
-            return new string[] { count.ToString(), "失败" + fail + "条, " + str };
-        }        
+            catch (Exception)
+            {
+                str = data.Title + " 发布失败";
+            }
+
+            return str;
+        }
         
         private QiCheNewsPostData GetNewsInfo(string newurl)
         {
@@ -1140,35 +1136,39 @@ namespace Aide
 
     public class NewListDTP
     {
-        public bool IsSelected { get; set; }
-        public int NewsId { get; set; }
-        public int RecommendedState { get; set; }
-        public int IsBullet { get; set; }
-        public int ClassId { get; set; }
-        public string ClassName { get; set; }
-        public int CompanyId { get; set; }
+        public string NewsId { get; set; }
         public string Title { get; set; }
-        public int ArticleId { get; set; }
-        public int NewsTemplateID { get; set; }
-        public int IsPublish { get; set; }
-        public int IsIITemplate { get; set; }
-        public int HasEquipCar { get; set; }
-        public int HasUpdate { get; set; }
-        public string UpdateMsg { get; set; }
-        public int HasDelete { get; set; }
-        public string DealerIds { get; set; }
-        public List<string> DealerNames { get; set; }
-        public int IsPosition { get; set; }
-        public string PositionUrl { get; set; }
-        public int IsShowTemplate { get; set; }
-        public int IncludeTel { get; set; }
-        public int IncludeAddress { get; set; }
-        public int Integrity { get; set; }
-        public int IsDel { get; set; }
-        public int GroupNewsId { get; set; }
-        public int MaxSelfDefinedCount { get; set; }
-        public int MaxRelationDealerCount { get; set; }
-        public int IsMoreThanWarningLine { get; set; }
-        public int IsNeedRecommended { get; set; }        
+        public string Message { get; set; }
+        public string Sitting { get { return "设置"; } }
+        public string Del { get; set; }
+
+        //public int RecommendedState { get; set; }
+        //public int IsBullet { get; set; }
+        //public int ClassId { get; set; }
+        //public string ClassName { get; set; }
+        //public int CompanyId { get; set; }
+        
+        //public int ArticleId { get; set; }
+        //public int NewsTemplateID { get; set; }
+        //public int IsPublish { get; set; }
+        //public int IsIITemplate { get; set; }
+        //public int HasEquipCar { get; set; }
+        //public int HasUpdate { get; set; }
+        //public string UpdateMsg { get; set; }
+        //public int HasDelete { get; set; }
+        //public string DealerIds { get; set; }
+        //public List<string> DealerNames { get; set; }
+        //public int IsPosition { get; set; }
+        //public string PositionUrl { get; set; }
+        //public int IsShowTemplate { get; set; }
+        //public int IncludeTel { get; set; }
+        //public int IncludeAddress { get; set; }
+        //public int Integrity { get; set; }
+        //public int IsDel { get; set; }
+        //public int GroupNewsId { get; set; }
+        //public int MaxSelfDefinedCount { get; set; }
+        //public int MaxRelationDealerCount { get; set; }
+        //public int IsMoreThanWarningLine { get; set; }
+        //public int IsNeedRecommended { get; set; }        
     }
 }
