@@ -597,6 +597,10 @@ namespace Aide
                     Tool.aideTimer.Dequeue("汽车之家报价");
                     Invoke(new Action(() => lbl_QC_QueryNum.Text = "非常抱歉，今天的报价次数已用完"));
                 }
+                else
+                {
+                    Invoke(new Action(() => lbl_QC_QueryNum.Text = Tool.userInfo_qc.QueryNum.ToString()));
+                }
             }
         }
 
@@ -632,6 +636,10 @@ namespace Aide
                 {
                     Tool.aideTimer.Dequeue("易车网报价");
                     Invoke(new Action(() => label16.Text = "非常抱歉，今天的报价次数已用完"));
+                }
+                else
+                {
+                    Invoke(new Action(() => label16.Text = Tool.userInfo_yc.QueryNum.ToString()));
                 }
             }
         }
@@ -683,6 +691,10 @@ namespace Aide
                     if(Tool.userInfo_qc.NewsNum <= 0)
                     {
                         Invoke(new Action(() => lbl_QC_NewsNum.Text = "非常抱歉，今天发布资讯次数已使用完"));
+                    }
+                    else
+                    {
+                        Invoke(new Action(() => lbl_QC_NewsNum.Text = Tool.userInfo_qc.NewsNum.ToString()));
                     }
                 }
                 selected.Message = "已执行";

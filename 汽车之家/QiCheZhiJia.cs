@@ -575,7 +575,7 @@ namespace Aide
 
             var newsinfo = GetNewsInfo(model_TS + data.NewsId);
             var json = JsonConvert.SerializeObject(newsinfo);
-            var postdatas = "promotion=" + HttpHelper.URLEncode(HttpHelper.URLEncode(json)) + "&token=" + token;
+            var postdatas = "promotion=" + HttpHelper.URLEncode(json, Encoding.UTF8) + "&token=" + token;
             var item = new HttpItem
             {
                 URL = "http://ics.autohome.com.cn/Price/NewsTemplate/SaveNewsTemplateData",
@@ -616,8 +616,8 @@ namespace Aide
             postdata.TemplateId = doc.GetElementbyId("templateId").GetAttributeValue("value", "");
             int ivalue = 0;
             int.TryParse(doc.GetElementbyId("txtIsMoreThanWarningLine").GetAttributeValue("value", ""), out ivalue);
-            postdata.IsMoreThanWarningLine = ivalue;
-            postdata.Integrity = 100;
+            postdata.IsMoreThanWarningLine = 1;// ivalue;
+            postdata.Integrity = 70;
             postdata.IsPublish = 1;
             var series = doc.DocumentNode.SelectSingleNode("//input[@type='radio' and @name='ckSeriesId' and @checked='checked']");
             postdata.SeriesId = series.GetAttributeValue("value", "");
@@ -717,6 +717,9 @@ namespace Aide
             var http = new HttpHelper();
             var htmlr = http.GetHtml(item);
             postdata.SpecInfos = JsonConvert.DeserializeObject<List<SpecInfos>>(htmlr.Html);
+            decimal price = 0;
+            decimal isPriceOff = 0;
+            decimal priceOff = 0;
             postdata.SpecInfos.ForEach(i =>
             {
                 i.SpecName = i.SpecName;// Tool.UTF8ToGBK();
@@ -734,17 +737,84 @@ namespace Aide
                         i.PromotionCondition += "<span class='nfomationissuepic-article-txt'>" + i.SelectedPrmtConditionList[j].Name + "</span>";
                     }
                 }
-            });
-            vpostdata = "action=0&seriesid=" + postdata.SeriesId + "&packageId=" + postdata.HasGiftPackage + "&priceOff=" + postdata.PriceOff + "&isPriceOff=" + postdata.IsPriceOff + "&isRecommend=" + postdata.IsReCommend + "&price=" + postdata.SpecInfos.Min(s => s.CarPrice) + "&checkRepeate=" + postdata.IsReCommend + "&DealerIds%5B%5D=" + postdata.DealerIds;
 
-            item.URL = "http://ics.autohome.com.cn/Price/NewsTemplate/GetTemplateTitle";
+                if (i.Status == 0 && i.IsDel == 0)
+                {
+                    var itemIsPriceOff = Convert.ToDecimal(i.IsPriceOff);
+                    var itemPrice = i.CarPrice;
+                    var itemPriceOff = i.PriceOff;
+                    //取最低价格
+                    if (price == 0 || itemPrice < price)
+                    {
+                        price = itemPrice;
+                    }
+                    if (itemIsPriceOff >= isPriceOff)
+                    {
+                        //优惠取最高值
+                        if (itemIsPriceOff == 1 && (isPriceOff == 0 || itemPriceOff > priceOff))
+                        {
+                            isPriceOff = 1;
+                            priceOff = itemPriceOff;
+                        }
+                        //加价去最低值
+                        if (itemIsPriceOff == 0 && (priceOff == 0 || itemPriceOff < priceOff))
+                        {
+                            isPriceOff = 0;
+                            priceOff = itemPriceOff;
+                        }
+                    }
+                }
+
+                if (postdata.DiscountRate == "0")
+                {
+                    i.InputPriceOff = priceOff;
+                }
+                else
+                {
+                    var priceoff = i.OriginalPrice * (priceOff / (10000 * 100));
+                    i.InputPriceOff = (Math.Round(priceOff));
+                }
+
+                i.PreSpecInvoicePrice = new List<PreSpecInvoicePrice>();
+                i.PreSpecInvoicePrice.Add(new PreSpecInvoicePrice
+                {
+                    isInvoice = "0",
+                    text = (i.InputPriceOff == 1 ? "↓" : "↑") + i.InputPriceOffTxt + "万 优惠价",
+                    value = i.InputPriceOff + ",0" + "|" + i.InputIsPriceOff
+                });
+
+                if (i.SelectPriceOffStatus)
+                {
+                    i.SelectedPriceOff = i.PriceOff + "," + i.PriceOffOrigin + "|" + i.IsPriceOff;
+                }
+                else
+                {
+                    var invoice = SpecInfos.SelectOneInvoice(i.SpecInvoicePrices);
+                    if(invoice != null)
+                    {
+                        i.SelectedPriceOff = invoice.PriceOff + ",1" + "|" + invoice.IsPriceOff;
+                    }
+                    else
+                    {
+                        i.SelectedPriceOff = i.PriceOff + "," + i.PriceOffOrigin + "|" + i.IsPriceOff;
+                    }
+                }
+            });
+
+            vpostdata = "action=0&seriesid=" + postdata.SeriesId + "&packageId=" + postdata.HasGiftPackage + "&priceOff=" + priceOff + "&isPriceOff=" + isPriceOff + "&isRecommend=" + postdata.IsReCommend + "&price=" + price + "&checkRepeate=" + postdata.IsReCommend + "&DealerIds%5B%5D=" + postdata.DealerIds;
+
+            item.URL = "http://ics.autohome.com.cn/Price/NewsTemplate/GetTemplateTitle?r=0.7422912956366994";
             item.Postdata = vpostdata;
             htmlr = http.GetHtml(item);
             List<TemplateTitle> templatetitles = JsonConvert.DeserializeObject<List<TemplateTitle>>(htmlr.Html);
             postdata.Titles = new List<Title>();
             foreach (var i in templatetitles)
             {//Tool.UTF8ToGBK()
-                postdata.Titles.Add(new Title { TitleText = i.Title, TitleValue = i.Id, DefaultSubTitle = i.DefaultSubTitle });
+                postdata.Titles.Add(new Title {
+                    TitleText = i.Title,
+                    TitleValue = i.Id,
+                    DefaultSubTitle = i.DefaultSubTitle
+                });
             }
             postdata.TitleId = postdata.Titles[0].TitleValue.ToString();
             postdata.Title = postdata.Titles[0].TitleText;
@@ -785,7 +855,7 @@ namespace Aide
                     postdata.MaintainEngines = new List<MaintainEngine>();
                     postdata.MaintainEngines.Add(JsonConvert.DeserializeObject<MaintainEngine>(script.Trim().Replace("var MaintainEngineJson=", "").Replace(";", "")));
                     postdata.MaintainEngines.ForEach(i => {
-                        //i.DealerId = i.companyId;
+                        i.DealerId = i.companyId;
                         i.WarrantKm = i.warrantyKm.ToString();
                         i.InsuranceCompany = i.InsuranceCompany;// Tool.UTF8ToGBK();
                         i.FinanceCompany = i.FinanceCompany;// Tool.UTF8ToGBK();
@@ -811,7 +881,9 @@ namespace Aide
             postdata.SelectedPrmtConditionList = new List<SelectedPrmtCondition>();
             foreach (HAP.HtmlNode node in prmtconditions)
             {//Tool.UTF8ToGBK(
-                postdata.NewsPromotionConditionsList.Add(new SelectedPrmtCondition { Name = node.GetAttributeValue("conditionname", ""), Id = Convert.ToInt32(node.GetAttributeValue("value", "0")) });
+                postdata.NewsPromotionConditionsList.Add(new SelectedPrmtCondition {
+                    Name = node.GetAttributeValue("conditionname", ""),
+                    Id = Convert.ToInt32(node.GetAttributeValue("value", "0")) });
                 if(node.GetAttributeValue("checked", "") == "checked")
                 {
                     postdata.SelectedPrmtConditionList.Add(new SelectedPrmtCondition { Name = node.GetAttributeValue("conditionname", ""), Id = Convert.ToInt32(node.GetAttributeValue("value", "0")) });
@@ -935,61 +1007,74 @@ namespace Aide
         public string SpecStructureseat { get; set; }
         public string SpecIsImport { get; set; }
         public int YearId { get; set; }
-        public string PromotionCondition { get; set; }
+        private string _PromotionCondition = "";
+        public string PromotionCondition { get { return _PromotionCondition ?? ""; } set { _PromotionCondition = value; } }
         public List<SelectedPrmtCondition> SelectedPrmtConditionList { get; set; }
         public decimal ForbidLinePriceInTenThousand { get; set; }
         public decimal AbsForbidLinePriceInTenThousand { get; set; }
         public decimal WarningLinePriceInTenThousand { get; set; }
         public decimal AbsWarningLinePriceInTenThousand { get; set; }
-        public decimal InputPrice { get; set; }
-        public string InputIsPriceOff { get; set; }
+        public decimal InputPrice { get { return OriginalPrice - PriceOff; } }
+        public string InputIsPriceOff { get { return IsPriceOff; } }
         public decimal InputPriceOff { get; set; }
-        public decimal InputPriceOffTxt { get; set; }
+        public decimal InputPriceOffTxt { get { return InputPriceOff / 10000; } }
         public decimal InputFactorySubsidyPrice { get; set; }
-        public string InputFactorySubsidyPriceTxt { get; set; }
+        private string _InputFactorySubsidyPriceTxt;
+        public string InputFactorySubsidyPriceTxt { get { return _InputFactorySubsidyPriceTxt ?? "0.00"; } set { _InputFactorySubsidyPriceTxt = value; } }
         public decimal InputGovSubsidyPrice { get; set; }
-        public string InputGovSubsidyPriceTxt { get; set; }
+        private string _InputGovSubsidyPriceTxt;
+        public string InputGovSubsidyPriceTxt { get { return _InputGovSubsidyPriceTxt ?? "0.00"; } set { _InputGovSubsidyPriceTxt = value; } }
         public decimal InputAllowancePrice { get; set; }
-        public string InputAllowancePriceTxt { get; set; }
+        private string _InputAllowancePriceTxt;
+        public string InputAllowancePriceTxt { get { return _InputAllowancePriceTxt ?? "0.00"; } set { _InputAllowancePriceTxt = value; } }
         public int PriceOffOrigin { get; set; }
-        public bool SelectPriceOffStatus { get; set; }
-        public List<string> SpecInvoicePrice { get; set; }
+        private bool _SelectPriceOffStatus = true;
+        public bool SelectPriceOffStatus { get { return _SelectPriceOffStatus; } }
+        public List<SpecInvoicePrice> SpecInvoicePrices { get; set; }
         public List<PreSpecInvoicePrice> PreSpecInvoicePrice { get; set; }
-        public string SelectedPriceOff { get; set; }        
-        public string PurchaseTaxTxt {
-            get {
+        public string SelectedPriceOff { get; set; }
+        public string PurchaseTaxTxt
+        {
+            get
+            {
                 if (PurchaseTax == "50")
-                    return Tool.UTF8ToGBK("购置税:赠送50%");
+                    return "购置税:赠送50%";//Tool.UTF8ToGBK()
                 if (PurchaseTax == "100")
-                    return Tool.UTF8ToGBK("购置税:赠送100%");
-                return Tool.UTF8ToGBK("不赠送购置税");
+                    return "购置税:赠送100%";
+                return "不赠送购置税";
             }
         }
-        public string CompulsoryInsuranceTxt {
-            get {
+        public string CompulsoryInsuranceTxt
+        {
+            get
+            {
                 if (CompulsoryInsurance == "0")
-                    return Tool.UTF8ToGBK("不赠送交强险");
-                return Tool.UTF8ToGBK("交强险:赠送" + CompulsoryInsurance + "年");
+                    return "不赠送交强险"; //Tool.UTF8ToGBK()
+                return "交强险:赠送" + CompulsoryInsurance + "年";
             }
         }
-        public string CommercialInsuranceTxt {
+        public string CommercialInsuranceTxt
+        {
             get
             {
                 if (CommercialInsurance == "0")
-                    return Tool.UTF8ToGBK("不赠送商业险");
-                return Tool.UTF8ToGBK("商业险:赠送" + CommercialInsurance + "年");
+                    return "不赠送商业险"; //Tool.UTF8ToGBK()
+                return "商业险:赠送" + CommercialInsurance + "年";
             }
-        }        
-        public string InsuranceDiscountTxt {
+        }
+        public string InsuranceDiscountTxt
+        {
             get
             {
                 if (InsuranceDiscount == 0)
-                    return Tool.UTF8ToGBK("无保险优惠");
-                return Tool.UTF8ToGBK("保险优惠:" + InsuranceDiscountValue + "万元");
+                    return "无保险优惠";//Tool.UTF8ToGBK()
+                return "保险优惠:" + InsuranceDiscountValue + "万元";
             }
         }
-        public int CarPrice {
-            get {
+        public int CarPrice
+        {
+            get
+            {
                 if (IsPriceOff == "1")
                 {
                     return OriginalPrice - PriceOff;
@@ -1000,8 +1085,10 @@ namespace Aide
                 }
             }
         }
-        public int DealPrice {
-            get {
+        public int DealPrice
+        {
+            get
+            {
                 var dealPrice = CarPrice + PurchaseTaxPrice + CompulsoryInsurancePrice + CommercialInsurancePrice + VehicleTaxPrice - InsuranceDiscount + LicenseTaxPrice + OtherPrice;
                 return dealPrice;
             }
@@ -1014,6 +1101,26 @@ namespace Aide
         public bool EditOther { get { return value; } }
         public bool EditColor { get { return value; } }
         public bool EditPromotionCondition { get { return value; } }
+
+        public static SpecInvoicePrice SelectOneInvoice(List<SpecInvoicePrice> invoices)
+        {
+            SpecInvoicePrice result = null;
+            if (invoices.Count == 1)
+                result = invoices[0];
+            else if(invoices.Count > 1)
+            {                
+                var maxpriceoff = decimal.MinValue;
+                invoices.ForEach(i => {
+                    var tempPriceOff = i.IsPriceOff ? i.PriceOff : -i.PriceOff;
+                    if (tempPriceOff > maxpriceoff)
+                    {
+                        result = i;
+                        maxpriceoff = i.PriceOff;
+                    }
+                });                
+            }
+            return result;
+        }
     }
     public class SelectedPrmtCondition
     {
@@ -1064,6 +1171,7 @@ namespace Aide
     public class MaintainEngine
     {
         public int Id { get; set; }
+        public int companyId { get; set; }
         public int DealerId { get; set; }        
         public int SeriesId { get; set; }
         public string WarrantyYear { get; set; }
@@ -1073,11 +1181,15 @@ namespace Aide
         public string EngineOil { get; set; }
         public string EngineOil3 { get; set; }
         public string InsuranceCompany { get; set; }
-        public int InsurancePrice { get; set; }
+        public int insuraneprice { get; set; }
+        public string InsurancePrice { get { return insuraneprice == 0 ? "" : insuraneprice.ToString(); } }
         public string FinanceCompany { get; set; }
-        public int LoanPayment { get; set; }
-        public int LoanMonth { get; set; }
-        public int LoanMonthPrice { get; set; }
+        public int loanpayment { get; set; }
+        public string LoanPayment { get { return loanpayment == 0 ? "" : loanpayment.ToString(); } }
+        public int loanmonth { get; set; }
+        public string LoanMonth { get { return loanmonth == 0 ? "" : loanmonth.ToString(); } }
+        public int loanmonthprice { get; set; }
+        public string LoanMonthPrice { get { return loanmonthprice == 0 ? "" : loanmonthprice.ToString(); } }
         public string CreateTime { get; set; }
         public string LastTime { get; set; }
         public int IsDel { get; set; }
@@ -1106,6 +1218,12 @@ namespace Aide
     public class EquptCarSpecId
     {
 
+    }
+
+    public class SpecInvoicePrice
+    {
+        public bool IsPriceOff { get; set; }
+        public decimal PriceOff { get; set; }
     }
 
     public class NewsResult

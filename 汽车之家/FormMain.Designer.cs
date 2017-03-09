@@ -57,12 +57,8 @@
             this.jct_QC_Query = new Aide.JobControl();
             this.lbxQuer = new System.Windows.Forms.ListBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.btnQC_LoadNews = new System.Windows.Forms.Button();
             this.rowMergeView1 = new RowMergeView();
-            this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSitting = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.colDel = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.colNewsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.newListDTPBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.lblNews = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -126,7 +122,11 @@
             this.tm_qcjob_news = new System.Windows.Forms.Timer(this.components);
             this.tm_yc_news = new System.Windows.Forms.Timer(this.components);
             this.tm_qc_news = new System.Windows.Forms.Timer(this.components);
-            this.btnQC_LoadNews = new System.Windows.Forms.Button();
+            this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSitting = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.colDel = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.colNewsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -433,6 +433,16 @@
             this.tabPage5.Text = "新闻";
             this.tabPage5.UseVisualStyleBackColor = true;
             // 
+            // btnQC_LoadNews
+            // 
+            this.btnQC_LoadNews.Location = new System.Drawing.Point(66, 3);
+            this.btnQC_LoadNews.Name = "btnQC_LoadNews";
+            this.btnQC_LoadNews.Size = new System.Drawing.Size(74, 21);
+            this.btnQC_LoadNews.TabIndex = 28;
+            this.btnQC_LoadNews.Text = "刷新新闻";
+            this.btnQC_LoadNews.UseVisualStyleBackColor = true;
+            this.btnQC_LoadNews.Click += new System.EventHandler(this.btnQC_LoadNews_Click);
+            // 
             // rowMergeView1
             // 
             this.rowMergeView1.AllowUserToAddRows = false;
@@ -452,54 +462,10 @@
             this.rowMergeView1.Name = "rowMergeView1";
             this.rowMergeView1.RowHeadersWidth = 11;
             this.rowMergeView1.RowTemplate.Height = 23;
-            this.rowMergeView1.Size = new System.Drawing.Size(524, 387);
+            this.rowMergeView1.Size = new System.Drawing.Size(559, 387);
             this.rowMergeView1.TabIndex = 27;
             this.rowMergeView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.rowMergeView1_CellContentClick);
             this.rowMergeView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.rowMergeView1_CellPainting);
-            // 
-            // colTitle
-            // 
-            this.colTitle.DataPropertyName = "Title";
-            this.colTitle.HeaderText = "标题";
-            this.colTitle.Name = "colTitle";
-            this.colTitle.Width = 210;
-            // 
-            // colMessage
-            // 
-            this.colMessage.DataPropertyName = "Message";
-            this.colMessage.HeaderText = "发布时间";
-            this.colMessage.Name = "colMessage";
-            this.colMessage.Width = 190;
-            // 
-            // colSitting
-            // 
-            this.colSitting.DataPropertyName = "Sitting";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colSitting.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colSitting.HeaderText = "操作";
-            this.colSitting.Name = "colSitting";
-            this.colSitting.ReadOnly = true;
-            this.colSitting.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colSitting.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colSitting.Width = 55;
-            // 
-            // colDel
-            // 
-            this.colDel.DataPropertyName = "Del";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colDel.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colDel.HeaderText = "操作";
-            this.colDel.Name = "colDel";
-            this.colDel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colDel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colDel.Width = 55;
-            // 
-            // colNewsId
-            // 
-            this.colNewsId.DataPropertyName = "NewsId";
-            this.colNewsId.HeaderText = "NewsId";
-            this.colNewsId.Name = "colNewsId";
-            this.colNewsId.Visible = false;
             // 
             // newListDTPBindingSource
             // 
@@ -510,9 +476,9 @@
             this.lblNews.FormattingEnabled = true;
             this.lblNews.HorizontalScrollbar = true;
             this.lblNews.ItemHeight = 12;
-            this.lblNews.Location = new System.Drawing.Point(533, 6);
+            this.lblNews.Location = new System.Drawing.Point(568, 11);
             this.lblNews.Name = "lblNews";
-            this.lblNews.Size = new System.Drawing.Size(371, 400);
+            this.lblNews.Size = new System.Drawing.Size(336, 400);
             this.lblNews.TabIndex = 23;
             // 
             // groupBox1
@@ -1122,15 +1088,49 @@
             this.tm_yc_news.Interval = 30000;
             this.tm_yc_news.Tick += new System.EventHandler(this.tm_yc_news_Tick);
             // 
-            // button1
+            // colTitle
             // 
-            this.btnQC_LoadNews.Location = new System.Drawing.Point(66, 3);
-            this.btnQC_LoadNews.Name = "button1";
-            this.btnQC_LoadNews.Size = new System.Drawing.Size(74, 21);
-            this.btnQC_LoadNews.TabIndex = 28;
-            this.btnQC_LoadNews.Text = "刷新新闻";
-            this.btnQC_LoadNews.UseVisualStyleBackColor = true;
-            this.btnQC_LoadNews.Click += new System.EventHandler(this.btnQC_LoadNews_Click);
+            this.colTitle.DataPropertyName = "Title";
+            this.colTitle.HeaderText = "标题";
+            this.colTitle.Name = "colTitle";
+            this.colTitle.Width = 240;
+            // 
+            // colMessage
+            // 
+            this.colMessage.DataPropertyName = "Message";
+            this.colMessage.HeaderText = "发布时间";
+            this.colMessage.Name = "colMessage";
+            this.colMessage.Width = 190;
+            // 
+            // colSitting
+            // 
+            this.colSitting.DataPropertyName = "Sitting";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colSitting.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colSitting.HeaderText = "操作";
+            this.colSitting.Name = "colSitting";
+            this.colSitting.ReadOnly = true;
+            this.colSitting.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSitting.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colSitting.Width = 55;
+            // 
+            // colDel
+            // 
+            this.colDel.DataPropertyName = "Del";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colDel.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colDel.HeaderText = "操作";
+            this.colDel.Name = "colDel";
+            this.colDel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colDel.Width = 55;
+            // 
+            // colNewsId
+            // 
+            this.colNewsId.DataPropertyName = "NewsId";
+            this.colNewsId.HeaderText = "NewsId";
+            this.colNewsId.Name = "colNewsId";
+            this.colNewsId.Visible = false;
             // 
             // FormMain
             // 
@@ -1247,11 +1247,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colSaleID;
         private System.Windows.Forms.Label label2;
         private RowMergeView rowMergeView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colMessage;
-        private System.Windows.Forms.DataGridViewLinkColumn colSitting;
-        private System.Windows.Forms.DataGridViewLinkColumn colDel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNewsId;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel linkLabel3;
@@ -1273,6 +1268,11 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button btnQC_LoadNews;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colTitle;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMessage;
+        private System.Windows.Forms.DataGridViewLinkColumn colSitting;
+        private System.Windows.Forms.DataGridViewLinkColumn colDel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNewsId;
     }
 }
 
