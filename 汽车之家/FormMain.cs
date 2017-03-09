@@ -375,6 +375,7 @@ namespace Aide
         {
             var nicks = qiche.GetNicks();
             dal.AddNicks(nicks);
+            dgvOrder.DataSource = nicks;
         }
 
         private void SendOrder_QC()
@@ -392,6 +393,7 @@ namespace Aide
                 if (vr.Result)
                 {
                     lbxSendOrder.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + vr.Message);
+                    lbxSendOrder.TopIndex = lbxSendOrder.Items.Count - 1;
                 }
 
                 LoadUser(Tool.userInfo_qc);
@@ -460,7 +462,7 @@ namespace Aide
 
                 type.ForEach(f => {
                     if (!f.Text.Contains("全部"))
-                        ordertype.Add(new OrderType { Site = Tool.site.ToString(), TypeName = f.Text, ID = Convert.ToInt32(f.Value) });  
+                        ordertype.Add(new OrderType { Site = Tool.site.ToString(), TypeName = f.Text, ID = Convert.ToInt32(f.Value), IsCheck = true });  
                 });
                 dal.AddOrderTypes(ordertype);
             }
@@ -485,6 +487,7 @@ namespace Aide
             {
                 if (vr.Result)
                     lbxSendOrder_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + vr.Message);
+                lbxSendOrder_YC.TopIndex = lbxSendOrder_YC.Items.Count - 1;
 
                 LoadUser(Tool.userInfo_yc);
             }));
@@ -573,7 +576,16 @@ namespace Aide
         private void SavePrice_QC(string jobName)
         {
             var result = qiche.SavePrice();
-            Invoke(new Action(() => lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message)));
+            Invoke(new Action(() =>
+            {
+                lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
+                lbxQuer.TopIndex = lbxQuer.Items.Count - 1;
+            }));
+            Job job = dal.GetJob(jobName);
+            if(job.JobType == 1 || !string.IsNullOrWhiteSpace(job.Time))
+            {
+                Invoke(new Action(() => jct_QC_Query.lblState.Text = ""));
+            }
             dal.AddJobLog(new JobLog { JobName = jobName, Time = DateTime.Now.ToString("yyyy-MM-dd") });
             if (result.Result)
             {
@@ -583,7 +595,7 @@ namespace Aide
                 if(Tool.userInfo_qc.QueryNum <= 0)
                 {
                     Tool.aideTimer.Dequeue("汽车之家报价");
-                    lbl_QC_QueryNum.Text = "非常抱歉，今天的报价次数已用完";
+                    Invoke(new Action(() => lbl_QC_QueryNum.Text = "非常抱歉，今天的报价次数已用完"));
                 }
             }
         }
@@ -600,17 +612,26 @@ namespace Aide
         private void SavePrice_YC(string jobName)
         {
             var result = yiche.SavePrice();
-            Invoke(new Action(() => lbxQuer_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message)));
+            Invoke(new Action(() =>
+                {
+                    lbxQuer_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
+                    lbxQuer_YC.TopIndex = lbxQuer_YC.Items.Count - 1;
+                }));
             dal.AddJobLog(new JobLog { JobName = jobName, Time = DateTime.Now.ToString("yyyy-MM-dd") });
+            Job job = dal.GetJob(jobName);
+            if (job.JobType == 1 || !string.IsNullOrWhiteSpace(job.Time))
+            {
+                Invoke(new Action(() => jct_YC_Query.lblState.Text = ""));
+            }
             if (result.Result)
             {
                 Tool.service.UpdateLastQuoteTime(Tool.userInfo_yc.Id);
                 Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_yc.Id, JobType = "报价", JobTime = DateTime.Now });
                 Tool.userInfo_yc.QueryNum--;
-                if (Tool.userInfo_qc.QueryNum <= 0)
+                if (Tool.userInfo_yc.QueryNum <= 0)
                 {
-                    Tool.aideTimer.Dequeue("汽车之家报价");
-                    Invoke(new Action(() => lbl_QC_QueryNum.Text = "非常抱歉，今天的报价次数已用完"));
+                    Tool.aideTimer.Dequeue("易车网报价");
+                    Invoke(new Action(() => label16.Text = "非常抱歉，今天的报价次数已用完"));
                 }
             }
         }
@@ -649,6 +670,7 @@ namespace Aide
                 var result = qiche.PostNews(selected);
                 Invoke(new Action(() => {
                     lblNews.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result);
+                    lblNews.TopIndex = lblNews.Items.Count - 1;
                 }));
                 var job = dal.GetJob(newsID);
                 job.ExecTime = DateTime.Now.ToString();
@@ -660,10 +682,17 @@ namespace Aide
                     Tool.userInfo_qc.NewsNum--;
                     if(Tool.userInfo_qc.NewsNum <= 0)
                     {
-                        lbl_QC_NewsNum.Text = "非常抱歉，今天发布资讯次数已使用完";
+                        Invoke(new Action(() => lbl_QC_NewsNum.Text = "非常抱歉，今天发布资讯次数已使用完"));
                     }
                 }
+                selected.Message = "已执行";
+                selected.Del = "";
             }
+        }
+
+        private void btnQC_LoadNews_Click(object sender, EventArgs e)
+        {
+            LoadNews();
         }
 
         private void LoadNews()
@@ -782,6 +811,7 @@ namespace Aide
             if(dataGridView1.Rows.Count == 0)
             {
                 listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":目前没有可以发布的新闻，请添加");
+                listBox3.TopIndex = listBox3.Items.Count - 1;
                 return;
             }
 
@@ -790,7 +820,7 @@ namespace Aide
                 var result = yiche.PostNews(news.ID);
                 if(result == "发布成功")
                 {
-                    listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + news.Title + " 发布成功");
+                    listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + news.Title + " 发布成功");                    
                     dal.AddJobLog(new JobLog { JobName = job_yc_news.ID.ToString(), Time = DateTime.Now.ToString("yyyy-MM-dd") });
                     Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_yc.Id, JobType = "资讯", JobTime = DateTime.Now });
                     Tool.userInfo_yc.NewsNum--;
@@ -799,6 +829,7 @@ namespace Aide
                 {
                     listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + news.Title + " 发布失败," + result);
                 }
+                listBox3.TopIndex = listBox3.Items.Count - 1;
             }
         }
 
@@ -852,7 +883,7 @@ namespace Aide
                 }                
             }
         }
-        #endregion
+        #endregion        
 
         #endregion        
     }

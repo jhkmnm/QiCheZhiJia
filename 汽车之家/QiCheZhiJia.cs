@@ -26,6 +26,8 @@ namespace Aide
         /// </summary>
         string postlogin = "http://ics.autohome.com.cn/passport/";
         string entervalidateCode = "http://ics.autohome.com.cn/passport/Account/GetEnterpriseValidateCode";
+        string homeindex = "http://ics.autohome.com.cn/passport/Home/Index";
+
         /// <summary>
         /// 账号列表
         /// </summary>
@@ -54,13 +56,6 @@ namespace Aide
         string modulus = "";
         public string cookie = "";
         DAL dal = new DAL();
-
-        //public string pid{get;set;}
-        //public string cid{get;set;}
-        //public string sid{get;set;}
-        //public string fid { get; set; }
-        //public string oid{get;set;}
-        //public List<Nicks> nicks { get; set; }
 
         public QiCheZhiJia(string js)
         {
@@ -176,8 +171,10 @@ namespace Aide
         {
             ViewResult vresult = new ViewResult();
 
-            HAP.HtmlDocument htmlDoc = GetHtml(employeelist);
-            
+            HAP.HtmlDocument htmlDoc = GetHtml(homeindex);
+            var companyid = htmlDoc.DocumentNode.SelectSingleNode("//div[@class='ics_box mt10 j_dealerState']").GetAttributeValue("dealer", "");
+
+            htmlDoc = GetHtml(employeelist);            
             var result = JsonConvert.DeserializeObject<LinkResult>(htmlDoc.DocumentNode.OuterHtml);
             var infoformat = "姓名:{0};性别:{1};职位:{2};手机:{3};座机:{4}" + Environment.NewLine;
             StringBuilder sb = new StringBuilder(result.Data.SaleList.Count * 25);
@@ -187,7 +184,7 @@ namespace Aide
             Service.User user = new Service.User
             {
                 Company = result.Data.SaleList[0].CompanyString.TrimEnd(','),
-                CompanyID = result.Data.SaleList[0].CompanyID.ToString(),
+                CompanyID = companyid,
                 SiteName = "汽车之家",
                 PassWord = passWord,
                 UserName = userName,
@@ -527,7 +524,7 @@ namespace Aide
                 return result;
             }
 
-            int companyid = Convert.ToInt32(Tool.userInfo_qc.CompanyID);           
+            int companyid = Convert.ToInt32(Tool.userInfo_qc.CompanyID);
 
             int[] specIds = saledata.Select(a => a.SpecId).ToArray();
             int[] prices = saledata.Select(a => a.Price).ToArray();
@@ -624,9 +621,9 @@ namespace Aide
             postdata.IsPublish = 1;
             var series = doc.DocumentNode.SelectSingleNode("//input[@type='radio' and @name='ckSeriesId' and @checked='checked']");
             postdata.SeriesId = series.GetAttributeValue("value", "");
-            postdata.SeriesName = Tool.UTF8ToGBK(series.GetAttributeValue("sname", ""));
+            postdata.SeriesName = series.GetAttributeValue("sname", "");//Tool.UTF8ToGBK(series.GetAttributeValue("sname", ""));
             postdata.CompanyId = doc.GetElementbyId("companyId").GetAttributeValue("value", "");
-            postdata.DealerIds = postdata.CompanyId;
+            postdata.DealerIds = Tool.userInfo_qc.CompanyID;//postdata.CompanyId;
             var IsPriceOff = doc.DocumentNode.SelectSingleNode("//input[@name='IsPriceOff' and @checked='checked']");
             postdata.IsPriceOff = IsPriceOff.GetAttributeValue("value", "");
             postdata.DiscountRate = doc.GetElementbyId("selDiscountRate").GetAttributeValue("value", "0");
@@ -670,12 +667,12 @@ namespace Aide
                 if (script.Contains("news_content"))
                 {
                     forcount++;
-                    postdata.Content = Tool.UTF8ToGBK(script.Trim().Replace("var news_content = \"", "").Replace("\"", "").Replace(";", ""));
+                    postdata.Content = script.Trim().Replace("var news_content = \"", "").Replace("\"", "").Replace(";", "");//Tool.UTF8ToGBK();
                 }
                 else if (script.Contains("news_conclusion"))
                 {
                     forcount++;
-                    postdata.Conclusion = Tool.UTF8ToGBK(script.Trim().Replace("var news_conclusion = \"", "").Replace("\"", "").Replace(";", ""));
+                    postdata.Conclusion = script.Trim().Replace("var news_conclusion = \"", "").Replace("\"", "").Replace(";", "");//Tool.UTF8ToGBK();
                 }
                 else if (script.Contains("GetNewsId") || isnews)
                 {
@@ -722,14 +719,14 @@ namespace Aide
             postdata.SpecInfos = JsonConvert.DeserializeObject<List<SpecInfos>>(htmlr.Html);
             postdata.SpecInfos.ForEach(i =>
             {
-                i.SpecName = Tool.UTF8ToGBK(i.SpecName);
-                i.SpecIsImport = Tool.UTF8ToGBK(i.SpecIsImport);                
+                i.SpecName = i.SpecName;// Tool.UTF8ToGBK();
+                i.SpecIsImport = i.SpecIsImport;// Tool.UTF8ToGBK();                
                 if (i.SelectedPrmtConditionList.Count > 0)
                 {
                     i.PromotionCondition = "<p>";
                     for (int j = 0; j < i.SelectedPrmtConditionList.Count; j++)
                     {
-                        i.SelectedPrmtConditionList[j].Name = Tool.UTF8ToGBK(i.SelectedPrmtConditionList[j].Name);
+                        i.SelectedPrmtConditionList[j].Name = i.SelectedPrmtConditionList[j].Name;// Tool.UTF8ToGBK();
                         if (j != 0)
                         {
                             i.PromotionCondition += "<span>|</span>";
@@ -746,8 +743,8 @@ namespace Aide
             List<TemplateTitle> templatetitles = JsonConvert.DeserializeObject<List<TemplateTitle>>(htmlr.Html);
             postdata.Titles = new List<Title>();
             foreach (var i in templatetitles)
-            {
-                postdata.Titles.Add(new Title { TitleText = Tool.UTF8ToGBK(i.Title), TitleValue = i.Id, DefaultSubTitle = Tool.UTF8ToGBK(i.DefaultSubTitle) });
+            {//Tool.UTF8ToGBK()
+                postdata.Titles.Add(new Title { TitleText = i.Title, TitleValue = i.Id, DefaultSubTitle = i.DefaultSubTitle });
             }
             postdata.TitleId = postdata.Titles[0].TitleValue.ToString();
             postdata.Title = postdata.Titles[0].TitleText;
@@ -788,17 +785,17 @@ namespace Aide
                     postdata.MaintainEngines = new List<MaintainEngine>();
                     postdata.MaintainEngines.Add(JsonConvert.DeserializeObject<MaintainEngine>(script.Trim().Replace("var MaintainEngineJson=", "").Replace(";", "")));
                     postdata.MaintainEngines.ForEach(i => {
-                        i.DealerId = i.companyId;
+                        //i.DealerId = i.companyId;
                         i.WarrantKm = i.warrantyKm.ToString();
-                        i.InsuranceCompany = Tool.UTF8ToGBK(i.InsuranceCompany);
-                        i.FinanceCompany = Tool.UTF8ToGBK(i.FinanceCompany);
+                        i.InsuranceCompany = i.InsuranceCompany;// Tool.UTF8ToGBK();
+                        i.FinanceCompany = i.FinanceCompany;// Tool.UTF8ToGBK();
                     });
                 }
                 else if(script.Contains("SeriesColor"))
                 {
                     forcount++;
                     postdata.SeriesColor = JsonConvert.DeserializeObject<List<SeriesColor>>(script.Trim().Replace("var SeriesColor = ", "").Replace(";", ""));
-                    postdata.SeriesColor.ForEach(i => i.name = Tool.UTF8ToGBK(i.name));
+                    postdata.SeriesColor.ForEach(i => i.name = i.name);//Tool.UTF8ToGBK()
                 }
             }
             postdata.BigImageTitle = "";
@@ -813,11 +810,11 @@ namespace Aide
             postdata.NewsPromotionConditionsList = new List<SelectedPrmtCondition>();
             postdata.SelectedPrmtConditionList = new List<SelectedPrmtCondition>();
             foreach (HAP.HtmlNode node in prmtconditions)
-            {
-                postdata.NewsPromotionConditionsList.Add(new SelectedPrmtCondition { Name = Tool.UTF8ToGBK(node.GetAttributeValue("conditionname", "")), Id = Convert.ToInt32(node.GetAttributeValue("value", "0")) });
+            {//Tool.UTF8ToGBK(
+                postdata.NewsPromotionConditionsList.Add(new SelectedPrmtCondition { Name = node.GetAttributeValue("conditionname", ""), Id = Convert.ToInt32(node.GetAttributeValue("value", "0")) });
                 if(node.GetAttributeValue("checked", "") == "checked")
                 {
-                    postdata.SelectedPrmtConditionList.Add(new SelectedPrmtCondition { Name = Tool.UTF8ToGBK(node.GetAttributeValue("conditionname", "")), Id = Convert.ToInt32(node.GetAttributeValue("value", "0")) });
+                    postdata.SelectedPrmtConditionList.Add(new SelectedPrmtCondition { Name = node.GetAttributeValue("conditionname", ""), Id = Convert.ToInt32(node.GetAttributeValue("value", "0")) });
                 }
             }
             return postdata;
@@ -938,13 +935,27 @@ namespace Aide
         public string SpecStructureseat { get; set; }
         public string SpecIsImport { get; set; }
         public int YearId { get; set; }
-        private string Colors { get; set; }
         public string PromotionCondition { get; set; }
         public List<SelectedPrmtCondition> SelectedPrmtConditionList { get; set; }
         public decimal ForbidLinePriceInTenThousand { get; set; }
         public decimal AbsForbidLinePriceInTenThousand { get; set; }
         public decimal WarningLinePriceInTenThousand { get; set; }
         public decimal AbsWarningLinePriceInTenThousand { get; set; }
+        public decimal InputPrice { get; set; }
+        public string InputIsPriceOff { get; set; }
+        public decimal InputPriceOff { get; set; }
+        public decimal InputPriceOffTxt { get; set; }
+        public decimal InputFactorySubsidyPrice { get; set; }
+        public string InputFactorySubsidyPriceTxt { get; set; }
+        public decimal InputGovSubsidyPrice { get; set; }
+        public string InputGovSubsidyPriceTxt { get; set; }
+        public decimal InputAllowancePrice { get; set; }
+        public string InputAllowancePriceTxt { get; set; }
+        public int PriceOffOrigin { get; set; }
+        public bool SelectPriceOffStatus { get; set; }
+        public List<string> SpecInvoicePrice { get; set; }
+        public List<PreSpecInvoicePrice> PreSpecInvoicePrice { get; set; }
+        public string SelectedPriceOff { get; set; }        
         public string PurchaseTaxTxt {
             get {
                 if (PurchaseTax == "50")
@@ -981,12 +992,10 @@ namespace Aide
             get {
                 if (IsPriceOff == "1")
                 {
-                    //self.Price(self.OriginalPrice() - self.PriceOff());
                     return OriginalPrice - PriceOff;
                 }
                 else
                 {
-                    //self.Price(self.OriginalPrice() + self.PriceOff());
                     return OriginalPrice + PriceOff;
                 }
             }
@@ -1055,8 +1064,7 @@ namespace Aide
     public class MaintainEngine
     {
         public int Id { get; set; }
-        public int DealerId { get; set; }
-        public int companyId { get; set; }
+        public int DealerId { get; set; }        
         public int SeriesId { get; set; }
         public string WarrantyYear { get; set; }
         public string WarrantKm { get; set; }
@@ -1125,35 +1133,13 @@ namespace Aide
         public string Title { get; set; }
         public string Message { get; set; }
         public string Sitting { get { return "设置"; } }
-        public string Del { get; set; }
+        public string Del { get; set; }     
+    }
 
-        //public int RecommendedState { get; set; }
-        //public int IsBullet { get; set; }
-        //public int ClassId { get; set; }
-        //public string ClassName { get; set; }
-        //public int CompanyId { get; set; }
-        
-        //public int ArticleId { get; set; }
-        //public int NewsTemplateID { get; set; }
-        //public int IsPublish { get; set; }
-        //public int IsIITemplate { get; set; }
-        //public int HasEquipCar { get; set; }
-        //public int HasUpdate { get; set; }
-        //public string UpdateMsg { get; set; }
-        //public int HasDelete { get; set; }
-        //public string DealerIds { get; set; }
-        //public List<string> DealerNames { get; set; }
-        //public int IsPosition { get; set; }
-        //public string PositionUrl { get; set; }
-        //public int IsShowTemplate { get; set; }
-        //public int IncludeTel { get; set; }
-        //public int IncludeAddress { get; set; }
-        //public int Integrity { get; set; }
-        //public int IsDel { get; set; }
-        //public int GroupNewsId { get; set; }
-        //public int MaxSelfDefinedCount { get; set; }
-        //public int MaxRelationDealerCount { get; set; }
-        //public int IsMoreThanWarningLine { get; set; }
-        //public int IsNeedRecommended { get; set; }        
+    public class PreSpecInvoicePrice
+    {
+        public string value { get; set; }
+        public string text { get; set; }
+        public string isInvoice { get; set; }
     }
 }

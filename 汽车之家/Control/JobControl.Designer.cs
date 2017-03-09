@@ -303,8 +303,8 @@
         private System.Windows.Forms.DateTimePicker dtpJobDate_Quote;
         private System.Windows.Forms.DateTimePicker dtpQuoteTime_QC;
         private System.Windows.Forms.ComboBox ddlPalnType;
-        private System.Windows.Forms.Label lblState;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button btnSetting_QC;
+        public System.Windows.Forms.Label lblState;
     }
 }
