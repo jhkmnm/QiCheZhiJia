@@ -24,14 +24,14 @@ namespace Aide
         Thread th;
         int top, left, height, width1;
 
-        Job job_qc_quote;
-        Job job_qc_news;
-        Job job_yc_quote;
-        Job job_yc_news;
+        string QC_Price_JobName = "汽车之家报价";
+        string YC_Price_JobName = "易车网报价";
 
+        //打码登录
         const string key = "087a9b3cdec0c2597df237916ebfff9a";
         const string username = "";
         const string password = "";
+        static int AutomaticCount = 20;
 
         /*
          * 登录后,判断用户类型,如果是试用,抢单判断试用时间,新闻、报价判断已经报价过的次数
@@ -45,9 +45,12 @@ namespace Aide
 
             this.qiche = qiche;
             this.yiche = yiche;
+            th = new Thread(Tool.aideTimer.Run);
+            th.Start();
             if(Tool.site == Aide.Site.Qiche)
             {
                 tabControl1.SelectedTab = tabPage1;
+                AddLoginJob();
             }
             else
             {
@@ -56,8 +59,20 @@ namespace Aide
 
             tabControl2.TabPages.Remove(tabPage8);
             dgvOrder.AutoGenerateColumns = false;
-            th = new Thread(Tool.aideTimer.Run);
-            th.Start();
+        }
+
+        /// <summary>
+        /// 自动登录
+        /// </summary>
+        private void AddLoginJob()
+        {
+            var job = dal.GetJob("汽车自动登录");
+            if(job == null)
+            {
+                job = new Job { JobType = 2, Time = "00:00:00", StartTime = "00:00:00", EndTime = "00:00:00", Space = 24 * 60 * 60 * 1000, JobName = "汽车自动登录" };
+                dal.AddJob(job);
+            }
+            Tool.aideTimer.Enqueue(new AideJobs { Job = job, JobAction = AutomaticLogin });
         }
 
         #region 窗体事件
@@ -119,6 +134,22 @@ namespace Aide
         #endregion
 
         #region 登录
+        private void AutomaticLogin(string jobName)
+        {
+            AutomaticCount--;
+            if (AutomaticCount < 0) return;
+            var validateCodeImg = qiche.ValidateCode();
+            var validatecode = DaMa(validateCodeImg);
+            var result = qiche.Login(Tool.userInfo_qc.UserName, Tool.userInfo_qc.PassWord, validatecode);
+            if (!result.Result)
+            {
+                if (result.Message.Contains("验证码输入有误"))
+                {
+                    AutomaticLogin(jobName);
+                }
+            }
+        }
+
         private void InitUser()
         {
             if (Tool.site == Aide.Site.Qiche)
@@ -163,6 +194,8 @@ namespace Aide
         {
             try
             {
+                DateTime dtnow = DateTime.Now;
+                bool isOver = (dtnow - user.DueTime.Value).TotalSeconds >= 0;
                 if(user.SiteName == "汽车之家")
                 {
                     lblCode.Text = user.Id.ToString();
@@ -177,101 +210,9 @@ namespace Aide
                     label19.Text = user.UserName;
                     label22.Text = user.UserType == 0 ? "试用" : "付费";
                 }
-
-                #region 抢单判断
-                bool canOrder = true;
-                if (user.UserType == 0 || !user.SendOrder)
-                {
-                    if (!Tool.service.CheckTasteTime(user.Id))
-                    {
-                        canOrder = false;
-                        if (Tool.site == Aide.Site.Qiche)
-                        {
-                            lblQD_QC.Text = "非常抱歉，今天抢单体验时间已到";
-                            btnSendOrder.Enabled = btnStop.Enabled = false;
-                            if (th_qc != null)
-                                th_qc.Abort();
-                        }
-                        else
-                        {
-                            lblQD_YC.Text = "非常抱歉，今天抢单体验时间已到";
-                            btnStart_YC.Enabled = btnStop_YC.Enabled = false;
-                            if (th_yc != null)
-                                th_yc.Abort();
-                        }
-                    }
-                }
-                if(canOrder)                
-                {
-                    if (Tool.site == Aide.Site.Qiche)
-                    {
-                        if (th_qc == null)
-                            LoadOrder();
-                    }
-                    else
-                    {
-                        if (th_yc == null)
-                            LoadOrder();
-                    }
-                }
-                #endregion
-
-                #region 报价判断
-                bool canQuery = true;
-                if (user.UserType == 0 || !user.Query)
-                {
-                    if (user.QueryNum <= 0)
-                    {
-                        canQuery = false;
-                        if (Tool.site == Aide.Site.Qiche && user.SiteName == "汽车之家")
-                        {
-                            lbl_QC_QueryNum.Text = "非常抱歉，今天报价次数已使用完";
-                            jct_QC_Query.Enabled = false;
-                        }
-                        else if(Tool.site == Aide.Site.Yiche && user.SiteName == "易车网")
-                        {
-                            lbl_QC_QueryNum.Text = "非常抱歉，今天报价次数已使用完";
-                            jct_YC_Query.Enabled = false;
-                        }
-                    }
-                }
-                if (canQuery)
-                {
-                    if (Tool.site == Aide.Site.Qiche)
-                        lbl_QC_QueryNum.Text = user.Query ? "按到期时间计算" : user.QueryNum.ToString();
-                    else
-                        label16.Text = user.Query ? "按到期时间计算" : user.QueryNum.ToString();
-                    LoadJob_Query();
-                }
-                #endregion
-
-                #region 资讯判断
-                bool canNews = true;
-                if (user.UserType == 0 || !user.News)
-                {
-                    if (user.NewsNum <= 0)
-                    {
-                        canNews = false;
-                        if (Tool.site == Aide.Site.Qiche && user.SiteName == "汽车之家")
-                        {
-                            lbl_QC_NewsNum.Text = "非常抱歉，今天发布资讯次数已使用完";
-                        }
-                        else if (Tool.site == Aide.Site.Yiche && user.SiteName == "易车网")
-                        {
-                            lbl_QC_NewsNum.Text = "非常抱歉，今天发布资讯次数已使用完";
-                            jct_YC_News.Enabled = false;
-                        }
-                    }                    
-                }
-                if (canNews)
-                {
-                    if (Tool.site == Aide.Site.Qiche)
-                        lbl_QC_NewsNum.Text = user.News ? "按到期时间计算" : user.NewsNum.ToString();
-                    else
-                        label14.Text = user.Query ? "按到期时间计算" : user.NewsNum.ToString();
-                    LoadJob_News();
-                }
-                #endregion
+                CheckSendOrder(user, isOver);
+                CheckSendPrice(user, isOver);
+                CheckSendNews(user, isOver);
             }
             catch(Exception ex)
             {
@@ -279,9 +220,171 @@ namespace Aide
             }
         }
 
-        private void CheckSendOrder()
+        /// <summary>
+        /// 抢单判断
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="isOver"></param>
+        private void CheckSendOrder(Service.User user, bool isOver)
         {
+            bool canOrder = true;
+            string message = user.DueTime.ToString();
+            if (user.UserType == 0 || !user.SendOrder)
+            {
+                if (!Tool.service.CheckTasteTime(user.Id))
+                {
+                    canOrder = false;
+                    message = "非常抱歉，今天抢单体验时间已到";
+                }
+            }
+            else if (user.SendOrder && isOver)
+            {
+                canOrder = false;
+                message = "非常抱歉，付费使用时间已到!";
+            }
+            if (canOrder)
+            {
+                if (Tool.site == Aide.Site.Qiche)
+                {
+                    if (th_qc == null)
+                        LoadOrder();
+                }
+                else
+                {
+                    if (th_yc == null)
+                        LoadOrder();
+                }
+            }
+            else
+            {
+                if (Tool.site == Aide.Site.Qiche)
+                {
+                    lblQD_QC.Text = message;
+                    btnSendOrder.Enabled = btnStop.Enabled = false;
+                    if (th_qc != null)
+                        th_qc.Abort();
+                }
+                else
+                {
+                    lblQD_YC.Text = message;
+                    btnStart_YC.Enabled = btnStop_YC.Enabled = false;
+                    if (th_yc != null)
+                        th_yc.Abort();
+                }
+            }
+        }
 
+        /// <summary>
+        /// 报价判断
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="isOver"></param>
+        private void CheckSendPrice(Service.User user, bool isOver)
+        {
+            bool canQuery = true;
+            string message = user.QueryNum.ToString();
+            if (user.UserType == 0 || !user.Query)
+            {
+                if (user.QueryNum <= 0)
+                {
+                    canQuery = false;
+                    message = "非常抱歉，今天报价次数已使用完";
+                }
+            }
+            else if (user.Query && isOver)
+            {
+                canQuery = false;
+                message = "非常抱歉，付费使用时间已到!";
+            }
+            if (canQuery)
+            {
+                if (Tool.site == Aide.Site.Qiche)
+                    lbl_QC_QueryNum.Text = user.Query ? "按到期时间计算" : user.QueryNum.ToString();
+                else
+                    label16.Text = user.Query ? "按到期时间计算" : user.QueryNum.ToString();
+                LoadJob_Query();
+            }
+            else
+            {
+                if (Tool.site == Aide.Site.Qiche && user.SiteName == "汽车之家")
+                {
+                    lbl_QC_QueryNum.Text = message;
+                    jct_QC_Query.Enabled = false;
+                    Tool.aideTimer.Dequeue(QC_Price_JobName);
+                }
+                else if (Tool.site == Aide.Site.Yiche && user.SiteName == "易车网")
+                {
+                    label16.Text = message;
+                    jct_YC_Query.Enabled = false;
+                    Tool.aideTimer.Dequeue(QC_Price_JobName);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 资讯判断
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="isOver"></param>
+        private void CheckSendNews(Service.User user, bool isOver)
+        {
+            bool canNews = true;
+            string message = user.NewsNum.ToString();
+            if (user.UserType == 0 || !user.News)
+            {
+                if (user.NewsNum <= 0)
+                {
+                    canNews = false;
+                    message = "非常抱歉，今天发布资讯次数已使用完";
+                }
+            }
+            else if (user.News && isOver)
+            {
+                canNews = false;
+                message = "非常抱歉，付费使用时间已到!";
+            }
+            if (canNews)
+            {
+                if (Tool.site == Aide.Site.Qiche)
+                    lbl_QC_NewsNum.Text = user.News ? "按到期时间计算" : user.NewsNum.ToString();
+                else
+                    label14.Text = user.Query ? "按到期时间计算" : user.NewsNum.ToString();
+                LoadJob_News();
+            }
+            else
+            {
+                if (Tool.site == Aide.Site.Qiche && user.SiteName == "汽车之家")
+                {
+                    lbl_QC_NewsNum.Text = message;
+                    colSitting.ReadOnly = true;
+                    if(newListDTPBindingSource.DataSource != null)
+                    {
+                        var data = (List<NewListDTP>)newListDTPBindingSource.DataSource;
+                        data.ForEach(item => {
+                            item.Message = "付费时间已到";
+                            item.Del = "";
+                            Tool.aideTimer.Dequeue(item.NewsId);
+                        });
+                        rowMergeView1.Refresh();
+                    }
+                }
+                else if (Tool.site == Aide.Site.Yiche && user.SiteName == "易车网")
+                {
+                    label14.Text = message;
+                    colYC_Sitting.ReadOnly = true;
+                    if (newListDTPBindingSource1.DataSource != null)
+                    {
+                        var data = (List<NewListDTP>)newListDTPBindingSource1.DataSource;
+                        data.ForEach(item =>
+                        {
+                            item.Message = "付费时间已到";
+                            item.Del = "";
+                            Tool.aideTimer.Dequeue(item.NewsId);
+                        });
+                        rowMergeView2.Refresh();
+                    }
+                }
+            }
         }
 
         private string DaMa(byte[] image)
@@ -395,8 +498,9 @@ namespace Aide
                     lbxSendOrder.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + vr.Message);
                     lbxSendOrder.TopIndex = lbxSendOrder.Items.Count - 1;
                 }
-
-                LoadUser(Tool.userInfo_qc);
+                bool isOver = (DateTime.Now - Tool.userInfo_qc.DueTime.Value).TotalSeconds >= 0;
+                CheckSendOrder(Tool.userInfo_qc, isOver);
+                //LoadUser(Tool.userInfo_qc);
             }));
         }
 
@@ -446,11 +550,10 @@ namespace Aide
         private void LoadOrder_YC()
         {
             var ordertype = dal.GetOrderTypes(Tool.site.ToString());
+            var htmlDoc = yiche.GoToOrder();
             if(ordertype.Count == 0)
             {
                 List<TextValue> type = new List<TextValue>();
-
-                var htmlDoc = yiche.GoToOrder();
                 var script = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"Head1\"]/script[7]/text()").InnerText.Replace(" ", "").Replace("\r", "").Split('\n');
                 foreach (string str in script)
                 {
@@ -489,7 +592,9 @@ namespace Aide
                     lbxSendOrder_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + vr.Message);
                 lbxSendOrder_YC.TopIndex = lbxSendOrder_YC.Items.Count - 1;
 
-                LoadUser(Tool.userInfo_yc);
+                bool isOver = (DateTime.Now - Tool.userInfo_yc.DueTime.Value).TotalSeconds >= 0;
+                CheckSendOrder(Tool.userInfo_yc, isOver);
+                //LoadUser(Tool.userInfo_yc);
             }));
         }
 
@@ -514,14 +619,14 @@ namespace Aide
             JobControl jc = null;
             if (Tool.site == Aide.Site.Qiche)
             {
-                jobname = "汽车之家报价";
+                jobname = QC_Price_JobName;
                 action = SavePrice_QC;
                 jc = jct_QC_Query;
                 jc.SetJobEvent += jct_QC_Query_SetJobEvent;
             }
             else
             {
-                jobname = "易车网报价";
+                jobname = YC_Price_JobName;
                 action = SavePrice_YC;
                 jc = jct_YC_Query;
                 jc.SetJobEvent += jct_YC_Query_SetJobEvent;
@@ -531,44 +636,6 @@ namespace Aide
             {
                 Tool.aideTimer.Enqueue(new AideJobs { Job = job, JobAction = action });
                 jc.SetJob(job);
-            }
-        }
-
-        private void ExecJob(Job job, Action action)
-        {
-            /*
-             * 计划类型为1，在指定时间执行一次
-             * 计划类型为2，
-             * 如果有指定执行时间，设置定时器间隔时间为30秒，到指定时间执行，并将间隔时间设置为24小时
-             * 如果没有指定执行时间，设置定时器间隔时间，在指定范围内执行
-             */
-
-            DateTime dtnow = DateTime.Now;
-            if (job.JobType == 1)
-            {
-                DateTime dt = Convert.ToDateTime(job.JobDate + " " + job.Time);
-                if ((dtnow - dt).Minutes >= 0 && (dtnow - dt).Minutes <= 1)
-                {
-                    action();
-                }
-            }
-            else
-            {
-                if (!string.IsNullOrWhiteSpace(job.Time))
-                {
-                    DateTime dt = Convert.ToDateTime(job.Time);
-                    if ((dtnow - dt).Minutes >= 0 && (dtnow - dt).Minutes <= 1)
-                    {
-                        action();
-                    }
-                }
-                else
-                {
-                    if ((dtnow - Convert.ToDateTime(job.StartTime)).Minutes >= 0 && (dtnow - Convert.ToDateTime(job.EndTime)).Minutes <= 0)
-                    {
-                        action();
-                    }
-                }
             }
         }
 
@@ -592,21 +659,23 @@ namespace Aide
                 Tool.service.UpdateLastQuoteTime(Tool.userInfo_qc.Id);
                 Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_qc.Id, JobType = "报价", JobTime = DateTime.Now });
                 Tool.userInfo_qc.QueryNum--;
-                if(Tool.userInfo_qc.QueryNum <= 0)
-                {
-                    Tool.aideTimer.Dequeue("汽车之家报价");
-                    Invoke(new Action(() => lbl_QC_QueryNum.Text = "非常抱歉，今天的报价次数已用完"));
-                }
-                else
-                {
-                    Invoke(new Action(() => lbl_QC_QueryNum.Text = Tool.userInfo_qc.QueryNum.ToString()));
-                }
+                bool isOver = (DateTime.Now - Tool.userInfo_qc.DueTime.Value).TotalSeconds >= 0;
+                Invoke(new Action(() => CheckSendPrice(Tool.userInfo_qc, isOver)));
+                //if(Tool.userInfo_qc.QueryNum <= 0)
+                //{
+                //    Tool.aideTimer.Dequeue(QC_Price_JobName);
+                //    Invoke(new Action(() => lbl_QC_QueryNum.Text = "非常抱歉，今天的报价次数已用完"));
+                //}
+                //else
+                //{
+                //    Invoke(new Action(() => lbl_QC_QueryNum.Text = Tool.userInfo_qc.QueryNum.ToString()));
+                //}
             }
         }
 
         void jct_QC_Query_SetJobEvent(Job job)
         {
-            job.JobName = "汽车之家报价";
+            job.JobName = QC_Price_JobName;
             dal.AddJob(job);
             Tool.aideTimer.Enqueue(new AideJobs { Job = job, JobAction = SavePrice_QC });
         }
@@ -632,21 +701,23 @@ namespace Aide
                 Tool.service.UpdateLastQuoteTime(Tool.userInfo_yc.Id);
                 Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_yc.Id, JobType = "报价", JobTime = DateTime.Now });
                 Tool.userInfo_yc.QueryNum--;
-                if (Tool.userInfo_yc.QueryNum <= 0)
-                {
-                    Tool.aideTimer.Dequeue("易车网报价");
-                    Invoke(new Action(() => label16.Text = "非常抱歉，今天的报价次数已用完"));
-                }
-                else
-                {
-                    Invoke(new Action(() => label16.Text = Tool.userInfo_yc.QueryNum.ToString()));
-                }
+                bool isOver = (DateTime.Now - Tool.userInfo_yc.DueTime.Value).TotalSeconds >= 0;
+                Invoke(new Action(() => CheckSendPrice(Tool.userInfo_yc, isOver)));
+                //if (Tool.userInfo_yc.QueryNum <= 0)
+                //{
+                //    Tool.aideTimer.Dequeue(YC_Price_JobName);
+                //    Invoke(new Action(() => label16.Text = "非常抱歉，今天的报价次数已用完"));
+                //}
+                //else
+                //{
+                //    Invoke(new Action(() => label16.Text = Tool.userInfo_yc.QueryNum.ToString()));
+                //}
             }
         }
 
         private void jct_YC_Query_SetJobEvent(Job job)
         {
-            job.JobName = "易车网报价";
+            job.JobName = YC_Price_JobName;
             dal.AddJob(job);
             Tool.aideTimer.Enqueue(new AideJobs { Job = job, JobAction = SavePrice_YC });
         }
@@ -663,9 +734,7 @@ namespace Aide
             }
             else
             {
-                job_yc_news = dal.GetJob("易车网新闻");
-                jct_YC_News.SetJobEvent += jct_YC_News_SetJobEvent;
-                jct_YC_News.SetJob(job_yc_news);
+                LoadNews_YC();
             }
         }
 
@@ -684,21 +753,25 @@ namespace Aide
                 job.ExecTime = DateTime.Now.ToString();
                 dal.AddJob(job);
                 dal.AddJobLog(new JobLog { JobName = newsID, Time = DateTime.Now.ToString("yyyy-MM-dd") });
+                selected.Message = "已执行";
+                selected.Del = "";
+                rowMergeView1.Refresh();
                 if (result.Contains("发布成功"))
                 {
                     Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_qc.Id, JobType = "资讯", JobTime = DateTime.Now });
                     Tool.userInfo_qc.NewsNum--;
-                    if(Tool.userInfo_qc.NewsNum <= 0)
-                    {
-                        Invoke(new Action(() => lbl_QC_NewsNum.Text = "非常抱歉，今天发布资讯次数已使用完"));
-                    }
-                    else
-                    {
-                        Invoke(new Action(() => lbl_QC_NewsNum.Text = Tool.userInfo_qc.NewsNum.ToString()));
-                    }
+                    bool isOver = (DateTime.Now - Tool.userInfo_qc.DueTime.Value).TotalSeconds >= 0;
+                    Invoke(new Action(() => CheckSendNews(Tool.userInfo_qc, isOver)));
+                    //if(Tool.userInfo_qc.NewsNum <= 0)
+                    //{
+                    //    Invoke(new Action(() => lbl_QC_NewsNum.Text = "非常抱歉，今天发布资讯次数已使用完"));
+                    //}
+                    //else
+                    //{
+                    //    Invoke(new Action(() => lbl_QC_NewsNum.Text = Tool.userInfo_qc.NewsNum.ToString()));
+                    //}
                 }
-                selected.Message = "已执行";
-                selected.Del = "";
+                
             }
         }
 
@@ -715,8 +788,8 @@ namespace Aide
                 var job = dal.GetJob(i.NewsId);
                 if (job != null)
                 {
-                    i.Message = "将于：" + job.JobDate + " " + job.Time + "执行";
-                    i.Del = "删除";
+                    i.Message = job.Message();
+                    i.Del = i.Message.Contains("已") ? "" : "删除";
                 }
             }
             newListDTPBindingSource.DataSource = list;
@@ -810,49 +883,59 @@ namespace Aide
         #endregion
 
         #region 易车
-        void jct_YC_News_SetJobEvent(Job job)
+        private void LoadNews_YC()
         {
-            job_yc_news = job;
-            job_yc_news.JobName = "易车网新闻";
-            dal.AddJob(job_yc_news);
-            tm_yc_news.Enabled = true;
+            var list = dal.GetNewsList();
+            List<NewListDTP> newdtp = new List<NewListDTP>();
+            foreach (var i in list)
+            {
+                var dtp = new NewListDTP { NewsId = i.ID.ToString(), Title = i.Title };
+                var job = dal.GetJob(dtp.NewsId);
+                if (job != null)
+                {
+                    dtp.Message = job.Message();
+                    dtp.Del = dtp.Message.Contains("已") ? "" : "删除";
+                }
+                newdtp.Add(dtp);
+            }
+            newListDTPBindingSource1.DataSource = newdtp;
+            rowMergeView2.Refresh();
         }
 
-        private void SaveNews_YC()
+        private void SaveNews_YC(string newsID)
         {
-            if(dataGridView1.Rows.Count == 0)
+            var selected = ((List<NewListDTP>)newListDTPBindingSource1.DataSource).Where(w => w.NewsId == newsID).FirstOrDefault();
+            if (selected != null)
             {
-                listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":目前没有可以发布的新闻，请添加");
-                listBox3.TopIndex = listBox3.Items.Count - 1;
-                return;
-            }
-
-            foreach(News news in newsBindingSource.DataSource as List<News>)
-            {
-                var result = yiche.PostNews(news.ID);
-                if(result == "发布成功")
+                var result = yiche.PostNews(selected);
+                Invoke(new Action(() =>
                 {
-                    listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + news.Title + " 发布成功");                    
-                    dal.AddJobLog(new JobLog { JobName = job_yc_news.ID.ToString(), Time = DateTime.Now.ToString("yyyy-MM-dd") });
+                    listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result);
+                    listBox3.TopIndex = lblNews.Items.Count - 1;
+                }));
+                var job = dal.GetJob(newsID);
+                job.ExecTime = DateTime.Now.ToString();
+                dal.AddJob(job);
+                dal.AddJobLog(new JobLog { JobName = newsID, Time = DateTime.Now.ToString("yyyy-MM-dd") });
+                selected.Message = "已执行";
+                selected.Del = "";
+                rowMergeView2.Refresh();
+                if (result.Contains("发布成功"))
+                {
                     Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_yc.Id, JobType = "资讯", JobTime = DateTime.Now });
                     Tool.userInfo_yc.NewsNum--;
-                }
-                else
-                {
-                    listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ": " + news.Title + " 发布失败," + result);
-                }
-                listBox3.TopIndex = listBox3.Items.Count - 1;
+                    bool isOver = (DateTime.Now - Tool.userInfo_yc.DueTime.Value).TotalSeconds >= 0;
+                    Invoke(new Action(() => CheckSendNews(Tool.userInfo_yc, isOver)));
+                    //if (Tool.userInfo_yc.NewsNum <= 0)
+                    //{
+                    //    Invoke(new Action(() => label14.Text = "非常抱歉，今天发布资讯次数已使用完"));
+                    //}
+                    //else
+                    //{
+                    //    Invoke(new Action(() => label14.Text = Tool.userInfo_yc.NewsNum.ToString()));
+                    //}
+                }                
             }
-        }
-
-        private void tm_yc_news_Tick(object sender, EventArgs e)
-        {
-            tm_yc_news.Enabled = false;
-            ExecJob(job_yc_news, SaveNews_YC);
-            if(job_yc_news.JobType != 1)
-                tm_yc_news.Interval = job_yc_news.Space.Value;
-            LoadUser(Tool.userInfo_yc);
-            tm_yc_news.Enabled = job_yc_news.JobType != 1 && jct_YC_News.Enabled;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -860,15 +943,13 @@ namespace Aide
             var form = new Form_YC(yiche);
             if (form.ShowDialog() == DialogResult.OK)
             {
-                newsBindingSource.DataSource = dal.GetNewsList();
-                dataGridView1.Refresh();
+                LoadNews_YC();
             }
         }
 
         private void btnLoadNews_Click(object sender, EventArgs e)
         {
-            newsBindingSource.DataSource = dal.GetNewsList();
-            dataGridView1.Refresh();
+            LoadNews_YC();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -876,24 +957,31 @@ namespace Aide
             if (e.ColumnIndex < 0 || e.RowIndex < 0)
                 return;
 
-            if (e.ColumnIndex == titleDataGridViewTextBoxColumn.Index)
+            var current = (NewListDTP)newListDTPBindingSource1.Current;
+            var newsid = current.NewsId;
+            if (e.ColumnIndex == colYC_Sitting.Index)
             {
-                //var form = new Form_YC(yiche, ((News)newsBindingSource.Current).ID);
-                //if (form.ShowDialog() == DialogResult.OK)
-                //{
-                //    newsBindingSource.DataSource = dal.GetNewsList();
-                //    dataGridView1.Refresh();
-                //}
-            }
-            else
-            {
-                if(MessageBox.Show("确认删除这条新闻吗?", "删除提示", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                var form = new FormNewsJob(newsid);
+                form.StartPosition = FormStartPosition.Manual;
+                form.Location = new Point(Cursor.Position.X, Cursor.Position.Y);
+                if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    dal.DelNews(((News)newsBindingSource.Current).ID);
-                    newsBindingSource.DataSource = dal.GetNewsList();
-                    dataGridView1.Refresh();
-                }                
+                    current.Message = form.Job.Message();
+                    current.Del = "删除";
+                    Tool.aideTimer.Enqueue(new AideJobs { Job = form.Job, JobAction = SaveNews_YC });
+                }
             }
+            else if (e.ColumnIndex == colYC_Del.Index)
+            {
+                if (MessageBox.Show("确定删除发布计划?", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    dal.DelJob(newsid);
+                    Tool.aideTimer.Dequeue(newsid);
+                    current.Message = "";
+                    current.Del = "";
+                }
+            }
+            rowMergeView2.Refresh();
         }
         #endregion        
 
@@ -908,7 +996,7 @@ namespace Aide
 
     public class AideTimer
     {
-        List<AideJobs> jobList = new List<AideJobs>();        
+        List<AideJobs> jobList = new List<AideJobs>();
 
         public void Enqueue(AideJobs aj)
         {
@@ -938,7 +1026,13 @@ namespace Aide
                     for (int i = 0; i < jobList.Count; i++)
                     {
                         if (jobList[i].JobAction != null)
-                            ExecJob(jobList[i].Job, jobList[i].JobAction);
+                        {
+                            if(ExecJob(jobList[i].Job, jobList[i].JobAction) && jobList[i].Job.JobType == 1)
+                            {
+                                jobList.Remove(jobList[i]);
+                                i--;
+                            }
+                        }
                     }
                 }
                 Thread.Sleep(1000 * 10);
@@ -984,13 +1078,15 @@ namespace Aide
         /// <param name="job"></param>
         /// <param name="action"></param>
         /// <returns></returns>
-        private void ExecJob(Job job, Action<string> action)
+        private bool ExecJob(Job job, Action<string> action)
         {
             if(CheckJob(job))
             {
                 job.ExecTime = DateTime.Now.ToString();
                 action(job.JobName);
+                return true;
             }
+            return false;
         }
     }
 

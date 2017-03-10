@@ -245,5 +245,46 @@ namespace Model
             public readonly static Field ExecTime = new Field("ExecTime", "Job", "");
         }
         #endregion
+    }    
+}
+
+public static class FuncExtend
+{
+    public static string Message(this Model.Job job)
+    {
+        DateTime dtnow = DateTime.Now;
+        DateTime dt = Convert.ToDateTime(job.JobDate + " " + job.Time);
+        if (job.JobType == 1)
+        {
+            if (!string.IsNullOrWhiteSpace(job.ExecTime))
+                return "已执行";
+            else if ((dtnow - dt).TotalSeconds > 0)
+                return "已过期";
+            else
+                return "只执行一次，时间是：" + dt.ToString();
+        }
+        else
+        {
+            if (!string.IsNullOrWhiteSpace(job.Time))
+            {
+                dt = Convert.ToDateTime(job.Time);
+                if (!string.IsNullOrWhiteSpace(job.ExecTime))
+                    return "已执行";
+                else if ((dtnow - dt).TotalSeconds > 0)
+                    return "已过期";
+                else
+                    return "每天执行一次，时间是：" + job.Time;
+            }
+            else
+            {
+                var index = job.Space.Value / 1000 / 60 / 60 >= 1 ? 1 : 0;
+                var space = index == 1 ? job.Space.Value / 1000 / 60 / 60 : job.Space.Value / 1000 / 60;
+                dt = Convert.ToDateTime(job.EndTime);
+                if ((dtnow - dt).TotalSeconds > 0)
+                    return "已过期";
+                else
+                    return string.Format("在每天的{0}到{1}，每隔{2}{3}执行一次", job.StartTime, job.EndTime, space, index == 1 ? "小时" : "分钟");
+            }
+        }
     }
 }

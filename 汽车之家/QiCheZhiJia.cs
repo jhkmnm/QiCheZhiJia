@@ -84,6 +84,13 @@ namespace Aide
         #region 登录
         public System.Drawing.Image LoadValidateCode()
         {
+            var code = ValidateCode();
+            MemoryStream ms = new MemoryStream(code);
+            return Image.FromStream(ms, true);
+        }
+
+        public byte[] ValidateCode()
+        {
             HttpItem item = new HttpItem()
             {
                 URL = validateCode,
@@ -94,8 +101,7 @@ namespace Aide
             HttpHelper http = new HttpHelper();
             var result = http.GetHtml(item);
             cookie += HttpHelper.GetSmallCookie(result.Cookie);
-            MemoryStream ms = new MemoryStream(result.ResultByte);
-            return Image.FromStream(ms, true);
+            return result.ResultByte;
         }
 
         public string GotoLoginPage()

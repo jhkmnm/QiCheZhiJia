@@ -406,7 +406,7 @@ namespace Aide
         /// <returns></returns>
         public HtmlDocument GoToOrder()
         {
-            app_Shangji_Cookie =  OsLogin(app_Shangji);
+            app_Shangji_Cookie = OsLogin(app_Shangji);
 
             var item = new HttpItem()
             {
@@ -441,8 +441,7 @@ namespace Aide
                 Method = "POST",
                 UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
             };
-            return GetHtml(item);
-            
+            return GetHtml(item);            
         }
 
         private HtmlDocument LoadOrder()
@@ -656,9 +655,9 @@ namespace Aide
             return htmlDoc;
         }
 
-        public string PostNews(int newsID)
+        public string PostNews(NewListDTP data)
         {
-            var news = dal.GetNews(newsID);
+            var news = dal.GetNews(Convert.ToInt32(data.NewsId));
             var postdata = OperateIniFile.ReadIniData("PostData", news.ID.ToString());
 
             if (string.IsNullOrEmpty(app_CheYiTong_Cookie))
@@ -669,14 +668,13 @@ namespace Aide
             var result = Post_CheYiTong(news.SendContent, postdata);
             if (result.DocumentNode.OuterHtml.Contains("NewsSuccess.aspx"))
             {
-                return "发布成功";
+                return data.Title + " 发布成功";
             }
             else
             {
                 Regex reg = new Regex(@"(?is)(?<=\()[^\)]+(?=\))");
                 var match = reg.Match(result.DocumentNode.OuterHtml);
-                //_M.Alert('非大礼包新闻中不能有单独促销价格为0的车款！')
-                return match.Value;
+                return data.Title + " " + match.Value;
             }
         }
         #endregion

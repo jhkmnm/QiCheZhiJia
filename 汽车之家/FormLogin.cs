@@ -70,7 +70,7 @@ namespace Aide
             string[] pw = new string[3];
             if (Tool.site == Aide.Site.Qiche)
             {
-                pw = qiche.LoadPw();                
+                pw = qiche.LoadPw();
             }
             else
             {
