@@ -57,7 +57,7 @@ namespace Aide
                 tabControl1.SelectedTab = tabPage2;
             }
 
-            tabControl2.TabPages.Remove(tabPage8);
+            //tabControl2.TabPages.Remove(tabPage8);
             dgvOrder.AutoGenerateColumns = false;
         }
 
@@ -789,7 +789,7 @@ namespace Aide
                 if (job != null)
                 {
                     i.Message = job.Message();
-                    i.Del = i.Message.Contains("已") ? "" : "删除";
+                    i.Del = i.Message.Contains("已") ? "" : "删除计划";
                 }
             }
             newListDTPBindingSource.DataSource = list;
@@ -864,7 +864,7 @@ namespace Aide
                 if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     ((NewListDTP)newListDTPBindingSource.Current).Message = "将于：" + form.Job.JobDate + " " + form.Job.Time +"执行";
-                    ((NewListDTP)newListDTPBindingSource.Current).Del = "删除";
+                    ((NewListDTP)newListDTPBindingSource.Current).Del = "删除计划";
                     Tool.aideTimer.Enqueue(new AideJobs { Job = form.Job, JobAction = SaveNews_QC });
                 }
             }
@@ -889,12 +889,12 @@ namespace Aide
             List<NewListDTP> newdtp = new List<NewListDTP>();
             foreach (var i in list)
             {
-                var dtp = new NewListDTP { NewsId = i.ID.ToString(), Title = i.Title };
+                var dtp = new NewListDTP { NewsId = i.ID.ToString(), Title = i.Title, DelNews = i.Content };
                 var job = dal.GetJob(dtp.NewsId);
                 if (job != null)
                 {
                     dtp.Message = job.Message();
-                    dtp.Del = dtp.Message.Contains("已") ? "" : "删除";
+                    dtp.Del = dtp.Message.Contains("已") ? "" : "删除计划";
                 }
                 newdtp.Add(dtp);
             }
@@ -967,7 +967,7 @@ namespace Aide
                 if (form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     current.Message = form.Job.Message();
-                    current.Del = "删除";
+                    current.Del = "删除计划";
                     Tool.aideTimer.Enqueue(new AideJobs { Job = form.Job, JobAction = SaveNews_YC });
                 }
             }
@@ -979,6 +979,14 @@ namespace Aide
                     Tool.aideTimer.Dequeue(newsid);
                     current.Message = "";
                     current.Del = "";
+                }
+            }
+            else if(e.ColumnIndex == colYC_Title.Index)
+            {
+                var form = new Form_YC(yiche, Convert.ToInt32(current.NewsId));
+                if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    LoadNews_YC();
                 }
             }
             rowMergeView2.Refresh();

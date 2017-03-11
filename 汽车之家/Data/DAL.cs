@@ -191,9 +191,19 @@ public class DAL
     #endregion
 
     #region News
-    public int AddNews(string title, string content, string url)
+    public int AddNews(int newsid, string title, string content, string url)
     {
-        return DB.Context.Insert(new News { Title = title, Content = content, SendContent = url});
+        var item = DB.Context.From<News>().Where(w => w.ID == newsid).First();
+        if(item != null)
+        {
+            item.Title = title;
+            item.Content = content;
+            item.SendContent = url;
+            DB.Context.Update(item);
+            return newsid;
+        }
+        else
+            return DB.Context.Insert(new News { Title = title, Content = content, SendContent = url});        
     }
 
     public List<News> GetNewsList()

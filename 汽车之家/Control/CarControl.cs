@@ -62,8 +62,7 @@ namespace Aide
         /// </summary>
         /// <param name="isDetail"></param>
         public void ShowType(bool isDetail)
-        {
-            colIsCheck.Visible = isDetail;
+        {            
             colPushedCount.Visible = !isDetail;
             colCarReferPrice.Visible = isDetail;
             colPromotionPrice.Visible = isDetail;
@@ -123,15 +122,13 @@ namespace Aide
                 var chk = new CheckBox();
                 chk.Location = new Point(x, y);
                 chk.Name = "chk" + i;
-                chk.Text = CarDataSource.YearType[i];
-
+                chk.Text = CarDataSource.YearType[i].Text;
+                chk.Checked = CarDataSource.YearType[i].IsChecked;
                 chk.CheckedChanged += Chk_CheckedChanged;
-                chk.AutoSize = true;
-                chk.Checked = true;
-                chk.CheckState = CheckState.Checked;
+                chk.AutoSize = true;                
                 chk.Size = new Size(72, 16);
                 chk.UseVisualStyleBackColor = true;
-                this.panel1.Controls.Add(chk);
+                this.panel1.Controls.Add(chk);                
             }
         }
 
@@ -167,6 +164,7 @@ namespace Aide
             if(linkLabel1.Text == "查看")
             {
                 linkLabel1.Text = "收起";
+                splitContainer1.Panel1Collapsed = true;
                 splitContainer1.Panel2Collapsed = false;
             }
             else
@@ -198,7 +196,7 @@ namespace Aide
                     MessageBox.Show("请输入0-35之间的整数");
                     return;
                 }
-                _promotioncars.Cars.ForEach(f => f.FavorablePrice = f.CarReferPrice * (price / 100));
+                _promotioncars.Cars.ForEach(f => f.FavorablePrice = f.CarReferPrice * (price / 100.0m));
                 dgvCar.Refresh();
             }
         }

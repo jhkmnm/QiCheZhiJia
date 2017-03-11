@@ -1257,7 +1257,8 @@ namespace Aide
         public string Title { get; set; }
         public string Message { get; set; }
         public string Sitting { get { return "设置"; } }
-        public string Del { get; set; }     
+        public string Del { get; set; }
+        public string DelNews { get; set; }
     }
 
     public class PreSpecInvoicePrice

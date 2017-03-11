@@ -35,30 +35,26 @@ namespace Aide
         string ImageUpload = "";
         List<Merchandise> merchandise = new List<Merchandise>();
         List<TextValue> Colors = new List<TextValue>();
-        
+        int newsid = 0;
 
-
-        
-        List<TextValue> PurchaseTax = new List<TextValue>();
-        
         public Form_YC(YiChe yc, int newsid = 0)
         {
             StartPosition = FormStartPosition.CenterScreen;
             InitializeComponent();
+            
             this.yc = yc;
             promotionType.AddRange(new[] { new TextValue { Text = "优惠金额", Value = "0" }, new TextValue { Text = "优惠折扣率", Value = "1" } });
-            ddlPromotionType.DataSource = promotionType;
-            ddlPromotionType.DisplayMember = "Text";
-            ddlPromotionType.ValueMember = "Value";
-            ddlPromotionType.SelectedIndex = 0;
 
             if (newsid > 0)
             {
+                this.newsid = newsid;
                 var news = dal.GetNews(newsid);
                 var content = OperateIniFile.ReadIniData("Content", news.ID.ToString());
                 carnews = JsonConvert.DeserializeObject<CarNews>(content);
                 groupBox2.Enabled = false;
                 gpbCarList.Enabled = false;
+                if (carnews.IsDetail)
+                    tabControl2.SelectedTab = tabPage2;
             }
 
             NewsType = rbtSource1.Name;
@@ -81,13 +77,162 @@ namespace Aide
             var rbt = ((RadioButton)sender);
             if (!rbt.Checked) return;
             NewsType = rbt.Name;
-            if (rbt.Text.Contains("降价"))
-                TemplaceNewsType = 1;
-            else if(rbt.Text.Contains("置换"))
-                TemplaceNewsType = 2;
-            else if (rbt.Text.Contains("加价"))
-                TemplaceNewsType = 3;
-            InitForm(rbt.Tag.ToString());
+            if(rbt.Text == "普通新闻")
+            {
+                pCX.Visible = false;
+                gbPTNews.Visible = true;
+                gbPTNews.Location = pCX.Location;
+                InitPTNews(rbt.Tag.ToString());
+            }
+            else
+            {
+                gbPTNews.Visible = false;
+                pCX.Visible = true;
+                if (rbt.Text.Contains("降价"))
+                    TemplaceNewsType = 1;
+                else if (rbt.Text.Contains("置换"))
+                    TemplaceNewsType = 2;
+                else if (rbt.Text.Contains("加价"))
+                    TemplaceNewsType = 3;
+                InitForm(rbt.Tag.ToString());
+            }
+        }
+
+        private void InitPTNews(string url)
+        {
+            this.url = url;
+            doc = yc.InforManagerNews(url);
+
+            List<TextValue> newsClass = new List<TextValue>();
+            newsClass.AddRange(new TextValue[]{
+                new TextValue{ Text = "请选择新闻分类", Value = "0" },
+                new TextValue{ Text = "企业新闻", Value = "1" },
+                new TextValue{ Text = "优惠促销", Value = "2" },
+                new TextValue{ Text = "车友活动", Value = "3" },
+                new TextValue{ Text = "新车到店", Value = "4" },
+                new TextValue{ Text = "维修保养", Value = "5" },
+                new TextValue{ Text = "置换信息", Value = "6" },
+            });
+            ddlNewsClass.DataSource = newsClass;
+            ddlNewsClass.DisplayMember = "Text";
+            ddlNewsClass.ValueMember = "Value";
+            ddlNewsClass.SelectedIndex = 0;
+
+
+            var divBrand = doc.GetElementbyId("brandSelect");
+            var brands = divBrand.SelectNodes(".//div/div/div/ul/li");
+            #region 相关车型
+            int xstep = 143;
+            int ystep = 22;
+            int xstart = 9;
+            int ystart = 8;
+            this.tabPage3.Controls.Clear();            
+            for (int i = 0; i < brands.Count; i++)
+            {
+                var text = brands[i].GetAttributeValue("title", "");
+                var value = brands[i].SelectSingleNode(".//input").GetAttributeValue("value", "");
+                int x = xstart;
+                int y = ystart;
+                if (i > 0)
+                {
+                    x = xstart + (xstep * (i % 4));
+                    y = ystart + (ystep * (i / 4));
+                }
+                var chk = new CheckBox();
+                chk.Location = new System.Drawing.Point(x, y);
+                chk.Name = "chk" + value;
+                chk.Tag = value;
+                chk.Text = text;
+                chk.AutoSize = true;
+                chk.Size = new System.Drawing.Size(72, 16);
+                chk.TabStop = true;
+                chk.UseVisualStyleBackColor = true;
+                if (carnews != null && carnews.PTNews.Brands.Contains(value))
+                    chk.Checked = true;
+                this.tabPage3.Controls.Add(chk);
+            }
+            #endregion
+
+            var divInvest = doc.GetElementbyId("investSelect");
+            var invests = divInvest.SelectNodes(".//div/div/div/div/ul/li");
+            if (carnews != null && carnews.PTNews.SelectVote.VoteType == "1")
+                rbtVoteType1.Checked = true;
+            else
+                rbtVoteType2.Checked = true;
+            #region 相关调查
+            xstep = 103;
+            ystep = 22;
+            xstart = 11;
+            ystart = 7;
+            this.pVote.Controls.Clear();
+            for (int i = 0; i < invests.Count; i++)
+            {
+                var text = invests[i].SelectSingleNode(".//label").InnerText;
+                var value = invests[i].SelectSingleNode(".//input").GetAttributeValue("value", "");
+                int x = xstart;
+                int y = ystart;
+                if (i > 0)
+                {
+                    y = ystart + (ystep * i);
+                }
+                var rbt = new RadioButton();
+                rbt.Location = new System.Drawing.Point(x, y);
+                rbt.Name = "rbt" + value;
+                rbt.Tag = value;
+                rbt.Text = text;
+                rbt.AutoSize = true;
+                rbt.Size = new System.Drawing.Size(95, 16);
+                rbt.TabStop = true;
+                rbt.UseVisualStyleBackColor = true;
+                if (carnews != null && carnews.PTNews.SelectVote.VoteIndex == value)
+                    rbt.Checked = true;
+                this.pVote.Controls.Add(rbt);
+            }
+            #endregion
+
+            var divBuyCar = doc.GetElementbyId("buycarSlect");
+            var carlist = divBuyCar.SelectNodes(".//div/div/div/ul/li");
+            #region 在线购车
+            xstep = 143;
+            ystep = 22;
+            xstart = 9;
+            ystart = 8;
+            this.tabPage5.Controls.Clear();
+            for (int i = 0; i < carlist.Count; i++)
+            {
+                var text = carlist[i].GetAttributeValue("title", "");
+                var value = carlist[i].SelectSingleNode(".//input").GetAttributeValue("value", "");
+                int x = xstart;
+                int y = ystart;
+                if (i > 0)
+                {
+                    x = xstart + (xstep * (i % 4));
+                    y = ystart + (ystep * (i / 4));
+                }
+                var chk = new CheckBox();
+                chk.Location = new System.Drawing.Point(x, y);
+                chk.Name = "chk" + value;
+                chk.Tag = value;
+                chk.Text = text;
+                chk.AutoSize = true;
+                chk.Size = new System.Drawing.Size(72, 16);
+                chk.TabStop = true;
+                chk.UseVisualStyleBackColor = true;
+                if (carnews != null && carnews.PTNews.BuyCar.Contains(value))
+                    chk.Checked = true;
+                this.tabPage5.Controls.Add(chk);
+            }
+            #endregion
+
+            if(carnews != null)
+            {
+                txtPTTitle.Text = carnews.PTNews.Title;
+                ddlNewsClass.SelectedValue = carnews.PTNews.Type;
+                txtDesc.Text = carnews.PTNews.Content;
+                chkAddress.Checked = carnews.PTNews.Address;
+                chkMap.Checked = carnews.PTNews.Map;
+                chkTel.Checked = carnews.PTNews.Tel;
+            }
         }
 
         private void InitForm(string url)
@@ -133,7 +278,7 @@ namespace Aide
                     rbtChk = rbt;
             }
             #endregion
-
+                        
             dtpPromotionB.Value = DateTime.Now.AddMonths(1).AddDays(1);
             ddlPromotionType.DataSource = promotionType;
             ddlPromotionType.DisplayMember = "Text";
@@ -267,12 +412,26 @@ namespace Aide
                     chk.Checked = true;
                 this.pColor.Controls.Add(chk);
             }
+            if (carnews != null && carnews.Colors.Contains("All"))
+            {
+                chkAllColor_CheckedChanged(null, new EventArgs());
+            }
             #endregion
 
             #region 车型
             cars = new PromotionCars();
             var yeartype = doc.DocumentNode.SelectNodes("//input[@name='chklYearType']");
-            yeartype.ToList().ForEach(f => cars.YearType.Add(f.GetAttributeValue("value", "")));
+            yeartype.ToList().ForEach(f => {
+                var text = f.GetAttributeValue("value", "");
+                var year = new YearType{ Text = text, IsChecked = true};
+                if(carnews != null)
+                {
+                    var yearA = carnews.YearType.Find(w => w.Text == text);
+                    if (yearA != null)
+                        year.IsChecked = yearA.IsChecked;
+                }
+                cars.YearType.Add(year);
+            });
 
             var cartrs = doc.DocumentNode.SelectNodes("//tbody[@id='listInfo']/tr");
             foreach (HtmlNode node in cartrs)
@@ -288,22 +447,25 @@ namespace Aide
                     var inputprice = node.SelectSingleNode(".//input[@price='price']");
                     var statesubsidies = node.GetAttributeValue("statesubsidies", "");
                     var localsubsidies = node.GetAttributeValue("localsubsidies", "");
-
                     var colorcount = tds[7].SelectSingleNode(".//div/p/span");
+                    var carid = Convert.ToInt32(inputCarInfo.GetAttributeValue("carid", ""));
+                    Car item = null;
+                    if (carnews != null)
+                        item = carnews.CarList.Find(w => w.CarID == carid);
                     cars.Cars.Add(new Car
                     {
-                        CarID = Convert.ToInt32(inputCarInfo.GetAttributeValue("carid", "")),
+                        CarID = carid,
                         Discount = Convert.ToDecimal(inputrate.GetAttributeValue("value", "0")),
                         IsAllowance = inputallowance != null ? inputallowance.GetAttributeValue("checked", "") : "",
-                        IsCheck = true,
+                        IsCheck = item == null? true : item.IsCheck,
                         TypeName = tds[0].GetAttributeValue("title", ""),
                         YearType = typeinput.GetAttributeValue("yeartype", ""),
                         IsNewEnergy = Convert.ToInt32(node.GetAttributeValue("isnewenergy", "0")),
                         Subsidies = tds[4].InnerText.Trim(),
-                        StoreState = "1",
+                        StoreState = item == null ? "1" : item.StoreState,
                         CarReferPrice = Convert.ToDecimal(inputCarInfo.GetAttributeValue("carreferprice", "0")),
-                        FavorablePrice = Convert.ToDecimal(inputprice.GetAttributeValue("value", "0")),
-                        ColorName = colorcount.InnerText,
+                        FavorablePrice = item == null ? Convert.ToDecimal(inputprice.GetAttributeValue("value", "0")) : item.FavorablePrice,
+                        ColorName = item == null ? colorcount.InnerText : item.ColorName,
                         PushedCount = tds[8].InnerText.Trim(),
                         StateSubsidies = statesubsidies != "--" ? string.Format("{0:0.00}", Convert.ToDecimal(statesubsidies)) : "0",
                         LocalSubsidies = localsubsidies != "--" ? string.Format("{0:0.00}", Convert.ToDecimal(localsubsidies)) : "0",
@@ -376,15 +538,6 @@ namespace Aide
             imgPosition4_hdf.ImageUpload = ImageUpload;
             #endregion            
 
-            if (carnews != null && carnews.CarList != null && carnews.CarList.Count > 0)
-            {
-                cars.Cars.ForEach(f => {
-                    var v = carnews.CarList.FirstOrDefault(ff => ff.CarID == f.CarID);
-                    if (v != null) f.IsCheck = v.IsCheck;
-                });
-                carnews.promotionCars = cars.PublishCarList;
-            }
-
             carA.CarDataSource = cars;
             carA.Colors = Colors;
             carA.ShowType(false);
@@ -392,6 +545,16 @@ namespace Aide
             carControl1.CarDataSource = cars;
             carControl1.Colors = Colors;
             carControl1.ShowType(true);
+
+            if(carnews != null)
+            {
+                dtpPromotionA.Value = carnews.StartDate;
+                dtpPromotionB.Value = carnews.EndDate;
+                chkIsShow400Number.Checked = carnews.IsShow400Number;
+                chkIsShowMaintenance.Checked = carnews.IsShowMaintenance;
+                chkIsShowMap.Checked = carnews.IsShowMap;
+                chkIsShowSaleAddr.Checked = carnews.IsShowSaleAddr;
+            }
         }
 
         void StoreState_CheckedChanged(object sender, EventArgs e)
@@ -493,7 +656,7 @@ namespace Aide
             InitDetail();
         }        
 
-        private string PushData()
+        private string PushData(bool isdetail)
         {
             StringBuilder sb = new StringBuilder(5000);
             sb.Append("scriptManager=UpdatePanel4%7CbtnPublish&");
@@ -518,7 +681,7 @@ namespace Aide
             sb.AppendFormat("hdfSelectSerialType={0}&", energytype);
             sb.AppendFormat("hdfNewsTitleTemplate={0}&", energytype == "0" ? "1" : "2");
             sb.AppendFormat("hdfCanSetTitleArticle={0}&", energytype == "0" ? "0" : "1");
-            sb.AppendFormat("hdfCSShowName={0}&", HttpHelper.URLEncode(csshowname, Encoding.UTF8));//HttpHelper.URLEncode(csshowname)
+            sb.AppendFormat("hdfCSShowName={0}&", HttpHelper.URLEncode(csshowname, Encoding.UTF8));
             sb.AppendFormat("hdfLastCheckedID={0}&", carid);
 
             var hdfnewstype = doc.GetElementbyId("hdfNewsType");
@@ -535,7 +698,7 @@ namespace Aide
 
             var hdfcarnewslist = doc.GetElementbyId("hdfCarNewsList");
             var inputvalue = hdfcarnewslist.GetAttributeValue("value", "").Replace("&quot;", "\"");
-            sb.AppendFormat("hdfCarNewsList={0}&", HttpHelper.URLEncode(inputvalue, Encoding.UTF8));            
+            sb.AppendFormat("hdfCarNewsList={0}&", HttpHelper.URLEncode(inputvalue, Encoding.UTF8));
 
             var hdfofflinecount = doc.GetElementbyId("hdfOffLineCount");
             sb.AppendFormat("hdfOffLineCount={0}&", hdfofflinecount.GetAttributeValue("value", ""));
@@ -553,19 +716,21 @@ namespace Aide
                 {
                     sb.AppendFormat("chklYearType={0}&", node.GetAttributeValue("value", ""));
                 }
+            }            
+            var carsource = isdetail ? carControl1.CarDataSource : carA.CarDataSource;
+            for (int i = 0; i < carsource.Cars.Count; i++)
+            {
+                var car = carsource.Cars[i];
+                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24checkbox", i), car.CarID);
+                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24rate", i), car.Discount);
+                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24Text1", i), car.FavorablePrice);
+            }
+            for (int i = 0; i < carsource.PublishCarList.Count; i++)
+            {
+                var pub = carsource.PublishCarList[i];
+                sb.AppendFormat("{0}={1}&", string.Format("rtpNotPushCarList%24ctl{0:00}%24checkbox", i), pub.CarID);
             }
 
-            for (int i = 0; i < cars.Cars.Count; i++)
-            {
-                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24checkbox", i), cars.Cars[i].CarID);
-                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24rate", i), cars.Cars[i].Discount);
-                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24Text1", i), cars.Cars[i].FavorablePrice);
-            }
-
-            for (int i = 0; i < cars.PublishCarList.Count; i++)
-            {
-                sb.AppendFormat("{0}={1}&", string.Format("rtpNotPushCarList%24ctl{0:00}%24checkbox", i), cars.PublishCarList[i].CarID);
-            }
             sb.Append("NewEnergyTitleTemplate=2&");
             sb.AppendFormat("title_article={0}&", HttpHelper.URLEncode(title_article.Text, Encoding.UTF8));
             sb.AppendFormat("rdoStoreState={0}&", rdoStoreState);
@@ -589,127 +754,86 @@ namespace Aide
             sb.AppendFormat("hdfCurrentState={0}&", str_hdfcurrentstate);            
             sb.AppendFormat("hdnType={0}&hdnCarMerchandiseID={1}&", ddlPromotionType.SelectedValue == "0" ? "money" : "rate", cars.GGiftInof.Merchandises != null ? string.Join(",", cars.GGiftInof.Merchandises.Select(s => s.id)) : "");
             sb.AppendFormat("hdnPromotionType={0}&", ddlPromotionType.SelectedIndex);
-            sb.AppendFormat("hdfCarInfoJson={0}&hdfGiftInfo={1}&", HttpHelper.URLEncode(cars.CarInfoJson, Encoding.UTF8), HttpHelper.URLEncode(cars.GiftInofJson));
+            sb.AppendFormat("hdfCarInfoJson={0}&hdfGiftInfo={1}&", HttpHelper.URLEncode(carsource.CarInfoJson, Encoding.UTF8), HttpHelper.URLEncode(cars.GiftInofJson));
             sb.Append("imgUploadChangehidethumburl=&imgUploadChangehideUrl=&txtStartPrice=&");
             sb.Append("txtEndPrice=&txtKeyword=&__EVENTTARGET=&__EVENTARGUMENT=&");
 
             var viewstate = doc.GetElementbyId("__VIEWSTATE");
             if (viewstate != null)
                 str_viewstate = viewstate.GetAttributeValue("value", "");
-            sb.AppendFormat("__VIEWSTATE={0}&", HttpHelper.URLEncode(str_viewstate));            
+            sb.AppendFormat("__VIEWSTATE={0}&", HttpHelper.URLEncode(str_viewstate));
 
             var viewstategenerator = doc.GetElementbyId("__VIEWSTATEGENERATOR");
             if (viewstategenerator != null)
                 str_viewstategenerator = viewstategenerator.GetAttributeValue("value", "");
             sb.AppendFormat("__VIEWSTATEGENERATOR={0}&__ASYNCPOST=true&btnPublish=%E5%8F%91%E5%B8%83", str_viewstategenerator);
-
             return sb.ToString();
         }
 
-        private string PushDataDetail()
+        private string PTNewsPost()
         {
             StringBuilder sb = new StringBuilder(5000);
-            sb.Append("scriptManager=UpdatePanel4%7CbtnPublish&");
-
-            var hadrdccid = doc.GetElementbyId("HADRDCCID");
-            if (hadrdccid != null)
-                str_hadrdccid = hadrdccid.GetAttributeValue("value", "");
-            sb.AppendFormat("HADRDCCID={0}&", HttpHelper.URLEncode(str_hadrdccid));
-
-            var hacbcidsid = doc.GetElementbyId("HACBCIDSID");
-            if (hacbcidsid != null)
-                str_hacbcidsid = hacbcidsid.GetAttributeValue("value", "");
-            sb.AppendFormat("HACBCIDSID={0}&", HttpHelper.URLEncode(str_hacbcidsid));
-
-            var hcbcidsid = doc.GetElementbyId("HCBCIDSID");
-            if (hcbcidsid != null)
-                str_hcbcidsid = hcbcidsid.GetAttributeValue("value", "");
-            sb.AppendFormat("HCBCIDSID={0}&", HttpHelper.URLEncode(str_hcbcidsid));
-
-            sb.AppendFormat("hdfSelectCarBrandID={0}&", cbid);
-            sb.AppendFormat("hdfSelectSerialID={0}&", carid);
-            sb.AppendFormat("hdfSelectSerialType={0}&", energytype);
-            sb.AppendFormat("hdfNewsTitleTemplate={0}&", energytype == "0" ? "1" : "2");
-            sb.AppendFormat("hdfCanSetTitleArticle={0}&", energytype == "0" ? "0" : "1");
-            sb.AppendFormat("hdfCSShowName={0}&", HttpHelper.URLEncode(csshowname, Encoding.UTF8));//HttpHelper.URLEncode(csshowname)
-            sb.AppendFormat("hdfLastCheckedID={0}&", carid);
-
-            var hdfnewstype = doc.GetElementbyId("hdfNewsType");
-            if (hdfnewstype != null)
-                str_hdfnewstype = hdfnewstype.GetAttributeValue("value", "");
-            sb.AppendFormat("hdfNewsType={0}&", str_hdfnewstype);
-
-            var rptcarbrandhdfcbid = doc.GetElementbyId("rptCarBrand_ctl00_hdfCBID");
-            if (rptcarbrandhdfcbid != null)
-                str_rptcarbrandhdfcbid = rptcarbrandhdfcbid.GetAttributeValue("value", "");
-            sb.AppendFormat("{0}={1}&", HttpHelper.URLEncode("rptCarBrand$ctl00$hdfCBID"), str_rptcarbrandhdfcbid);
-
-            sb.AppendFormat("CarSerialGroup={0}&hdfCarIDs=&", carid);
-
-            var hdfcarnewslist = doc.GetElementbyId("hdfCarNewsList");
-            var inputvalue = hdfcarnewslist.GetAttributeValue("value", "").Replace("&quot;", "\"");
-            sb.AppendFormat("hdfCarNewsList={0}&", HttpHelper.URLEncode(inputvalue, Encoding.UTF8));            
-
-            var hdfofflinecount = doc.GetElementbyId("hdfOffLineCount");
-            sb.AppendFormat("hdfOffLineCount={0}&", hdfofflinecount.GetAttributeValue("value", ""));
-
-            var hdfmindata = doc.GetElementbyId("hdfMinData");
-            sb.AppendFormat("hdfMinData={0}&", hdfmindata.GetAttributeValue("value", ""));
-
-            sb.AppendFormat("txtDateTimeBegin={0}&", dtpPromotionA.Value.ToString("yyyy-MM-dd"));
-            sb.AppendFormat("txtDateTimeEnd={0}&", dtpPromotionB.Value.ToString("yyyy-MM-dd"));
-            
-            carControl1.YearTypeList.ForEach(f => sb.AppendFormat("chklYearType={0}&", f));
-
-            int i = 0;
-            carControl1.CarDataSource.Cars.FindAll(w => w.IsCheck).ForEach(f => {
-                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24checkbox", i), cars.Cars[i].CarID);
-                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24rate", i), cars.Cars[i].Discount);
-                sb.AppendFormat("{0}={1}&", string.Format("rptFavourableList%24ctl{0:00}%24Text1", i), cars.Cars[i].FavorablePrice);
-                i++;
-            });
-
-            for (i = 0; i < cars.PublishCarList.Count; i++)
-            {
-                sb.AppendFormat("{0}={1}&", string.Format("rtpNotPushCarList%24ctl{0:00}%24checkbox", i), cars.PublishCarList[i].CarID);
-            }
-            sb.Append("NewEnergyTitleTemplate=2&");
-            sb.AppendFormat("title_article={0}&", HttpHelper.URLEncode(title_article.Text, Encoding.UTF8));
-            sb.AppendFormat("rdoStoreState={0}&", rdoStoreState);
-            sb.AppendFormat("txtLead={0}&txtPrice={1}&ddlBusinessTax={2}&", HttpHelper.URLEncode(txtLead.Text, Encoding.UTF8), cars.GGiftInof.Price, cars.GGiftInof.SYXValue);
-            sb.AppendFormat("ddlTrafficTax={0}&PurchaseTax={1}&", cars.GGiftInof.JQXValue, 1);//txtPurchaseTax.Text
-            sb.AppendFormat("txtOtherInfo={0}&", HttpHelper.URLEncode(cars.GGiftInof.OtherInfoValue, Encoding.UTF8));
-            sb.AppendFormat("imgLogo_hdf={0}&hdfSerial={1}&hdfImgSelectID=&", HttpHelper.URLEncode(imgLogo_hdf.ImgUrl), carid, imgLogo_hdf.ImgSelectID);
-            sb.AppendFormat("imgPosition1_hdf={0}&", HttpHelper.URLEncode(imgPosition1_hdf.ImgUrl));
-            sb.AppendFormat("imgPosition2_hdf={0}&", HttpHelper.URLEncode(imgPosition2_hdf.ImgUrl));
-            sb.AppendFormat("imgPosition3_hdf={0}&", HttpHelper.URLEncode(imgPosition3_hdf.ImgUrl));
-            sb.AppendFormat("imgPosition4_hdf={0}&", HttpHelper.URLEncode(imgPosition4_hdf.ImgUrl));
-            sb.AppendFormat("chkIsShowMaintenance={0}&", chkIsShowMaintenance.Checked ? "on" : "off");
-            sb.AppendFormat("chkIsShowSaleAddr={0}&", chkIsShowSaleAddr.Checked ? "on" : "off");
-            sb.AppendFormat("chkIsShowMap={0}&", chkIsShowMap.Checked ? "on" : "off");
-            sb.AppendFormat("chkIsShow400Number={0}&", chkIsShow400Number.Checked ? "on" : "off");
-
-            var hdfcurrentstate = doc.GetElementbyId("hdfCurrentState");
-            if (hdfcurrentstate != null)
-                str_hdfcurrentstate = hdfcurrentstate.GetAttributeValue("value", "");
-            sb.AppendFormat("hdfCurrentState={0}&", str_hdfcurrentstate);
-
-            sb.AppendFormat("hdnType={0}&hdnCarMerchandiseID=&", ddlPromotionType.SelectedValue == "0" ? "money" : "rate");
-            sb.AppendFormat("hdnPromotionType={0}&", ddlPromotionType.SelectedIndex);
-            sb.AppendFormat("hdfCarInfoJson={0}&hdfGiftInfo={1}&", HttpHelper.URLEncode(cars.CarInfoJson), HttpHelper.URLEncode(cars.GiftInofJson));
-            sb.Append("imgUploadChangehidethumburl=&imgUploadChangehideUrl=&txtStartPrice=&");
-            sb.Append("txtEndPrice=&txtKeyword=&__EVENTTARGET=&__EVENTARGUMENT=&");
-
+            sb.Append("ScriptManager1=ctl17%7CbtnPublish&__EVENTTARGET=&__EVENTARGUMENT=&");
             var viewstate = doc.GetElementbyId("__VIEWSTATE");
             if (viewstate != null)
                 str_viewstate = viewstate.GetAttributeValue("value", "");
-            sb.AppendFormat("__VIEWSTATE={0}&", HttpHelper.URLEncode(str_viewstate));            
-
+            sb.AppendFormat("__VIEWSTATE={0}&", HttpHelper.URLEncode(str_viewstate));
             var viewstategenerator = doc.GetElementbyId("__VIEWSTATEGENERATOR");
             if (viewstategenerator != null)
                 str_viewstategenerator = viewstategenerator.GetAttributeValue("value", "");
-            sb.AppendFormat("__VIEWSTATEGENERATOR={0}&__ASYNCPOST=true&btnPublish=%E5%8F%91%E5%B8%83", str_viewstategenerator);
-
+            sb.AppendFormat("__VIEWSTATEGENERATOR={0}&", str_viewstategenerator);
+            sb.AppendFormat("title_article={0}", HttpHelper.URLEncode(txtPTTitle.Text));
+            sb.AppendFormat("ddlNewsClass={0}&", ddlNewsClass.SelectedValue);
+            sb.AppendFormat("txtDesc={0}&", HttpHelper.URLEncode(txtDesc.Text));
+            var txtDesc_classId = doc.GetElementbyId("txtDesc_classId");
+            sb.AppendFormat("txtDesc_classId={0}&", txtDesc_classId.GetAttributeValue("value", ""));
+            var txtDesc_folder = doc.GetElementbyId("txtDesc_folder");
+            sb.AppendFormat("txtDesc_folder={0}&", txtDesc_folder.GetAttributeValue("value", ""));
+            var txtDesc_HostName = doc.GetElementbyId("txtDesc_HostName");
+            sb.AppendFormat("txtDesc_HostName={0}&", txtDesc_HostName.GetAttributeValue("value", ""));
+            var txtDesc_CrossDomain = doc.GetElementbyId("txtDesc_CrossDomain");
+            sb.AppendFormat("txtDesc_CrossDomain={0}&", txtDesc_CrossDomain.GetAttributeValue("value", ""));
+            var selectedValue = "";            
+            foreach(Control con in tabPage3.Controls)
+            {
+                var chk  = con as CheckBox;
+                if(chk != null && chk.Checked)
+                {
+                    var str = chk.Tag.ToString() + ",";
+                    selectedValue += str.Split(',')[0] +",";
+                    sb.AppendFormat("chkItem={0}&", HttpHelper.URLEncode(str));
+                }                    
+            }
+            sb.AppendFormat("hidSeriesList={0}&", HttpHelper.URLEncode(selectedValue));
+            foreach(Control con in pVote.Controls)
+            {
+                var rbt  = con as RadioButton;
+                if(rbt != null && rbt.Checked)
+                {
+                    var str = rbt.Tag.ToString();
+                    selectedValue = str.Split(',')[0] +",";
+                    sb.AppendFormat("radItem={0}&", HttpHelper.URLEncode(str));
+                    break;
+                }
+            }
+            sb.AppendFormat("txtVoteID={0}&", selectedValue);
+            sb.AppendFormat("txtVoteType={0}&", rbtVoteType1.Checked ? "1" : "2");
+            sb.AppendFormat("VoteType={0}&", rbtVoteType1.Checked ? "1" : "2");
+            foreach(Control con in tabPage5.Controls)
+            {
+                var chk  = con as CheckBox;
+                if(chk != null && chk.Checked)
+                {
+                    var str = chk.Tag.ToString() + ",";
+                    selectedValue += str.Split(',')[0] +",";
+                    sb.AppendFormat("chkItem2={0}&", HttpHelper.URLEncode(str));
+                }
+            }
+            sb.AppendFormat("hidSeriesListbuycar={0}&", HttpHelper.URLEncode(selectedValue));
+            if(chkAddress.Checked) sb.AppendFormat("chkIsShowSaleAddr=on&");
+            if(chkMap.Checked) sb.AppendFormat("chkIsShowMap=on&");
+            if(chkTel.Checked) sb.AppendFormat("chkIsShow400Number=on&");
+            sb.Append("txtNewsID=&txtDraftID=&__ASYNCPOST=true&btnPublish=%E5%8F%91%E5%B8%83");
             return sb.ToString();
         }
 
@@ -772,51 +896,121 @@ namespace Aide
         {
             carnews.IsDetail = false;
             
-            var postdata = PushData();
+            var postdata = PushData(isDetail);
             var content = JsonConvert.SerializeObject(carnews);
-            var newsid = dal.AddNews(carnews.Title, "删除", url);
+            newsid = dal.AddNews(newsid, carnews.Title, "删除草稿", url);
             var r = OperateIniFile.WriteIniData(content, postdata, newsid.ToString());
             if (r)
                 DialogResult = DialogResult.OK;
-            //var result = yc.Post_CheYiTong(url, postdata);
-            //if (result.DocumentNode.OuterHtml.Contains("NewsSuccess.aspx"))
-            //{
-            //    MessageBox.Show("发布成功");
-            //}
-            //else
-            //{
-            //    Regex reg = new Regex(@"(?is)(?<=\()[^\)]+(?=\))");
-            //    var match = reg.Match(result.DocumentNode.OuterHtml);
-            //    //_M.Alert('非大礼包新闻中不能有单独促销价格为0的车款！')
-            //    MessageBox.Show(match.Value);
-            //}
+        }
+
+        private void SendPTNews()
+        {
+            var postdata = PTNewsPost();
+            var content = JsonConvert.SerializeObject(carnews);
+            newsid = dal.AddNews(newsid, carnews.PTNews.Title, "删除草稿", url);
+            var r = OperateIniFile.WriteIniData(content, postdata, newsid.ToString());
+            if (r)
+                DialogResult = DialogResult.OK;
         }
 
         private void InitCarNews()
         {
             if (carnews == null) carnews = new CarNews();
 
-            carnews.NewsType = NewsType;
-            carnews.CarType = CarType;            
-            foreach(Control con in pColor.Controls)
+            if (NewsType == "rbtSource0")
             {
-                var chk = con as CheckBox;
-                if(chk != null && chk.Checked)
+                carnews.PTNews.Title = txtPTTitle.Text;
+                carnews.PTNews.Type = ddlNewsClass.SelectedValue.ToString();
+                carnews.PTNews.Content = txtDesc.Text;
+                carnews.PTNews.Address = chkAddress.Checked;
+                carnews.PTNews.Map = chkMap.Checked;
+                carnews.PTNews.Tel = chkTel.Checked;
+                foreach (Control con in tabPage3.Controls)
                 {
-                    carnews.Colors.Add(chk.Tag.ToString());
-                }
-            }
-            carnews.Title = title_article.Text;
-            carnews.title_number = title_number.Text;
-            carnews.Lead = txtLead.Text;
+                    var chk = con as CheckBox;
+                    if (chk != null && chk.Checked)
+                    {
+                        if (carnews.PTNews.Brands == null)
+                            carnews.PTNews.Brands = new List<string>();
+                        else
+                            carnews.PTNews.Brands.Clear();
 
-            if(!carnews.IsDetail)
-            {
-                carnews.CarList = carControl1.CarDataSource.Cars;
+                        carnews.PTNews.Brands.Add(chk.Tag.ToString());
+                    }
+                }
+                if (carnews.PTNews.SelectVote == null)
+                    carnews.PTNews.SelectVote = new Vote();
+                carnews.PTNews.SelectVote.VoteType = rbtVoteType1.Checked ? "1" : "2";
+                foreach (Control con in pVote.Controls)
+                {
+                    var rbt = con as RadioButton;
+                    if (rbt != null && rbt.Checked)
+                    {
+                        carnews.PTNews.SelectVote.VoteIndex = rbt.Tag.ToString();
+                        break;
+                    }
+                }                
+                foreach (Control con in tabPage5.Controls)
+                {
+                    var chk = con as CheckBox;
+                    if (chk != null && chk.Checked)
+                    {
+                        if (carnews.PTNews.BuyCar == null)
+                            carnews.PTNews.BuyCar = new List<string>();
+                        else
+                            carnews.PTNews.BuyCar.Clear();
+                        carnews.PTNews.BuyCar.Add(chk.Tag.ToString());
+                    }
+                }
             }
             else
             {
-                carnews.CarList = carA.CarDataSource.Cars;
+                #region 促销
+                carnews.PromotionType = ddlPromotionType.SelectedValue.ToString();
+                carnews.PromotionValue = txtMoney.Text;
+                carnews.StoreState = rdoStoreState;
+                carnews.NewsType = NewsType;
+                carnews.CarType = CarType;
+                foreach (Control con in pColor.Controls)
+                {
+                    var chk = con as CheckBox;
+                    if (chk != null && chk.Checked)
+                    {
+                        carnews.Colors.Add(chk.Tag.ToString());
+                    }
+                }
+                carnews.Title = title_article.Text;
+                carnews.title_number = title_number.Text;
+                carnews.Lead = txtLead.Text;
+
+                carnews.ImageA = imgLogo_hdf.ImgUrl;
+                carnews.CarID = imgLogo_hdf.CSID;
+                carnews.ImageB = imgPosition1_hdf.ImgUrl;
+                carnews.CarID = imgPosition1_hdf.CSID;
+                carnews.ImageC = imgPosition2_hdf.ImgUrl;
+                carnews.CarID = imgPosition2_hdf.CSID;
+                carnews.ImageD = imgPosition3_hdf.ImgUrl;
+                carnews.CarID = imgPosition3_hdf.CSID;
+                carnews.ImageE = imgPosition4_hdf.ImgUrl;
+                carnews.CarID = imgPosition4_hdf.CSID;
+
+                if (!carnews.IsDetail)
+                {
+                    carnews.CarList = carControl1.CarDataSource.Cars;
+                    carnews.YearType = carControl1.CarDataSource.YearType;
+                }
+                else
+                {
+                    carnews.CarList = carA.CarDataSource.Cars;
+                }
+                carnews.IsShowMaintenance = chkIsShowMaintenance.Checked;
+                carnews.IsShowSaleAddr = chkIsShowSaleAddr.Checked;
+                carnews.IsShowMap = chkIsShowMap.Checked;
+                carnews.IsShow400Number = chkIsShow400Number.Checked;
+                carnews.StartDate = dtpPromotionA.Value;
+                carnews.EndDate = dtpPromotionB.Value;
+                #endregion
             }
         }
 
@@ -978,7 +1172,7 @@ namespace Aide
                     chk.Checked = chkAllColor.Checked;
                     chk.Enabled = !chkAllColor.Checked;
                 }
-            }            
+            }
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -1018,13 +1212,39 @@ namespace Aide
             var maxMoney = cars.Cars.Max(f => f.FavorablePrice);
             GenerateTitleAndLead(maxMoney, maxMoney, cars.GGiftInof.Price, csshowname);
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if(string.IsNullOrWhiteSpace(txtPTTitle.Text))
+            {
+                MessageBox.Show("请输入标题");
+                return;
+            }
+            else if(txtPTTitle.Text.Length > 18)
+            {
+                MessageBox.Show("标题最大长度为18个字符");
+                return;
+            }
+            else if(ddlNewsClass.SelectedIndex == 0)
+            {
+                MessageBox.Show("请选择新闻分类");
+                return;
+            }
+            else if(string.IsNullOrWhiteSpace(txtDesc.Text))
+            {
+                MessageBox.Show("请输入新闻正文");
+                return;
+            }
+            InitCarNews();
+            SendPTNews();
+        }
     }
 
     public class PromotionCars
     {
         public PromotionCars()
         {
-            YearType = new List<string>();
+            YearType = new List<YearType>();
             Cars = new List<Car>();
             PublishCarList = new List<Car>();
             GGiftInof = new GiftInfo();
@@ -1034,7 +1254,7 @@ namespace Aide
         /// <summary>
         /// 年款
         /// </summary>
-        public List<string> YearType { get; set; }
+        public List<YearType> YearType { get; set; }
         /// <summary>
         /// 车列表
         /// </summary>
@@ -1234,45 +1454,8 @@ namespace Aide
         /// <summary>
         /// obj.IsNewEnergy = $(this).attr("isNewEnergy")
         /// </summary>
-        public int IsNewEnergy { get; set; }        
-
-        /// <summary>
-        /// //    if (obj.IsNewEnergy == 1) {
-        //        if ($(this).attr("StateSubsidies") != '--') {
-        //            obj.StateSubsidies = parseFloat($(this).attr("StateSubsidies")).toFixed(2);
-        //        } else {
-        //            obj.StateSubsidies = 0;
-        //        }
-        //        if ($(this).attr("LocalSubsidies") != '--') {
-        //            obj.LocalSubsidies = parseFloat($(this).attr("LocalSubsidies")).toFixed(2);
-        //        }
-        //        else {
-        //            obj.LocalSubsidies = 0;
-        //        }
-        //    } else {
-        //        obj.StateSubsidies = 0;
-        //        obj.LocalSubsidies = 0;
-        //    }
-        /// </summary>
-        public string StateSubsidies { get; set; }
-        /// <summary>
-        /// //    if (obj.IsNewEnergy == 1) {
-        //        if ($(this).attr("StateSubsidies") != '--') {
-        //            obj.StateSubsidies = parseFloat($(this).attr("StateSubsidies")).toFixed(2);
-        //        } else {
-        //            obj.StateSubsidies = 0;
-        //        }
-        //        if ($(this).attr("LocalSubsidies") != '--') {
-        //            obj.LocalSubsidies = parseFloat($(this).attr("LocalSubsidies")).toFixed(2);
-        //        }
-        //        else {
-        //            obj.LocalSubsidies = 0;
-        //        }
-        //    } else {
-        //        obj.StateSubsidies = 0;
-        //        obj.LocalSubsidies = 0;
-        //    }
-        /// </summary>
+        public int IsNewEnergy { get; set; }
+        public string StateSubsidies { get; set; }        
         public string LocalSubsidies { get; set; }
 
         public string Action { get { return "选择颜色"; } }
@@ -1338,6 +1521,7 @@ namespace Aide
             giftInfo = new GiftInfo();
             CarList = new List<Car>();
             promotionCars = new List<Car>();
+            PTNews = new PTNews();
         }
 
         /// <summary>
@@ -1355,15 +1539,15 @@ namespace Aide
         /// </summary>
         public string CarType { get; set; }     //保存控件名称
         
-        public DateTime MinData { get; set; }
+        public DateTime MinDate { get; set; }
         /// <summary>
         /// 促销开始日期
         /// </summary>
-        public DateTime StartData { get; set; }
+        public DateTime StartDate { get; set; }
         /// <summary>
         /// 促销结束日期
         /// </summary>
-        public DateTime EndData { get; set; }
+        public DateTime EndDate { get; set; }
         /// <summary>
         /// 库存状态 
         /// </summary>
@@ -1393,6 +1577,7 @@ namespace Aide
         /// 礼包
         /// </summary>
         public GiftInfo giftInfo { get; set; }
+        public List<YearType> YearType { get; set; }
         /// <summary>
         /// 未发车
         /// </summary>
@@ -1436,13 +1621,37 @@ namespace Aide
         /// <summary>
         /// 添加400电话
         /// </summary>
-        public bool IsShow400Number { get; set; }
-
-        public string Startdate { get; set; }
-        public string Enddate { get; set; }
+        public bool IsShow400Number { get; set; }        
         public string Status { get; set; }
         public int Statusvalue { get; set; }
         public int Mark { get; set; }
-        public int Extendcarid { get; set; }       
-    }        
+        public int Extendcarid { get; set; }
+
+        public PTNews PTNews { get; set; }
+    }
+
+    public class PTNews
+    {
+        public string Title { get; set; }
+        public string Type { get; set; }
+        public string Content { get; set; }
+        public List<string> Brands { get; set; }
+        public Vote SelectVote { get; set; }
+        public List<string> BuyCar { get; set; }
+        public bool Address { get; set; }
+        public bool Map { get; set; }
+        public bool Tel { get; set; }
+    }
+
+    public class Vote
+    {
+        public string VoteType {get;set;}
+        public string VoteIndex{get;set;}
+    }
+
+    public class YearType
+    {
+        public string Text { get; set; }
+        public bool IsChecked { get; set; }
+    }
 }
