@@ -14,6 +14,13 @@ public class DAL
             .ToList();
     }
 
+    public List<Area> GetAreaCheck(string site)
+    {
+        return DB.Context.From<Area>()
+            .Where(w => w.Site == site && w.IsChecked)
+            .ToList();
+    }
+
     public int UpdateAreaChecked(List<Area> area)
     {
         return DB.Context.Update(area);
@@ -53,7 +60,17 @@ public class DAL
     {
         var model = DB.Context.From<Nicks>().Where(w => w.Id == id).First();
         model.Check = !model.Check;
-        return DB.Context.Update<Nicks>(model);
+        return DB.Context.Update(model);
+    }
+
+    public int UpdateNickChecked(bool check)
+    {
+        var listModel = DB.Context.From<Nicks>().ToList();
+        foreach (var entity in listModel)
+        {
+            entity.Check = check;
+        }
+        return DB.Context.Update(listModel);
     }
 
     /// <summary>

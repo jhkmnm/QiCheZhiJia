@@ -40,7 +40,7 @@ namespace Aide
         /// <summary>
         /// 获取公共订单
         /// </summary>
-        string publicOrder = "http://ics.autohome.com.cn/Dms/Order/GetPublicOrders?ki=9DF3FD033BAD49F2AD12724D56DB11A9&appid=dms&provinceid={0}&cityid={1}&factoryID={2}&seriesid={3}&logicType={4}&pageindex=1&pagesize=200&kt=2644691E-91BE-4F2F-97B3-57FD0316D52C";
+        string publicOrder = "http://ics.autohome.com.cn/Dms/Order/GetPublicOrders?kis=9DF3FD033BAD49F2AD12724D65DB11A9&appid=dms&provinceid=0&cityid=0&factoryID=0&seriesid=0&logicType=0&pageindex=1&pagesize=200&kts=2644691E-91BE-4F2F-97B3-57DD0316D52C";
 
         string onsalelist = "http://ics.autohome.com.cn/Price/CarPrice/GetOnSaleList?dealerId={0}";
 
@@ -56,6 +56,7 @@ namespace Aide
         string modulus = "";
         public string cookie = "";
         DAL dal = new DAL();
+        List<Area> areaList = new List<Area>();
 
         public QiCheZhiJia(string js)
         {
@@ -313,10 +314,11 @@ namespace Aide
 
         private List<PublicOrder> GetNewOrder()
         {
-            HAP.HtmlDocument htmlDoc = GetHtml(string.Format(publicOrder, "", "", "", "", ""));
-
+            //DateTime dt = DateTime.UtcNow;
+            //var timestamp = (long)(dt - DateTime.Parse("1970-1-1")).TotalMilliseconds;
+            //string.Format(publicOrder, timestamp.ToString())
+            HAP.HtmlDocument htmlDoc = GetHtml(publicOrder);
             var result = JsonConvert.DeserializeObject<ReturnResult>(htmlDoc.DocumentNode.OuterHtml);
-
             return result.Result.List;
         }
 
@@ -335,11 +337,10 @@ namespace Aide
                     orders.ForEach(f => { 
                         if(!dal.IsHaveOrder(f.Id))
                         {
-                            dal.AddOrders(new Orders { CustomerName = f.CustomerName, Id = f.Id });
                             if (CheckOrder(f))
                             {
+                                dal.AddOrders(new Orders { CustomerName = f.CustomerName, Id = f.Id });
                                 var nick = dal.GetNick();
-
                                 if (SendOrder(nick, f))
                                 {
                                     dal.UpdateOrderSend(f.Id, nick.Id);
@@ -421,11 +422,12 @@ namespace Aide
         private bool CheckOrder(PublicOrder order)
         {
             var result = false;
-
-            if (dal.CityIsChecked("汽车", order.IntentionCityName, order.CityName))
+            if (areaList.Count == 0)
+                areaList = dal.GetArea(Tool.site.ToString());
+            if (areaList.Any(w => w.IsChecked && (w.City == order.IntentionCityName.Trim() || w.City == order.CityName.Trim())))
             {
                 result = true;
-                var ordertype = dal.GetOrderTypes("汽车");
+                var ordertype = dal.GetOrderTypes(Tool.site.ToString());
                 var spec = dal.GetSpecs();
 
                 if(ordertype.Any(w => !w.IsCheck))

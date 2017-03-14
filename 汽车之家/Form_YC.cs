@@ -56,6 +56,12 @@ namespace Aide
                 if (carnews.IsDetail)
                     tabControl2.SelectedTab = tabPage2;
             }
+            
+            doc = yc.InforManagerNews("http://das.app.easypass.cn/InforManage/News/NewsList.aspx");
+            if(!doc.DocumentNode.InnerText.Contains("新能源车"))
+            {
+                radioButton5.Visible = radioButton4.Visible = false;
+            }
 
             NewsType = rbtSource1.Name;
             if (carnews == null)
@@ -67,7 +73,8 @@ namespace Aide
                 {
                     var o = fieldinfo.GetValue(this);
                     NewsType = ((RadioButton)o).Name;
-                    InitForm(((RadioButton)o).Tag.ToString());
+                    ((RadioButton)o).Checked = true;
+                    //InitForm(((RadioButton)o).Tag.ToString());
                 }
             }
         }
@@ -246,6 +253,7 @@ namespace Aide
             int xstart = 16;
             int ystart = 22;
             RadioButton rbtChk = null;
+            gpbCarList.Controls.Clear();
             for (int i = 0; i < carList.Count; i++)
             {
                 var value = carList[i].GetAttributeValue("for", "");
@@ -273,13 +281,16 @@ namespace Aide
                 rbt.Size = new System.Drawing.Size(101, 16);
                 rbt.TabStop = true;
                 rbt.UseVisualStyleBackColor = true;
-                this.gpbCarList.Controls.Add(rbt);
+                gpbCarList.Controls.Add(rbt);
                 if (carnews != null && carnews.CarType == rbt.Name)
                     rbtChk = rbt;
             }
             #endregion
-                        
-            dtpPromotionB.Value = DateTime.Now.AddMonths(1).AddDays(1);
+            var datetimeend = doc.GetElementbyId("txtDateTimeEnd");
+            if (datetimeend != null)
+                dtpPromotionB.Value = Convert.ToDateTime(datetimeend.GetAttributeValue("value", DateTime.Now.AddMonths(1).AddDays(1).ToString()));
+            else
+                dtpPromotionB.Value = DateTime.Now.AddMonths(1).AddDays(1);
             ddlPromotionType.DataSource = promotionType;
             ddlPromotionType.DisplayMember = "Text";
             ddlPromotionType.ValueMember = "Value";
@@ -298,6 +309,7 @@ namespace Aide
             xstart = 4;
             ystart = 7;
             RadioButton rbtStoreChk = null;
+            pStoreState.Controls.Clear();
             for (int i = 0; i < stateInputs.Count; i++)
             {
                 var value = stateInputs[i].GetAttributeValue("value", "");
@@ -319,7 +331,7 @@ namespace Aide
                 rbt.Size = new System.Drawing.Size(101, 16);
                 rbt.TabStop = true;
                 rbt.UseVisualStyleBackColor = true;
-                this.pStoreState.Controls.Add(rbt);
+                pStoreState.Controls.Add(rbt);
 
                 if (carnews != null && carnews.StoreState == value)
                     rbtStoreChk = rbt;
@@ -348,12 +360,6 @@ namespace Aide
             }
             #endregion
 
-            if (rbtStoreChk != null) rbtStoreChk.Checked = true;
-            if (rbtChk != null) rbtChk.Checked = true;
-        }
-
-        private void InitDetail()
-        {
             var article = doc.GetElementbyId("title_article");
             var number = doc.GetElementbyId("title_number");
             if (carnews != null && !string.IsNullOrWhiteSpace(carnews.Title))
@@ -376,6 +382,12 @@ namespace Aide
                 txtLead.Text = lead.GetAttributeValue("backvalue", "");
             }
 
+            if (rbtStoreChk != null) rbtStoreChk.Checked = true;
+            if (rbtChk != null) rbtChk.Checked = true;
+        }
+
+        private void InitDetail()
+        {
             #region 颜色列表
             var colorList = doc.DocumentNode.SelectNodes("//div[@id='UpdatePanel7']/span/label");
             int xstep = 152;
@@ -445,15 +457,17 @@ namespace Aide
                     var inputrate = node.SelectSingleNode(".//input[@rate='rate']");
                     var inputallowance = node.SelectSingleNode(".//input[@allowance='allowance']");
                     var inputprice = node.SelectSingleNode(".//input[@price='price']");
-                    var statesubsidies = node.GetAttributeValue("statesubsidies", "");
-                    var localsubsidies = node.GetAttributeValue("localsubsidies", "");
-                    var colorcount = tds[7].SelectSingleNode(".//div/p/span");
+                    var statesubsidies = node.GetAttributeValue("statesubsidies", "0");
+                    var localsubsidies = node.GetAttributeValue("localsubsidies", "0");
+                    var colorcount = node.SelectSingleNode(".//td[@class='pick_color']/div/p/span");
                     var carid = Convert.ToInt32(inputCarInfo.GetAttributeValue("carid", ""));
+                    var pushedcount = node.SelectSingleNode(".//td[contains(@class, 't_c')]");
                     Car item = null;
                     if (carnews != null)
                         item = carnews.CarList.Find(w => w.CarID == carid);
                     cars.Cars.Add(new Car
                     {
+                        IsUp = TemplaceNewsType == 3,
                         CarID = carid,
                         Discount = Convert.ToDecimal(inputrate.GetAttributeValue("value", "0")),
                         IsAllowance = inputallowance != null ? inputallowance.GetAttributeValue("checked", "") : "",
@@ -466,7 +480,7 @@ namespace Aide
                         CarReferPrice = Convert.ToDecimal(inputCarInfo.GetAttributeValue("carreferprice", "0")),
                         FavorablePrice = item == null ? Convert.ToDecimal(inputprice.GetAttributeValue("value", "0")) : item.FavorablePrice,
                         ColorName = item == null ? colorcount.InnerText : item.ColorName,
-                        PushedCount = tds[8].InnerText.Trim(),
+                        PushedCount = pushedcount == null ? "0" : pushedcount.InnerText.Trim(),
                         StateSubsidies = statesubsidies != "--" ? string.Format("{0:0.00}", Convert.ToDecimal(statesubsidies)) : "0",
                         LocalSubsidies = localsubsidies != "--" ? string.Format("{0:0.00}", Convert.ToDecimal(localsubsidies)) : "0",
                     });
@@ -538,6 +552,7 @@ namespace Aide
             imgPosition4_hdf.ImageUpload = ImageUpload;
             #endregion            
 
+            cars.IsUp = TemplaceNewsType == 3;
             carA.CarDataSource = cars;
             carA.Colors = Colors;
             carA.ShowType(false);
@@ -782,9 +797,9 @@ namespace Aide
             if (viewstategenerator != null)
                 str_viewstategenerator = viewstategenerator.GetAttributeValue("value", "");
             sb.AppendFormat("__VIEWSTATEGENERATOR={0}&", str_viewstategenerator);
-            sb.AppendFormat("title_article={0}", HttpHelper.URLEncode(txtPTTitle.Text));
+            sb.AppendFormat("title_article={0}&", HttpHelper.URLEncode(txtPTTitle.Text, Encoding.UTF8));
             sb.AppendFormat("ddlNewsClass={0}&", ddlNewsClass.SelectedValue);
-            sb.AppendFormat("txtDesc={0}&", HttpHelper.URLEncode(txtDesc.Text));
+            sb.AppendFormat("txtDesc={0}&", HttpHelper.URLEncode(txtDesc.Text, Encoding.UTF8));
             var txtDesc_classId = doc.GetElementbyId("txtDesc_classId");
             sb.AppendFormat("txtDesc_classId={0}&", txtDesc_classId.GetAttributeValue("value", ""));
             var txtDesc_folder = doc.GetElementbyId("txtDesc_folder");
@@ -801,7 +816,7 @@ namespace Aide
                 {
                     var str = chk.Tag.ToString() + ",";
                     selectedValue += str.Split(',')[0] +",";
-                    sb.AppendFormat("chkItem={0}&", HttpHelper.URLEncode(str));
+                    sb.AppendFormat("chkItem={0}&", HttpHelper.URLEncode(str, Encoding.UTF8));
                 }                    
             }
             sb.AppendFormat("hidSeriesList={0}&", HttpHelper.URLEncode(selectedValue));
@@ -812,7 +827,7 @@ namespace Aide
                 {
                     var str = rbt.Tag.ToString();
                     selectedValue = str.Split(',')[0] +",";
-                    sb.AppendFormat("radItem={0}&", HttpHelper.URLEncode(str));
+                    sb.AppendFormat("radItem={0}&", HttpHelper.URLEncode(str, Encoding.UTF8));
                     break;
                 }
             }
@@ -826,7 +841,7 @@ namespace Aide
                 {
                     var str = chk.Tag.ToString() + ",";
                     selectedValue += str.Split(',')[0] +",";
-                    sb.AppendFormat("chkItem2={0}&", HttpHelper.URLEncode(str));
+                    sb.AppendFormat("chkItem2={0}&", HttpHelper.URLEncode(str, Encoding.UTF8));
                 }
             }
             sb.AppendFormat("hidSeriesListbuycar={0}&", HttpHelper.URLEncode(selectedValue));
@@ -917,7 +932,7 @@ namespace Aide
         private void InitCarNews()
         {
             if (carnews == null) carnews = new CarNews();
-
+            carnews.NewsType = NewsType;
             if (NewsType == "rbtSource0")
             {
                 carnews.PTNews.Title = txtPTTitle.Text;
@@ -926,18 +941,15 @@ namespace Aide
                 carnews.PTNews.Address = chkAddress.Checked;
                 carnews.PTNews.Map = chkMap.Checked;
                 carnews.PTNews.Tel = chkTel.Checked;
+                if (carnews.PTNews.Brands == null)
+                    carnews.PTNews.Brands = new List<string>();
+                else
+                    carnews.PTNews.Brands.Clear();
                 foreach (Control con in tabPage3.Controls)
                 {
                     var chk = con as CheckBox;
                     if (chk != null && chk.Checked)
-                    {
-                        if (carnews.PTNews.Brands == null)
-                            carnews.PTNews.Brands = new List<string>();
-                        else
-                            carnews.PTNews.Brands.Clear();
-
                         carnews.PTNews.Brands.Add(chk.Tag.ToString());
-                    }
                 }
                 if (carnews.PTNews.SelectVote == null)
                     carnews.PTNews.SelectVote = new Vote();
@@ -950,18 +962,16 @@ namespace Aide
                         carnews.PTNews.SelectVote.VoteIndex = rbt.Tag.ToString();
                         break;
                     }
-                }                
+                }
+                if (carnews.PTNews.BuyCar == null)
+                    carnews.PTNews.BuyCar = new List<string>();
+                else
+                    carnews.PTNews.BuyCar.Clear();
                 foreach (Control con in tabPage5.Controls)
                 {
                     var chk = con as CheckBox;
                     if (chk != null && chk.Checked)
-                    {
-                        if (carnews.PTNews.BuyCar == null)
-                            carnews.PTNews.BuyCar = new List<string>();
-                        else
-                            carnews.PTNews.BuyCar.Clear();
                         carnews.PTNews.BuyCar.Add(chk.Tag.ToString());
-                    }
                 }
             }
             else
@@ -970,7 +980,6 @@ namespace Aide
                 carnews.PromotionType = ddlPromotionType.SelectedValue.ToString();
                 carnews.PromotionValue = txtMoney.Text;
                 carnews.StoreState = rdoStoreState;
-                carnews.NewsType = NewsType;
                 carnews.CarType = CarType;
                 foreach (Control con in pColor.Controls)
                 {
@@ -983,7 +992,6 @@ namespace Aide
                 carnews.Title = title_article.Text;
                 carnews.title_number = title_number.Text;
                 carnews.Lead = txtLead.Text;
-
                 carnews.ImageA = imgLogo_hdf.ImgUrl;
                 carnews.CarID = imgLogo_hdf.CSID;
                 carnews.ImageB = imgPosition1_hdf.ImgUrl;
@@ -1306,76 +1314,20 @@ namespace Aide
                 return sb.ToString();
             }
         }
+
+        public bool IsUp { get; set; }
     }
 
     public class Car
     {
-        //var trs = $("#listInfo tr[carinfotr]");
-        //var array = new Array();
-        //$(trs).each(function () {
-        //    var trObj = this;
-        //    var obj = new promotionCarInfo();
-        //    var inputCarInfo = $(trObj).find("input[carinfo]");
-        //    // 主键
-        //    obj.RelaID = 0;
-        //    //是否勾选
-        //    obj.IsCheck = $(trObj).find(":checkbox").eq(0).attr("checked"); 
-        //    //车款ID
-        //    obj.CarID = parseInt(inputCarInfo.attr("carid"));
-        //    // 指导价
-        //    obj.CarReferPrice = inputCarInfo.attr("carreferprice");
-        //    // 优惠金额
-        //    obj.FavorablePrice = $(trObj).find("input[price]").val() == "" ? 0 : $(trObj).find("input[price]").val();
-        //    // 折扣率
-        //    obj.Discount = $(trObj).find("input[rate]").val() == "" ? 0 : $(trObj).find("input[rate]").val();
-        //    // 是否包含惠民补贴
-        //    obj.IsAllowance = $(trObj).find("input[allowance]").attr("checked");
-        //    // 库存状态
-        //    obj.StoreState = $(trObj).find("select[storestate]").val() == "" ? 1 : $(trObj).find("select[storestate]").val();
-        //    obj.StoreState = obj.StoreState ? obj.StoreState : 1;
-        //    // 车型颜色
-        //    obj.ColorName = $(trObj).find(".pick_color a").attr("selectcolor");
-        //    // 车型颜色
-        //    obj.CustomColorName = $(trObj).find(".pick_color a").attr("costumcolor");
-        //    // 标识
-        //    obj.Mark = $(this).attr("mark");
-        //    // 标识 增配车ID
-        //    obj.ExtendCarID = $(this).attr("ExtendCarID");
-        //    obj.IsNewEnergy = $(this).attr("isNewEnergy")
-        //    if (obj.IsNewEnergy == 1) {
-        //        if ($(this).attr("StateSubsidies") != '--') {
-        //            obj.StateSubsidies = parseFloat($(this).attr("StateSubsidies")).toFixed(2);
-        //        } else {
-        //            obj.StateSubsidies = 0;
-        //        }
-        //        if ($(this).attr("LocalSubsidies") != '--') {
-        //            obj.LocalSubsidies = parseFloat($(this).attr("LocalSubsidies")).toFixed(2);
-        //        }
-        //        else {
-        //            obj.LocalSubsidies = 0;
-        //        }
-        //    } else {
-        //        obj.StateSubsidies = 0;
-        //        obj.LocalSubsidies = 0;
-        //    }
-        //    array.push(obj);
-        //});
-
+        public bool IsUp { get; set; }
         public int RelaID { get; set; }
-
-        /// <summary>
-        /// 车款ID
-        /// obj.CarID = parseInt(inputCarInfo.attr("carid"));
-        /// </summary>
-
         public int CarID { get; set; }
-
         /// <summary>
         /// 是否勾选
         /// obj.IsCheck = $(trObj).find(":checkbox").eq(0).attr("checked"); 
         /// </summary>
         public bool IsCheck { get; set; }
-
         /// <summary>
         /// 年款
         /// </summary>
@@ -1416,7 +1368,12 @@ namespace Aide
         /// <summary>
         /// 优惠价(万)
         /// </summary>
-        public decimal PromotionPrice { get { return CarReferPrice - FavorablePrice; } }
+        public decimal PromotionPrice {
+            get
+            {
+                return IsUp ? CarReferPrice + FavorablePrice : CarReferPrice - FavorablePrice;
+            }
+        }
 
         /// <summary>
         /// 库存状态

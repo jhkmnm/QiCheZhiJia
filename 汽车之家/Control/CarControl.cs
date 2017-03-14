@@ -77,15 +77,30 @@ namespace Aide
             ddlStoreState.Visible = isDetail;
             llbColor.Visible = isDetail;
             colAction.Visible = isDetail;
+
+            if (_promotioncars.IsUp)
+            {
+                txtFavorablePrice.Tag = txtFavorablePrice.Text = "加价金额";
+                txtDiscount.Tag = txtDiscount.Text = "加价折扣率";
+                colFavorablePrice.HeaderText = "加价金额(万)";
+                colSubsidies.Visible = false;
+                colPromotionPrice.HeaderText = "本店价(万)";
+            }
+            else
+            {
+                txtFavorablePrice.Tag = txtFavorablePrice.Text = "优惠金额";
+                txtDiscount.Tag = txtDiscount.Text = "优惠折扣率";
+                colFavorablePrice.HeaderText = "优惠金额(万)";
+                colSubsidies.Visible = true;
+                colPromotionPrice.HeaderText = "优惠价(万)";
+            }
         }
 
         public CarControl()
         {
             InitializeComponent();
             splitContainer1.Panel2Collapsed = true;
-
             var state = new TextValue[4];
-
             StoreStateList.AddRange(new[] {
                 new TextValue { Text = "库存状态", Value = "-1" },
                 new TextValue { Text = "现车充足", Value = "1" },
@@ -93,12 +108,10 @@ namespace Aide
                 new TextValue { Text = "需提前预定", Value = "3" }
             });
             StoreStateList.CopyTo(state);
-
             ddlStoreState.DataSource = StoreStateList;
             ddlStoreState.DisplayMember = "Text";
             ddlStoreState.ValueMember = "Value";
-
-            StoreStateBindingSource.DataSource = state.ToList();
+            StoreStateBindingSource.DataSource = state.ToList();            
         }
 
         public void InitYearType()

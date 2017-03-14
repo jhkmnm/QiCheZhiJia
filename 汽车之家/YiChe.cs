@@ -237,58 +237,14 @@ namespace Aide
 
             var htmlDoc = GetHtml(useradmin);
 
-            var rowcount = Convert.ToInt32(htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"ContentPlaceHolder1_UpdatePanel1\"]/div/div/div[3]/ul/li[2]/strong").InnerText.Trim());
-
-            var infoformat = "姓名:{0};职位:{1};手机:{2}" + Environment.NewLine;
-            StringBuilder sb = new StringBuilder(rowcount * 25);            
-
-            var trs = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"ContentPlaceHolder1_dgvUserList\"]/tr");
-            for (int i = 1; i < trs.Count; i++)
+            try
             {
-                var tr = trs[i];
-                var name = tr.SelectSingleNode("//*[@id=\"ContentPlaceHolder1_dgvUserList_UserManageHead_"+ (i-1).ToString() +"\"]").InnerText;
-                var rolename = tr.ChildNodes[2].InnerText.Trim();
-                var phone = tr.ChildNodes[4].InnerText.Trim().Split('\r')[0];
-                sb.AppendFormat(infoformat, name, rolename, phone);
-            }            
+                var rowcount = Convert.ToInt32(htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"ContentPlaceHolder1_UpdatePanel1\"]/div/div/div[3]/ul/li[2]/strong").InnerText.Trim());
 
-            string type = "ctl00%24ContentPlaceHolder1%24dgvUserList%24ctl{0}%24hideAccountType";
-            string level = "ctl00%24ContentPlaceHolder1%24dgvUserList%24ctl{0}%24hideAccountLevel";
-            string id = "ctl00%24ContentPlaceHolder1%24dgvUserList%24ctl{0}%24hideAccountId";
-            string admin = "ctl00%24ContentPlaceHolder1%24dgvUserList%24ctl{0}%24hideAccountAdmin";
-            string roleid = "ctl00%24ContentPlaceHolder1%24dgvUserList%24ctl{0}%24hideAccountRoleId";
+                var infoformat = "姓名:{0};职位:{1};手机:{2}" + Environment.NewLine;
+                StringBuilder sb = new StringBuilder(rowcount * 25);
 
-            #region 分页
-            while (rowcount > 10)
-            {
-                var postdata = HttpHelper.URLEncode("ctl00$ContentPlaceHolder1$ScriptManager1=ctl00$ContentPlaceHolder1$UpdatePanel1|ctl00$ContentPlaceHolder1$AspnetPager1$AspNetPager1");
-                postdata += "&HADRDCCID=" + HttpHelper.URLEncode(htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"HADRDCCID\"]").GetAttributeValue("value", ""));
-                postdata += "&__EVENTTARGET=ctl00%24ContentPlaceHolder1%24AspnetPager1%24AspNetPager1";
-                postdata += "&__EVENTARGUMENT=2";
-                postdata += "&__VIEWSTATE=" + HttpHelper.URLEncode(htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"__VIEWSTATE\"]").GetAttributeValue("value", ""));
-                postdata += "&__VIEWSTATEGENERATOR=" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"__VIEWSTATEGENERATOR\"]").GetAttributeValue("value", "");
-                postdata += "&__VIEWSTATEENCRYPTED=";
-                postdata += "&__EVENTVALIDATION=" + HttpHelper.URLEncode(htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"__EVENTVALIDATION\"]").GetAttributeValue("value", ""));
-                postdata += "&ctl00%24imgUploadChangehidethumburl=&ctl00%24imgUploadChangehideUrl=&ctl00%24ContentPlaceHolder1%24ddlRoleName=&ctl00%24ContentPlaceHolder1%24txtUserName=&ctl00%24ContentPlaceHolder1%24txtUserMobile=";
-
-                for (int i = 1; i < trs.Count; i++)
-                {
-                    var tr = trs[i];
-                    var type_t = string.Format(type, (i + 1).ToString().PadLeft(2, '0'));
-                    var level_t = string.Format(level, (i + 1).ToString().PadLeft(2, '0'));
-                    var id_t = string.Format(id, (i + 1).ToString().PadLeft(2, '0'));
-                    var admin_t = string.Format(admin, (i + 1).ToString().PadLeft(2, '0'));
-                    var roleid_t = string.Format(roleid, (i + 1).ToString().PadLeft(2, '0'));
-                    postdata += string.Format("&{0}={1}", type_t, tr.SelectSingleNode("//*[@name=\"" + HttpHelper.URLDecode(type_t) + "\"]").GetAttributeValue("value", ""));
-                    postdata += string.Format("&{0}={1}", level_t, tr.SelectSingleNode("//*[@name=\"" + HttpHelper.URLDecode(level_t) + "\"]").GetAttributeValue("value", ""));
-                    postdata += string.Format("&{0}={1}", id_t, tr.SelectSingleNode("//*[@name=\"" + HttpHelper.URLDecode(id_t) + "\"]").GetAttributeValue("value", ""));
-                    postdata += string.Format("&{0}={1}", admin_t, tr.SelectSingleNode("//*[@name=\"" + HttpHelper.URLDecode(admin_t) + "\"]").GetAttributeValue("value", ""));
-                    postdata += string.Format("&{0}={1}", roleid_t, tr.SelectSingleNode("//*[@name=\"" + HttpHelper.URLDecode(roleid_t) + "\"]").GetAttributeValue("value", ""));
-                }
-                postdata += "&aspnet1CurrentPageIndex=1&__ASYNCPOST=true";
-
-                htmlDoc = Post(useradmin, postdata);
-                trs = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"ContentPlaceHolder1_dgvUserList\"]/tr");
+                var trs = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"ContentPlaceHolder1_dgvUserList\"]/tr");
                 for (int i = 1; i < trs.Count; i++)
                 {
                     var tr = trs[i];
@@ -297,35 +253,88 @@ namespace Aide
                     var phone = tr.ChildNodes[4].InnerText.Trim().Split('\r')[0];
                     sb.AppendFormat(infoformat, name, rolename, phone);
                 }
-                rowcount -= 10;
+
+                string type = "ctl00%24ContentPlaceHolder1%24dgvUserList%24ctl{0}%24hideAccountType";
+                string level = "ctl00%24ContentPlaceHolder1%24dgvUserList%24ctl{0}%24hideAccountLevel";
+                string id = "ctl00%24ContentPlaceHolder1%24dgvUserList%24ctl{0}%24hideAccountId";
+                string admin = "ctl00%24ContentPlaceHolder1%24dgvUserList%24ctl{0}%24hideAccountAdmin";
+                string roleid = "ctl00%24ContentPlaceHolder1%24dgvUserList%24ctl{0}%24hideAccountRoleId";
+
+                #region 分页
+                while (rowcount > 10)
+                {
+                    var postdata = HttpHelper.URLEncode("ctl00$ContentPlaceHolder1$ScriptManager1=ctl00$ContentPlaceHolder1$UpdatePanel1|ctl00$ContentPlaceHolder1$AspnetPager1$AspNetPager1");
+                    postdata += "&HADRDCCID=" + HttpHelper.URLEncode(htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"HADRDCCID\"]").GetAttributeValue("value", ""));
+                    postdata += "&__EVENTTARGET=ctl00%24ContentPlaceHolder1%24AspnetPager1%24AspNetPager1";
+                    postdata += "&__EVENTARGUMENT=2";
+                    postdata += "&__VIEWSTATE=" + HttpHelper.URLEncode(htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"__VIEWSTATE\"]").GetAttributeValue("value", ""));
+                    postdata += "&__VIEWSTATEGENERATOR=" + htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"__VIEWSTATEGENERATOR\"]").GetAttributeValue("value", "");
+                    postdata += "&__VIEWSTATEENCRYPTED=";
+                    postdata += "&__EVENTVALIDATION=" + HttpHelper.URLEncode(htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"__EVENTVALIDATION\"]").GetAttributeValue("value", ""));
+                    postdata += "&ctl00%24imgUploadChangehidethumburl=&ctl00%24imgUploadChangehideUrl=&ctl00%24ContentPlaceHolder1%24ddlRoleName=&ctl00%24ContentPlaceHolder1%24txtUserName=&ctl00%24ContentPlaceHolder1%24txtUserMobile=";
+
+                    for (int i = 1; i < trs.Count; i++)
+                    {
+                        var tr = trs[i];
+                        var type_t = string.Format(type, (i + 1).ToString().PadLeft(2, '0'));
+                        var level_t = string.Format(level, (i + 1).ToString().PadLeft(2, '0'));
+                        var id_t = string.Format(id, (i + 1).ToString().PadLeft(2, '0'));
+                        var admin_t = string.Format(admin, (i + 1).ToString().PadLeft(2, '0'));
+                        var roleid_t = string.Format(roleid, (i + 1).ToString().PadLeft(2, '0'));
+                        postdata += string.Format("&{0}={1}", type_t, tr.SelectSingleNode("//*[@name=\"" + HttpHelper.URLDecode(type_t) + "\"]").GetAttributeValue("value", ""));
+                        postdata += string.Format("&{0}={1}", level_t, tr.SelectSingleNode("//*[@name=\"" + HttpHelper.URLDecode(level_t) + "\"]").GetAttributeValue("value", ""));
+                        postdata += string.Format("&{0}={1}", id_t, tr.SelectSingleNode("//*[@name=\"" + HttpHelper.URLDecode(id_t) + "\"]").GetAttributeValue("value", ""));
+                        postdata += string.Format("&{0}={1}", admin_t, tr.SelectSingleNode("//*[@name=\"" + HttpHelper.URLDecode(admin_t) + "\"]").GetAttributeValue("value", ""));
+                        postdata += string.Format("&{0}={1}", roleid_t, tr.SelectSingleNode("//*[@name=\"" + HttpHelper.URLDecode(roleid_t) + "\"]").GetAttributeValue("value", ""));
+                    }
+                    postdata += "&aspnet1CurrentPageIndex=1&__ASYNCPOST=true";
+
+                    htmlDoc = Post(useradmin, postdata);
+                    trs = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"ContentPlaceHolder1_dgvUserList\"]/tr");
+                    for (int i = 1; i < trs.Count; i++)
+                    {
+                        var tr = trs[i];
+                        var name = tr.SelectSingleNode("//*[@id=\"ContentPlaceHolder1_dgvUserList_UserManageHead_" + (i - 1).ToString() + "\"]").InnerText;
+                        var rolename = tr.ChildNodes[2].InnerText.Trim();
+                        var phone = tr.ChildNodes[4].InnerText.Trim().Split('\r')[0];
+                        sb.AppendFormat(infoformat, name, rolename, phone);
+                    }
+                    rowcount -= 10;
+                }
+                #endregion
+
+                Service.User user = new Service.User
+                {
+                    Company = company,
+                    CompanyID = "",
+                    SiteName = "易车网",
+                    PassWord = passWord,
+                    UserName = userName,
+                    Status = 1,
+                    LinkInfo = sb.ToString()
+                };
+
+                var loginResult = Tool.service.UserLogin(user);
+
+                if (loginResult.Result)
+                {
+                    Tool.userInfo_yc = loginResult.Data;
+                }
+                else
+                {
+                    vresult.Message = loginResult.Message;
+                    vresult.Exit = true;
+                }
+                vresult.Result = loginResult.Result;
+
+                return vresult;
             }
-            #endregion
-
-            Service.User user = new Service.User
+            catch(Exception ex)
             {
-                Company = company,
-                CompanyID = "",
-                SiteName = "易车网",
-                PassWord = passWord,
-                UserName = userName,
-                Status = 1,
-                LinkInfo = sb.ToString()
-            };
-
-            var loginResult = Tool.service.UserLogin(user);
-
-            if (loginResult.Result)
-            {
-                Tool.userInfo_yc = loginResult.Data;
-            }
-            else
-            {
-                vresult.Message = loginResult.Message;
+                vresult.Message = "登录失败，请重试";
                 vresult.Exit = true;
+                return vresult;
             }
-            vresult.Result = loginResult.Result;
-
-            return vresult;
         }
 
         /// <summary>
@@ -463,93 +472,112 @@ namespace Aide
         public void SendOrder()
         {
             ViewResult result = new ViewResult();
+            List<string> CarID = new List<string>();
+            var orderTypes = dal.GetOrderTypes(Tool.site.ToString());
+            var area = dal.GetArea(Tool.site.ToString());
             while (true)
             {
                 var htmlDoc = LoadOrder();
                 var strcount = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"commonarea\"]/ul/li[2]/strong").InnerText.Trim();
                 int ordercount = 0;
                 int.TryParse(strcount, out ordercount);
-                StringBuilder sb = new StringBuilder();
-
-                var staticstr = "ScriptManager1=" + HttpHelper.URLEncode("UpdatePanel1|btnFetchAll") + "&hf_OrderType=0&hf_Province=0&hf_Location=0&HACBCIDSID=" + hacdsid + "&HADRDCCID=" + HttpHelper.URLEncode(dccid) + "&HCBCIDSID=" + HttpHelper.URLEncode(dsid) + "&__VIEWSTATEGENERATOR=" + viewrator + "&__VIEWSTATEENCRYPTED=&__VIEWSTATE=" + HttpHelper.URLEncode(viewstate) + "&__EVENTTARGET={0}&__EVENTARGUMENT={1}&__ASYNCPOST=true&";
-                int page = 1;
-                result.Result = false;
-
-                if(ordercount == 0)
+                if (ordercount == 0)
                 {
                     result.Message = "程序运行中，暂时未发现新线索";
                     result.Result = true;
                     SendResult(result);
                 }
 
+                StringBuilder sb = new StringBuilder();
+                var staticstrA = "ScriptManager1=" + HttpHelper.URLEncode("UpdatePanel1|btnFetchAll") + "&hf_OrderType=0&hf_Province=0&hf_Location=0";
+                var staticstrB = "&__EVENTTARGET={0}&__EVENTARGUMENT={1}&__VIEWSTATE=" + HttpHelper.URLEncode(viewstate) + "&__VIEWSTATEGENERATOR=" + viewrator + "&HADRDCCID=" + HttpHelper.URLEncode(dccid) + "&HACBCIDSID=" + hacdsid + "&HCBCIDSID=" + HttpHelper.URLEncode(dsid) + "&__VIEWSTATEENCRYPTED=&__ASYNCPOST=true&";
+                int page = 1;
+                result.Result = false;
+
                 while (ordercount > 0)
                 {
-                    sb.Clear();
+                    var count = 0;
                     var trs = htmlDoc.DocumentNode.SelectNodes("//*[@id=\"grvNewCarOpportunity\"]/tr[@onmouseover]");
-                    sb.AppendFormat(staticstr, "btnFetchAll", "");
-                    ordercount -= trs.Count;
-
-                    var allchk = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"grvNewCarOpportunity_AllCheckBox\"]");
-                    sb.AppendFormat("&{0}=on", HttpHelper.URLEncode(allchk.GetAttributeValue("name", "")));
 
                     foreach (var tr in trs)
                     {
+                        sb.Clear();
+                        sb.Append(staticstrA);
+                        var tds = tr.SelectNodes(".//td");
+                        var type = tds[1].InnerText.Trim();
+                        var addr = tr.SelectSingleNode(".//p/a[1]").InnerText.Trim();
+                        var carid = tr.SelectSingleNode(".//p").GetAttributeValue("id", "0");
                         var chk = tr.SelectSingleNode(".//input[@type='checkbox']");
-                        sb.AppendFormat("&{0}=on", HttpHelper.URLEncode(chk.GetAttributeValue("name", "")));
-                    }
+                        if (orderTypes.Any(w => w.IsCheck && w.TypeName == type) && area.Any(w => w.IsChecked && addr.Contains(w.City)) && !CarID.Exists(e => e == carid))
+                        {
+                            CarID.Add(carid);
+                            count++;
+                            sb.AppendFormat("&{0}=on", HttpHelper.URLEncode(chk.GetAttributeValue("name", "")));
 
-                    var item = new HttpItem
-                    {
-                        URL = commonorder,
-                        Postdata = sb.ToString(),
-                        Cookie = app_Shangji_Cookie,
-                        ContentType = "application/x-www-form-urlencoded",
-                        Method = "POST",
-                        UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
-                    };
-                    htmlDoc = GetHtml(item);
+                            sb.AppendFormat(staticstrB, "btnFetchAll", "");
+                            var items = new HttpItem
+                            {
+                                URL = commonorder,
+                                Postdata = sb.ToString(),
+                                Cookie = app_Shangji_Cookie,
+                                ContentType = "application/x-www-form-urlencoded",
+                                Method = "POST",
+                                UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
+                            };
+                            htmlDoc = GetHtml(items);
 
-                    var scripts = htmlDoc.DocumentNode.SelectNodes("//script");
-                    var text = "";
-                    int rnum = 0;
-                    var num = "";
-                    if (scripts != null)
-                    {
-                        text = scripts[scripts.Count - 1].InnerText;
-                        num = GetNum(text);
-                    }
-                    else
-                    {
-                        text = htmlDoc.DocumentNode.ChildNodes[8].InnerText.Trim();
-                        num = GetNum(text.Split('|')[56].Replace("\\u0027", ""));
-                        int.TryParse(num, out rnum);
-                    }
+                            var scripts = htmlDoc.DocumentNode.SelectNodes("//script");
+                            var text = "";
+                            int rnum = 0;
+                            var num = "";
+                            if (scripts != null)
+                            {
+                                text = scripts[scripts.Count - 1].InnerText;
+                                num = GetNum(text);
+                            }
+                            else
+                            {
+                                text = htmlDoc.DocumentNode.ChildNodes[8].InnerText.Trim();
+                                num = GetNum(text.Split('|')[56].Replace("\\u0027", ""));
+                                int.TryParse(num, out rnum);
+                            }
 
-                    if(rnum > 0)
-                    {
-                        dal.UpdateOrderSend(0, Tool.userInfo_yc.UserName);
-                        dal.UpdateSendCount(Tool.userInfo_yc.UserName);
-                        result.Message = string.Format("成功认领{1}条线索{2}", DateTime.Now.ToString(), rnum, Environment.NewLine);
-                        result.Result = true;
-                        SendResult(result);
+                            if (rnum > 0)
+                            {
+                                dal.UpdateOrderSend(0, Tool.userInfo_yc.UserName);
+                                dal.UpdateSendCount(Tool.userInfo_yc.UserName);
+                                result.Message = string.Format("成功认领{1}条线索{2}", DateTime.Now.ToString(), rnum, Environment.NewLine);
+                                result.Result = true;
+                                SendResult(result);
+                            }
+                            strcount = htmlDoc.DocumentNode.SelectSingleNode("//*[@id=\"commonarea\"]/ul/li[2]/strong").InnerText.Trim();
+                            ordercount = 0;
+                            int.TryParse(strcount, out ordercount);
+                            break;
+                        }
                     }
-
-                    page++;
-                    sb.Clear();
-                    sb.AppendFormat(staticstr, "pager1", page);
-                    item = new HttpItem
+                    if (count == 0)
                     {
-                        URL = commonorder,
-                        Postdata = sb.ToString(),
-                        Cookie = app_Shangji_Cookie,
-                        ContentType = "application/x-www-form-urlencoded",
-                        Method = "POST",
-                        UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
-                    };
-                    htmlDoc = GetHtml(item);
+                        ordercount -= page * 15;
+                        if(ordercount > 0)
+                        {
+                            page++;
+                            sb.Clear();
+                            sb.Append(staticstrA);
+                            sb.AppendFormat(staticstrB, "pager1", page);
+                            var item = new HttpItem
+                            {
+                                URL = commonorder,
+                                Postdata = sb.ToString(),
+                                Cookie = app_Shangji_Cookie,
+                                ContentType = "application/x-www-form-urlencoded",
+                                Method = "POST",
+                                UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
+                            };
+                            htmlDoc = GetHtml(item);
+                        }                        
+                    }
                 }
-
-                //间隔2分钟
                 Thread.Sleep(1000 * 3);
             }
         }

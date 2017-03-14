@@ -39,14 +39,7 @@ namespace Aide
             if (job.JobType == 1)
             {
                 dtpJobDate_Quote.Value = Convert.ToDateTime(job.JobDate);
-                dtpQuoteTime_QC.Value = Convert.ToDateTime(job.Time);                
-                //DateTime dt = Convert.ToDateTime(job.JobDate + " " + job.Time);
-                //if(!string.IsNullOrWhiteSpace(job.ExecTime))
-                //    lblState.Text = "已执行";
-                //else if ((dtnow - dt).TotalSeconds > 0)
-                //    lblState.Text = "已过期";
-                //else
-                //    lblState.Text = "只执行一次，时间是：" + job.JobDate + " " + job.Time;
+                dtpQuoteTime_QC.Value = Convert.ToDateTime(job.Time);
             }
             else
             {
@@ -55,13 +48,7 @@ namespace Aide
                     p_A_QC.Enabled = true;
                     p_B_QC.Enabled = false;
                     rbtQuote_A_QC.Checked = true;
-                    dtpQuer.Value = Convert.ToDateTime(job.Time);                    
-                    //if (!string.IsNullOrWhiteSpace(job.ExecTime))
-                    //    lblState.Text = "已执行";
-                    //else if ((dtnow - dtpQuer.Value).TotalSeconds > 0)
-                    //    lblState.Text = "已过期";
-                    //else
-                    //    lblState.Text = "每天执行一次，时间是：" + job.Time;
+                    dtpQuer.Value = Convert.ToDateTime(job.Time);
                 }
                 else
                 {
@@ -72,10 +59,6 @@ namespace Aide
                     nudQuote_QC.Value = ddlQuote_QC.SelectedIndex == 1 ? job.Space.Value / 1000 / 60 / 60 : job.Space.Value / 1000 / 60;
                     dtpQuote_S_QC.Value = Convert.ToDateTime(job.StartTime);
                     dtpQuote_E_QC.Value = Convert.ToDateTime(job.EndTime);
-                    //if ((dtnow - dtpQuote_E_QC.Value).TotalSeconds > 0)
-                    //    lblState.Text = "已过期";
-                    //else
-                    //    lblState.Text = string.Format("在每天的{0}到{1}，每隔{2}{3}执行一次", job.StartTime, job.EndTime, nudQuote_QC.Value, ddlQuote_QC.Text);
                 }
                 SendResult(job);
             }
@@ -83,6 +66,7 @@ namespace Aide
 
         private void btnSetting_QC_Click(object sender, EventArgs e)
         {
+            DateTime dtnow = DateTime.Now;
             if (ddlPalnType.Text == "选择计划类型")
             {
                 MessageBox.Show("先选择计划类型");
@@ -96,6 +80,12 @@ namespace Aide
                 job.JobType = 1;
                 job.JobDate = dtpJobDate_Quote.Value.ToString("yyyy-MM-dd");
                 job.Time = dtpQuoteTime_QC.Value.ToString("HH:mm:ss");
+                DateTime dt = Convert.ToDateTime(job.JobDate + " " + job.Time);
+                if ((dtnow - dt).TotalSeconds > 0)
+                {
+                    MessageBox.Show("设置的时间无效");
+                    return;
+                }
                 lblState.Text = "只执行一次，时间是：" + job.JobDate + " " + job.Time;
             }
             else

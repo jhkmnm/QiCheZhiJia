@@ -261,7 +261,7 @@ public static class FuncExtend
             else if ((dtnow - dt).TotalSeconds > 0)
                 return "已过期";
             else
-                return "只执行一次，时间是：" + dt.ToString();
+                return "将在：" + dt.ToString() + "执行";
         }
         else
         {

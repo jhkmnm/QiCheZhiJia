@@ -46,6 +46,21 @@ namespace Aide
 
         }
 
+        public static bool DelIniFile(string newsID)
+        {
+            string iniFilePath = FilePath + "\\" + newsID + ".ini";
+
+            if (File.Exists(iniFilePath))
+            {
+                File.Delete(iniFilePath);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         #endregion
     }
 

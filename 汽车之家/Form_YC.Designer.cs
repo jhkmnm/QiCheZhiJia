@@ -34,6 +34,7 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.btnSend_Ex = new System.Windows.Forms.Button();
+            this.carA = new Aide.CarControl();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -72,6 +73,12 @@
             this.label40 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
+            this.imgPosition4_hdf = new Aide.ImgControl();
+            this.imgPosition3_hdf = new Aide.ImgControl();
+            this.imgPosition2_hdf = new Aide.ImgControl();
+            this.imgPosition1_hdf = new Aide.ImgControl();
+            this.imgLogo_hdf = new Aide.ImgControl();
+            this.carControl1 = new Aide.CarControl();
             this.gbPTNews = new System.Windows.Forms.GroupBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -82,12 +89,13 @@
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.rbtVoteType1 = new System.Windows.Forms.RadioButton();
+            this.rbtVoteType2 = new System.Windows.Forms.RadioButton();
             this.pVote = new System.Windows.Forms.Panel();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.label25 = new System.Windows.Forms.Label();
-            this.rbtVoteType1 = new System.Windows.Forms.RadioButton();
-            this.rbtVoteType2 = new System.Windows.Forms.RadioButton();
             this.label24 = new System.Windows.Forms.Label();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.checkBox10 = new System.Windows.Forms.CheckBox();
@@ -117,7 +125,6 @@
             this.label28 = new System.Windows.Forms.Label();
             this.dtpPromotionA = new System.Windows.Forms.DateTimePicker();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.radioButton5 = new System.Windows.Forms.RadioButton();
             this.radioButton4 = new System.Windows.Forms.RadioButton();
             this.rbtSource2 = new System.Windows.Forms.RadioButton();
@@ -127,14 +134,6 @@
             this.dtpPromotionB = new System.Windows.Forms.DateTimePicker();
             this.label30 = new System.Windows.Forms.Label();
             this.pCX = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.carA = new Aide.CarControl();
-            this.imgPosition4_hdf = new Aide.ImgControl();
-            this.imgPosition3_hdf = new Aide.ImgControl();
-            this.imgPosition2_hdf = new Aide.ImgControl();
-            this.imgPosition1_hdf = new Aide.ImgControl();
-            this.imgLogo_hdf = new Aide.ImgControl();
-            this.carControl1 = new Aide.CarControl();
             this.tabControl2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.pColor.SuspendLayout();
@@ -143,12 +142,11 @@
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage4.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.pVote.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.pCX.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // gpbCarList
@@ -204,7 +202,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(388, 403);
+            this.linkLabel1.Location = new System.Drawing.Point(389, 400);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(29, 12);
             this.linkLabel1.TabIndex = 113;
@@ -214,7 +212,7 @@
             // 
             // btnSend_Ex
             // 
-            this.btnSend_Ex.Location = new System.Drawing.Point(105, 706);
+            this.btnSend_Ex.Location = new System.Drawing.Point(106, 699);
             this.btnSend_Ex.Name = "btnSend_Ex";
             this.btnSend_Ex.Size = new System.Drawing.Size(101, 33);
             this.btnSend_Ex.TabIndex = 112;
@@ -222,11 +220,20 @@
             this.btnSend_Ex.UseVisualStyleBackColor = true;
             this.btnSend_Ex.Click += new System.EventHandler(this.btnSend_Ex_Click);
             // 
+            // carA
+            // 
+            this.carA.CarDataSource = null;
+            this.carA.Colors = null;
+            this.carA.Location = new System.Drawing.Point(88, 3);
+            this.carA.Name = "carA";
+            this.carA.Size = new System.Drawing.Size(603, 353);
+            this.carA.TabIndex = 111;
+            // 
             // label20
             // 
             this.label20.AutoSize = true;
             this.label20.ForeColor = System.Drawing.Color.Black;
-            this.label20.Location = new System.Drawing.Point(22, 15);
+            this.label20.Location = new System.Drawing.Point(23, 12);
             this.label20.Name = "label20";
             this.label20.Size = new System.Drawing.Size(59, 12);
             this.label20.TabIndex = 110;
@@ -236,7 +243,7 @@
             // 
             this.label21.AutoSize = true;
             this.label21.ForeColor = System.Drawing.Color.Red;
-            this.label21.Location = new System.Drawing.Point(9, 15);
+            this.label21.Location = new System.Drawing.Point(10, 12);
             this.label21.Name = "label21";
             this.label21.Size = new System.Drawing.Size(11, 12);
             this.label21.TabIndex = 109;
@@ -246,7 +253,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.ForeColor = System.Drawing.Color.Black;
-            this.label16.Location = new System.Drawing.Point(309, 403);
+            this.label16.Location = new System.Drawing.Point(310, 400);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(41, 12);
             this.label16.TabIndex = 90;
@@ -255,7 +262,7 @@
             // pColor
             // 
             this.pColor.Controls.Add(this.chkAllColor);
-            this.pColor.Location = new System.Drawing.Point(88, 423);
+            this.pColor.Location = new System.Drawing.Point(89, 420);
             this.pColor.Name = "pColor";
             this.pColor.Size = new System.Drawing.Size(583, 277);
             this.pColor.TabIndex = 108;
@@ -274,7 +281,7 @@
             // 
             // pStoreState
             // 
-            this.pStoreState.Location = new System.Drawing.Point(87, 365);
+            this.pStoreState.Location = new System.Drawing.Point(88, 362);
             this.pStoreState.Name = "pStoreState";
             this.pStoreState.Size = new System.Drawing.Size(372, 29);
             this.pStoreState.TabIndex = 93;
@@ -283,7 +290,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.ForeColor = System.Drawing.Color.Black;
-            this.label14.Location = new System.Drawing.Point(19, 403);
+            this.label14.Location = new System.Drawing.Point(20, 400);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(59, 12);
             this.label14.TabIndex = 87;
@@ -293,7 +300,7 @@
             // 
             this.label18.AutoSize = true;
             this.label18.ForeColor = System.Drawing.Color.Red;
-            this.label18.Location = new System.Drawing.Point(9, 374);
+            this.label18.Location = new System.Drawing.Point(10, 371);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(11, 12);
             this.label18.TabIndex = 91;
@@ -303,7 +310,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.ForeColor = System.Drawing.Color.Red;
-            this.label15.Location = new System.Drawing.Point(9, 403);
+            this.label15.Location = new System.Drawing.Point(10, 400);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(11, 12);
             this.label15.TabIndex = 86;
@@ -313,7 +320,7 @@
             // 
             this.label17.AutoSize = true;
             this.label17.ForeColor = System.Drawing.Color.Black;
-            this.label17.Location = new System.Drawing.Point(19, 374);
+            this.label17.Location = new System.Drawing.Point(20, 371);
             this.label17.Name = "label17";
             this.label17.Size = new System.Drawing.Size(59, 12);
             this.label17.TabIndex = 92;
@@ -323,7 +330,7 @@
             // 
             this.label19.AutoSize = true;
             this.label19.ForeColor = System.Drawing.Color.Black;
-            this.label19.Location = new System.Drawing.Point(22, 435);
+            this.label19.Location = new System.Drawing.Point(23, 432);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(59, 12);
             this.label19.TabIndex = 107;
@@ -333,14 +340,14 @@
             // 
             this.ddlPromotionType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ddlPromotionType.FormattingEnabled = true;
-            this.ddlPromotionType.Location = new System.Drawing.Point(88, 398);
+            this.ddlPromotionType.Location = new System.Drawing.Point(89, 395);
             this.ddlPromotionType.Name = "ddlPromotionType";
             this.ddlPromotionType.Size = new System.Drawing.Size(99, 20);
             this.ddlPromotionType.TabIndex = 88;
             // 
             // txtMoney
             // 
-            this.txtMoney.Location = new System.Drawing.Point(193, 398);
+            this.txtMoney.Location = new System.Drawing.Point(194, 395);
             this.txtMoney.Name = "txtMoney";
             this.txtMoney.Size = new System.Drawing.Size(110, 21);
             this.txtMoney.TabIndex = 89;
@@ -635,8 +642,85 @@
             this.label32.TabIndex = 61;
             this.label32.Text = "*";
             // 
+            // imgPosition4_hdf
+            // 
+            this.imgPosition4_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition4_hdf.CSID = null;
+            this.imgPosition4_hdf.ImageUpload = null;
+            this.imgPosition4_hdf.ImgSelectID = null;
+            this.imgPosition4_hdf.ImgUrl = null;
+            this.imgPosition4_hdf.Location = new System.Drawing.Point(530, 703);
+            this.imgPosition4_hdf.Name = "imgPosition4_hdf";
+            this.imgPosition4_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition4_hdf.TabIndex = 143;
+            this.imgPosition4_hdf.yiche = null;
+            // 
+            // imgPosition3_hdf
+            // 
+            this.imgPosition3_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition3_hdf.CSID = null;
+            this.imgPosition3_hdf.ImageUpload = null;
+            this.imgPosition3_hdf.ImgSelectID = null;
+            this.imgPosition3_hdf.ImgUrl = null;
+            this.imgPosition3_hdf.Location = new System.Drawing.Point(384, 703);
+            this.imgPosition3_hdf.Name = "imgPosition3_hdf";
+            this.imgPosition3_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition3_hdf.TabIndex = 142;
+            this.imgPosition3_hdf.yiche = null;
+            // 
+            // imgPosition2_hdf
+            // 
+            this.imgPosition2_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition2_hdf.CSID = null;
+            this.imgPosition2_hdf.ImageUpload = null;
+            this.imgPosition2_hdf.ImgSelectID = null;
+            this.imgPosition2_hdf.ImgUrl = null;
+            this.imgPosition2_hdf.Location = new System.Drawing.Point(236, 703);
+            this.imgPosition2_hdf.Name = "imgPosition2_hdf";
+            this.imgPosition2_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition2_hdf.TabIndex = 141;
+            this.imgPosition2_hdf.yiche = null;
+            // 
+            // imgPosition1_hdf
+            // 
+            this.imgPosition1_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition1_hdf.CSID = null;
+            this.imgPosition1_hdf.ImageUpload = null;
+            this.imgPosition1_hdf.ImgSelectID = null;
+            this.imgPosition1_hdf.ImgUrl = null;
+            this.imgPosition1_hdf.Location = new System.Drawing.Point(90, 703);
+            this.imgPosition1_hdf.Name = "imgPosition1_hdf";
+            this.imgPosition1_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition1_hdf.TabIndex = 140;
+            this.imgPosition1_hdf.yiche = null;
+            // 
+            // imgLogo_hdf
+            // 
+            this.imgLogo_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgLogo_hdf.CSID = null;
+            this.imgLogo_hdf.ImageUpload = null;
+            this.imgLogo_hdf.ImgSelectID = null;
+            this.imgLogo_hdf.ImgUrl = null;
+            this.imgLogo_hdf.Location = new System.Drawing.Point(90, 471);
+            this.imgLogo_hdf.Name = "imgLogo_hdf";
+            this.imgLogo_hdf.Size = new System.Drawing.Size(300, 224);
+            this.imgLogo_hdf.TabIndex = 139;
+            this.imgLogo_hdf.yiche = null;
+            // 
+            // carControl1
+            // 
+            this.carControl1.CarDataSource = null;
+            this.carControl1.Colors = null;
+            this.carControl1.Location = new System.Drawing.Point(90, 4);
+            this.carControl1.Name = "carControl1";
+            this.carControl1.Size = new System.Drawing.Size(574, 312);
+            this.carControl1.TabIndex = 96;
+            // 
             // gbPTNews
             // 
+            this.gbPTNews.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.gbPTNews.Controls.Add(this.tabControl1);
             this.gbPTNews.Controls.Add(this.chkTel);
             this.gbPTNews.Controls.Add(this.chkMap);
@@ -655,9 +739,9 @@
             this.gbPTNews.Controls.Add(this.txtPTTitle);
             this.gbPTNews.Controls.Add(this.label7);
             this.gbPTNews.Controls.Add(this.label8);
-            this.gbPTNews.Location = new System.Drawing.Point(245, 56);
+            this.gbPTNews.Location = new System.Drawing.Point(49, 56);
             this.gbPTNews.Name = "gbPTNews";
-            this.gbPTNews.Size = new System.Drawing.Size(554, 714);
+            this.gbPTNews.Size = new System.Drawing.Size(740, 714);
             this.gbPTNews.TabIndex = 10;
             this.gbPTNews.TabStop = false;
             this.gbPTNews.Visible = false;
@@ -670,7 +754,7 @@
             this.tabControl1.Location = new System.Drawing.Point(25, 408);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(523, 218);
+            this.tabControl1.Size = new System.Drawing.Size(625, 218);
             this.tabControl1.TabIndex = 156;
             // 
             // tabPage3
@@ -684,7 +768,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(515, 192);
+            this.tabPage3.Size = new System.Drawing.Size(617, 192);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "相关车型";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -758,10 +842,43 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(515, 192);
+            this.tabPage4.Size = new System.Drawing.Size(617, 192);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "相关调查";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.rbtVoteType1);
+            this.panel1.Controls.Add(this.rbtVoteType2);
+            this.panel1.Location = new System.Drawing.Point(105, 1);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(227, 26);
+            this.panel1.TabIndex = 162;
+            // 
+            // rbtVoteType1
+            // 
+            this.rbtVoteType1.AutoSize = true;
+            this.rbtVoteType1.Checked = true;
+            this.rbtVoteType1.Location = new System.Drawing.Point(3, 4);
+            this.rbtVoteType1.Name = "rbtVoteType1";
+            this.rbtVoteType1.Size = new System.Drawing.Size(95, 16);
+            this.rbtVoteType1.TabIndex = 159;
+            this.rbtVoteType1.TabStop = true;
+            this.rbtVoteType1.Tag = "1";
+            this.rbtVoteType1.Text = "新闻内容下方";
+            this.rbtVoteType1.UseVisualStyleBackColor = true;
+            // 
+            // rbtVoteType2
+            // 
+            this.rbtVoteType2.AutoSize = true;
+            this.rbtVoteType2.Location = new System.Drawing.Point(115, 4);
+            this.rbtVoteType2.Name = "rbtVoteType2";
+            this.rbtVoteType2.Size = new System.Drawing.Size(95, 16);
+            this.rbtVoteType2.TabIndex = 158;
+            this.rbtVoteType2.Tag = "2";
+            this.rbtVoteType2.Text = "新闻内容上方";
+            this.rbtVoteType2.UseVisualStyleBackColor = true;
             // 
             // pVote
             // 
@@ -805,30 +922,6 @@
             this.label25.TabIndex = 160;
             this.label25.Text = "选择一个调查:";
             // 
-            // rbtVoteType1
-            // 
-            this.rbtVoteType1.AutoSize = true;
-            this.rbtVoteType1.Checked = true;
-            this.rbtVoteType1.Location = new System.Drawing.Point(3, 4);
-            this.rbtVoteType1.Name = "rbtVoteType1";
-            this.rbtVoteType1.Size = new System.Drawing.Size(95, 16);
-            this.rbtVoteType1.TabIndex = 159;
-            this.rbtVoteType1.TabStop = true;
-            this.rbtVoteType1.Tag = "1";
-            this.rbtVoteType1.Text = "新闻内容下方";
-            this.rbtVoteType1.UseVisualStyleBackColor = true;
-            // 
-            // rbtVoteType2
-            // 
-            this.rbtVoteType2.AutoSize = true;
-            this.rbtVoteType2.Location = new System.Drawing.Point(115, 4);
-            this.rbtVoteType2.Name = "rbtVoteType2";
-            this.rbtVoteType2.Size = new System.Drawing.Size(95, 16);
-            this.rbtVoteType2.TabIndex = 158;
-            this.rbtVoteType2.Tag = "2";
-            this.rbtVoteType2.Text = "新闻内容上方";
-            this.rbtVoteType2.UseVisualStyleBackColor = true;
-            // 
             // label24
             // 
             this.label24.AutoSize = true;
@@ -850,7 +943,7 @@
             this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(515, 192);
+            this.tabPage5.Size = new System.Drawing.Size(617, 192);
             this.tabPage5.TabIndex = 2;
             this.tabPage5.Text = "在线购车";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -969,7 +1062,7 @@
             // 
             this.txtDesc.Location = new System.Drawing.Point(25, 97);
             this.txtDesc.Name = "txtDesc";
-            this.txtDesc.Size = new System.Drawing.Size(523, 290);
+            this.txtDesc.Size = new System.Drawing.Size(625, 290);
             this.txtDesc.TabIndex = 82;
             // 
             // label22
@@ -1111,7 +1204,8 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.groupBox4);
+            this.groupBox2.Controls.Add(this.radioButton5);
+            this.groupBox2.Controls.Add(this.radioButton4);
             this.groupBox2.Controls.Add(this.rbtSource2);
             this.groupBox2.Controls.Add(this.rbtSource3);
             this.groupBox2.Controls.Add(this.rbtSource0);
@@ -1123,40 +1217,29 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "新闻类型";
             // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.radioButton5);
-            this.groupBox4.Controls.Add(this.radioButton4);
-            this.groupBox4.Location = new System.Drawing.Point(440, 11);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(200, 41);
-            this.groupBox4.TabIndex = 11;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "新能源车促销";
-            // 
             // radioButton5
             // 
             this.radioButton5.AutoSize = true;
-            this.radioButton5.Location = new System.Drawing.Point(122, 16);
+            this.radioButton5.Location = new System.Drawing.Point(444, 28);
             this.radioButton5.Name = "radioButton5";
-            this.radioButton5.Size = new System.Drawing.Size(71, 16);
+            this.radioButton5.Size = new System.Drawing.Size(107, 16);
             this.radioButton5.TabIndex = 15;
             this.radioButton5.Tag = "http://das.app.easypass.cn/InforManage/News/ReplaceTemplateNews2.aspx?NewEnegy=1&" +
     "source=100";
-            this.radioButton5.Text = "置换促销";
+            this.radioButton5.Text = "新能源置换促销";
             this.radioButton5.UseVisualStyleBackColor = true;
             this.radioButton5.CheckedChanged += new System.EventHandler(this.Source_CheckedChanged);
             // 
             // radioButton4
             // 
             this.radioButton4.AutoSize = true;
-            this.radioButton4.Location = new System.Drawing.Point(15, 16);
+            this.radioButton4.Location = new System.Drawing.Point(576, 28);
             this.radioButton4.Name = "radioButton4";
-            this.radioButton4.Size = new System.Drawing.Size(71, 16);
+            this.radioButton4.Size = new System.Drawing.Size(107, 16);
             this.radioButton4.TabIndex = 16;
             this.radioButton4.Tag = "http://das.app.easypass.cn/InforManage/News/TemplateNews.aspx?NewEnegy=1&source=1" +
     "00";
-            this.radioButton4.Text = "降价促销";
+            this.radioButton4.Text = "新能源降价促销";
             this.radioButton4.UseVisualStyleBackColor = true;
             this.radioButton4.CheckedChanged += new System.EventHandler(this.Source_CheckedChanged);
             // 
@@ -1243,106 +1326,14 @@
             this.pCX.Controls.Add(this.label28);
             this.pCX.Location = new System.Drawing.Point(2, 55);
             this.pCX.Name = "pCX";
-            this.pCX.Size = new System.Drawing.Size(746, 721);
+            this.pCX.Size = new System.Drawing.Size(746, 738);
             this.pCX.TabIndex = 61;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.rbtVoteType1);
-            this.panel1.Controls.Add(this.rbtVoteType2);
-            this.panel1.Location = new System.Drawing.Point(105, 1);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(227, 26);
-            this.panel1.TabIndex = 162;
-            // 
-            // carA
-            // 
-            this.carA.CarDataSource = null;
-            this.carA.Colors = null;
-            this.carA.Location = new System.Drawing.Point(87, 6);
-            this.carA.Name = "carA";
-            this.carA.Size = new System.Drawing.Size(603, 353);
-            this.carA.TabIndex = 111;
-            // 
-            // imgPosition4_hdf
-            // 
-            this.imgPosition4_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition4_hdf.CSID = null;
-            this.imgPosition4_hdf.ImageUpload = null;
-            this.imgPosition4_hdf.ImgSelectID = null;
-            this.imgPosition4_hdf.ImgUrl = null;
-            this.imgPosition4_hdf.Location = new System.Drawing.Point(530, 703);
-            this.imgPosition4_hdf.Name = "imgPosition4_hdf";
-            this.imgPosition4_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition4_hdf.TabIndex = 143;
-            this.imgPosition4_hdf.yiche = null;
-            // 
-            // imgPosition3_hdf
-            // 
-            this.imgPosition3_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition3_hdf.CSID = null;
-            this.imgPosition3_hdf.ImageUpload = null;
-            this.imgPosition3_hdf.ImgSelectID = null;
-            this.imgPosition3_hdf.ImgUrl = null;
-            this.imgPosition3_hdf.Location = new System.Drawing.Point(384, 703);
-            this.imgPosition3_hdf.Name = "imgPosition3_hdf";
-            this.imgPosition3_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition3_hdf.TabIndex = 142;
-            this.imgPosition3_hdf.yiche = null;
-            // 
-            // imgPosition2_hdf
-            // 
-            this.imgPosition2_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition2_hdf.CSID = null;
-            this.imgPosition2_hdf.ImageUpload = null;
-            this.imgPosition2_hdf.ImgSelectID = null;
-            this.imgPosition2_hdf.ImgUrl = null;
-            this.imgPosition2_hdf.Location = new System.Drawing.Point(236, 703);
-            this.imgPosition2_hdf.Name = "imgPosition2_hdf";
-            this.imgPosition2_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition2_hdf.TabIndex = 141;
-            this.imgPosition2_hdf.yiche = null;
-            // 
-            // imgPosition1_hdf
-            // 
-            this.imgPosition1_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition1_hdf.CSID = null;
-            this.imgPosition1_hdf.ImageUpload = null;
-            this.imgPosition1_hdf.ImgSelectID = null;
-            this.imgPosition1_hdf.ImgUrl = null;
-            this.imgPosition1_hdf.Location = new System.Drawing.Point(90, 703);
-            this.imgPosition1_hdf.Name = "imgPosition1_hdf";
-            this.imgPosition1_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition1_hdf.TabIndex = 140;
-            this.imgPosition1_hdf.yiche = null;
-            // 
-            // imgLogo_hdf
-            // 
-            this.imgLogo_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgLogo_hdf.CSID = null;
-            this.imgLogo_hdf.ImageUpload = null;
-            this.imgLogo_hdf.ImgSelectID = null;
-            this.imgLogo_hdf.ImgUrl = null;
-            this.imgLogo_hdf.Location = new System.Drawing.Point(90, 471);
-            this.imgLogo_hdf.Name = "imgLogo_hdf";
-            this.imgLogo_hdf.Size = new System.Drawing.Size(300, 224);
-            this.imgLogo_hdf.TabIndex = 139;
-            this.imgLogo_hdf.yiche = null;
-            // 
-            // carControl1
-            // 
-            this.carControl1.CarDataSource = null;
-            this.carControl1.Colors = null;
-            this.carControl1.Location = new System.Drawing.Point(90, 4);
-            this.carControl1.Name = "carControl1";
-            this.carControl1.Size = new System.Drawing.Size(574, 312);
-            this.carControl1.TabIndex = 96;
             // 
             // Form_YC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(751, 776);
+            this.ClientSize = new System.Drawing.Size(751, 793);
             this.Controls.Add(this.pCX);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.gbPTNews);
@@ -1363,18 +1354,16 @@
             this.tabPage3.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.pVote.ResumeLayout(false);
             this.pVote.PerformLayout();
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
             this.pCX.ResumeLayout(false);
             this.pCX.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1407,7 +1396,6 @@
         private System.Windows.Forms.TextBox txtPTTitle;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtMoney;
         private System.Windows.Forms.ComboBox ddlPromotionType;

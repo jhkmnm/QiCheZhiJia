@@ -216,187 +216,71 @@ namespace AideAdmin
                 file.Title = "导出Excel";
                 file.DefaultExt = ".xls";
                 file.Filter = "Excel文件|*.xls";
-                file.FileName = "用户数据" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                file.FileName = "用户数据" + DateTime.Now.ToString("yyyyMMddHHmmss");
                 if (file.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
-
-                //SaveExcelFile(dgvData, file.FileName, ".xls", "sheet", null);
+                ExportExcel(file.FileName, dgvData);
             }
         }
 
-        private static int CalculateCountOfPage(int total, int pageSize)
+        public static void ExportExcel(string fileName, DataGridView myDGV)
         {
-            int remainder;
-            int countOfPage = Division(total, pageSize, out remainder);
-            if (remainder > 0)
+            if (myDGV.Rows.Count > 0)
             {
-                countOfPage++;
+                ExcelApp.Application xlApp = new ExcelApp.Application();
+                if (xlApp == null)
+                {
+                    MessageBox.Show("无法创建Excel对象，可能您的机子未安装Excel");
+                    return;
+                }
+
+                ExcelApp.Workbooks workbooks = xlApp.Workbooks;
+                ExcelApp.Workbook workbook = workbooks.Add(ExcelApp.XlWBATemplate.xlWBATWorksheet);
+                ExcelApp.Worksheet worksheet = (ExcelApp.Worksheet)workbook.Worksheets[1];//取得sheet1  
+
+                //写入标题
+                for (int i = 0; i < myDGV.ColumnCount; i++)
+                {
+                    worksheet.Cells[1, i + 1] = myDGV.Columns[i].HeaderText;
+                }
+                //写入数值  
+                for (int r = 0; r < myDGV.Rows.Count; r++)
+                {
+                    for (int i = 0; i < myDGV.ColumnCount; i++)
+                    {
+                        if (myDGV.Columns[i].HeaderText == "类型")
+                            worksheet.Cells[r + 2, i + 1] = myDGV.Rows[r].Cells[i].Value.ToString() == "0" ? "试用" : "付费";
+                        else if(myDGV.Columns[i].HeaderText == "状态")
+                            worksheet.Cells[r + 2, i + 1] = myDGV.Rows[r].Cells[i].Value.ToString() == "0" ? "离线" : "运行";
+                        else
+                            worksheet.Cells[r + 2, i + 1] = myDGV.Rows[r].Cells[i].Value;
+                    }
+                    Application.DoEvents();
+                }
+                worksheet.Columns.EntireColumn.AutoFit();
+
+                if (fileName != "")
+                {
+                    try
+                    {
+                        workbook.Saved = true;
+                        workbook.SaveCopyAs(fileName);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("导出文件时出错,文件可能正被打开！\n" + ex.Message);
+                    }
+                }
+                xlApp.Quit();
+                GC.Collect();
+                MessageBox.Show(fileName + "保存成功", "提示", MessageBoxButtons.OK);
             }
-            return countOfPage;
-        }
-
-        private static int Division(int divided, int divisor, out int remainder)
-        {
-            int quotient = divided / divisor;
-            remainder = divided - quotient * divisor;
-            return quotient;
-        }
-        /// <summary>
-        /// 童荣辉增加 20130724 抽取出共用的代码，以适应与弹出保存框区分开
-        /// DataGridView数据展出到Excel
-        /// </summary>
-        private static bool SaveExcelFile(DataGridView gridView, string strfileName, string strVersion, string sheetName, List<string> nonColumns)
-        {
-            return true;
-            //int maxLength = 65535;
-            //if (strVersion.EndsWith(".xlsx", StringComparison.OrdinalIgnoreCase))
-            //{
-            //    maxLength = 1048575;
-            //}
-            //string saveFileName = strfileName;
-            //System.Reflection.Missing miss = System.Reflection.Missing.Value;
-            ////创建EXCEL对象appExcel,Workbook对象,Worksheet对象,Range对象
-            //ExcelApp.Application appExcel = new ExcelApp.Application();
-            //ExcelApp.Workbook workbookData = appExcel.Workbooks.Add(ExcelApp.XlWBATemplate.xlWBATWorksheet);
-            //ExcelApp.Worksheet worksheetData = null;
-            //ExcelApp.Range rangedata;
-            ////设置对象不可见
-            //appExcel.Visible = false;
-            //int countOfSheets = CalculateCountOfPage(gridView.RowCount, maxLength);
-            ///* 在调用Excel应用程序，或创建Excel工作簿之前，记着加上下面的两行代码
-            // * 这是因为Excel有一个Bug，如果你的操作系统的环境不是英文的，而Excel就会在执行下面的代码时，报异常。
-            // */
-            //for (int ipage = 1; ipage <= countOfSheets; ipage++)
-            //{
-            //    if (worksheetData == null)
-            //    {
-            //        worksheetData = (ExcelApp.Worksheet)workbookData.Worksheets.Add(Type.Missing, Type.Missing, 1, Type.Missing);
-            //    }
-            //    else
-            //    {
-            //        worksheetData = (ExcelApp.Worksheet)workbookData.Worksheets.Add(Type.Missing, worksheetData, 1, Type.Missing);
-            //    }
-            //    //当前页数据条数
-            //    int currentPageNums = 0;
-            //    //给工作表赋名称
-            //    if (countOfSheets == 1)
-            //    {
-            //        worksheetData.Name = sheetName;
-            //        currentPageNums = gridView.RowCount;
-            //    }
-            //    else
-            //    {
-            //        worksheetData.Name = string.Format("{0}{1}", sheetName, ipage);
-            //        if (ipage == countOfSheets)
-            //        {
-            //            currentPageNums = gridView.RowCount - maxLength * (ipage - 1);
-            //        }
-            //        else
-            //        {
-            //            currentPageNums = maxLength;
-            //        }
-            //    }
-            //    //新建一个字典来控制Visible的列不导出
-            //    Dictionary<int, int> dictionary = new Dictionary<int, int>();
-            //    int iVisible = 0;
-            //    //清零计数并开始计数
-            //    // 保存到WorkSheet的表头，你应该看到，是一个Cell一个Cell的存储，这样效率特别低，解决的办法是，使用Rang，一块一块地存储到Excel
-            //    for (int i = 0; i < gridView.ColumnCount; i++)
-            //    {
-            //        if (gridView.Columns[i].Visible &&
-            //            ((nonColumns != null && !nonColumns.Contains(gridView.Columns[i].Name)) || nonColumns == null))
-            //        {
-            //            worksheetData.Cells[1, iVisible + 1] = gridView.Columns[i].HeaderText.ToString();
-            //            var range = worksheetData.Cells[1, iVisible + 1];
-            //            range.Font.Bold = true;
-            //            range.Font.Size = 12;
-            //            dictionary.Add(iVisible, i);
-            //            iVisible++;
-            //        }
-            //    }
-            //    //先给Range对象一个范围为A2开始，Range对象可以给一个CELL的范围，也可以给例如A1到H10这样的范围
-            //    //因为第一行已经写了表头，所以所有数据都应该从A2开始
-            //    rangedata = worksheetData.get_Range("A2", miss);
-            //    Microsoft.Office.Interop.Excel.Range xlRang = null;
-
-            //    //iColumnAccount为实际列数，最大列数
-            //    int iColumnAccount = iVisible;
-            //    //在内存中声明一个iEachSize×iColumnAccount的数组，iEachSize是每次最大存储的行数，iColumnAccount就是存储的实际列数
-            //    //object[,] objVal = new object[currentPageNums, iColumnAccount];
-            //    //每次最大导入数据量
-            //    int perMaxCount = 2000;
-            //    //当前行
-            //    int iParstedRow = 0;
-            //    int times = CalculateCountOfPage(currentPageNums, perMaxCount);
-            //    for (int ti = 0; ti < times; ti++)
-            //    {
-            //        //当前循环的得到的数
-            //        int currentTimeNum = 0;
-            //        if ((currentPageNums - ti * perMaxCount) < perMaxCount)
-            //        {
-            //            currentTimeNum = currentPageNums - ti * perMaxCount;
-            //        }
-            //        else
-            //        {
-            //            currentTimeNum = perMaxCount;
-            //        }
-            //        object[,] objVal = new object[currentTimeNum, iColumnAccount];
-            //        for (int i = 0; i < currentTimeNum; i++)
-            //        {
-            //            for (int j = 0; j < iColumnAccount; j++)
-            //            {
-            //                int numOfColumn;
-            //                if (!dictionary.TryGetValue(j, out numOfColumn))
-            //                {
-            //                    throw new KeyNotFoundException("导出Excel异常，未找到列！");
-            //                }
-            //                object cellValue = gridView[numOfColumn, ti * perMaxCount + i + (ipage - 1) * maxLength].Value;
-            //                if (cellValue != null && (cellValue.GetType() == typeof(string) || cellValue.GetType() == typeof(DateTime)))
-            //                {
-            //                    cellValue = "'" + cellValue.ToString();
-            //                }
-            //                objVal[i, j] = cellValue;
-            //            }
-            //            System.Windows.Forms.Application.DoEvents();
-            //        }
-            //        xlRang = worksheetData.get_Range("A" + (iParstedRow + 2).ToString(), (ExcelColumnNameEnum.A + iColumnAccount - 1).ToString() + (currentTimeNum + iParstedRow + 1).ToString());
-            //        // 调用Range的Value2属性，把内存中的值赋给Excel
-            //        xlRang.Value2 = objVal;
-
-            //        iParstedRow += currentTimeNum;
-            //    }
-            //}
-            //try
-            //{
-            //    workbookData.Saved = true;
-            //    workbookData.SaveCopyAs(saveFileName);
-            //    return true;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //    return false;
-            //}
-            //finally
-            //{
-            //    QuitExcel(appExcel);
-            //}
-        }
-
-        private static void QuitExcel(ExcelApp.Application application)
-        {
-            application.Quit();
-            System.Runtime.InteropServices.Marshal.ReleaseComObject(application);
-        }
-
-        public enum ExcelColumnNameEnum
-        {
-            A = 1, B, C, D, E, F, G, H, I, J, K, L, M, N, O, P, Q, R, S, T, U, V, W, X, Y, Z,
-            AA, AB, AC, AD, AE, AF, AG, AH, AI, AJ, AK, AL, AM, AN, AO, AP, AQ, AR, AS, AT, AU, AV, AW, AX, AY, AZ,
-            BA, BB, BC, BD, BE, BF, BG, BH, BI, BJ, BK, BL, BM, BN, BO, BP, BQ, BR, BS, BT, BU, BV, BW, BX, BY, BZ,
-            CA, CB, CC, CD, CE, CF, CG, CH, CI, CJ, CK, CL, CM, CN, CO, CP, CQ, CR, CS, CT, CU, CV, CW, CX, CY, CZ
+            else
+            {
+                MessageBox.Show("报表为空,无表格需要导出", "提示", MessageBoxButtons.OK);
+            }
         }
     }
 

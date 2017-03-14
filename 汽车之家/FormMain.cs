@@ -31,7 +31,7 @@ namespace Aide
         const string key = "087a9b3cdec0c2597df237916ebfff9a";
         const string username = "";
         const string password = "";
-        static int AutomaticCount = 20;
+        static int AutomaticCount = 20;        
 
         /*
          * 登录后,判断用户类型,如果是试用,抢单判断试用时间,新闻、报价判断已经报价过的次数
@@ -231,7 +231,7 @@ namespace Aide
             string message = user.DueTime.ToString();
             if (user.UserType == 0 || !user.SendOrder)
             {
-                if (!Tool.service.CheckTasteTime(user.Id))
+                if (isOver)
                 {
                     canOrder = false;
                     message = "非常抱歉，今天抢单体验时间已到";
@@ -267,7 +267,7 @@ namespace Aide
                 else
                 {
                     lblQD_YC.Text = message;
-                    btnStart_YC.Enabled = btnStop_YC.Enabled = false;
+                    btnStart_YC.Enabled = btnStop_YC.Enabled = btnOrderYC.Enabled = false;
                     if (th_yc != null)
                         th_yc.Abort();
                 }
@@ -512,11 +512,12 @@ namespace Aide
 
         private void chkAll_CheckedChanged(object sender, EventArgs e)
         {
+            bool check = chkAll.Checked;
             foreach (DataGridViewRow row in dgvOrder.Rows)
             {
                 row.Cells[colSelected.Name].Value = chkAll.Checked;
-                dal.UpdateNickChecked(row.Cells[colSaleID.Name].Value.ToString());
             }
+            dal.UpdateNickChecked(check);
         }
 
         private void dgvOrder_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -801,9 +802,9 @@ namespace Aide
             #region 重绘datagridview表头
             
             DataGridView dgv = (DataGridView)(sender);
-            if (e.RowIndex == -1 && (e.ColumnIndex == colSitting.Index || e.ColumnIndex == colDel.Index))
+            if (e.RowIndex == -1 && (e.ColumnIndex == colYC_Sitting.Index || e.ColumnIndex == colYC_Del.Index))
             {
-                if (e.ColumnIndex == colSitting.Index)
+                if (e.ColumnIndex == colYC_Sitting.Index)
                 {
                     top = e.CellBounds.Top;
                     left = e.CellBounds.Left;
@@ -811,7 +812,7 @@ namespace Aide
                     width1 = e.CellBounds.Width;
                 }
 
-                int width2 = colDel.Width;
+                int width2 = colYC_Del.Width;
 
                 Rectangle rect = new Rectangle(left, top, width1 + width2, e.CellBounds.Height);
                 using (Brush backColorBrush = new SolidBrush(e.CellStyle.BackColor))
@@ -919,7 +920,7 @@ namespace Aide
                 dal.AddJobLog(new JobLog { JobName = newsID, Time = DateTime.Now.ToString("yyyy-MM-dd") });
                 selected.Message = "已执行";
                 selected.Del = "";
-                rowMergeView2.Refresh();
+                Invoke(new Action(() => rowMergeView2.Refresh()));                
                 if (result.Contains("发布成功"))
                 {
                     Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_yc.Id, JobType = "资讯", JobTime = DateTime.Now });
@@ -987,6 +988,18 @@ namespace Aide
                 if(form.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     LoadNews_YC();
+                }
+            }
+            else if(e.ColumnIndex == colDelNews.Index)
+            {
+                if (MessageBox.Show("确定删除草稿?", "提示", MessageBoxButtons.YesNo) == System.Windows.Forms.DialogResult.Yes)
+                {
+                    dal.DelJob(newsid);
+                    Tool.aideTimer.Dequeue(newsid);
+                    dal.DelNews(Convert.ToInt32(newsid));
+                    OperateIniFile.DelIniFile(newsid);
+                    //((List<NewListDTP>)newListDTPBindingSource1.DataSource).Remove(current);
+                    rowMergeView2.Rows.RemoveAt(e.RowIndex);
                 }
             }
             rowMergeView2.Refresh();
