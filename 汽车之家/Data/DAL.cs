@@ -14,22 +14,9 @@ public class DAL
             .ToList();
     }
 
-    public List<Area> GetAreaCheck(string site)
-    {
-        return DB.Context.From<Area>()
-            .Where(w => w.Site == site && w.IsChecked)
-            .ToList();
-    }
-
     public int UpdateAreaChecked(List<Area> area)
     {
         return DB.Context.Update(area);
-    }
-
-    public bool CityIsChecked(string site, string city, string city2)
-    {
-        var v = DB.Context.From<Area>().Where(w => w.Site == site && (w.City == city || w.City == city2));
-        return v.Count() > 0;
     }
     #endregion
 
@@ -79,14 +66,13 @@ public class DAL
     /// <returns></returns>
     public Nicks GetNick()
     {
-        var v = DB.Context.From<Nicks>().Where(w => w.Check && w.Send == 0);
-        if(v.Count() == 0)
+        var list = GetNicks();
+        if(!list.Any(w => w.Check && w.Send == 0))
         {
-            var listModel = DB.Context.From<Nicks>().ToList();
-            listModel.ForEach(f => f.Send = 0);
-            DB.Context.Update<Nicks>(listModel);
+            list.ForEach(f => f.Send = 0);
+            DB.Context.Update(list);
         }
-        return DB.Context.From<Nicks>().Where(w => w.Check && w.Send == 0).First();        
+        return list.Where(w => w.Check && w.Send == 0).First();
     }
 
     public int UpdateSendCount(string Id)
@@ -126,7 +112,7 @@ public class DAL
         {
             uptModel.SendTo = nickId;
             uptModel.SendTime = DateTime.Now;
-            return DB.Context.Update(uptModel);
+            DB.Context.Update(uptModel);
         }
 
         UpdateSendCount(nickId);

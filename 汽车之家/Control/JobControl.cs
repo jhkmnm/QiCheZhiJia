@@ -107,7 +107,11 @@ namespace Aide
                         MessageBox.Show("间隔时间必须大于0");
                         return;
                     }
-
+                    if(dtpQuote_S_QC.Value > dtpQuote_E_QC.Value)
+                    {
+                        MessageBox.Show("结束时间必须大于开始时间");
+                        return;
+                    }
                     job.StartTime = dtpQuote_S_QC.Value.ToString("HH:mm:ss");
                     job.EndTime = dtpQuote_E_QC.Value.ToString("HH:mm:ss");
                     int interval = ddlQuote_QC.Text == "分钟" ? Convert.ToInt32(nudQuote_QC.Value) * 60 * 1000 : Convert.ToInt32(nudQuote_QC.Value) * 60 * 60 * 1000;

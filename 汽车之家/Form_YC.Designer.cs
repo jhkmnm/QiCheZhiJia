@@ -34,7 +34,6 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.btnSend_Ex = new System.Windows.Forms.Button();
-            this.carA = new Aide.CarControl();
             this.label20 = new System.Windows.Forms.Label();
             this.label21 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -73,12 +72,6 @@
             this.label40 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
             this.label32 = new System.Windows.Forms.Label();
-            this.imgPosition4_hdf = new Aide.ImgControl();
-            this.imgPosition3_hdf = new Aide.ImgControl();
-            this.imgPosition2_hdf = new Aide.ImgControl();
-            this.imgPosition1_hdf = new Aide.ImgControl();
-            this.imgLogo_hdf = new Aide.ImgControl();
-            this.carControl1 = new Aide.CarControl();
             this.gbPTNews = new System.Windows.Forms.GroupBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -109,7 +102,6 @@
             this.chkAddress = new System.Windows.Forms.CheckBox();
             this.label23 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.txtDesc = new McDull.Windows.Forms.HTMLTextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
@@ -134,6 +126,14 @@
             this.dtpPromotionB = new System.Windows.Forms.DateTimePicker();
             this.label30 = new System.Windows.Forms.Label();
             this.pCX = new System.Windows.Forms.Panel();
+            this.txtDesc = new ZetaHtmlEditControl.UI.HtmlEditUserControl();
+            this.carA = new Aide.CarControl();
+            this.imgPosition4_hdf = new Aide.ImgControl();
+            this.imgPosition3_hdf = new Aide.ImgControl();
+            this.imgPosition2_hdf = new Aide.ImgControl();
+            this.imgPosition1_hdf = new Aide.ImgControl();
+            this.imgLogo_hdf = new Aide.ImgControl();
+            this.carControl1 = new Aide.CarControl();
             this.tabControl2.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.pColor.SuspendLayout();
@@ -219,15 +219,6 @@
             this.btnSend_Ex.Text = "保存";
             this.btnSend_Ex.UseVisualStyleBackColor = true;
             this.btnSend_Ex.Click += new System.EventHandler(this.btnSend_Ex_Click);
-            // 
-            // carA
-            // 
-            this.carA.CarDataSource = null;
-            this.carA.Colors = null;
-            this.carA.Location = new System.Drawing.Point(88, 3);
-            this.carA.Name = "carA";
-            this.carA.Size = new System.Drawing.Size(603, 353);
-            this.carA.TabIndex = 111;
             // 
             // label20
             // 
@@ -388,7 +379,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(732, 609);
+            this.tabPage2.Size = new System.Drawing.Size(27, 609);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "编辑明细";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -642,92 +633,18 @@
             this.label32.TabIndex = 61;
             this.label32.Text = "*";
             // 
-            // imgPosition4_hdf
-            // 
-            this.imgPosition4_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition4_hdf.CSID = null;
-            this.imgPosition4_hdf.ImageUpload = null;
-            this.imgPosition4_hdf.ImgSelectID = null;
-            this.imgPosition4_hdf.ImgUrl = null;
-            this.imgPosition4_hdf.Location = new System.Drawing.Point(530, 703);
-            this.imgPosition4_hdf.Name = "imgPosition4_hdf";
-            this.imgPosition4_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition4_hdf.TabIndex = 143;
-            this.imgPosition4_hdf.yiche = null;
-            // 
-            // imgPosition3_hdf
-            // 
-            this.imgPosition3_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition3_hdf.CSID = null;
-            this.imgPosition3_hdf.ImageUpload = null;
-            this.imgPosition3_hdf.ImgSelectID = null;
-            this.imgPosition3_hdf.ImgUrl = null;
-            this.imgPosition3_hdf.Location = new System.Drawing.Point(384, 703);
-            this.imgPosition3_hdf.Name = "imgPosition3_hdf";
-            this.imgPosition3_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition3_hdf.TabIndex = 142;
-            this.imgPosition3_hdf.yiche = null;
-            // 
-            // imgPosition2_hdf
-            // 
-            this.imgPosition2_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition2_hdf.CSID = null;
-            this.imgPosition2_hdf.ImageUpload = null;
-            this.imgPosition2_hdf.ImgSelectID = null;
-            this.imgPosition2_hdf.ImgUrl = null;
-            this.imgPosition2_hdf.Location = new System.Drawing.Point(236, 703);
-            this.imgPosition2_hdf.Name = "imgPosition2_hdf";
-            this.imgPosition2_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition2_hdf.TabIndex = 141;
-            this.imgPosition2_hdf.yiche = null;
-            // 
-            // imgPosition1_hdf
-            // 
-            this.imgPosition1_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgPosition1_hdf.CSID = null;
-            this.imgPosition1_hdf.ImageUpload = null;
-            this.imgPosition1_hdf.ImgSelectID = null;
-            this.imgPosition1_hdf.ImgUrl = null;
-            this.imgPosition1_hdf.Location = new System.Drawing.Point(90, 703);
-            this.imgPosition1_hdf.Name = "imgPosition1_hdf";
-            this.imgPosition1_hdf.Size = new System.Drawing.Size(139, 97);
-            this.imgPosition1_hdf.TabIndex = 140;
-            this.imgPosition1_hdf.yiche = null;
-            // 
-            // imgLogo_hdf
-            // 
-            this.imgLogo_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.imgLogo_hdf.CSID = null;
-            this.imgLogo_hdf.ImageUpload = null;
-            this.imgLogo_hdf.ImgSelectID = null;
-            this.imgLogo_hdf.ImgUrl = null;
-            this.imgLogo_hdf.Location = new System.Drawing.Point(90, 471);
-            this.imgLogo_hdf.Name = "imgLogo_hdf";
-            this.imgLogo_hdf.Size = new System.Drawing.Size(300, 224);
-            this.imgLogo_hdf.TabIndex = 139;
-            this.imgLogo_hdf.yiche = null;
-            // 
-            // carControl1
-            // 
-            this.carControl1.CarDataSource = null;
-            this.carControl1.Colors = null;
-            this.carControl1.Location = new System.Drawing.Point(90, 4);
-            this.carControl1.Name = "carControl1";
-            this.carControl1.Size = new System.Drawing.Size(574, 312);
-            this.carControl1.TabIndex = 96;
-            // 
             // gbPTNews
             // 
             this.gbPTNews.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.gbPTNews.Controls.Add(this.txtDesc);
             this.gbPTNews.Controls.Add(this.tabControl1);
             this.gbPTNews.Controls.Add(this.chkTel);
             this.gbPTNews.Controls.Add(this.chkMap);
             this.gbPTNews.Controls.Add(this.chkAddress);
             this.gbPTNews.Controls.Add(this.label23);
             this.gbPTNews.Controls.Add(this.button2);
-            this.gbPTNews.Controls.Add(this.txtDesc);
             this.gbPTNews.Controls.Add(this.label22);
             this.gbPTNews.Controls.Add(this.label13);
             this.gbPTNews.Controls.Add(this.label11);
@@ -1058,13 +975,6 @@
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // txtDesc
-            // 
-            this.txtDesc.Location = new System.Drawing.Point(25, 97);
-            this.txtDesc.Name = "txtDesc";
-            this.txtDesc.Size = new System.Drawing.Size(625, 290);
-            this.txtDesc.TabIndex = 82;
-            // 
             // label22
             // 
             this.label22.AutoSize = true;
@@ -1329,6 +1239,97 @@
             this.pCX.Size = new System.Drawing.Size(746, 738);
             this.pCX.TabIndex = 61;
             // 
+            // txtDesc
+            // 
+            this.txtDesc.IsToolbarVisible = true;
+            this.txtDesc.Location = new System.Drawing.Point(25, 104);
+            this.txtDesc.Name = "txtDesc";
+            this.txtDesc.Size = new System.Drawing.Size(621, 286);
+            this.txtDesc.TabIndex = 157;
+            // 
+            // carA
+            // 
+            this.carA.CarDataSource = null;
+            this.carA.Colors = null;
+            this.carA.Location = new System.Drawing.Point(88, 3);
+            this.carA.Name = "carA";
+            this.carA.Size = new System.Drawing.Size(603, 353);
+            this.carA.TabIndex = 111;
+            // 
+            // imgPosition4_hdf
+            // 
+            this.imgPosition4_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition4_hdf.CSID = null;
+            this.imgPosition4_hdf.ImageUpload = null;
+            this.imgPosition4_hdf.ImgSelectID = null;
+            this.imgPosition4_hdf.ImgUrl = null;
+            this.imgPosition4_hdf.Location = new System.Drawing.Point(530, 703);
+            this.imgPosition4_hdf.Name = "imgPosition4_hdf";
+            this.imgPosition4_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition4_hdf.TabIndex = 143;
+            this.imgPosition4_hdf.yiche = null;
+            // 
+            // imgPosition3_hdf
+            // 
+            this.imgPosition3_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition3_hdf.CSID = null;
+            this.imgPosition3_hdf.ImageUpload = null;
+            this.imgPosition3_hdf.ImgSelectID = null;
+            this.imgPosition3_hdf.ImgUrl = null;
+            this.imgPosition3_hdf.Location = new System.Drawing.Point(384, 703);
+            this.imgPosition3_hdf.Name = "imgPosition3_hdf";
+            this.imgPosition3_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition3_hdf.TabIndex = 142;
+            this.imgPosition3_hdf.yiche = null;
+            // 
+            // imgPosition2_hdf
+            // 
+            this.imgPosition2_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition2_hdf.CSID = null;
+            this.imgPosition2_hdf.ImageUpload = null;
+            this.imgPosition2_hdf.ImgSelectID = null;
+            this.imgPosition2_hdf.ImgUrl = null;
+            this.imgPosition2_hdf.Location = new System.Drawing.Point(236, 703);
+            this.imgPosition2_hdf.Name = "imgPosition2_hdf";
+            this.imgPosition2_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition2_hdf.TabIndex = 141;
+            this.imgPosition2_hdf.yiche = null;
+            // 
+            // imgPosition1_hdf
+            // 
+            this.imgPosition1_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgPosition1_hdf.CSID = null;
+            this.imgPosition1_hdf.ImageUpload = null;
+            this.imgPosition1_hdf.ImgSelectID = null;
+            this.imgPosition1_hdf.ImgUrl = null;
+            this.imgPosition1_hdf.Location = new System.Drawing.Point(90, 703);
+            this.imgPosition1_hdf.Name = "imgPosition1_hdf";
+            this.imgPosition1_hdf.Size = new System.Drawing.Size(139, 97);
+            this.imgPosition1_hdf.TabIndex = 140;
+            this.imgPosition1_hdf.yiche = null;
+            // 
+            // imgLogo_hdf
+            // 
+            this.imgLogo_hdf.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgLogo_hdf.CSID = null;
+            this.imgLogo_hdf.ImageUpload = null;
+            this.imgLogo_hdf.ImgSelectID = null;
+            this.imgLogo_hdf.ImgUrl = null;
+            this.imgLogo_hdf.Location = new System.Drawing.Point(90, 471);
+            this.imgLogo_hdf.Name = "imgLogo_hdf";
+            this.imgLogo_hdf.Size = new System.Drawing.Size(300, 224);
+            this.imgLogo_hdf.TabIndex = 139;
+            this.imgLogo_hdf.yiche = null;
+            // 
+            // carControl1
+            // 
+            this.carControl1.CarDataSource = null;
+            this.carControl1.Colors = null;
+            this.carControl1.Location = new System.Drawing.Point(90, 4);
+            this.carControl1.Name = "carControl1";
+            this.carControl1.Size = new System.Drawing.Size(574, 312);
+            this.carControl1.TabIndex = 96;
+            // 
             // Form_YC
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1444,7 +1445,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.LinkLabel linkLabel3;
         private System.Windows.Forms.Label label22;
-        private McDull.Windows.Forms.HTMLTextBox txtDesc;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.CheckBox checkBox9;
@@ -1475,5 +1475,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Panel pCX;
         private System.Windows.Forms.Panel panel1;
+        private ZetaHtmlEditControl.UI.HtmlEditUserControl txtDesc;
     }
 }

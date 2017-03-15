@@ -308,15 +308,12 @@ namespace Aide
             HAP.HtmlDocument htmlDoc = GetHtml("http://ics.autohome.com.cn/dms/Order/GetDealerSales");
             var result = JsonConvert.DeserializeObject<NicksResult>(htmlDoc.DocumentNode.OuterHtml);
             List<Nicks> nicks = new List<Nicks>();
-            result.rows.ForEach(f => nicks.Add(new Nicks { Check = true, Id = f.saleID.ToString(), Nick = f.saleName }));
+            result.rows.ForEach(f => nicks.Add(new Nicks { Check = true, Id = f.saleID.ToString(), Nick = f.saleName, Send = 0 }));
             return nicks;
         }
 
         private List<PublicOrder> GetNewOrder()
         {
-            //DateTime dt = DateTime.UtcNow;
-            //var timestamp = (long)(dt - DateTime.Parse("1970-1-1")).TotalMilliseconds;
-            //string.Format(publicOrder, timestamp.ToString())
             HAP.HtmlDocument htmlDoc = GetHtml(publicOrder);
             var result = JsonConvert.DeserializeObject<ReturnResult>(htmlDoc.DocumentNode.OuterHtml);
             return result.Result.List;
@@ -330,87 +327,100 @@ namespace Aide
             ViewResult result = new ViewResult();
             while (true)
             {
-                var orders = GetNewOrder();
-                result.Result = false;
-                if (orders.Count > 0)
+                try
                 {
-                    orders.ForEach(f => { 
-                        if(!dal.IsHaveOrder(f.Id))
+                    var orders = GetNewOrder();
+                    result.Result = false;
+                    if (orders.Count > 0)
+                    {
+                        orders.ForEach(f =>
                         {
-                            if (CheckOrder(f))
+                            if (!dal.IsHaveOrder(f.Id))
                             {
-                                dal.AddOrders(new Orders { CustomerName = f.CustomerName, Id = f.Id });
-                                var nick = dal.GetNick();
-                                if (SendOrder(nick, f))
+                                areaList = dal.GetArea(Tool.site.ToString());
+                                if (CheckOrder(f))
                                 {
-                                    dal.UpdateOrderSend(f.Id, nick.Id);
-                                    result.Message = string.Format("系统事件{0}将客户分配给销售顾问{1}{2}", DateTime.Now.ToString(), nick.Nick, Environment.NewLine);
-                                    result.Result = true;
-                                    SendResult(result);
+                                    dal.AddOrders(new Orders { CustomerName = f.CustomerName, Id = f.Id });
+                                    var nick = dal.GetNick();
+                                    if (SendOrder(nick, f))
+                                    {
+                                        dal.UpdateOrderSend(f.Id, nick.Id);
+                                        result.Message = string.Format("系统事件{0}将客户分配给销售顾问{1}{2}", DateTime.Now.ToString(), nick.Nick, Environment.NewLine);
+                                        result.Result = true;
+                                        SendResult(result);
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
 
-                    #region
-                    //orders.ForEach(a => dal.AddOrders(new Orders { CustomerName = a.CustomerName, Id = a.Id }));
+                        #region
+                        //orders.ForEach(a => dal.AddOrders(new Orders { CustomerName = a.CustomerName, Id = a.Id }));
 
-                    //var sendlogs = dal.GetTodaySendLog();
+                        //var sendlogs = dal.GetTodaySendLog();
 
-                    //var total = orders.Count + sendlogs.Sum(s => s.OrderCount);
-                    //var count = nicks.Count;
+                        //var total = orders.Count + sendlogs.Sum(s => s.OrderCount);
+                        //var count = nicks.Count;
 
-                    ////更新发送数量
-                    //nicks.ForEach(f => f.Send = sendlogs.Where(w => w.NickID == f.Id).Sum(s => s.OrderCount));
-                    ////按发送数量排序，较少优先
-                    //nicks.Sort((a, b) => a.Send.Value.CompareTo(b.Send.Value));
+                        ////更新发送数量
+                        //nicks.ForEach(f => f.Send = sendlogs.Where(w => w.NickID == f.Id).Sum(s => s.OrderCount));
+                        ////按发送数量排序，较少优先
+                        //nicks.Sort((a, b) => a.Send.Value.CompareTo(b.Send.Value));
 
-                    //for (int i = 0; i < nicks.Count; i++)
-                    //{
-                    //    var sendcount = GetAvg(total, count);
-                    //    if (sendcount <= 0)
-                    //        break;
+                        //for (int i = 0; i < nicks.Count; i++)
+                        //{
+                        //    var sendcount = GetAvg(total, count);
+                        //    if (sendcount <= 0)
+                        //        break;
 
-                    //    int send = sendcount;
-                    //    total -= sendcount;
-                    //    count--;
+                        //    int send = sendcount;
+                        //    total -= sendcount;
+                        //    count--;
 
-                    //    if (sendlogs.Count > 0)
-                    //    {
-                    //        var sendlog = sendlogs.FirstOrDefault(f => f.NickID == nicks[i].Id);
-                    //        if (sendlog != null && sendlog.OrderCount < sendcount)
-                    //        {
-                    //            send = sendcount - sendlog.OrderCount;
-                    //        }
-                    //        else
-                    //            send = 0;
-                    //    }
+                        //    if (sendlogs.Count > 0)
+                        //    {
+                        //        var sendlog = sendlogs.FirstOrDefault(f => f.NickID == nicks[i].Id);
+                        //        if (sendlog != null && sendlog.OrderCount < sendcount)
+                        //        {
+                        //            send = sendcount - sendlog.OrderCount;
+                        //        }
+                        //        else
+                        //            send = 0;
+                        //    }
 
-                    //    var sendorders = orders.Take(send).ToList();
-                    //    orders.RemoveRange(0, send);
+                        //    var sendorders = orders.Take(send).ToList();
+                        //    orders.RemoveRange(0, send);
 
-                    //    sendorders.ForEach(a =>
-                    //    {
-                    //        if (SendOrder(nicks[i], a))
-                    //        {
-                    //            dal.UpdateOrderSend(a.Id, nicks[i].Id);
-                    //            dal.UpdateSendCount(nicks[i].Id);
-                    //            dal.AddSendLog(nicks[i].Id, 1);
-                    //            result.Message = string.Format("系统事件{0}将客户分配给销售顾问{1}{2}", DateTime.Now.ToString(), nicks[i].Nick, Environment.NewLine);
-                    //            result.Result = true;
-                    //            SendResult(result);
-                    //        }
-                    //    });
-                    //}
-                    #endregion
+                        //    sendorders.ForEach(a =>
+                        //    {
+                        //        if (SendOrder(nicks[i], a))
+                        //        {
+                        //            dal.UpdateOrderSend(a.Id, nicks[i].Id);
+                        //            dal.UpdateSendCount(nicks[i].Id);
+                        //            dal.AddSendLog(nicks[i].Id, 1);
+                        //            result.Message = string.Format("系统事件{0}将客户分配给销售顾问{1}{2}", DateTime.Now.ToString(), nicks[i].Nick, Environment.NewLine);
+                        //            result.Result = true;
+                        //            SendResult(result);
+                        //        }
+                        //    });
+                        //}
+                        #endregion
+                    }
+                    else
+                    {
+                        result.Message = "暂时未发现新线索";
+                        result.Result = true;
+                        SendResult(result);
+                    }
+                    var dtnow = DateTime.Now;
+                    if ((dtnow - Convert.ToDateTime("00:00:00")).TotalSeconds <= 10)
+                        return;
+                    else
+                        Thread.Sleep(1000 * 3);
                 }
-                else
+                catch
                 {
-                    result.Message = "暂时未发现新线索";
-                    result.Result = true;
-                    SendResult(result);
+                    return;
                 }
-                Thread.Sleep(1000 * 3);
             }
         }
 
@@ -421,9 +431,7 @@ namespace Aide
         /// <returns></returns>
         private bool CheckOrder(PublicOrder order)
         {
-            var result = false;
-            if (areaList.Count == 0)
-                areaList = dal.GetArea(Tool.site.ToString());
+            var result = false;            
             if (areaList.Any(w => w.IsChecked && (w.City == order.IntentionCityName.Trim() || w.City == order.CityName.Trim())))
             {
                 result = true;
@@ -482,10 +490,7 @@ namespace Aide
 
         public void SendResult(ViewResult vr)
         {
-            if (SendOrderEvent != null)
-            {
-                SendOrderEvent(vr);
-            }
+            SendOrderEvent?.Invoke(vr);
         }
 
         #endregion
@@ -582,35 +587,42 @@ namespace Aide
             string str = "";
 
             var newsinfo = GetNewsInfo(model_TS + data.NewsId);
-            var json = JsonConvert.SerializeObject(newsinfo);
-            var postdatas = "promotion=" + HttpHelper.URLEncode(json, Encoding.UTF8) + "&token=" + token;
-            var item = new HttpItem
+            if (newsinfo == null)
             {
-                URL = "http://ics.autohome.com.cn/Price/NewsTemplate/SaveNewsTemplateData",
-                Method = "post",
-                Cookie = cookie,
-                Postdata = postdatas,
-                ContentType = "application/x-www-form-urlencoded; charset=UTF-8",
-                Referer = "http://ics.autohome.com.cn/dms/Order/Index",
-                UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"
-            };
-            item.Header.Add("X-Requested-With", "XMLHttpRequest");
-            item.Allowautoredirect = false;
-            var http = new HttpHelper();
-            var htmlr = http.GetHtml(item);
-            try
-            {
-                var result = JsonConvert.DeserializeObject<NewsResult>(htmlr.Html);
-                if (result.NewsId > 0)
-                    str = data.Title + " 发布成功";
-                else
-                {
-                    str += data.Title + ":" + result.ErrorMessage + ";";
-                }
+                str = "你没有权限发布新闻";
             }
-            catch (Exception)
+            else
             {
-                str = data.Title + " 发布失败";
+                var json = JsonConvert.SerializeObject(newsinfo);
+                var postdatas = "promotion=" + HttpHelper.URLEncode(json, Encoding.UTF8) + "&token=" + token;
+                var item = new HttpItem
+                {
+                    URL = "http://ics.autohome.com.cn/Price/NewsTemplate/SaveNewsTemplateData",
+                    Method = "post",
+                    Cookie = cookie,
+                    Postdata = postdatas,
+                    ContentType = "application/x-www-form-urlencoded; charset=UTF-8",
+                    Referer = "http://ics.autohome.com.cn/dms/Order/Index",
+                    UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)"
+                };
+                item.Header.Add("X-Requested-With", "XMLHttpRequest");
+                item.Allowautoredirect = false;
+                var http = new HttpHelper();
+                var htmlr = http.GetHtml(item);
+                try
+                {
+                    var result = JsonConvert.DeserializeObject<NewsResult>(htmlr.Html);
+                    if (result.NewsId > 0)
+                        str = data.Title + " 发布成功";
+                    else
+                    {
+                        str += data.Title + ":" + result.ErrorMessage + ";";
+                    }
+                }
+                catch (Exception)
+                {
+                    str = data.Title + " 发布失败";
+                }
             }
 
             return str;
@@ -619,6 +631,10 @@ namespace Aide
         private QiCheNewsPostData GetNewsInfo(string newurl)
         {
             var doc = GetHtml(newurl);
+            if(doc.DocumentNode.OuterHtml.Contains("NoAuth"))
+            {
+                return null;
+            }
             token = doc.GetElementbyId("token").GetAttributeValue("value", "");
             var postdata = new QiCheNewsPostData();
             postdata.TemplateId = doc.GetElementbyId("templateId").GetAttributeValue("value", "");

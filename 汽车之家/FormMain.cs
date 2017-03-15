@@ -41,8 +41,7 @@ namespace Aide
         public FormMain(QiCheZhiJia qiche, YiChe yiche)
         {
             InitializeComponent();
-            this.StartPosition = FormStartPosition.CenterScreen;
-
+            StartPosition = FormStartPosition.CenterScreen;
             this.qiche = qiche;
             this.yiche = yiche;
             th = new Thread(Tool.aideTimer.Run);
@@ -56,9 +55,8 @@ namespace Aide
             {
                 tabControl1.SelectedTab = tabPage2;
             }
-
-            //tabControl2.TabPages.Remove(tabPage8);
             dgvOrder.AutoGenerateColumns = false;
+            rowMergeView1.AutoGenerateColumns = false;
         }
 
         /// <summary>
@@ -147,6 +145,17 @@ namespace Aide
                 {
                     AutomaticLogin(jobName);
                 }
+            }
+            else
+            {
+                DateTime dtnow = DateTime.Now;
+                bool isOver = (dtnow - Tool.userInfo_qc.DueTime.Value).TotalSeconds >= 0;
+                AutomaticCount = 20;
+                CheckSendOrder(Tool.userInfo_qc, isOver);
+                CheckSendPrice(Tool.userInfo_qc, isOver);
+                CheckSendNews(Tool.userInfo_qc, isOver);
+                if(string.IsNullOrWhiteSpace(lblQD_QC.Text))
+                    btnSendOrder_Click(new object(), new EventArgs());
             }
         }
 
@@ -500,7 +509,6 @@ namespace Aide
                 }
                 bool isOver = (DateTime.Now - Tool.userInfo_qc.DueTime.Value).TotalSeconds >= 0;
                 CheckSendOrder(Tool.userInfo_qc, isOver);
-                //LoadUser(Tool.userInfo_qc);
             }));
         }
 
@@ -643,34 +651,37 @@ namespace Aide
         #region 汽车之家
         private void SavePrice_QC(string jobName)
         {
-            var result = qiche.SavePrice();
-            Invoke(new Action(() =>
+            try
             {
-                lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
-                lbxQuer.TopIndex = lbxQuer.Items.Count - 1;
-            }));
-            Job job = dal.GetJob(jobName);
-            if(job.JobType == 1 || !string.IsNullOrWhiteSpace(job.Time))
-            {
-                Invoke(new Action(() => jct_QC_Query.lblState.Text = ""));
+                var result = qiche.SavePrice();
+                Invoke(new Action(() =>
+                {
+                    lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
+                    lbxQuer.TopIndex = lbxQuer.Items.Count - 1;
+                }));
+                Job job = dal.GetJob(jobName);
+                if (job.JobType == 1 || !string.IsNullOrWhiteSpace(job.Time))
+                {
+                    Invoke(new Action(() => jct_QC_Query.lblState.Text = ""));
+                }
+                dal.AddJobLog(new JobLog { JobName = jobName, Time = DateTime.Now.ToString("yyyy-MM-dd") });
+                if (result.Result)
+                {
+                    Tool.service.UpdateLastQuoteTime(Tool.userInfo_qc.Id);
+                    Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_qc.Id, JobType = "报价", JobTime = DateTime.Now });
+                    Tool.userInfo_qc.QueryNum--;
+                    bool isOver = (DateTime.Now - Tool.userInfo_qc.DueTime.Value).TotalSeconds >= 0;
+                    Invoke(new Action(() => CheckSendPrice(Tool.userInfo_qc, isOver)));
+                }
             }
-            dal.AddJobLog(new JobLog { JobName = jobName, Time = DateTime.Now.ToString("yyyy-MM-dd") });
-            if (result.Result)
+            catch(Exception ex)
             {
-                Tool.service.UpdateLastQuoteTime(Tool.userInfo_qc.Id);
-                Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_qc.Id, JobType = "报价", JobTime = DateTime.Now });
-                Tool.userInfo_qc.QueryNum--;
-                bool isOver = (DateTime.Now - Tool.userInfo_qc.DueTime.Value).TotalSeconds >= 0;
-                Invoke(new Action(() => CheckSendPrice(Tool.userInfo_qc, isOver)));
-                //if(Tool.userInfo_qc.QueryNum <= 0)
-                //{
-                //    Tool.aideTimer.Dequeue(QC_Price_JobName);
-                //    Invoke(new Action(() => lbl_QC_QueryNum.Text = "非常抱歉，今天的报价次数已用完"));
-                //}
-                //else
-                //{
-                //    Invoke(new Action(() => lbl_QC_QueryNum.Text = Tool.userInfo_qc.QueryNum.ToString()));
-                //}
+                Invoke(new Action(() =>
+                {
+                    lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":程序出错，请重新登录");
+                    lbxQuer.TopIndex = lbxQuer.Items.Count - 1;
+                }));
+                Tool.aideTimer.Dequeue(jobName);
             }
         }
 
@@ -745,34 +756,38 @@ namespace Aide
             var selected = ((List<NewListDTP>)newListDTPBindingSource.DataSource).Where(w => w.NewsId == newsID).FirstOrDefault();
             if (selected != null)
             {
-                var result = qiche.PostNews(selected);
-                Invoke(new Action(() => {
-                    lblNews.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result);
-                    lblNews.TopIndex = lblNews.Items.Count - 1;
-                }));
-                var job = dal.GetJob(newsID);
-                job.ExecTime = DateTime.Now.ToString();
-                dal.AddJob(job);
-                dal.AddJobLog(new JobLog { JobName = newsID, Time = DateTime.Now.ToString("yyyy-MM-dd") });
-                selected.Message = "已执行";
-                selected.Del = "";
-                rowMergeView1.Refresh();
-                if (result.Contains("发布成功"))
+                try
                 {
-                    Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_qc.Id, JobType = "资讯", JobTime = DateTime.Now });
-                    Tool.userInfo_qc.NewsNum--;
-                    bool isOver = (DateTime.Now - Tool.userInfo_qc.DueTime.Value).TotalSeconds >= 0;
-                    Invoke(new Action(() => CheckSendNews(Tool.userInfo_qc, isOver)));
-                    //if(Tool.userInfo_qc.NewsNum <= 0)
-                    //{
-                    //    Invoke(new Action(() => lbl_QC_NewsNum.Text = "非常抱歉，今天发布资讯次数已使用完"));
-                    //}
-                    //else
-                    //{
-                    //    Invoke(new Action(() => lbl_QC_NewsNum.Text = Tool.userInfo_qc.NewsNum.ToString()));
-                    //}
+                    var result = qiche.PostNews(selected);
+                    Invoke(new Action(() =>
+                    {
+                        lblNews.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result);
+                        lblNews.TopIndex = lblNews.Items.Count - 1;
+                    }));
+                    var job = dal.GetJob(newsID);
+                    job.ExecTime = DateTime.Now.ToString();
+                    dal.AddJob(job);
+                    dal.AddJobLog(new JobLog { JobName = newsID, Time = DateTime.Now.ToString("yyyy-MM-dd") });
+                    selected.Message = "已执行";
+                    selected.Del = "";
+                    Invoke(new Action(() => rowMergeView1.Refresh()));
+                    if (result.Contains("发布成功"))
+                    {
+                        Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_qc.Id, JobType = "资讯", JobTime = DateTime.Now });
+                        Tool.userInfo_qc.NewsNum--;
+                        bool isOver = (DateTime.Now - Tool.userInfo_qc.DueTime.Value).TotalSeconds >= 0;
+                        Invoke(new Action(() => CheckSendNews(Tool.userInfo_qc, isOver)));
+                    }
                 }
-                
+                catch(Exception ex)
+                {
+                    Invoke(new Action(() =>
+                    {
+                        lblNews.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":程序出错，请重新登录");
+                        lblNews.TopIndex = lblNews.Items.Count - 1;
+                    }));
+                    Tool.aideTimer.Dequeue(newsID);
+                }
             }
         }
 
@@ -802,18 +817,16 @@ namespace Aide
             #region 重绘datagridview表头
             
             DataGridView dgv = (DataGridView)(sender);
-            if (e.RowIndex == -1 && (e.ColumnIndex == colYC_Sitting.Index || e.ColumnIndex == colYC_Del.Index))
+            if (e.RowIndex == -1 && (e.ColumnIndex == colSitting.Index || e.ColumnIndex == colDel.Index))
             {
-                if (e.ColumnIndex == colYC_Sitting.Index)
+                if (e.ColumnIndex == colSitting.Index)
                 {
                     top = e.CellBounds.Top;
                     left = e.CellBounds.Left;
                     height = e.CellBounds.Height;
                     width1 = e.CellBounds.Width;
                 }
-
-                int width2 = colYC_Del.Width;
-
+                int width2 = colDel.Width;
                 Rectangle rect = new Rectangle(left, top, width1 + width2, e.CellBounds.Height);
                 using (Brush backColorBrush = new SolidBrush(e.CellStyle.BackColor))
                 {
@@ -927,14 +940,6 @@ namespace Aide
                     Tool.userInfo_yc.NewsNum--;
                     bool isOver = (DateTime.Now - Tool.userInfo_yc.DueTime.Value).TotalSeconds >= 0;
                     Invoke(new Action(() => CheckSendNews(Tool.userInfo_yc, isOver)));
-                    //if (Tool.userInfo_yc.NewsNum <= 0)
-                    //{
-                    //    Invoke(new Action(() => label14.Text = "非常抱歉，今天发布资讯次数已使用完"));
-                    //}
-                    //else
-                    //{
-                    //    Invoke(new Action(() => label14.Text = Tool.userInfo_yc.NewsNum.ToString()));
-                    //}
                 }                
             }
         }
@@ -1003,6 +1008,60 @@ namespace Aide
                 }
             }
             rowMergeView2.Refresh();
+        }
+
+        private void rowMergeView2_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+        {
+            #region 重绘datagridview表头
+
+            DataGridView dgv = (DataGridView)(sender);
+            if (e.RowIndex == -1 && (e.ColumnIndex == colYC_Sitting.Index || e.ColumnIndex == colYC_Del.Index))
+            {
+                if (e.ColumnIndex == colYC_Sitting.Index)
+                {
+                    top = e.CellBounds.Top;
+                    left = e.CellBounds.Left;
+                    height = e.CellBounds.Height;
+                    width1 = e.CellBounds.Width;
+                }
+
+                int width2 = colYC_Del.Width;
+
+                Rectangle rect = new Rectangle(left, top, width1 + width2, e.CellBounds.Height);
+                using (Brush backColorBrush = new SolidBrush(e.CellStyle.BackColor))
+                {
+                    //抹去原来的cell背景
+                    e.Graphics.FillRectangle(backColorBrush, rect);
+                }
+                using (Pen pen = new Pen(Color.White))
+                {
+                    e.Graphics.DrawLine(pen, left + 1, top + 1, left + width1 + width2 - 1, top + 1);
+                }
+                using (Pen gridLinePen = new Pen(dgv.GridColor))
+                {
+                    e.Graphics.DrawLine(gridLinePen, left, top, left + width1 + width2, top);
+                    e.Graphics.DrawLine(gridLinePen, left, top + height - 1, left + width1 + width2, top + height - 1);
+                    e.Graphics.DrawLine(gridLinePen, left, top, left, top + height);
+                    e.Graphics.DrawLine(gridLinePen, left + width1 + width2 - 1, top, left + width1 + width2 - 1, top + height);
+
+                    //计算绘制字符串的位置
+                    string columnValue = "操作";
+                    SizeF sf = e.Graphics.MeasureString(columnValue, e.CellStyle.Font);
+                    float lstr = (width1 + width2 - sf.Width) / 2;
+                    float rstr = (height / 2 - sf.Height);
+                    //画出文本框
+                    if (columnValue != "")
+                    {
+                        e.Graphics.DrawString(columnValue, e.CellStyle.Font,
+                                                   new SolidBrush(e.CellStyle.ForeColor),
+                                                     left + lstr,
+                                                     top + rstr + 10,
+                                                     StringFormat.GenericDefault);
+                    }
+                }
+                e.Handled = true;
+            }
+            #endregion
         }
         #endregion        
 
@@ -1076,7 +1135,7 @@ namespace Aide
                 if (!string.IsNullOrWhiteSpace(job.Time))
                 {
                     DateTime dt = Convert.ToDateTime(job.Time);
-                    if ((dtnow - dt).TotalSeconds >= 0 && (dtnow - dt).TotalSeconds <= 10 && string.IsNullOrWhiteSpace(job.ExecTime))
+                    if ((dtnow - dt).TotalSeconds >= 0 && (dtnow - dt).TotalSeconds <= 10 && (string.IsNullOrWhiteSpace(job.ExecTime) || Convert.ToDateTime(job.ExecTime).Date != dtnow.Date))
                     {
                         return true;
                     }

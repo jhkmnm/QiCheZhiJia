@@ -252,10 +252,10 @@ public static class FuncExtend
 {
     public static string Message(this Model.Job job)
     {
-        DateTime dtnow = DateTime.Now;
-        DateTime dt = Convert.ToDateTime(job.JobDate + " " + job.Time);
+        DateTime dtnow = DateTime.Now;        
         if (job.JobType == 1)
         {
+            DateTime dt = Convert.ToDateTime(job.JobDate + " " + job.Time);
             if (!string.IsNullOrWhiteSpace(job.ExecTime))
                 return "已执行";
             else if ((dtnow - dt).TotalSeconds > 0)
@@ -267,6 +267,7 @@ public static class FuncExtend
         {
             if (!string.IsNullOrWhiteSpace(job.Time))
             {
+                DateTime dt = Convert.ToDateTime(job.JobDate + " " + job.Time);
                 dt = Convert.ToDateTime(job.Time);
                 if (!string.IsNullOrWhiteSpace(job.ExecTime))
                     return "已执行";
@@ -279,7 +280,7 @@ public static class FuncExtend
             {
                 var index = job.Space.Value / 1000 / 60 / 60 >= 1 ? 1 : 0;
                 var space = index == 1 ? job.Space.Value / 1000 / 60 / 60 : job.Space.Value / 1000 / 60;
-                dt = Convert.ToDateTime(job.EndTime);
+                var dt = Convert.ToDateTime(job.EndTime);
                 if ((dtnow - dt).TotalSeconds > 0)
                     return "已过期";
                 else
