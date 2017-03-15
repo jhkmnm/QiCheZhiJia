@@ -325,7 +325,7 @@ namespace Aide
                 {
                     label16.Text = message;
                     jct_YC_Query.Enabled = false;
-                    Tool.aideTimer.Dequeue(QC_Price_JobName);
+                    Tool.aideTimer.Dequeue(YC_Price_JobName);
                 }
             }
         }
@@ -664,6 +664,8 @@ namespace Aide
                 {
                     Invoke(new Action(() => jct_QC_Query.lblState.Text = ""));
                 }
+                job.ExecTime = DateTime.Now.ToString();
+                dal.AddJob(job);
                 dal.AddJobLog(new JobLog { JobName = jobName, Time = DateTime.Now.ToString("yyyy-MM-dd") });
                 if (result.Result)
                 {
@@ -708,6 +710,8 @@ namespace Aide
             {
                 Invoke(new Action(() => jct_YC_Query.lblState.Text = ""));
             }
+            job.ExecTime = DateTime.Now.ToString();
+            dal.AddJob(job);
             if (result.Result)
             {
                 Tool.service.UpdateLastQuoteTime(Tool.userInfo_yc.Id);
@@ -715,15 +719,6 @@ namespace Aide
                 Tool.userInfo_yc.QueryNum--;
                 bool isOver = (DateTime.Now - Tool.userInfo_yc.DueTime.Value).TotalSeconds >= 0;
                 Invoke(new Action(() => CheckSendPrice(Tool.userInfo_yc, isOver)));
-                //if (Tool.userInfo_yc.QueryNum <= 0)
-                //{
-                //    Tool.aideTimer.Dequeue(YC_Price_JobName);
-                //    Invoke(new Action(() => label16.Text = "非常抱歉，今天的报价次数已用完"));
-                //}
-                //else
-                //{
-                //    Invoke(new Action(() => label16.Text = Tool.userInfo_yc.QueryNum.ToString()));
-                //}
             }
         }
 

@@ -85,9 +85,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
-            this.label4 = new System.Windows.Forms.Label();
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label14 = new System.Windows.Forms.Label();
@@ -130,6 +128,8 @@
             this.tm_qcjob_news = new System.Windows.Forms.Timer(this.components);
             this.tm_qc_news = new System.Windows.Forms.Timer(this.components);
             this.newsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.label13 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -692,10 +692,10 @@
             // 
             this.groupBox4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox4.Controls.Add(this.label3);
-            this.groupBox4.Controls.Add(this.label13);
-            this.groupBox4.Controls.Add(this.linkLabel3);
             this.groupBox4.Controls.Add(this.label4);
+            this.groupBox4.Controls.Add(this.label13);
+            this.groupBox4.Controls.Add(this.label3);
+            this.groupBox4.Controls.Add(this.linkLabel3);
             this.groupBox4.Controls.Add(this.linkLabel4);
             this.groupBox4.Location = new System.Drawing.Point(3, 539);
             this.groupBox4.Name = "groupBox4";
@@ -714,16 +714,6 @@
             this.label3.TabIndex = 16;
             this.label3.Text = "淘宝店铺:";
             // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.label13.Location = new System.Drawing.Point(15, 17);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(147, 14);
-            this.label13.TabIndex = 12;
-            this.label13.Text = "联系电话:18319384011";
-            // 
             // linkLabel3
             // 
             this.linkLabel3.AutoSize = true;
@@ -735,16 +725,6 @@
             this.linkLabel3.TabStop = true;
             this.linkLabel3.Text = "打开易车网后台";
             this.linkLabel3.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.label4.Location = new System.Drawing.Point(256, 17);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(91, 14);
-            this.label4.TabIndex = 13;
-            this.label4.Text = "QQ:278815541";
             // 
             // linkLabel4
             // 
@@ -1144,6 +1124,26 @@
             // 
             this.newsBindingSource.DataSource = typeof(Model.News);
             // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label13.Location = new System.Drawing.Point(11, 19);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(161, 14);
+            this.label13.TabIndex = 17;
+            this.label13.Text = "联系电话:  18319384011";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label4.Location = new System.Drawing.Point(258, 21);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(98, 14);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "QQ: 278815541";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1256,8 +1256,6 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.LinkLabel linkLabel3;
         private System.Windows.Forms.LinkLabel linkLabel4;
-        private System.Windows.Forms.Label label4;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.Label label16;
@@ -1286,6 +1284,8 @@
         private System.Windows.Forms.DataGridViewLinkColumn colYC_Sitting;
         private System.Windows.Forms.DataGridViewLinkColumn colYC_Del;
         private System.Windows.Forms.DataGridViewTextBoxColumn colYC_NewsID;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label13;
     }
 }
 
