@@ -74,7 +74,6 @@ namespace Aide
                     var o = fieldinfo.GetValue(this);
                     NewsType = ((RadioButton)o).Name;
                     ((RadioButton)o).Checked = true;
-                    //InitForm(((RadioButton)o).Tag.ToString());
                 }
             }
         }

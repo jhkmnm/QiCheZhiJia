@@ -16,9 +16,18 @@ namespace Aide
             Application.SetCompatibleTextRenderingDefault(false);
             Tool.service.Url = System.Configuration.ConfigurationManager.AppSettings["dataSrvUrl"];
             var form = new FormLogin(Site.Qiche);
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
             if(form.ShowDialog() == DialogResult.OK)
             {
                 Application.Run(new FormMain(form.qiche, form.yiche));
+            }
+        }
+
+        private static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            if(e.ExceptionObject is System.Reflection.TargetInvocationException)
+            {
+                MessageBox.Show("普通新闻只能在win10系统下才能正常使用!");
             }
         }
     }

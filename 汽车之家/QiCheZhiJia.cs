@@ -325,19 +325,20 @@ namespace Aide
         public void SendOrder()
         {
             ViewResult result = new ViewResult();
+            areaList = dal.GetArea(Tool.site.ToString());
             while (true)
             {
                 try
-                {
+                {                    
                     var orders = GetNewOrder();
                     result.Result = false;
                     if (orders.Count > 0)
                     {
+                        SendResult(new ViewResult { Exit = false, Ref = false, Result = true, Message = "搜索到" + orders.Count + "条订单" });
                         orders.ForEach(f =>
                         {
                             if (!dal.IsHaveOrder(f.Id))
-                            {
-                                areaList = dal.GetArea(Tool.site.ToString());
+                            {                                
                                 if (CheckOrder(f))
                                 {
                                     dal.AddOrders(new Orders { CustomerName = f.CustomerName, Id = f.Id });

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Model
+﻿namespace Model
 {
     public class ViewResult
     {
@@ -12,5 +7,7 @@ namespace Model
         public bool Exit { get; set; }
 
         public string Message { get; set; }
+        private bool _ref = true;
+        public bool Ref { get { return _ref; } set { _ref = value; } }
     }
 }

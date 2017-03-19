@@ -32,6 +32,14 @@ namespace Aide
 
         private void button1_Click(object sender, EventArgs e)
         {
+            DateTime dtnow = DateTime.Now;
+            DateTime dt = Convert.ToDateTime(dtpJobDate_Quote.Value.ToString("yyyy-MM-dd") + " " + dtpQuoteTime_QC.Value.ToString("HH:mm:ss"));
+            if ((dtnow - dt).TotalSeconds > 0)
+            {
+                MessageBox.Show("设置的时间无效");
+                return;
+            }
+
             if (job == null)
             {
                 job = new Job();

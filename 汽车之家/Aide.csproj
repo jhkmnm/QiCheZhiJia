@@ -354,7 +354,15 @@
     <Content Include="Data\data.mdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="DLL\AxInterop.Dama2Lib.dll" />
+    <Content Include="DLL\CrackCaptchaAPI.dll" />
     <Content Include="DLL\HttpHelper.dll" />
+    <Content Include="DLL\HttpServer.dll" />
+    <Content Include="DLL\Interop.Dama2Lib.dll" />
+    <Content Include="DLL\McDull.Windows.Forms.dll" />
+    <Content Include="DLL\SgmlReaderDll.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ico.ico" />
   </ItemGroup>
   <ItemGroup>

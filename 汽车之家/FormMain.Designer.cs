@@ -56,17 +56,10 @@
             this.colSaleName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSaleID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.jct_QC_Query = new Aide.JobControl();
+            this.btn_QC_Del = new System.Windows.Forms.Button();
             this.lbxQuer = new System.Windows.Forms.ListBox();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.btnQC_LoadNews = new System.Windows.Forms.Button();
-            this.rowMergeView1 = new RowMergeView();
-            this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.colSitting = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.colDel = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.colNewsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.newListDTPBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.lblNews = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lbl_QC_NewsNum = new System.Windows.Forms.Label();
@@ -84,6 +77,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
@@ -108,10 +103,26 @@
             this.lbxSendOrder_YC = new System.Windows.Forms.ListBox();
             this.btnStart_YC = new System.Windows.Forms.Button();
             this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.btn_YC_Del = new System.Windows.Forms.Button();
             this.lbxQuer_YC = new System.Windows.Forms.ListBox();
             this.lblYC_YC = new System.Windows.Forms.Label();
-            this.jct_YC_Query = new Aide.JobControl();
             this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.btnLoadNews = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.listBox3 = new System.Windows.Forms.ListBox();
+            this.tm_qc_quer = new System.Windows.Forms.Timer(this.components);
+            this.tm_yc_query = new System.Windows.Forms.Timer(this.components);
+            this.tm_qcjob_news = new System.Windows.Forms.Timer(this.components);
+            this.tm_qc_news = new System.Windows.Forms.Timer(this.components);
+            this.jct_QC_Query = new Aide.JobControl();
+            this.rowMergeView1 = new RowMergeView();
+            this.colTitle = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colMessage = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colSitting = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.colDel = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.colNewsId = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.newListDTPBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.jct_YC_Query = new Aide.JobControl();
             this.rowMergeView2 = new RowMergeView();
             this.colYC_Title = new System.Windows.Forms.DataGridViewLinkColumn();
             this.colYC_Message = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -120,16 +131,7 @@
             this.colYC_Del = new System.Windows.Forms.DataGridViewLinkColumn();
             this.colYC_NewsID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.newListDTPBindingSource1 = new System.Windows.Forms.BindingSource(this.components);
-            this.btnLoadNews = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.listBox3 = new System.Windows.Forms.ListBox();
-            this.tm_qc_quer = new System.Windows.Forms.Timer(this.components);
-            this.tm_yc_query = new System.Windows.Forms.Timer(this.components);
-            this.tm_qcjob_news = new System.Windows.Forms.Timer(this.components);
-            this.tm_qc_news = new System.Windows.Forms.Timer(this.components);
             this.newsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.label13 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -138,8 +140,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).BeginInit();
             this.tabPage4.SuspendLayout();
             this.tabPage5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.rowMergeView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.newListDTPBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -148,6 +148,8 @@
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tabPage8.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.rowMergeView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newListDTPBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowMergeView2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.newListDTPBindingSource1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.newsBindingSource)).BeginInit();
@@ -396,6 +398,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.btn_QC_Del);
             this.tabPage4.Controls.Add(this.jct_QC_Query);
             this.tabPage4.Controls.Add(this.lbxQuer);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
@@ -406,12 +409,15 @@
             this.tabPage4.Text = "报价";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
-            // jct_QC_Query
+            // btn_QC_Del
             // 
-            this.jct_QC_Query.Location = new System.Drawing.Point(3, 3);
-            this.jct_QC_Query.Name = "jct_QC_Query";
-            this.jct_QC_Query.Size = new System.Drawing.Size(399, 186);
-            this.jct_QC_Query.TabIndex = 21;
+            this.btn_QC_Del.Location = new System.Drawing.Point(317, 185);
+            this.btn_QC_Del.Name = "btn_QC_Del";
+            this.btn_QC_Del.Size = new System.Drawing.Size(75, 23);
+            this.btn_QC_Del.TabIndex = 22;
+            this.btn_QC_Del.Text = "停止";
+            this.btn_QC_Del.UseVisualStyleBackColor = true;
+            this.btn_QC_Del.Click += new System.EventHandler(this.btn_QC_Del_Click);
             // 
             // lbxQuer
             // 
@@ -446,78 +452,6 @@
             this.btnQC_LoadNews.Text = "刷新新闻";
             this.btnQC_LoadNews.UseVisualStyleBackColor = true;
             this.btnQC_LoadNews.Click += new System.EventHandler(this.btnQC_LoadNews_Click);
-            // 
-            // rowMergeView1
-            // 
-            this.rowMergeView1.AllowUserToAddRows = false;
-            this.rowMergeView1.AllowUserToDeleteRows = false;
-            this.rowMergeView1.AutoGenerateColumns = false;
-            this.rowMergeView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.rowMergeView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colTitle,
-            this.colMessage,
-            this.colSitting,
-            this.colDel,
-            this.colNewsId});
-            this.rowMergeView1.DataSource = this.newListDTPBindingSource;
-            this.rowMergeView1.Location = new System.Drawing.Point(3, 27);
-            this.rowMergeView1.MergeColumnHeaderBackColor = System.Drawing.SystemColors.Control;
-            this.rowMergeView1.MergeColumnNames = ((System.Collections.Generic.List<string>)(resources.GetObject("rowMergeView1.MergeColumnNames")));
-            this.rowMergeView1.Name = "rowMergeView1";
-            this.rowMergeView1.RowHeadersWidth = 11;
-            this.rowMergeView1.RowTemplate.Height = 23;
-            this.rowMergeView1.Size = new System.Drawing.Size(559, 387);
-            this.rowMergeView1.TabIndex = 27;
-            this.rowMergeView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.rowMergeView1_CellContentClick);
-            this.rowMergeView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.rowMergeView1_CellPainting);
-            // 
-            // colTitle
-            // 
-            this.colTitle.DataPropertyName = "Title";
-            this.colTitle.HeaderText = "标题";
-            this.colTitle.Name = "colTitle";
-            this.colTitle.Width = 240;
-            // 
-            // colMessage
-            // 
-            this.colMessage.DataPropertyName = "Message";
-            this.colMessage.HeaderText = "发布时间";
-            this.colMessage.Name = "colMessage";
-            this.colMessage.Width = 190;
-            // 
-            // colSitting
-            // 
-            this.colSitting.DataPropertyName = "Sitting";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colSitting.DefaultCellStyle = dataGridViewCellStyle1;
-            this.colSitting.HeaderText = "操作";
-            this.colSitting.Name = "colSitting";
-            this.colSitting.ReadOnly = true;
-            this.colSitting.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colSitting.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colSitting.Width = 55;
-            // 
-            // colDel
-            // 
-            this.colDel.DataPropertyName = "Del";
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            this.colDel.DefaultCellStyle = dataGridViewCellStyle2;
-            this.colDel.HeaderText = "操作";
-            this.colDel.Name = "colDel";
-            this.colDel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.colDel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.colDel.Width = 55;
-            // 
-            // colNewsId
-            // 
-            this.colNewsId.DataPropertyName = "NewsId";
-            this.colNewsId.HeaderText = "NewsId";
-            this.colNewsId.Name = "colNewsId";
-            this.colNewsId.Visible = false;
-            // 
-            // newListDTPBindingSource
-            // 
-            this.newListDTPBindingSource.DataSource = typeof(Aide.NewListDTP);
             // 
             // lblNews
             // 
@@ -703,6 +637,26 @@
             this.groupBox4.TabIndex = 28;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "店铺信息";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label4.Location = new System.Drawing.Point(258, 21);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(98, 14);
+            this.label4.TabIndex = 18;
+            this.label4.Text = "QQ: 278815541";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("宋体", 10.5F);
+            this.label13.Location = new System.Drawing.Point(11, 19);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(161, 14);
+            this.label13.TabIndex = 17;
+            this.label13.Text = "联系电话:  18319384011";
             // 
             // label3
             // 
@@ -952,6 +906,7 @@
             // 
             // tabPage7
             // 
+            this.tabPage7.Controls.Add(this.btn_YC_Del);
             this.tabPage7.Controls.Add(this.lbxQuer_YC);
             this.tabPage7.Controls.Add(this.lblYC_YC);
             this.tabPage7.Controls.Add(this.jct_YC_Query);
@@ -962,6 +917,16 @@
             this.tabPage7.TabIndex = 1;
             this.tabPage7.Text = "报价";
             this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // btn_YC_Del
+            // 
+            this.btn_YC_Del.Location = new System.Drawing.Point(317, 185);
+            this.btn_YC_Del.Name = "btn_YC_Del";
+            this.btn_YC_Del.Size = new System.Drawing.Size(75, 23);
+            this.btn_YC_Del.TabIndex = 24;
+            this.btn_YC_Del.Text = "停止";
+            this.btn_YC_Del.UseVisualStyleBackColor = true;
+            this.btn_YC_Del.Click += new System.EventHandler(this.btn_YC_Del_Click);
             // 
             // lbxQuer_YC
             // 
@@ -981,13 +946,6 @@
             this.lblYC_YC.Size = new System.Drawing.Size(0, 12);
             this.lblYC_YC.TabIndex = 22;
             // 
-            // jct_YC_Query
-            // 
-            this.jct_YC_Query.Location = new System.Drawing.Point(3, 3);
-            this.jct_YC_Query.Name = "jct_YC_Query";
-            this.jct_YC_Query.Size = new System.Drawing.Size(399, 215);
-            this.jct_YC_Query.TabIndex = 23;
-            // 
             // tabPage8
             // 
             this.tabPage8.Controls.Add(this.rowMergeView2);
@@ -1000,6 +958,129 @@
             this.tabPage8.TabIndex = 2;
             this.tabPage8.Text = "新闻";
             this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // btnLoadNews
+            // 
+            this.btnLoadNews.Location = new System.Drawing.Point(39, 3);
+            this.btnLoadNews.Name = "btnLoadNews";
+            this.btnLoadNews.Size = new System.Drawing.Size(74, 21);
+            this.btnLoadNews.TabIndex = 27;
+            this.btnLoadNews.Text = "加载新闻";
+            this.btnLoadNews.UseVisualStyleBackColor = true;
+            this.btnLoadNews.Click += new System.EventHandler(this.btnLoadNews_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(140, 3);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(74, 21);
+            this.button2.TabIndex = 25;
+            this.button2.Text = "添加新闻";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // listBox3
+            // 
+            this.listBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBox3.FormattingEnabled = true;
+            this.listBox3.HorizontalScrollbar = true;
+            this.listBox3.ItemHeight = 12;
+            this.listBox3.Location = new System.Drawing.Point(610, 14);
+            this.listBox3.Name = "listBox3";
+            this.listBox3.Size = new System.Drawing.Size(294, 400);
+            this.listBox3.TabIndex = 23;
+            // 
+            // tm_qcjob_news
+            // 
+            this.tm_qcjob_news.Interval = 30000;
+            // 
+            // jct_QC_Query
+            // 
+            this.jct_QC_Query.Location = new System.Drawing.Point(3, 3);
+            this.jct_QC_Query.Name = "jct_QC_Query";
+            this.jct_QC_Query.Size = new System.Drawing.Size(399, 186);
+            this.jct_QC_Query.TabIndex = 21;
+            // 
+            // rowMergeView1
+            // 
+            this.rowMergeView1.AllowUserToAddRows = false;
+            this.rowMergeView1.AllowUserToDeleteRows = false;
+            this.rowMergeView1.AutoGenerateColumns = false;
+            this.rowMergeView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.rowMergeView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colTitle,
+            this.colMessage,
+            this.colSitting,
+            this.colDel,
+            this.colNewsId});
+            this.rowMergeView1.DataSource = this.newListDTPBindingSource;
+            this.rowMergeView1.Location = new System.Drawing.Point(3, 27);
+            this.rowMergeView1.MergeColumnHeaderBackColor = System.Drawing.SystemColors.Control;
+            this.rowMergeView1.MergeColumnNames = ((System.Collections.Generic.List<string>)(resources.GetObject("rowMergeView1.MergeColumnNames")));
+            this.rowMergeView1.Name = "rowMergeView1";
+            this.rowMergeView1.RowHeadersWidth = 11;
+            this.rowMergeView1.RowTemplate.Height = 23;
+            this.rowMergeView1.Size = new System.Drawing.Size(559, 387);
+            this.rowMergeView1.TabIndex = 27;
+            this.rowMergeView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.rowMergeView1_CellContentClick);
+            this.rowMergeView1.CellPainting += new System.Windows.Forms.DataGridViewCellPaintingEventHandler(this.rowMergeView1_CellPainting);
+            // 
+            // colTitle
+            // 
+            this.colTitle.DataPropertyName = "Title";
+            this.colTitle.HeaderText = "标题";
+            this.colTitle.Name = "colTitle";
+            this.colTitle.Width = 240;
+            // 
+            // colMessage
+            // 
+            this.colMessage.DataPropertyName = "Message";
+            this.colMessage.HeaderText = "发布时间";
+            this.colMessage.Name = "colMessage";
+            this.colMessage.Width = 190;
+            // 
+            // colSitting
+            // 
+            this.colSitting.DataPropertyName = "Sitting";
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colSitting.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colSitting.HeaderText = "操作";
+            this.colSitting.Name = "colSitting";
+            this.colSitting.ReadOnly = true;
+            this.colSitting.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colSitting.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colSitting.Width = 55;
+            // 
+            // colDel
+            // 
+            this.colDel.DataPropertyName = "Del";
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            this.colDel.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colDel.HeaderText = "操作";
+            this.colDel.Name = "colDel";
+            this.colDel.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colDel.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.colDel.Width = 55;
+            // 
+            // colNewsId
+            // 
+            this.colNewsId.DataPropertyName = "NewsId";
+            this.colNewsId.HeaderText = "NewsId";
+            this.colNewsId.Name = "colNewsId";
+            this.colNewsId.Visible = false;
+            // 
+            // newListDTPBindingSource
+            // 
+            this.newListDTPBindingSource.DataSource = typeof(Aide.NewListDTP);
+            // 
+            // jct_YC_Query
+            // 
+            this.jct_YC_Query.Location = new System.Drawing.Point(3, 3);
+            this.jct_YC_Query.Name = "jct_YC_Query";
+            this.jct_YC_Query.Size = new System.Drawing.Size(399, 215);
+            this.jct_YC_Query.TabIndex = 23;
             // 
             // rowMergeView2
             // 
@@ -1083,66 +1164,9 @@
             // 
             this.newListDTPBindingSource1.DataSource = typeof(Aide.NewListDTP);
             // 
-            // btnLoadNews
-            // 
-            this.btnLoadNews.Location = new System.Drawing.Point(39, 3);
-            this.btnLoadNews.Name = "btnLoadNews";
-            this.btnLoadNews.Size = new System.Drawing.Size(74, 21);
-            this.btnLoadNews.TabIndex = 27;
-            this.btnLoadNews.Text = "加载新闻";
-            this.btnLoadNews.UseVisualStyleBackColor = true;
-            this.btnLoadNews.Click += new System.EventHandler(this.btnLoadNews_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(140, 3);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(74, 21);
-            this.button2.TabIndex = 25;
-            this.button2.Text = "添加新闻";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // listBox3
-            // 
-            this.listBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listBox3.FormattingEnabled = true;
-            this.listBox3.HorizontalScrollbar = true;
-            this.listBox3.ItemHeight = 12;
-            this.listBox3.Location = new System.Drawing.Point(610, 14);
-            this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(294, 400);
-            this.listBox3.TabIndex = 23;
-            // 
-            // tm_qcjob_news
-            // 
-            this.tm_qcjob_news.Interval = 30000;
-            // 
             // newsBindingSource
             // 
             this.newsBindingSource.DataSource = typeof(Model.News);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.label13.Location = new System.Drawing.Point(11, 19);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(161, 14);
-            this.label13.TabIndex = 17;
-            this.label13.Text = "联系电话:  18319384011";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("宋体", 10.5F);
-            this.label4.Location = new System.Drawing.Point(258, 21);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(98, 14);
-            this.label4.TabIndex = 18;
-            this.label4.Text = "QQ: 278815541";
             // 
             // FormMain
             // 
@@ -1153,7 +1177,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "推送助手";
+            this.Text = "推送助理-汽车网络营销智能维护软件";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormLogin_FormClosing);
             this.Load += new System.EventHandler(this.FormLogin_Load);
             this.tabControl1.ResumeLayout(false);
@@ -1167,8 +1191,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgvOrder)).EndInit();
             this.tabPage4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.rowMergeView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.newListDTPBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -1182,6 +1204,8 @@
             this.tabPage7.ResumeLayout(false);
             this.tabPage7.PerformLayout();
             this.tabPage8.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.rowMergeView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.newListDTPBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.rowMergeView2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.newListDTPBindingSource1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.newsBindingSource)).EndInit();
@@ -1286,6 +1310,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn colYC_NewsID;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button btn_QC_Del;
+        private System.Windows.Forms.Button btn_YC_Del;
     }
 }
 

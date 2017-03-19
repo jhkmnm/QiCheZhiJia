@@ -29,9 +29,9 @@ namespace Aide
 
         //打码登录
         const string key = "087a9b3cdec0c2597df237916ebfff9a";
-        const string username = "";
-        const string password = "";
-        static int AutomaticCount = 20;        
+        const string username = "122552967";
+        const string password = "18923463698";
+        static int AutomaticCount = 20;
 
         /*
          * 登录后,判断用户类型,如果是试用,抢单判断试用时间,新闻、报价判断已经报价过的次数
@@ -57,6 +57,7 @@ namespace Aide
             }
             dgvOrder.AutoGenerateColumns = false;
             rowMergeView1.AutoGenerateColumns = false;
+            tabControl2.TabPages.Remove(tabPage8);
         }
 
         /// <summary>
@@ -307,9 +308,9 @@ namespace Aide
             }
             if (canQuery)
             {
-                if (Tool.site == Aide.Site.Qiche)
+                if (Tool.site == Aide.Site.Qiche && user.SiteName == "汽车之家")
                     lbl_QC_QueryNum.Text = user.Query ? "按到期时间计算" : user.QueryNum.ToString();
-                else
+                else if (Tool.site == Aide.Site.Yiche && user.SiteName == "易车网")
                     label16.Text = user.Query ? "按到期时间计算" : user.QueryNum.ToString();
                 LoadJob_Query();
             }
@@ -507,14 +508,19 @@ namespace Aide
                     lbxSendOrder.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + vr.Message);
                     lbxSendOrder.TopIndex = lbxSendOrder.Items.Count - 1;
                 }
-                bool isOver = (DateTime.Now - Tool.userInfo_qc.DueTime.Value).TotalSeconds >= 0;
-                CheckSendOrder(Tool.userInfo_qc, isOver);
+                if(vr.Ref)
+                {
+                    bool isOver = (DateTime.Now - Tool.userInfo_qc.DueTime.Value).TotalSeconds >= 0;
+                    CheckSendOrder(Tool.userInfo_qc, isOver);
+                }                
             }));
         }
 
         private void btnSendOrder_Click(object sender, EventArgs e)
         {
             btnSendOrder.Enabled = false;
+            btnCondition.Enabled = false;
+            btnRef.Enabled = false;
             SendOrder_QC();
         }
 
@@ -545,6 +551,8 @@ namespace Aide
             {
                 th_qc.Abort();
                 btnSendOrder.Enabled = true;
+                btnCondition.Enabled = true;
+                btnRef.Enabled = true;
             }            
         }
         #endregion
@@ -600,10 +608,11 @@ namespace Aide
                 if (vr.Result)
                     lbxSendOrder_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + vr.Message);
                 lbxSendOrder_YC.TopIndex = lbxSendOrder_YC.Items.Count - 1;
-
-                bool isOver = (DateTime.Now - Tool.userInfo_yc.DueTime.Value).TotalSeconds >= 0;
-                CheckSendOrder(Tool.userInfo_yc, isOver);
-                //LoadUser(Tool.userInfo_yc);
+                if (vr.Ref)
+                {
+                    bool isOver = (DateTime.Now - Tool.userInfo_yc.DueTime.Value).TotalSeconds >= 0;
+                    CheckSendOrder(Tool.userInfo_yc, isOver);
+                }
             }));
         }
 
@@ -631,6 +640,7 @@ namespace Aide
                 jobname = QC_Price_JobName;
                 action = SavePrice_QC;
                 jc = jct_QC_Query;
+                jc.SetJobEvent -= jct_QC_Query_SetJobEvent;
                 jc.SetJobEvent += jct_QC_Query_SetJobEvent;
             }
             else
@@ -638,6 +648,7 @@ namespace Aide
                 jobname = YC_Price_JobName;
                 action = SavePrice_YC;
                 jc = jct_YC_Query;
+                jc.SetJobEvent -= jct_YC_Query_SetJobEvent;
                 jc.SetJobEvent += jct_YC_Query_SetJobEvent;
             }
             var job = dal.GetJob(jobname);
@@ -662,10 +673,8 @@ namespace Aide
                 Job job = dal.GetJob(jobName);
                 if (job.JobType == 1 || !string.IsNullOrWhiteSpace(job.Time))
                 {
-                    Invoke(new Action(() => jct_QC_Query.lblState.Text = ""));
+                    Invoke(new Action(() => jct_QC_Query.lblState.Text = job.Message()));
                 }
-                job.ExecTime = DateTime.Now.ToString();
-                dal.AddJob(job);
                 dal.AddJobLog(new JobLog { JobName = jobName, Time = DateTime.Now.ToString("yyyy-MM-dd") });
                 if (result.Result)
                 {
@@ -680,17 +689,20 @@ namespace Aide
             {
                 Invoke(new Action(() =>
                 {
-                    lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":程序出错，请重新登录");
+                    lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":自动登录失败，请重新登录");
                     lbxQuer.TopIndex = lbxQuer.Items.Count - 1;
                 }));
                 Tool.aideTimer.Dequeue(jobName);
             }
         }
 
-        void jct_QC_Query_SetJobEvent(Job job)
+        void jct_QC_Query_SetJobEvent(Job job, bool add)
         {
-            job.JobName = QC_Price_JobName;
-            dal.AddJob(job);
+            if(add)
+            {
+                job.JobName = QC_Price_JobName;
+                dal.AddJob(job);
+            }
             Tool.aideTimer.Enqueue(new AideJobs { Job = job, JobAction = SavePrice_QC });
         }
         #endregion
@@ -708,10 +720,8 @@ namespace Aide
             Job job = dal.GetJob(jobName);
             if (job.JobType == 1 || !string.IsNullOrWhiteSpace(job.Time))
             {
-                Invoke(new Action(() => jct_YC_Query.lblState.Text = ""));
+                Invoke(new Action(() => jct_YC_Query.lblState.Text = job.Message()));
             }
-            job.ExecTime = DateTime.Now.ToString();
-            dal.AddJob(job);
             if (result.Result)
             {
                 Tool.service.UpdateLastQuoteTime(Tool.userInfo_yc.Id);
@@ -722,10 +732,13 @@ namespace Aide
             }
         }
 
-        private void jct_YC_Query_SetJobEvent(Job job)
+        private void jct_YC_Query_SetJobEvent(Job job, bool add)
         {
-            job.JobName = YC_Price_JobName;
-            dal.AddJob(job);
+            if (add)
+            {
+                job.JobName = YC_Price_JobName;
+                dal.AddJob(job);
+            }            
             Tool.aideTimer.Enqueue(new AideJobs { Job = job, JobAction = SavePrice_YC });
         }
         #endregion
@@ -758,10 +771,7 @@ namespace Aide
                     {
                         lblNews.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result);
                         lblNews.TopIndex = lblNews.Items.Count - 1;
-                    }));
-                    var job = dal.GetJob(newsID);
-                    job.ExecTime = DateTime.Now.ToString();
-                    dal.AddJob(job);
+                    }));                    
                     dal.AddJobLog(new JobLog { JobName = newsID, Time = DateTime.Now.ToString("yyyy-MM-dd") });
                     selected.Message = "已执行";
                     selected.Del = "";
@@ -778,7 +788,7 @@ namespace Aide
                 {
                     Invoke(new Action(() =>
                     {
-                        lblNews.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":程序出错，请重新登录");
+                        lblNews.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":自动登录失败，请重新登录");
                         lblNews.TopIndex = lblNews.Items.Count - 1;
                     }));
                     Tool.aideTimer.Dequeue(newsID);
@@ -922,9 +932,6 @@ namespace Aide
                     listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result);
                     listBox3.TopIndex = lblNews.Items.Count - 1;
                 }));
-                var job = dal.GetJob(newsID);
-                job.ExecTime = DateTime.Now.ToString();
-                dal.AddJob(job);
                 dal.AddJobLog(new JobLog { JobName = newsID, Time = DateTime.Now.ToString("yyyy-MM-dd") });
                 selected.Message = "已执行";
                 selected.Del = "";
@@ -947,6 +954,71 @@ namespace Aide
                 LoadNews_YC();
             }
         }
+
+        private void btn_YC_Del_Click(object sender, EventArgs e)
+        {
+            dal.DelJob(YC_Price_JobName);
+            Tool.aideTimer.Dequeue(YC_Price_JobName);
+            jct_YC_Query.InitControl();
+        }
+
+        private void btn_QC_Del_Click(object sender, EventArgs e)
+        {
+            dal.DelJob(QC_Price_JobName);
+            Tool.aideTimer.Dequeue(QC_Price_JobName);
+            jct_QC_Query.InitControl();            
+        }
+
+        //private void button1_Click(object sender, EventArgs e)
+        //{
+        //    List<TextValue> pro = new List<TextValue>();
+        //    pro.AddRange(new TextValue[] {
+        //        new TextValue { Text="安徽", Value="1" },
+        //        new TextValue { Text="北京", Value="2" },
+        //        new TextValue {Text="福建", Value="3"},
+        //        new TextValue {Text ="甘肃", Value="4" },
+        //        new TextValue {Text="广东", Value="5"},
+        //        new TextValue {Text="广西", Value="6"},
+        //        new TextValue {Text="贵州", Value="7"},
+        //        new TextValue {Text="海南", Value="8"},
+        //    new TextValue {Text="河北", Value="9"},
+        //    new TextValue {Text="河南", Value="10"},
+        //    new TextValue {Text="黑龙江", Value="11"},
+        //    new TextValue {Text="湖北", Value="12"},
+        //    new TextValue {Text="湖南", Value="13"},
+        //    new TextValue {Text="吉林", Value="14"},
+        //    new TextValue {Text="江苏", Value="15"},
+        //    new TextValue {Text="江西", Value="16"},
+        //    new TextValue {Text="辽宁", Value="17"},
+        //    new TextValue {Text="内蒙古", Value="18"},
+        //    new TextValue {Text="宁夏", Value="19"},
+        //    new TextValue {Text="青海", Value="20"},
+        //    new TextValue {Text="山东", Value="21"},
+        //    new TextValue {Text="山西", Value="22"},
+        //    new TextValue {Text="陕西", Value="23"},
+        //    new TextValue {Text="上海", Value="24"},
+        //    new TextValue {Text="四川", Value="25"},
+        //    new TextValue {Text="天津", Value="26"},
+        //    new TextValue {Text="西藏", Value="27"},
+        //    new TextValue {Text="新疆", Value="28"},
+        //    new TextValue {Text="云南", Value="29"},
+        //    new TextValue {Text="浙江", Value="30"},
+        //    new TextValue {Text="重庆", Value="31"},
+        //    new TextValue {Text="日喀则", Value="2703" } });
+
+        //    //pro.ForEach(i => dal.AddPro(i.Text, i.Value));
+
+        //    comboBox1.DataSource = pro;
+        //    comboBox1.DisplayMember = "Text";
+        //    comboBox1.ValueMember = "Value";
+        //}
+
+        //private void button3_Click(object sender, EventArgs e)
+        //{
+        //    var v = yiche.LoadCityByPro("100005907", comboBox1.SelectedValue.ToString());
+        //    var city = JsonConvert.DeserializeObject<List<TextValue>>(v.DocumentNode.OuterHtml);
+        //    city.ForEach(i => dal.AddCity(comboBox1.Text, comboBox1.SelectedValue.ToString(), i.Text, i.Value));
+        //}
 
         private void btnLoadNews_Click(object sender, EventArgs e)
         {
@@ -1072,45 +1144,54 @@ namespace Aide
     public class AideTimer
     {
         List<AideJobs> jobList = new List<AideJobs>();
+        DAL dal = new DAL();
+        bool isbusy = false;
 
         public void Enqueue(AideJobs aj)
         {
+            isbusy = true;
             var item = jobList.Find(w => w.Job.JobName == aj.Job.JobName);
             if (item != null)
-            {
-                aj.Job.ExecTime = item.Job.ExecTime;
-                item = aj;
-            }
-            else
-                jobList.Add(aj);
+                Dequeue(aj.Job.JobName);
+            jobList.Add(aj);
+            isbusy = false;
         }
 
         public void Dequeue(string jobname)
         {
+            isbusy = true;
             var item = jobList.Find(w => w.Job.JobName == jobname);
             if(item != null)
                 jobList.Remove(item);
+            isbusy = false;
         }
 
         public void Run()
         {
             while (true)
             {
-                if (jobList.Count > 0)
+                if (!isbusy)
                 {
-                    for (int i = 0; i < jobList.Count; i++)
+                    if (jobList.Count > 0)
                     {
-                        if (jobList[i].JobAction != null)
+                        for (int i = 0; i < jobList.Count; i++)
                         {
-                            if(ExecJob(jobList[i].Job, jobList[i].JobAction) && jobList[i].Job.JobType == 1)
+                            try
                             {
-                                jobList.Remove(jobList[i]);
-                                i--;
+                                if (jobList[i].JobAction != null)
+                                {
+                                    if (ExecJob(jobList[i].Job, jobList[i].JobAction) && jobList[i].Job.JobType == 1)
+                                    {
+                                        jobList.Remove(jobList[i]);
+                                        i--;
+                                    }
+                                }
                             }
+                            catch { }
                         }
                     }
                 }
-                Thread.Sleep(1000 * 10);
+                Thread.Sleep(1000 * 5);
             }
         }
 
@@ -1120,7 +1201,7 @@ namespace Aide
             if (job.JobType == 1)
             {
                 DateTime dt = Convert.ToDateTime(job.JobDate + " " + job.Time);
-                if ((dtnow - dt).TotalSeconds >= 0 && (dtnow - dt).TotalSeconds <= 10 && string.IsNullOrWhiteSpace(job.ExecTime))
+                if ((dtnow - dt).TotalSeconds >= 0 && (dtnow - dt).TotalSeconds <= 5 && string.IsNullOrWhiteSpace(job.ExecTime))
                 {
                     return true;
                 }
@@ -1130,7 +1211,7 @@ namespace Aide
                 if (!string.IsNullOrWhiteSpace(job.Time))
                 {
                     DateTime dt = Convert.ToDateTime(job.Time);
-                    if ((dtnow - dt).TotalSeconds >= 0 && (dtnow - dt).TotalSeconds <= 10 && (string.IsNullOrWhiteSpace(job.ExecTime) || Convert.ToDateTime(job.ExecTime).Date != dtnow.Date))
+                    if ((dtnow - dt).TotalSeconds >= 0 && (dtnow - dt).TotalSeconds <= 5 && (string.IsNullOrWhiteSpace(job.ExecTime) || Convert.ToDateTime(job.ExecTime).Date != dtnow.Date))
                     {
                         return true;
                     }
@@ -1158,6 +1239,7 @@ namespace Aide
             if(CheckJob(job))
             {
                 job.ExecTime = DateTime.Now.ToString();
+                dal.UpJobExecTime(job.JobName);
                 action(job.JobName);
                 return true;
             }

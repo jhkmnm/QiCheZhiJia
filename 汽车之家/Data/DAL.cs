@@ -18,6 +18,34 @@ public class DAL
     {
         return DB.Context.Update(area);
     }
+
+    public List<Area> GetProvince()
+    {
+        return DB.Context.From<Area>()
+            .Select(Area._.ProId, Area._.Pro)
+            .Where(w => w.Site == "Yiche")
+            .Distinct()
+            .ToList();
+    }
+    public int AddPro(string pro, string proid)
+    {
+        var p = DB.Context.From<Area>()
+            .Where(w => w.Pro == pro && w.Site == "Yiche").First();
+        if(p == null)
+        {
+            
+        }
+        else
+        {            
+            DB.Context.Update<Area>(Area._.ProId, proid, Area._.Site == "Yiche" && Area._.Pro == pro);
+        }
+        return 0;
+    }
+
+    public int AddCity(string pro, string proid, string city, string cityid)
+    {
+        return DB.Context.Insert(new Area { City = city, CityId = cityid, IsChecked = true, Pro = pro, ProId = proid, Site = "Yiche" });
+    }
     #endregion
 
     #region Nicks
@@ -154,16 +182,19 @@ public class DAL
     #region Job
     public int AddJob(Job job)
     {
-        var uptModel = DB.Context.From<Job>().Where(a => a.JobName == job.JobName).ToFirst();
-        if(uptModel == null)
+        DelJob(job.JobName);
+        return DB.Context.Insert(job);
+    }
+
+    public int UpJobExecTime(string jobName)
+    {
+        var uptModel = DB.Context.From<Job>().Where(a => a.JobName == jobName).ToFirst();
+        if (uptModel != null)
         {
-            return DB.Context.Insert(job);
-        }
-        else
-        {
-            uptModel = job;
+            uptModel.ExecTime = DateTime.Now.ToString();
             return DB.Context.Update(uptModel);
         }
+        return 0;
     }
 
     public Job GetJob(string jobName)

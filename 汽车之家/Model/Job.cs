@@ -269,7 +269,7 @@ public static class FuncExtend
             {
                 DateTime dt = Convert.ToDateTime(job.JobDate + " " + job.Time);
                 dt = Convert.ToDateTime(job.Time);
-                if (!string.IsNullOrWhiteSpace(job.ExecTime))
+                if (!string.IsNullOrWhiteSpace(job.ExecTime) && Convert.ToDateTime(job.ExecTime).Date == dtnow.Date)
                     return "已执行";
                 else if ((dtnow - dt).TotalSeconds > 0)
                     return "已过期";

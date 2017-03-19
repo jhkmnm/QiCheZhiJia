@@ -7,15 +7,12 @@ namespace Aide
     public partial class JobControl : UserControl
     {
         Job job;
-        public delegate void delSetJob(Job job);
+        public delegate void delSetJob(Job job, bool add);
         public event delSetJob SetJobEvent;
 
-        public void SendResult(Job job)
+        public void SendResult(Job job, bool add)
         {
-            if(SetJobEvent != null)
-            {
-                SetJobEvent(job);
-            }            
+            SetJobEvent?.Invoke(job, add);
         }
 
         public JobControl()
@@ -30,6 +27,17 @@ namespace Aide
             this.job = job;
             if(this.job != null)
                 InitJob();
+        }
+
+        public void InitControl()
+        {
+            ddlPalnType.SelectedIndex = 0;
+            ddlQuote_QC.SelectedIndex = 0;
+            rbtQuote_A_QC.Checked = false;
+            rbtQuote_B_QC.Checked = false;
+            panel4.Enabled = false;
+            panel3.Enabled = false;
+            lblState.Text = "未设置";
         }
 
         private void InitJob()
@@ -54,13 +62,13 @@ namespace Aide
                 {
                     p_A_QC.Enabled = false;
                     p_B_QC.Enabled = true;
-                    rbtQuote_B_QC.Checked = true;                    
+                    rbtQuote_B_QC.Checked = true;
                     ddlQuote_QC.SelectedIndex = job.Space.Value / 1000 / 60 / 60 >= 1 ? 1 : 0;
                     nudQuote_QC.Value = ddlQuote_QC.SelectedIndex == 1 ? job.Space.Value / 1000 / 60 / 60 : job.Space.Value / 1000 / 60;
                     dtpQuote_S_QC.Value = Convert.ToDateTime(job.StartTime);
                     dtpQuote_E_QC.Value = Convert.ToDateTime(job.EndTime);
                 }
-                SendResult(job);
+                SendResult(job, false);
             }
         }
 
@@ -75,6 +83,7 @@ namespace Aide
 
             if(job == null)
                 job = new Job();
+            job.ExecTime = string.Empty;
             if (ddlPalnType.Text == "执行一次")
             {
                 job.JobType = 1;
@@ -112,6 +121,7 @@ namespace Aide
                         MessageBox.Show("结束时间必须大于开始时间");
                         return;
                     }
+                    job.Time = string.Empty;
                     job.StartTime = dtpQuote_S_QC.Value.ToString("HH:mm:ss");
                     job.EndTime = dtpQuote_E_QC.Value.ToString("HH:mm:ss");
                     int interval = ddlQuote_QC.Text == "分钟" ? Convert.ToInt32(nudQuote_QC.Value) * 60 * 1000 : Convert.ToInt32(nudQuote_QC.Value) * 60 * 60 * 1000;
@@ -119,7 +129,7 @@ namespace Aide
                     lblState.Text = string.Format("在每天的{0}到{1}，每隔{2}{3}执行一次", job.StartTime, job.EndTime, nudQuote_QC.Value, ddlQuote_QC.Text);
                 }
             }
-            SendResult(job);
+            SendResult(job, true);
         }
 
         private void ddlPalnType_SelectedIndexChanged(object sender, EventArgs e)

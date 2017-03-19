@@ -218,7 +218,7 @@
             this.Controls.Add(this.label2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormLogin";
-            this.Text = "登录";
+            this.Text = "汽车网络营销智能维护客户端";
             ((System.ComponentModel.ISupportInitialize)(this.pbCode)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
