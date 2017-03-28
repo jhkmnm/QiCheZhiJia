@@ -44,6 +44,8 @@ namespace Aide.Service {
         
         private System.Threading.SendOrPostCallback GetDicOperationCompleted;
         
+        private System.Threading.SendOrPostCallback GetDicByNameOperationCompleted;
+        
         private System.Threading.SendOrPostCallback UpdateDicOperationCompleted;
         
         private System.Threading.SendOrPostCallback UpdateLoginLogByLogOutOperationCompleted;
@@ -120,6 +122,9 @@ namespace Aide.Service {
         
         /// <remarks/>
         public event GetDicCompletedEventHandler GetDicCompleted;
+        
+        /// <remarks/>
+        public event GetDicByNameCompletedEventHandler GetDicByNameCompleted;
         
         /// <remarks/>
         public event UpdateDicCompletedEventHandler UpdateDicCompleted;
@@ -354,6 +359,35 @@ namespace Aide.Service {
             if ((this.GetDicCompleted != null)) {
                 System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
                 this.GetDicCompleted(this, new GetDicCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
+            }
+        }
+        
+        /// <remarks/>
+        [System.Web.Services.Protocols.SoapDocumentMethodAttribute("http://tempuri.org/GetDicByName", RequestNamespace="http://tempuri.org/", ResponseNamespace="http://tempuri.org/", Use=System.Web.Services.Description.SoapBindingUse.Literal, ParameterStyle=System.Web.Services.Protocols.SoapParameterStyle.Wrapped)]
+        public Dictionaries GetDicByName(string key) {
+            object[] results = this.Invoke("GetDicByName", new object[] {
+                        key});
+            return ((Dictionaries)(results[0]));
+        }
+        
+        /// <remarks/>
+        public void GetDicByNameAsync(string key) {
+            this.GetDicByNameAsync(key, null);
+        }
+        
+        /// <remarks/>
+        public void GetDicByNameAsync(string key, object userState) {
+            if ((this.GetDicByNameOperationCompleted == null)) {
+                this.GetDicByNameOperationCompleted = new System.Threading.SendOrPostCallback(this.OnGetDicByNameOperationCompleted);
+            }
+            this.InvokeAsync("GetDicByName", new object[] {
+                        key}, this.GetDicByNameOperationCompleted, userState);
+        }
+        
+        private void OnGetDicByNameOperationCompleted(object arg) {
+            if ((this.GetDicByNameCompleted != null)) {
+                System.Web.Services.Protocols.InvokeCompletedEventArgs invokeArgs = ((System.Web.Services.Protocols.InvokeCompletedEventArgs)(arg));
+                this.GetDicByNameCompleted(this, new GetDicByNameCompletedEventArgs(invokeArgs.Results, invokeArgs.Error, invokeArgs.Cancelled, invokeArgs.UserState));
             }
         }
         
@@ -1197,6 +1231,32 @@ namespace Aide.Service {
             get {
                 this.RaiseExceptionIfNecessary();
                 return ((Dictionaries[])(this.results[0]));
+            }
+        }
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
+    public delegate void GetDicByNameCompletedEventHandler(object sender, GetDicByNameCompletedEventArgs e);
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Web.Services", "4.6.1038.0")]
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.ComponentModel.DesignerCategoryAttribute("code")]
+    public partial class GetDicByNameCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        internal GetDicByNameCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        /// <remarks/>
+        public Dictionaries Result {
+            get {
+                this.RaiseExceptionIfNecessary();
+                return ((Dictionaries)(this.results[0]));
             }
         }
     }

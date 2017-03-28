@@ -3,7 +3,7 @@ using Dos.ORM;
 
 class DB
 {
-    public static readonly DbSession Context = new DbSession("AccCon");
+    public static readonly DbSession Context = new DbSession("SqliteConn");
 
     static DB()
     {

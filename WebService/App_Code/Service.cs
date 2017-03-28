@@ -64,15 +64,11 @@ public class Service : System.Web.Services.WebService
             }
 
             userResult.Data.DueTime = dal.UpdateLoginLogByLogin(userResult.Data.Id);
+            var num = dal.GetQueryAndNewsNum(userResult.Data.Id);
+            userResult.Data.QueryNum = num[0];
+            userResult.Data.NewsNum = num[1];
 
-            if (userResult.Data.UserType == 0)
-            {
-                //如果是试用用户获取剩余的报价和新闻次数
-                var num = dal.GetQueryAndNewsNum(userResult.Data.Id);
-                userResult.Data.QueryNum = num[0];
-                userResult.Data.NewsNum = num[1];
-            }
-            else
+            if (userResult.Data.UserType != 0)
             {
                 if (!dal.CheckDueTime(user.UserName, user.Company, user.SiteName))
                 {
@@ -137,6 +133,12 @@ public class Service : System.Web.Services.WebService
     public List<Dictionaries> GetDic()
     {
         return dal.GetDic();
+    }
+
+    [WebMethod]
+    public Dictionaries GetDicByName(string key)
+    {
+        return dal.GetDic(key);
     }
 
     [WebMethod]

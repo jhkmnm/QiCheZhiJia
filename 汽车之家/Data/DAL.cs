@@ -14,6 +14,13 @@ public class DAL
             .ToList();
     }
 
+    public List<Area> GetAreaBySiteChecked(string site)
+    {
+        return DB.Context.From<Area>()
+            .Where(w => w.Site == site && w.IsChecked == true)
+            .ToList();
+    }
+
     public int UpdateAreaChecked(List<Area> area)
     {
         return DB.Context.Update(area);
@@ -151,6 +158,11 @@ public class DAL
     {
         var v = DB.Context.From<Orders>().Where(w => w.Id == id);
         return v.Count() > 0;
+    }
+
+    public List<Orders> GetOrderList()
+    {
+        return DB.Context.From<Orders>().Select(s => s.Id).ToList();
     }
     #endregion
 

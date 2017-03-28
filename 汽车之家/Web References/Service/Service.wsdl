@@ -151,6 +151,20 @@
           </s:extension>
         </s:complexContent>
       </s:complexType>
+      <s:element name="GetDicByName">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDicByNameResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetDicByNameResult" type="tns:Dictionaries" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="UpdateDic">
         <s:complexType>
           <s:sequence>
@@ -340,6 +354,12 @@
   <wsdl:message name="GetDicSoapOut">
     <wsdl:part name="parameters" element="tns:GetDicResponse" />
   </wsdl:message>
+  <wsdl:message name="GetDicByNameSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDicByName" />
+  </wsdl:message>
+  <wsdl:message name="GetDicByNameSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDicByNameResponse" />
+  </wsdl:message>
   <wsdl:message name="UpdateDicSoapIn">
     <wsdl:part name="parameters" element="tns:UpdateDic" />
   </wsdl:message>
@@ -422,6 +442,10 @@
     <wsdl:operation name="GetDic">
       <wsdl:input message="tns:GetDicSoapIn" />
       <wsdl:output message="tns:GetDicSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDicByName">
+      <wsdl:input message="tns:GetDicByNameSoapIn" />
+      <wsdl:output message="tns:GetDicByNameSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="UpdateDic">
       <wsdl:input message="tns:UpdateDicSoapIn" />
@@ -518,6 +542,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetDic">
       <soap:operation soapAction="http://tempuri.org/GetDic" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDicByName">
+      <soap:operation soapAction="http://tempuri.org/GetDicByName" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -665,6 +698,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetDic">
       <soap12:operation soapAction="http://tempuri.org/GetDic" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDicByName">
+      <soap12:operation soapAction="http://tempuri.org/GetDicByName" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

@@ -11,6 +11,7 @@ using HAP = HtmlAgilityPack;
 using CsharpHttpHelper.Enum;
 using System.IO;
 using System.Threading;
+using log4net;
 
 namespace Aide
 {
@@ -40,8 +41,8 @@ namespace Aide
         /// <summary>
         /// 获取公共订单
         /// </summary>
-        string publicOrder = "http://ics.autohome.com.cn/Dms/Order/GetPublicOrders?kis=9DF3FD033BAD49F2AD12724D65DB11A9&appid=dms&provinceid=0&cityid=0&factoryID=0&seriesid=0&logicType=0&pageindex=1&pagesize=200&kts=2644691E-91BE-4F2F-97B3-57DD0316D52C";
-
+        string publicOrder = "http://ics.autohome.com.cn/Dms/Order/GetPublicOrders?kis=9DF3FD033BAD49F2AD12724D65DB11A9&appid=dms&provinceid=0&cityid=0&factoryID=0&seriesid=0&logicType=0&pageindex=1&pagesize=2000&kts=2644691E-91BE-4F2F-97B3-57DD0316D52C";
+        ILog logger;
         string onsalelist = "http://ics.autohome.com.cn/Price/CarPrice/GetOnSaleList?dealerId={0}";
 
         #region 资讯模板
@@ -60,6 +61,7 @@ namespace Aide
 
         public QiCheZhiJia(string js)
         {
+            logger = LogManager.GetLogger(typeof(QiCheZhiJia));
             StrJS = js;
         }
 
@@ -117,7 +119,7 @@ namespace Aide
             HttpResult result = http.GetHtml(item);
 
             if(result.Cookie == null)
-                return "网络异常，请关掉程序重试";
+                return "网络异常，请关掉程序重试, 详询QQ：278815541。";
 
             cookie = HttpHelper.GetSmallCookie(result.Cookie);
 
@@ -138,7 +140,7 @@ namespace Aide
             }
             catch(Exception ex)
             {
-                return "网络异常，请关掉程序重试";
+                return "网络异常，请关掉程序重试, 详询QQ：278815541。";
             }            
         }
 
@@ -265,19 +267,19 @@ namespace Aide
 
             if (strhtml.IndexOf("8|1") != -1)
             {
-                result.Message = "验证码输入有误，请重新输入！";
+                result.Message = "验证码输入有误，请重新输入！详询QQ：278815541。";
             }
             else if (strhtml.IndexOf("3|1") != -1)
             {
-                result.Message = "该用户帐户信息错误或访问受限";
+                result.Message = "该用户帐户信息错误或访问受限!详询QQ：278815541。";
             }
             else if (strhtml.IndexOf("2|1") != -1)
             {
-                result.Message = "用户不存在或者密码错误";            
+                result.Message = "用户不存在或者密码错误!详询QQ：278815541。";            
             }
             else if (strhtml.IndexOf("5|1") != -1)
             {
-                result.Message = "验证码过期";
+                result.Message = "验证码过期!详询QQ：278815541。";
             }
             else if (strhtml == "0")
             {
@@ -286,8 +288,8 @@ namespace Aide
             }
             else
             {
-                result.Message = "登录异常！建议重试！";
-            }            
+                result.Message = "登录异常！建议重试！详询QQ：278815541。";
+            }
 
             return result;
         }
@@ -325,31 +327,55 @@ namespace Aide
         public void SendOrder()
         {
             ViewResult result = new ViewResult();
-            areaList = dal.GetArea(Tool.site.ToString());
+            areaList = dal.GetAreaBySiteChecked(Tool.site.ToString());//dal.GetArea(Tool.site.ToString());
+            var orderList = dal.GetOrderList();
+            var ordertype = dal.GetOrderTypes(Tool.site.ToString());
+            var spec = dal.GetSpecs();
             while (true)
             {
                 try
                 {                    
-                    var orders = GetNewOrder();
+                    var neworders = GetNewOrder();
                     result.Result = false;
-                    if (orders.Count > 0)
+                    if (neworders.Count > 0)
                     {
-                        SendResult(new ViewResult { Exit = false, Ref = false, Result = true, Message = "搜索到" + orders.Count + "条订单" });
-                        orders.ForEach(f =>
+                        SendResult(new ViewResult { Exit = false, Ref = false, Result = true, Message = "搜索到" + neworders.Count + "条订单" });
+                        
+                        if(spec.Any(w => !w.IsCheck))
                         {
-                            if (!dal.IsHaveOrder(f.Id))
-                            {                                
-                                if (CheckOrder(f))
+                            neworders = (from a in neworders
+                                        join b in spec on a.SpecName equals b.SPecName
+                                        select a).ToList();
+                        }
+
+                        if(ordertype.Any(w => !w.IsCheck))
+                        {
+                            neworders = (from a in neworders
+                                         from b in ordertype
+                                         where b.IsCheck && ((a.OrderType == 4 && b.ID == 2) || (b.ID == 1))
+                                         select a).Distinct().ToList();
+                        }
+
+                        neworders = (from a in neworders
+                                     from b in areaList
+                                     where a.IntentionCityName.Trim() == b.City || a.CityName.Trim() == b.City
+                                     select a).Distinct().ToList();
+
+                        neworders.ForEach(f =>
+                        {
+                            if (!orderList.Any(w => w.Id == f.Id))
+                            {
+                                dal.AddOrders(new Orders { CustomerName = f.CustomerName, Id = f.Id });
+                                orderList.Add(new Orders { Id = f.Id });
+                                var nick = dal.GetNick();
+                                if (SendOrder(nick, f))
                                 {
-                                    dal.AddOrders(new Orders { CustomerName = f.CustomerName, Id = f.Id });
-                                    var nick = dal.GetNick();
-                                    if (SendOrder(nick, f))
-                                    {
-                                        dal.UpdateOrderSend(f.Id, nick.Id);
-                                        result.Message = string.Format("系统事件{0}将客户分配给销售顾问{1}{2}", DateTime.Now.ToString(), nick.Nick, Environment.NewLine);
-                                        result.Result = true;
-                                        SendResult(result);
-                                    }
+                                    logger.Info(string.Format("匹配订单:[客户名称:{0},上牌地区:{1},意向地区:{2},订单类型:{3},意向车型:{4},分配给销售顾问:{5}", f.CustomerName, f.CityName, f.IntentionCityName, f.OrderType == 4 ? "400" : "订单", f.SpecName, nick.Nick));
+                                    dal.UpdateOrderSend(f.Id, nick.Id);
+                                    Tool.service.UpdateLastAllotTime(Tool.userInfo_qc.Id);
+                                    result.Message = string.Format("将客户分配给销售顾问{0}{1}", nick.Nick, Environment.NewLine);
+                                    result.Result = true;
+                                    SendResult(result);
                                 }
                             }
                         });
@@ -415,10 +441,10 @@ namespace Aide
                     var dtnow = DateTime.Now;
                     if ((dtnow - Convert.ToDateTime("00:00:00")).TotalSeconds <= 10)
                         return;
-                    else
-                        Thread.Sleep(1000 * 3);
+                    //else
+                    //    Thread.Sleep(1000 * 3);
                 }
-                catch
+                catch(Exception ex)
                 {
                     return;
                 }
@@ -432,7 +458,7 @@ namespace Aide
         /// <returns></returns>
         private bool CheckOrder(PublicOrder order)
         {
-            var result = false;            
+            var result = false;
             if (areaList.Any(w => w.IsChecked && (w.City == order.IntentionCityName.Trim() || w.City == order.CityName.Trim())))
             {
                 result = true;

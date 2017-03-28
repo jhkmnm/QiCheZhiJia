@@ -202,11 +202,11 @@ namespace Aide
             var strhtml = htmlDoc.DocumentNode.OuterHtml;
             if (strhtml.IndexOf("验证码") != -1)
             {
-                result.Message = "验证码输入有误";
+                result.Message = "验证码输入有误!详询QQ：278815541。";
             }
             else if (strhtml.IndexOf("账号或密码不正确") != -1)
             {
-                result.Message = "账号或密码不正确，请重新登录！";
+                result.Message = "账号或密码不正确，请重新登录！详询QQ：278815541。";
             }
             else
             {
@@ -334,7 +334,7 @@ namespace Aide
             }
             catch(Exception ex)
             {
-                vresult.Message = "登录失败，请重试";
+                vresult.Message = "登录失败，请重试!详询QQ：278815541。";
                 vresult.Exit = true;
                 return vresult;
             }
@@ -453,7 +453,7 @@ namespace Aide
                 Method = "POST",
                 UserAgent = "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)",
             };
-            return GetHtml(item);            
+            return GetHtml(item);
         }
 
         private HtmlDocument LoadOrder()
@@ -549,7 +549,8 @@ namespace Aide
                             {
                                 dal.UpdateOrderSend(0, Tool.userInfo_yc.UserName);
                                 dal.UpdateSendCount(Tool.userInfo_yc.UserName);
-                                result.Message = string.Format("成功认领{1}条线索{2}", DateTime.Now.ToString(), rnum, Environment.NewLine);
+                                Tool.service.UpdateLastAllotTime(Tool.userInfo_yc.Id);
+                                result.Message = string.Format("成功认领{0}条线索{1}", rnum, Environment.NewLine);
                                 result.Result = true;
                                 SendResult(result);
                             }
@@ -581,7 +582,7 @@ namespace Aide
                         }                        
                     }
                 }
-                Thread.Sleep(1000 * 3);
+                //Thread.Sleep(1000 * 3);
             }
         }
 

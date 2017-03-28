@@ -28,7 +28,7 @@ namespace Aide
         string YC_Price_JobName = "易车网报价";
 
         //打码登录
-        const string key = "087a9b3cdec0c2597df237916ebfff9a";
+        const string key = "234c5af7071248958ea8ffc54bc0318c";
         const string username = "122552967";
         const string password = "18923463698";
         static int AutomaticCount = 20;
@@ -48,8 +48,7 @@ namespace Aide
             th.Start();
             if(Tool.site == Aide.Site.Qiche)
             {
-                tabControl1.SelectedTab = tabPage1;
-                AddLoginJob();
+                tabControl1.SelectedTab = tabPage1;                
             }
             else
             {
@@ -212,6 +211,8 @@ namespace Aide
                     lblEnd.Text = user.DueTime.HasValue ? user.DueTime.ToString() : "";
                     lblUserName.Text = user.UserName;
                     lblUserType.Text = user.UserType == 0 ? "试用" : "付费";
+                    if(user.UserType == 1)
+                        AddLoginJob();
                 }
                 else if (user.SiteName == "易车网")
                 {
@@ -254,20 +255,11 @@ namespace Aide
             }
             if (canOrder)
             {
-                if (Tool.site == Aide.Site.Qiche)
-                {
-                    if (th_qc == null)
-                        LoadOrder();
-                }
-                else
-                {
-                    if (th_yc == null)
-                        LoadOrder();
-                }
+                LoadOrder(user.SiteName);
             }
             else
             {
-                if (Tool.site == Aide.Site.Qiche)
+                if (user.SiteName == "汽车之家")
                 {
                     lblQD_QC.Text = message;
                     btnSendOrder.Enabled = btnStop.Enabled = false;
@@ -355,7 +347,7 @@ namespace Aide
             }
             if (canNews)
             {
-                if (Tool.site == Aide.Site.Qiche)
+                if (user.SiteName == "汽车之家")
                     lbl_QC_NewsNum.Text = user.News ? "按到期时间计算" : user.NewsNum.ToString();
                 else
                     label14.Text = user.Query ? "按到期时间计算" : user.NewsNum.ToString();
@@ -414,15 +406,17 @@ namespace Aide
         #endregion
 
         #region 抢单
-        private void LoadOrder()
+        private void LoadOrder(string siteName)
         {
-            if (Tool.site == Aide.Site.Qiche)
+            if (siteName == "汽车之家")
             {
-                LoadOrder_QC();
+                if (th_qc == null)
+                    LoadOrder_QC();
             }
             else
             {
-                LoadOrder_YC();
+                if(th_yc == null)
+                    LoadOrder_YC();
             }
         }
 
@@ -505,14 +499,14 @@ namespace Aide
             {
                 if (vr.Result)
                 {
-                    lbxSendOrder.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + vr.Message);
+                    lbxSendOrder.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffff") + ":" + vr.Message);
                     lbxSendOrder.TopIndex = lbxSendOrder.Items.Count - 1;
                 }
                 if(vr.Ref)
                 {
                     bool isOver = (DateTime.Now - Tool.userInfo_qc.DueTime.Value).TotalSeconds >= 0;
                     CheckSendOrder(Tool.userInfo_qc, isOver);
-                }                
+                }
             }));
         }
 
@@ -590,6 +584,7 @@ namespace Aide
 
         private void btnStart_YC_Click(object sender, EventArgs e)
         {
+            btnOrderYC.Enabled = false;
             btnStart_YC.Enabled = false;
             SendOrder_YC();
         }
@@ -606,7 +601,7 @@ namespace Aide
             Invoke(new Action(() =>
             {
                 if (vr.Result)
-                    lbxSendOrder_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + vr.Message);
+                    lbxSendOrder_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffff") + ":" + vr.Message);
                 lbxSendOrder_YC.TopIndex = lbxSendOrder_YC.Items.Count - 1;
                 if (vr.Ref)
                 {
@@ -622,6 +617,7 @@ namespace Aide
             {
                 th_yc.Abort();
                 btnStart_YC.Enabled = true;
+                btnOrderYC.Enabled = true;
             }
         }
         #endregion
@@ -667,7 +663,7 @@ namespace Aide
                 var result = qiche.SavePrice();
                 Invoke(new Action(() =>
                 {
-                    lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
+                    lbxQuer.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffff") + ":" + result.Message);
                     lbxQuer.TopIndex = lbxQuer.Items.Count - 1;
                 }));
                 Job job = dal.GetJob(jobName);
@@ -713,7 +709,7 @@ namespace Aide
             var result = yiche.SavePrice();
             Invoke(new Action(() =>
                 {
-                    lbxQuer_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result.Message);
+                    lbxQuer_YC.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffff") + ":" + result.Message);
                     lbxQuer_YC.TopIndex = lbxQuer_YC.Items.Count - 1;
                 }));
             dal.AddJobLog(new JobLog { JobName = jobName, Time = DateTime.Now.ToString("yyyy-MM-dd") });
@@ -769,7 +765,7 @@ namespace Aide
                     var result = qiche.PostNews(selected);
                     Invoke(new Action(() =>
                     {
-                        lblNews.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result);
+                        lblNews.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffff") + ":" + result);
                         lblNews.TopIndex = lblNews.Items.Count - 1;
                     }));                    
                     dal.AddJobLog(new JobLog { JobName = newsID, Time = DateTime.Now.ToString("yyyy-MM-dd") });
@@ -779,6 +775,7 @@ namespace Aide
                     if (result.Contains("发布成功"))
                     {
                         Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_qc.Id, JobType = "资讯", JobTime = DateTime.Now });
+                        Tool.service.UpdateLastNewsTime(Tool.userInfo_qc.Id);
                         Tool.userInfo_qc.NewsNum--;
                         bool isOver = (DateTime.Now - Tool.userInfo_qc.DueTime.Value).TotalSeconds >= 0;
                         Invoke(new Action(() => CheckSendNews(Tool.userInfo_qc, isOver)));
@@ -929,20 +926,21 @@ namespace Aide
                 var result = yiche.PostNews(selected);
                 Invoke(new Action(() =>
                 {
-                    listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + ":" + result);
+                    listBox3.Items.Add(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.ffff") + ":" + result);
                     listBox3.TopIndex = lblNews.Items.Count - 1;
                 }));
                 dal.AddJobLog(new JobLog { JobName = newsID, Time = DateTime.Now.ToString("yyyy-MM-dd") });
                 selected.Message = "已执行";
                 selected.Del = "";
-                Invoke(new Action(() => rowMergeView2.Refresh()));                
+                Invoke(new Action(() => rowMergeView2.Refresh()));
                 if (result.Contains("发布成功"))
                 {
                     Tool.service.AddJobLog(new Service.JobLog { UserID = Tool.userInfo_yc.Id, JobType = "资讯", JobTime = DateTime.Now });
+                    Tool.service.UpdateLastNewsTime(Tool.userInfo_yc.Id);
                     Tool.userInfo_yc.NewsNum--;
                     bool isOver = (DateTime.Now - Tool.userInfo_yc.DueTime.Value).TotalSeconds >= 0;
                     Invoke(new Action(() => CheckSendNews(Tool.userInfo_yc, isOver)));
-                }                
+                }
             }
         }
 
@@ -967,6 +965,17 @@ namespace Aide
             dal.DelJob(QC_Price_JobName);
             Tool.aideTimer.Dequeue(QC_Price_JobName);
             jct_QC_Query.InitControl();            
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var str = qiche.GotoLoginPage();
+            if (string.IsNullOrWhiteSpace(str))
+            {
+                var validateCodeImg = qiche.ValidateCode();
+                var validatecode = DaMa(validateCodeImg);
+                var result = qiche.Login(Tool.userInfo_qc.UserName, Tool.userInfo_qc.PassWord, validatecode);
+            }
         }
 
         //private void button1_Click(object sender, EventArgs e)

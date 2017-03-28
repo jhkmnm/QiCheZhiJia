@@ -34,6 +34,7 @@
             this.colSiteName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colUserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colCompany = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPassWord = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colLinkMan = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colDueTime = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
@@ -91,6 +92,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textValueBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.textValueBindingSource1)).BeginInit();
@@ -117,6 +119,7 @@
             this.colSiteName,
             this.colUserName,
             this.colCompany,
+            this.colPassWord,
             this.colLinkMan,
             this.colDueTime,
             this.userTypeDataGridViewTextBoxColumn,
@@ -164,6 +167,14 @@
             this.colCompany.HeaderText = "公司名称";
             this.colCompany.Name = "colCompany";
             this.colCompany.ReadOnly = true;
+            // 
+            // colPassWord
+            // 
+            this.colPassWord.DataPropertyName = "PassWord";
+            this.colPassWord.HeaderText = "密码";
+            this.colPassWord.Name = "colPassWord";
+            this.colPassWord.ReadOnly = true;
+            this.colPassWord.Visible = false;
             // 
             // colLinkMan
             // 
@@ -734,6 +745,11 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "用户名";
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 5000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -807,17 +823,6 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.BindingSource textValueBindingSource;
         private System.Windows.Forms.BindingSource textValueBindingSource1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colSiteName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colUserName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colCompany;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colLinkMan;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colDueTime;
-        private System.Windows.Forms.DataGridViewComboBoxColumn userTypeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewComboBoxColumn statusDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn lastAllotTimeDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colQuote;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colNews;
         private System.Windows.Forms.TextBox txtLastNews;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.TextBox txtLastQuote;
@@ -825,6 +830,19 @@
         private System.Windows.Forms.CheckBox chkNews;
         private System.Windows.Forms.CheckBox chkQuery;
         private System.Windows.Forms.CheckBox chkSendOrder;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colSiteName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colUserName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colCompany;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colPassWord;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colLinkMan;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDueTime;
+        private System.Windows.Forms.DataGridViewComboBoxColumn userTypeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewComboBoxColumn statusDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn lastAllotTimeDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colQuote;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colNews;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 

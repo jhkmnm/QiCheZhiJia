@@ -32,13 +32,14 @@ namespace AideAdmin
         private void btnSearch_Click(object sender, EventArgs e)
         {
             LoadUserData();
+            timer1.Enabled = true;
         }
 
         private void LoadUserData()
         {
             var data = new List<localhost.User>();
             data.AddRange(Tool.service.GetUserList(type, status, due));
-            UserList = data;
+            UserList = new BindingCollection<localhost.User>(data);
             InitData();
         }
 
@@ -83,6 +84,12 @@ namespace AideAdmin
 
         private void btnUpdType_Click(object sender, EventArgs e)
         {
+            if(!chkSendOrder.Checked && !chkQuery.Checked && !chkNews.Checked)
+            {
+                MessageBox.Show("请至少选择一种付费方式");
+                return;
+            }
+
             int id = GetUserID();
             if (id > 0)
             {
@@ -154,9 +161,6 @@ namespace AideAdmin
 
         private void dgvData_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex < 0 || e.RowIndex < 0)
-                return;
-
             InitData();
         }
 
@@ -184,11 +188,11 @@ namespace AideAdmin
         /// <summary>
         /// 分配用户-角色下的用户列表
         /// </summary>
-        private List<localhost.User> UserList
+        private BindingCollection<localhost.User> UserList
         {
             get
             {
-                return userBindingSource.DataSource as List<localhost.User>;
+                return userBindingSource.DataSource as BindingCollection<localhost.User>;
             }
             set
             {
@@ -281,6 +285,29 @@ namespace AideAdmin
             {
                 MessageBox.Show("报表为空,无表格需要导出", "提示", MessageBoxButtons.OK);
             }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
+            var userlist = Tool.service.GetUserList(type, status, due);
+            foreach(DataGridViewRow row in dgvData.Rows)
+            {
+                var userid = row.Cells[colID.Name].Value.ToString();
+                foreach(localhost.User user in userlist)
+                {
+                    if(user.Id.ToString() == userid)
+                    {
+                        row.Cells[statusDataGridViewTextBoxColumn.Name].Value = user.Status;
+                        row.Cells[lastAllotTimeDataGridViewTextBoxColumn.Name].Value = user.LastAllotTime;
+                        row.Cells[colQuote.Name].Value = user.LastQuoteTime;
+                        row.Cells[colNews.Name].Value = user.LastNewsTime;
+                        InitData();
+                        break;
+                    }
+                }
+            }
+            timer1.Enabled = true;
         }
     }
 
